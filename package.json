@@ -1,24 +1,30 @@
 {
-  "name": "npm-base",
+  "name": "rxfetch",
   "author": "waiting",
   "version": "0.0.1",
-  "description": "npm boilerplate",
-  "keywords": [],
+  "description": "Observable HTTP fetch API for browser",
+  "keywords": [
+    "rx",
+    "rxjs",
+    "http",
+    "fetch",
+    "typescript"
+  ],
   "engines": {
     "node": ">=8.10.0"
   },
-  "browser": "",
-  "es2015": "./dist/index.esm.js",
+  "browser": "./dist/rxfetch.esm.js",
+  "es2015": "./dist/rxfetch.esm.js",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bugs": {
-    "url": "https://github.com/waitingsong/npm-base/issues"
+    "url": "https://github.com/waitingsong/rxfetch/issues"
   },
-  "homepage": "https://github.com/waitingsong/npm-base#readme",
+  "homepage": "https://github.com/waitingsong/rxfetch#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/waitingsong/npm-base.git"
+    "url": "git+https://github.com/waitingsong/rxfetch.git"
   },
   "license": "MIT",
   "nyc": {
