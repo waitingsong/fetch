@@ -1,0 +1,25 @@
+if: tag IS blank
+
+language: node_js
+node_js:
+- '8'
+- '10'
+
+cache:
+  directories:
+    - node_modules
+
+before_install:
+  - npm i -g rollup
+  - npm install
+
+
+install: true
+
+script:
+  - npm run build
+  - npm run test
+
+after_success:
+  - npm run cov:coveralls
+
