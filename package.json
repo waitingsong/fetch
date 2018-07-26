@@ -1,11 +1,12 @@
 {
-  "name": "rxfetch",
+  "name": "rxxfetch",
   "author": "waiting",
   "version": "0.0.1",
-  "description": "Observable HTTP fetch API for browser",
+  "description": "Observable HTTP fetch API for browser and Nodejs",
   "keywords": [
     "rx",
     "rxjs",
+    "rxjs6",
     "http",
     "fetch",
     "typescript"
