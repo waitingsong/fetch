@@ -14,18 +14,18 @@
   "engines": {
     "node": ">=8.10.0"
   },
-  "browser": "./dist/rxfetch.esm.js",
-  "es2015": "./dist/rxfetch.esm.js",
+  "browser": "./dist/rxxfetch.esm.js",
+  "es2015": "./dist/rxxfetch.esm.js",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bugs": {
-    "url": "https://github.com/waitingsong/rxfetch/issues"
+    "url": "https://github.com/waitingsong/rxxfetch/issues"
   },
-  "homepage": "https://github.com/waitingsong/rxfetch#readme",
+  "homepage": "https://github.com/waitingsong/rxxfetch#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/waitingsong/rxfetch.git"
+    "url": "git+https://github.com/waitingsong/rxxfetch.git"
   },
   "license": "MIT",
   "nyc": {
