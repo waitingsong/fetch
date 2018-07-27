@@ -202,7 +202,7 @@ function parseInitOpts(init?: RxRequestInit): RxRequestInit {
         initOpts.headers.set('Content-Type', initOpts.contentType)
       }
       else if (!initOpts.headers.has('Content-Type')) {
-        initOpts.headers.set('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
+        initOpts.headers.set('Content-Type', 'application/x-www-form-urlencoded')
       }
       break
   }
