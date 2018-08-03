@@ -8,7 +8,7 @@ export const initialRxRequestInit: RxRequestInit = {
   timeout: null,
   throwErrorIfHigher400: true,
 
-  cache: 'no-cache',
+  cache: 'default',
   credentials: 'same-origin',
   mode: 'cors',
   redirect: 'follow',
