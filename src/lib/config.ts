@@ -10,7 +10,7 @@ export const initialRxRequestInit: RxRequestInit = {
 
   cache: 'no-cache',
   credentials: 'same-origin',
-  mode: 'same-origin',
+  mode: 'cors',
   redirect: 'follow',
   referrer: 'client',
 }
