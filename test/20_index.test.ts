@@ -16,8 +16,8 @@ const filename = basename(__filename)
 describe(filename, () => {
 
   describe('Should get() works with github.com', () => {
-    const url = 'https://github.com/waitingsong/rxfetch#readme'
-    const regexp = /<title>[\w -]+?waitingsong\/rxfetch/
+    const url = 'https://github.com/waitingsong/rxxfetch#readme'
+    const regexp = /<title>[\w -]+?waitingsong\/rxxfetch/
     const initArgs = <RxRequestInit> {
       dataType: 'text',
       fetchModule: nodefetch,
