@@ -21,6 +21,20 @@ describe(filename, () => {
       dataType: 'json',
     }
 
+    it('without args', resolve => {
+      get<HttpbinGetResponse>(url).subscribe(
+        res => {
+          assert(!! res, 'Should response not empty')
+          assert(res.url === url)
+        },
+        err => {
+          assert(false, err)
+          resolve()
+        },
+        resolve,
+      )
+    })
+
     it('without query data', resolve => {
       const args = { ...initArgs }
 
