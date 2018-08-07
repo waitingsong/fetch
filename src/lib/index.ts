@@ -1,5 +1,5 @@
 import * as QueryString from 'qs'
-import { defer, of, Observable } from 'rxjs'
+import { defer, of, throwError, Observable } from 'rxjs'
 import { catchError, concatMap, map, switchMap, tap, timeout } from 'rxjs/operators'
 
 import { initialRxRequestInit } from './config'
@@ -14,7 +14,7 @@ export function rxfetch<T extends ObbRetType = ObbRetType>(
 ): Observable<T> {
 
   if (! input) {
-    throw new TypeError('value of input invalid')
+    throwError(new TypeError('value of input invalid'))
   }
 
   let req$: Observable<Response>
@@ -30,7 +30,7 @@ export function rxfetch<T extends ObbRetType = ObbRetType>(
   }
   /* istanbul ignore else  */
   if (! fetchModule || typeof fetchModule !== 'function') {
-    throw new TypeError('fetchModule/fetch not Function')
+    throwError(new TypeError('fetchModule/fetch not Function'))
   }
 
   const dataType: RxRequestInit['dataType'] = initOpts.dataType ? initOpts.dataType : 'json'
