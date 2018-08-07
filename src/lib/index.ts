@@ -178,16 +178,22 @@ function parseResponseType(response: Response, dataType: RxRequestInit['dataType
     switch (dataType) {
       case 'arrayBuffer':
         return defer(() => response.arrayBuffer())
+
       case 'blob':
         return defer(() => response.blob())
+
       case 'formData':
         return defer(() => response.formData())
+
       case 'json':
         return <Observable<object>> defer(() => response.json())
+
       case 'raw':
         return of(response)
+
       case 'text':
         return defer(() => response.text())
+
       default:
         assertNever(dataType)
     }
