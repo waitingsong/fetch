@@ -22,11 +22,13 @@ export function rxfetch<T extends ObbRetType = ObbRetType>(
   const initOpts = parseInitOpts(init)
   let fetchModule: Args['fetchModule'] | null = typeof fetch === 'function' ? fetch : null
 
+  /* istanbul ignore else  */
   if (initOpts.fetchModule) {
     fetchModule = initOpts.fetchModule
     delete initOpts.fetchModule
     delete initOpts.fetchHeadersClass
   }
+  /* istanbul ignore else  */
   if (! fetchModule || typeof fetchModule !== 'function') {
     throw new TypeError('fetchModule/fetch not Function')
   }
@@ -40,6 +42,7 @@ export function rxfetch<T extends ObbRetType = ObbRetType>(
     : null
 
   if (typeof input === 'string') {
+    /* istanbul ignore else  */
     if (typeof initOpts.data !== 'undefined') {
       if (initOpts.processData) {
         if (['GET', 'DELETE'].includes(<string> initOpts.method)) {
@@ -52,9 +55,10 @@ export function rxfetch<T extends ObbRetType = ObbRetType>(
       else {
         initOpts.body = <any> initOpts.data
       }
+
+      delete initOpts.data
     }
 
-    delete initOpts.data
     delete initOpts.dataType
     delete initOpts.contentType
     delete initOpts.timeout
@@ -69,19 +73,23 @@ export function rxfetch<T extends ObbRetType = ObbRetType>(
 
   let ret$ = req$.pipe(
     tap((res: Response) => {
+      /* istanbul ignore else  */
       if (!res.ok) {
         throw new Error(`Fetch error status: ${res.status}`)
       }
     }),
   )
 
+  /* istanbul ignore else  */
   if (timeoutValue && timeoutValue >= 0) {
     ret$ = ret$.pipe(timeout(timeoutValue))
   }
 
+  /* istanbul ignore else  */
   if (throwErrorIfHigher400) {
     ret$ = ret$.pipe(
       concatMap(res => {
+        /* istanbul ignore else  */
         if (throwErrorIfHigher400 && res.status >= 400) {
           return defer(() => res.text()).pipe(
             catchError(err => of(err ? err.toStrin() : 'unknow error')),
@@ -102,6 +110,7 @@ export function rxfetch<T extends ObbRetType = ObbRetType>(
 
 
 export function get<T extends ObbRetType = ObbRetType>(input: string, init ?: RxRequestInit): Observable<T> {
+  /* istanbul ignore else  */
   if (init) {
     init.method = 'GET'
   }
@@ -113,6 +122,7 @@ export function get<T extends ObbRetType = ObbRetType>(input: string, init ?: Rx
 
 
 export function post<T extends ObbRetType = ObbRetType>(input: string, init?: RxRequestInit): Observable<T> {
+  /* istanbul ignore else  */
   if (init) {
     init.method = 'POST'
   }
@@ -124,6 +134,7 @@ export function post<T extends ObbRetType = ObbRetType>(input: string, init?: Rx
 
 
 export function put<T extends ObbRetType = ObbRetType>(input: string, init?: RxRequestInit): Observable<T> {
+  /* istanbul ignore else  */
   if (init) {
     init.method = 'PUT'
   }
@@ -135,6 +146,7 @@ export function put<T extends ObbRetType = ObbRetType>(input: string, init?: RxR
 
 
 export function remove<T extends ObbRetType = ObbRetType>(input: string, init?: RxRequestInit): Observable<T> {
+  /* istanbul ignore else  */
   if (init) {
     init.method = 'DELETE'
   }
@@ -161,6 +173,7 @@ export function buildQueryString(url: string, data: RxRequestInit['data']): stri
 
 
 function parseResponseType(response: Response, dataType: RxRequestInit['dataType']): Observable<ObbRetType> {
+  /* istanbul ignore else  */
   if (dataType) {
     switch (dataType) {
       case 'arrayBuffer':
@@ -189,6 +202,7 @@ function parseInitOpts(init?: RxRequestInit): RxRequestInit {
   const hClass = initOpts.fetchHeadersClass ? initOpts.fetchHeadersClass : Headers
 
   initOpts.headers = <Headers> (initOpts.headers ? new hClass(initOpts.headers) : new hClass())
+  /* istanbul ignore else  */
   if (!initOpts.headers.has('Accept')) {
     initOpts.headers.set('Accept', 'application/json, text/html, text/javascript, text/plain, */*')
   }
@@ -201,6 +215,7 @@ function parseInitOpts(init?: RxRequestInit): RxRequestInit {
       else if (initOpts.contentType) {
         initOpts.headers.set('Content-Type', initOpts.contentType)
       }
+      /* istanbul ignore else  */
       else if (!initOpts.headers.has('Content-Type')) {
         initOpts.headers.set('Content-Type', 'application/x-www-form-urlencoded')
       }
