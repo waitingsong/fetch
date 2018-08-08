@@ -72,4 +72,48 @@ describe(filename, () => {
 
   })
 
+
+  describe('Should rxfetch() throw error with invalid parameter init', () => {
+    const url = 'https://httpbin.org/get'
+    const initArgs = <RxRequestInit> {
+      dataType: 'text',
+      // fetchModule: nodefetch,
+      fetchHeadersClass: Headers,
+      timeout: 20 * 1000,
+    }
+
+    it('with invalid fetchModule', resolve => {
+      const args = { ...initArgs }
+      // @ts-ignore
+      args.fetchModule = 'should Function'
+
+      fetch(url, args).subscribe(
+        () => {
+          assert(false, 'Should throw error but NOT')
+        },
+        () => {
+          assert(true)
+          resolve()
+        },
+        resolve,
+      )
+    })
+
+    it('without fetchMOdule', resolve => {
+      const args = { ...initArgs }
+
+      fetch(url, args).subscribe(
+        () => {
+          assert(false, 'Should throw error but NOT')
+        },
+        () => {
+          assert(true)
+          resolve()
+        },
+        resolve,
+      )
+    })
+
+  })
+
 })
