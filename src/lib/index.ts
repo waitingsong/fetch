@@ -44,7 +44,7 @@ export function rxfetch<T extends ObbRetType = ObbRetType>(
     throwError(new TypeError('fetchModule/fetch not Function'))
   }
 
-  const dataType: RxRequestInit['dataType'] = initOpts.dataType ? initOpts.dataType : 'json'
+  const dataType: RxRequestInit['dataType'] = initOpts.dataType
   const throwErrorIfHigher400 = typeof initOpts.throwErrorIfHigher400 === 'boolean'
     ? initOpts.throwErrorIfHigher400
     : true
@@ -237,6 +237,11 @@ function parseInitOpts(init?: RxRequestInit): RxRequestInit {
         initOpts.headers.set('Content-Type', 'application/x-www-form-urlencoded')
       }
       break
+  }
+
+  /* istanbul ignore else  */
+  if (! initOpts.dataType) {
+    initOpts.dataType = 'json'
   }
 
   return initOpts
