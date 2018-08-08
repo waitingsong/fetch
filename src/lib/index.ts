@@ -24,16 +24,23 @@ export function rxfetch<T extends ObbRetType = ObbRetType>(
   let req$: Observable<Response>
 
   const initOpts = parseInitOpts(init)
-  let fetchModule: Args['fetchModule'] | null = typeof fetch === 'function' ? fetch : null
+  // let fetchModule: Args['fetchModule'] | null = typeof fetch === 'function' ? fetch : null
+  let fetchModule: Args['fetchModule'] | null = null
 
-  /* istanbul ignore else  */
   if (initOpts.fetchModule) {
+    /* istanbul ignore else  */
+    if (typeof initOpts.fetchModule !== 'function') {
+      throwError(new TypeError('fetchModule is not Function'))
+    }
     fetchModule = initOpts.fetchModule
     delete initOpts.fetchModule
     delete initOpts.fetchHeadersClass
   }
-  /* istanbul ignore else  */
-  if (! fetchModule || typeof fetchModule !== 'function') {
+  else if (typeof fetch === 'function') { // native fetch
+    fetchModule = fetch
+  }
+  /* istanbul ignore next  */
+  else {
     throwError(new TypeError('fetchModule/fetch not Function'))
   }
 
