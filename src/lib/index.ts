@@ -169,7 +169,7 @@ export function remove<T extends ObbRetType = ObbRetType>(input: string, init?: 
 
 
 /** Update initialRxRequestInit */
-export function setGloalConfig(config: Partial<Args>): void {
+export function setGloalRequestInit(config: Partial<Args>): void {
   for (const [key, value] of Object.entries(config)) {
     Object.defineProperty(initialRxRequestInit, key, {
       configurable: true,
@@ -181,7 +181,7 @@ export function setGloalConfig(config: Partial<Args>): void {
 }
 
 /** Get copy of initialRxRequestInit */
-export function getGloalConfig(): Readonly<RxRequestInit> {
+export function getGloalRequestInit(): Readonly<RxRequestInit> {
   return { ...initialRxRequestInit }
 }
 
