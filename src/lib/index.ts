@@ -28,7 +28,7 @@ export function rxfetch<T extends ObbRetType = ObbRetType>(
   let fetchModule: Args['fetchModule'] | null = null
 
   if (initOpts.fetchModule) {
-    /* istanbul ignore else  */
+    /* istanbul ignore else */
     if (typeof initOpts.fetchModule !== 'function') {
       throwError(new TypeError('fetchModule is not Function'))
     }
@@ -36,7 +36,7 @@ export function rxfetch<T extends ObbRetType = ObbRetType>(
     delete initOpts.fetchModule
     delete initOpts.fetchHeadersClass
   }
-  /* istanbul ignore else  */
+  /* istanbul ignore else */
   else if (typeof fetch === 'function') { // native fetch
     fetchModule = fetch
   }
@@ -53,7 +53,7 @@ export function rxfetch<T extends ObbRetType = ObbRetType>(
     : null
 
   if (typeof input === 'string') {
-    /* istanbul ignore else  */
+    /* istanbul ignore else */
     if (typeof initOpts.data !== 'undefined') {
       if (initOpts.processData) {
         if (['GET', 'DELETE'].includes(<string> initOpts.method)) {
@@ -84,23 +84,23 @@ export function rxfetch<T extends ObbRetType = ObbRetType>(
 
   let ret$ = req$.pipe(
     tap((res: Response) => {
-      /* istanbul ignore else  */
+      /* istanbul ignore else */
       if (!res.ok) {
         throw new Error(`Fetch error status: ${res.status}`)
       }
     }),
   )
 
-  /* istanbul ignore else  */
+  /* istanbul ignore else */
   if (timeoutValue && timeoutValue >= 0) {
     ret$ = ret$.pipe(timeout(timeoutValue))
   }
 
-  /* istanbul ignore else  */
+  /* istanbul ignore else */
   if (throwErrorIfHigher400) {
     ret$ = ret$.pipe(
       concatMap(res => {
-        /* istanbul ignore else  */
+        /* istanbul ignore else */
         if (throwErrorIfHigher400 && res.status >= 400) {
           return defer(() => res.text()).pipe(
             catchError((err: Error) => of(err ? err.toString() : 'unknow error')),
@@ -121,7 +121,7 @@ export function rxfetch<T extends ObbRetType = ObbRetType>(
 
 
 export function get<T extends ObbRetType = ObbRetType>(input: string, init ?: RxRequestInit): Observable<T> {
-  /* istanbul ignore else  */
+  /* istanbul ignore else */
   if (init) {
     init.method = 'GET'
   }
@@ -133,7 +133,7 @@ export function get<T extends ObbRetType = ObbRetType>(input: string, init ?: Rx
 
 
 export function post<T extends ObbRetType = ObbRetType>(input: string, init?: RxRequestInit): Observable<T> {
-  /* istanbul ignore else  */
+  /* istanbul ignore else */
   if (init) {
     init.method = 'POST'
   }
@@ -145,7 +145,7 @@ export function post<T extends ObbRetType = ObbRetType>(input: string, init?: Rx
 
 
 export function put<T extends ObbRetType = ObbRetType>(input: string, init?: RxRequestInit): Observable<T> {
-  /* istanbul ignore else  */
+  /* istanbul ignore else */
   if (init) {
     init.method = 'PUT'
   }
@@ -157,7 +157,7 @@ export function put<T extends ObbRetType = ObbRetType>(input: string, init?: RxR
 
 
 export function remove<T extends ObbRetType = ObbRetType>(input: string, init?: RxRequestInit): Observable<T> {
-  /* istanbul ignore else  */
+  /* istanbul ignore else */
   if (init) {
     init.method = 'DELETE'
   }
@@ -225,6 +225,19 @@ function parseInitOpts(init?: RxRequestInit): RxRequestInit {
   }
 
   switch (initOpts.method) {
+    case 'DELETE':
+      if (initOpts.contentType === false) {
+        break
+      }
+      else if (initOpts.contentType) {
+        initOpts.headers.set('Content-Type', initOpts.contentType)
+      }
+      /* istanbul ignore else  */
+      else if (!initOpts.headers.has('Content-Type')) {
+        initOpts.headers.set('Content-Type', 'application/x-www-form-urlencoded')
+      }
+      break
+
     case 'POST':
       if (initOpts.contentType === false) {
         break
