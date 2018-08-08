@@ -237,6 +237,19 @@ function parseInitOpts(init?: RxRequestInit): RxRequestInit {
         initOpts.headers.set('Content-Type', 'application/x-www-form-urlencoded')
       }
       break
+
+    case 'PUT':
+      if (initOpts.contentType === false) {
+        break
+      }
+      else if (initOpts.contentType) {
+        initOpts.headers.set('Content-Type', initOpts.contentType)
+      }
+      /* istanbul ignore else  */
+      else if (!initOpts.headers.has('Content-Type')) {
+        initOpts.headers.set('Content-Type', 'application/x-www-form-urlencoded')
+      }
+      break
   }
 
   /* istanbul ignore else  */
