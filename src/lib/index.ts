@@ -7,7 +7,11 @@ import { Args, ObbRetType, RxRequestInit } from './model'
 import { assertNever } from './shared'
 
 
-/** ignore init if input is Request */
+/**
+ * fetch wrapper
+ *
+ * parameter init ignored during parameter input is typeof Request
+ */
 export function rxfetch<T extends ObbRetType = ObbRetType>(
   input: Request | string,
   init?: RxRequestInit,
