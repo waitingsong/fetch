@@ -103,7 +103,7 @@ export function rxfetch<T extends ObbRetType = ObbRetType>(
         /* istanbul ignore else  */
         if (throwErrorIfHigher400 && res.status >= 400) {
           return defer(() => res.text()).pipe(
-            catchError(err => of(err ? err.toStrin() : 'unknow error')),
+            catchError((err: Error) => of(err ? err.toString() : 'unknow error')),
             map((txt: string) => {
               throw new TypeError(`Fetch error status: ${res.status}\nResponse: ` + txt)
             }),
