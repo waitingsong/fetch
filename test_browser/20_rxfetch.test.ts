@@ -14,12 +14,12 @@ describe(filename, () => {
       fetch('').subscribe(
         () => {
           assert(false, 'Should throw error but NOT')
+          resolve()
         },
         () => {
           assert(true)
           resolve()
         },
-        resolve,
       )
     })
 
@@ -28,12 +28,12 @@ describe(filename, () => {
       fetch(null).subscribe(
         () => {
           assert(false, 'Should throw error but NOT')
+          resolve()
         },
         () => {
           assert(true)
           resolve()
         },
-        resolve,
       )
     })
 
@@ -42,12 +42,12 @@ describe(filename, () => {
       fetch().subscribe(
         () => {
           assert(false, 'Should throw error but NOT')
+          resolve()
         },
         () => {
           assert(true)
           resolve()
         },
-        resolve,
       )
     })
 
@@ -68,12 +68,12 @@ describe(filename, () => {
       fetch(url, args).subscribe(
         () => {
           assert(false, 'Should throw error but NOT')
+          resolve()
         },
         () => {
           assert(true)
           resolve()
         },
-        resolve,
       )
     })
 

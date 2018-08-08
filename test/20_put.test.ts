@@ -44,12 +44,12 @@ describe(filename, () => {
           catch (ex) {
             assert(false, ex)
           }
+          resolve()
         },
         err => {
           assert(false, err)
           resolve()
         },
-        resolve,
       )
     })
 
@@ -77,12 +77,12 @@ describe(filename, () => {
           catch (ex) {
             assert(false, ex)
           }
+          resolve()
         },
         err => {
           assert(false, err)
           resolve()
         },
-        resolve,
       )
     })
 
@@ -107,12 +107,12 @@ describe(filename, () => {
           catch (ex) {
             assert(false, ex)
           }
+          resolve()
         },
         err => {
           assert(false, err)
           resolve()
         },
-        resolve,
       )
     })
 

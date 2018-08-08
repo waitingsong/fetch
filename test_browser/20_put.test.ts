@@ -20,12 +20,12 @@ describe(filename, () => {
       put<HttpbinPostResponse>(url).subscribe(
         res => {
           assert(res && res.url === url)
+          resolve()
         },
         err => {
           assert(false, err)
           resolve()
         },
-        resolve,
       )
     })
 
@@ -49,12 +49,12 @@ describe(filename, () => {
           catch (ex) {
             assert(false, ex)
           }
+          resolve()
         },
         err => {
           assert(false, err)
           resolve()
         },
-        resolve,
       )
     })
 
@@ -82,12 +82,12 @@ describe(filename, () => {
           catch (ex) {
             assert(false, ex)
           }
+          resolve()
         },
         err => {
           assert(false, err)
           resolve()
         },
-        resolve,
       )
     })
 
@@ -112,12 +112,12 @@ describe(filename, () => {
           catch (ex) {
             assert(false, ex)
           }
+          resolve()
         },
         err => {
           assert(false, err)
           resolve()
         },
-        resolve,
       )
     })
 

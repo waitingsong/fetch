@@ -34,12 +34,12 @@ describe(filename, () => {
       get<string>(url, args).subscribe(
         txt => {
           assert(txt && regexp.test(txt.slice(500, 3000)))
+          resolve()
         },
         err => {
           assert(false, err)
           resolve()
         },
-        resolve,
       )
     })
 
@@ -51,12 +51,12 @@ describe(filename, () => {
         buf => {
           const txt = buf.byteLength ? ab2str(buf.slice(0, 5000)) : ''
           assert(txt && regexp.test(txt.slice(500, 3000)))
+          resolve()
         },
         err => {
           assert(false, err)
           resolve()
         },
-        resolve,
       )
     })
 
@@ -67,12 +67,12 @@ describe(filename, () => {
       get(url, args).subscribe(
         () => {
           assert(false, 'Should throw timeoutError but NOT')
+          resolve()
         },
         () => {
           assert(true)
           resolve()
         },
-        resolve,
       )
     })
   })
@@ -99,12 +99,12 @@ describe(filename, () => {
           // console.info(res)
           assert(!! res, 'Should response not empty')
           assert(res.url === url)
+          resolve()
         },
         err => {
           assert(false, err)
           resolve()
         },
-        resolve,
       )
     })
 
@@ -120,12 +120,12 @@ describe(filename, () => {
           assert(res.url === url + '?' + QueryString.stringify(pdata))
           assert(res.args.p1 === pdata.p1.toString(), `Should got ${pdata.p1}`)
           assert(res.args.p2 === pdata.p2, `Should got ${pdata.p2}`)
+          resolve()
         },
         err => {
           assert(false, err)
           resolve()
         },
-        resolve,
       )
     })
 
@@ -151,12 +151,12 @@ describe(filename, () => {
           catch (ex) {
             assert(false, ex)
           }
+          resolve()
         },
         err => {
           assert(false, err)
           resolve()
         },
-        resolve,
       )
     })
 
