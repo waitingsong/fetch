@@ -13,7 +13,7 @@ const filename = basename(__filename)
 
 describe(filename, () => {
 
-  describe.only('Should remove() works with httpbin.org', () => {
+  describe('Should remove() works with httpbin.org', () => {
     const url = 'https://httpbin.org/delete'
     const initArgs = <RxRequestInit> {
       fetchModule: nodefetch,
