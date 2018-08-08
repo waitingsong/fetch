@@ -36,10 +36,10 @@ export function rxfetch<T extends ObbRetType = ObbRetType>(
     delete initOpts.fetchModule
     delete initOpts.fetchHeadersClass
   }
+  /* istanbul ignore else  */
   else if (typeof fetch === 'function') { // native fetch
     fetchModule = fetch
   }
-  /* istanbul ignore next  */
   else {
     throwError(new TypeError('fetchModule/fetch not Function'))
   }
