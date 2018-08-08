@@ -1,9 +1,8 @@
 /// <reference types="mocha" />
 
 import * as assert from 'power-assert'
-import * as QueryString from 'qs'
 
-import fetch, { Args, RxRequestInit } from '../src/index'
+import fetch, { RxRequestInit } from '../src/index'
 
 
 const filename = '20_get.test.ts'

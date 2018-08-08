@@ -3,7 +3,7 @@
 import * as assert from 'power-assert'
 import * as QueryString from 'qs'
 
-import { get, post, Args, RxRequestInit } from '../src/index'
+import { get, post, RxRequestInit } from '../src/index'
 
 import { HttpbinGetResponse, HttpbinPostResponse } from '../test/model'
 
