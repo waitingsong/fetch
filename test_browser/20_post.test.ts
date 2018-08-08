@@ -5,7 +5,7 @@ import * as assert from 'power-assert'
 import { post, RxRequestInit } from '../src/index'
 import { HttpbinPostResponse } from '../test/model'
 
-const filename = '20_index.test.ts'
+const filename = '20_post.test.ts'
 
 describe(filename, () => {
 

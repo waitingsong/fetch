@@ -5,9 +5,7 @@ import nodefetch, { Headers } from 'node-fetch'
 import * as assert from 'power-assert'
 
 import { post, RxRequestInit } from '../src/index'
-import {
-  basename,
-} from '../src/shared/index'
+import { basename } from '../src/shared/index'
 
 import { HttpbinPostResponse } from './model'
 

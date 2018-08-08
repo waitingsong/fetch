@@ -5,7 +5,7 @@ import * as assert from 'power-assert'
 import fetch, { RxRequestInit } from '../src/index'
 
 
-const filename = '20_get.test.ts'
+const filename = '20_rxfetch.test.ts'
 
 describe(filename, () => {
 
