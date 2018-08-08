@@ -168,12 +168,15 @@ export function remove<T extends ObbRetType = ObbRetType>(input: string, init?: 
 }
 
 
+/** update initialRxRequestInit */
 export function setGloalConfig(config: Partial<Args>): void {
   for (const [key, value] of Object.entries(config)) {
-    if (key in initialRxRequestInit) {
-      // @ts-ignore
-      initialRxRequestInit[key] = value
-    }
+    Object.defineProperty(initialRxRequestInit, key, {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value,
+    })
   }
 }
 
