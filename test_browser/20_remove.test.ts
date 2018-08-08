@@ -6,6 +6,7 @@ import * as QueryString from 'qs'
 import { remove, RxRequestInit } from '../src/index'
 import { HttpbinPostResponse, PDATA } from '../test/model'
 
+
 const filename = '20_remove.test.ts'
 
 describe(filename, () => {

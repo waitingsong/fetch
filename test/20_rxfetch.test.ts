@@ -1,14 +1,10 @@
 /// <reference types="mocha" />
 
-import * as FormData from 'form-data'
 import nodefetch, { Headers } from 'node-fetch'
 import * as assert from 'power-assert'
-import * as QueryString from 'qs'
 
 import fetch, { Args, RxRequestInit } from '../src/index'
-import {
-  basename,
-} from '../src/shared/index'
+import { basename } from '../src/shared/index'
 
 
 const filename = basename(__filename)
