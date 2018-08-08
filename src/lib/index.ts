@@ -99,18 +99,7 @@ export function rxfetch<T extends ObbRetType = ObbRetType>(
   /* istanbul ignore else */
   if (throwErrorIfHigher400) {
     ret$ = ret$.pipe(
-      concatMap(res => {
-        /* istanbul ignore else */
-        if (throwErrorIfHigher400 && res.status >= 400) {
-          return defer(() => res.text()).pipe(
-            catchError((err: Error) => of(err ? err.toString() : 'unknow error')),
-            map((txt: string) => {
-              throw new TypeError(`Fetch error status: ${res.status}\nResponse: ` + txt)
-            }),
-          )
-        }
-        return of(res)
-      }),
+      concatMap(res => preParseResponse(res, throwErrorIfHigher400)),
     )
   }
 
@@ -120,7 +109,7 @@ export function rxfetch<T extends ObbRetType = ObbRetType>(
 }
 
 
-export function get<T extends ObbRetType = ObbRetType>(input: string, init ?: RxRequestInit): Observable<T> {
+export function get<T extends ObbRetType = ObbRetType>(input: string, init?: RxRequestInit): Observable<T> {
   /* istanbul ignore else */
   if (init) {
     init.method = 'GET'
@@ -188,6 +177,21 @@ export function getGloalRequestInit(): Readonly<RxRequestInit> {
 
 export function buildQueryString(url: string, data: RxRequestInit['data']): string {
   return data ? `${url}?${QueryString.stringify(data)}` : url
+}
+
+
+/** Throw error for throwErrorIfHigher400 */
+function preParseResponse(resp: Response, throwErrorIfHigher400: boolean): Observable<Response> {
+  /* istanbul ignore else */
+  if (throwErrorIfHigher400 && resp.status >= 400) {
+    return defer(() => resp.text()).pipe(
+      catchError((err: Error) => of(err ? err.toString() : 'unknow error')),
+      map((txt: string) => {
+        throw new TypeError(`Fetch error status: ${resp.status}\nResponse: ` + txt)
+      }),
+    )
+  }
+  return of(resp)
 }
 
 
