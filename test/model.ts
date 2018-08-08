@@ -18,3 +18,12 @@ export interface HttpbinPostResponse extends HttpbinGetResponse {
   form: any
   json: any
 }
+
+/** post data for test */
+export interface PDATA {
+  p1: string | number
+  p2: string
+  p3?: {
+    foo: string,
+  }
+}
