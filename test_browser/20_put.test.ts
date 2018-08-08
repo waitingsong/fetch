@@ -16,6 +16,19 @@ describe(filename, () => {
       timeout: 20 * 1000,
     }
 
+    it('without parameter init', resolve => {
+      put<HttpbinPostResponse>(url).subscribe(
+        res => {
+          assert(res && res.url === url)
+        },
+        err => {
+          assert(false, err)
+          resolve()
+        },
+        resolve,
+      )
+    })
+
     it('send key:value object data', resolve => {
       const pdata = {
         p1: Math.random(),
