@@ -5,6 +5,7 @@ import * as QueryString from 'qs'
 
 import { get, post, Args, RxRequestInit } from '../src/index'
 
+import { HttpbinGetResponse, HttpbinPostResponse } from '../test/model'
 
 const filename = '20_index.test.ts'
 
@@ -176,25 +177,6 @@ describe(filename, () => {
 
 
 })
-
-
-interface HttpbinGetResponse {
-  args: any
-  headers: {
-    Accept: string
-    Connection: string
-    Host: string
-    'User-Agent': string,
-  }
-  origin: string  // ip
-  url: string
-}
-interface HttpbinPostResponse extends HttpbinGetResponse {
-  data: string
-  files: any
-  form: any
-  json: any
-}
 
 
 function ab2str(buf: ArrayBuffer) {

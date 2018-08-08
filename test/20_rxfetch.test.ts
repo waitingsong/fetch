@@ -76,25 +76,6 @@ describe(filename, () => {
 })
 
 
-interface HttpbinGetResponse {
-  args: any
-  headers: {
-    Accept: string
-    Connection: string
-    Host: string
-    'User-Agent': string,
-  }
-  origin: string  // ip
-  url: string
-}
-interface HttpbinPostResponse extends HttpbinGetResponse {
-  data: string
-  files: any
-  form: any
-  json: any
-}
-
-
 function ab2str(buf: ArrayBuffer) {
   const bufView = new Uint8Array(buf)
   const len = bufView.length

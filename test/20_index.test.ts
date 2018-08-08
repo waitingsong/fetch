@@ -10,6 +10,8 @@ import {
   basename,
 } from '../src/shared/index'
 
+import { HttpbinGetResponse, HttpbinPostResponse } from './model'
+
 
 const filename = basename(__filename)
 
@@ -234,24 +236,6 @@ describe(filename, () => {
 
 })
 
-
-interface HttpbinGetResponse {
-  args: any
-  headers: {
-    Accept: string
-    Connection: string
-    Host: string
-    'User-Agent': string,
-  }
-  origin: string  // ip
-  url: string
-}
-interface HttpbinPostResponse extends HttpbinGetResponse {
-  data: string
-  files: any
-  form: any
-  json: any
-}
 
 
 function ab2str(buf: ArrayBuffer) {
