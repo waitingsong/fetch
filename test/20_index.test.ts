@@ -17,7 +17,7 @@ const mods = rewire('../src/lib/index')
 const defaultInit = getGloalRequestInit()
 
 describe(filename, () => {
-  after(() => {
+  afterEach(() => {
     setGloalRequestInit(defaultInit)
   })
 
@@ -77,7 +77,6 @@ describe(filename, () => {
       dataType: 'text',
       fetchModule: nodefetch,
       headersInitClass: Headers,
-      timeout: 20 * 1000,
     }
 
     it('got status 404', resolve => {
@@ -86,13 +85,13 @@ describe(filename, () => {
 
       get(url, args).subscribe(
         () => {
-          assert(false, 'Should go into error() but not next()')
+          assert(false, 'Should go into error() not next()')
           resolve()
         },
         (err: Error) => {
           assert(
             err && err.message.indexOf(`${httpErrorMsgPrefix}404`) === 0,
-            'Should got 404 error ',
+            'Should got 404 error, but got: ' + err.message,
           )
           resolve()
         },
@@ -149,7 +148,7 @@ describe(filename, () => {
     //   const args = { ...initArgs }
     //   const abortController = new AbortController()
     //   args.abortController = abortController
-    //   args.timeout = 30000
+    //   args.timeout = 60000
 
     //   get(url, args).subscribe(
     //     next => {

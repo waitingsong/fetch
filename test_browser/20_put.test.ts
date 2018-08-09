@@ -13,7 +13,7 @@ describe(filename, () => {
   describe('Should put() works with httpbin.org', () => {
     const url = 'https://httpbin.org/put'
     const initArgs = <RxRequestInit> {
-      timeout: 20 * 1000,
+      timeout: 60 * 1000,
     }
 
     it('without parameter init', resolve => {

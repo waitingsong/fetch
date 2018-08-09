@@ -143,7 +143,7 @@ describe(filename, () => {
       const args = { ...initArgs }
       const abortController = new AbortController()
       args.abortController = abortController
-      args.timeout = 30000
+      args.timeout = 60000
 
       get(url, args).subscribe(
         next => {

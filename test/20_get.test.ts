@@ -24,8 +24,6 @@ describe(filename, () => {
       dataType: 'text',
       fetchModule: nodefetch,
       headersInitClass: Headers,
-      // mode: 'cors',
-      timeout: 20 * 1000,
     }
 
     it('fetch page', resolve => {

@@ -16,7 +16,6 @@ describe(filename, () => {
       dataType: 'text',
       fetchModule: nodefetch,
       headersInitClass: Headers,
-      timeout: 20 * 1000,
     }
 
     it('with blank string', resolve => {
@@ -72,7 +71,6 @@ describe(filename, () => {
       dataType: 'text',
       // fetchModule: nodefetch,
       headersInitClass: Headers,
-      timeout: 20 * 1000,
     }
 
     it('with invalid fetchModule', resolve => {

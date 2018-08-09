@@ -14,7 +14,7 @@ describe(filename, () => {
   describe('Should remove() works with httpbin.org', () => {
     const url = 'https://httpbin.org/delete'
     const initArgs = <RxRequestInit> {
-      timeout: 20 * 1000,
+      timeout: 60 * 1000,
     }
 
     it('without parameter init', resolve => {

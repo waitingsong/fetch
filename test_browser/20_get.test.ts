@@ -18,7 +18,6 @@ describe(filename, () => {
       p2: Math.random().toString(),
     }
     const initArgs = <RxRequestInit> {
-      timeout: 20 * 1000,
       dataType: 'json',
     }
 

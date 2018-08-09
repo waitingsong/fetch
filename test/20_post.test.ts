@@ -19,7 +19,6 @@ describe(filename, () => {
     const initArgs = <RxRequestInit> {
       fetchModule: nodefetch,
       headersInitClass: Headers,
-      timeout: 20 * 1000,
     }
 
     it('send key:value object data', resolve => {
