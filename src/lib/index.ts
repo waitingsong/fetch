@@ -1,6 +1,6 @@
 import * as QueryString from 'qs'
 import { defer, of, throwError, Observable } from 'rxjs'
-import { catchError, concatMap, map, switchMap, tap, timeout } from 'rxjs/operators'
+import { catchError, concatMap, map, switchMap, timeout } from 'rxjs/operators'
 
 import { httpErrorMsgPrefix, initialRxRequestInit } from './config'
 import { Args, ObbRetType, RxRequestInit } from './model'
