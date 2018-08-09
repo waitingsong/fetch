@@ -235,9 +235,9 @@ function splitInitArgs(rxInitOpts: RxRequestInit): ArgsRequestInitCombined {
     delete rxInitOpts.fetchModule
   }
 
-  if (rxInitOpts.fetchHeadersClass) {
-    args.fetchHeadersClass = rxInitOpts.fetchHeadersClass
-    delete rxInitOpts.fetchHeadersClass
+  if (rxInitOpts.headersInitClass) {
+    args.headersInitClass = rxInitOpts.headersInitClass
+    delete rxInitOpts.headersInitClass
   }
 
   if (typeof rxInitOpts.processData !== 'undefined') {
@@ -270,20 +270,28 @@ export function parseInitOpts(init?: RxRequestInit): ArgsRequestInitCombined {
 
 function parseHeaders(options: ArgsRequestInitCombined): ArgsRequestInitCombined {
   const { args, requestInit } = options
-  const heardersClass = args.fetchHeadersClass
-    ? args.fetchHeadersClass
+  const headersInitClass = args.headersInitClass
+    ? args.headersInitClass
     : (typeof Headers === 'function' ? Headers : null)
 
-  if (! heardersClass) {
+  if (! headersInitClass) {
     throw new TypeError('Headers not defined')
   }
-  requestInit.headers = <Headers> (requestInit.headers
-    ? new heardersClass(requestInit.headers)
-    : new heardersClass())
+  let headers = <Headers> requestInit.headers
+
   /* istanbul ignore else  */
-  if (! requestInit.headers.has('Accept')) {
-    requestInit.headers.set('Accept', 'application/json, text/html, text/javascript, text/plain, */*')
+  if (! headers || typeof headers.has !== 'function') {
+    headers = requestInit.headers
+      ? <Headers> new headersInitClass(requestInit.headers)
+      : <Headers> new headersInitClass()
   }
+
+  /* istanbul ignore else  */
+  if (! headers.has('Accept')) {
+    headers.set('Accept', 'application/json, text/html, text/javascript, text/plain, */*')
+  }
+
+  requestInit.headers = headers
 
   return { args, requestInit }
 }

@@ -20,7 +20,7 @@ describe(filename, () => {
     const url = 'https://httpbin.org/put'
     const initArgs = <RxRequestInit> {
       fetchModule: nodefetch,
-      fetchHeadersClass: Headers,
+      headersInitClass: Headers,
       timeout: 20 * 1000,
     }
 

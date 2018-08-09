@@ -15,7 +15,7 @@ describe(filename, () => {
     const initArgs = <RxRequestInit> {
       dataType: 'text',
       fetchModule: nodefetch,
-      fetchHeadersClass: Headers,
+      headersInitClass: Headers,
       timeout: 20 * 1000,
     }
 
@@ -71,7 +71,7 @@ describe(filename, () => {
     const initArgs = <RxRequestInit> {
       dataType: 'text',
       // fetchModule: nodefetch,
-      fetchHeadersClass: Headers,
+      headersInitClass: Headers,
       timeout: 20 * 1000,
     }
 

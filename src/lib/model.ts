@@ -14,7 +14,7 @@ export interface Args {
   dataType?: 'arrayBuffer' | 'blob' | 'formData' | 'json' | 'text' | 'raw'
   /** pass a fetch() module for isomorphic usage such as node-fetch or isomorphic-fetch */
   fetchModule?: (input: string | Request, init?: RequestInit) => Promise<Response | any>
-  fetchHeadersClass?: typeof Headers | any
+  headersInitClass?: typeof Headers | any
   /** whether process Args.data automatically. jQuery behavior */
   processData?: boolean
   /** msec default Infinity */
