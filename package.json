@@ -1,7 +1,7 @@
 {
   "name": "rxxfetch",
   "author": "waiting",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Observable HTTP fetch API for browser and Nodejs",
   "keywords": [
     "rx",
