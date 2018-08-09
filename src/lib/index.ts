@@ -45,9 +45,6 @@ export function rxfetch<T extends ObbRetType = ObbRetType>(
   }
 
   const dataType: RxRequestInit['dataType'] = args.dataType
-  const timeoutValue = (args.timeout && args.timeout >= 0 && Number.isSafeInteger(args.timeout))
-    ? args.timeout
-    : null
 
   if (typeof input === 'string') {
     /* istanbul ignore else */
@@ -75,9 +72,9 @@ export function rxfetch<T extends ObbRetType = ObbRetType>(
 
 
   /* istanbul ignore else */
-  if (timeoutValue && timeoutValue >= 0) {
+  if (typeof args.timeout === 'number' && args.timeout >= 0) {
     req$ = req$.pipe(
-      timeout(timeoutValue),
+      timeout(args.timeout),
       catchError(err => {
         if (args.abortController && !args.abortController.signal.aborted) {
           args.abortController.abort()
@@ -240,6 +237,7 @@ export function parseInitOpts(init?: RxRequestInit): ArgsRequestInitCombined {
   options = parseHeaders(options)
   options = parseMethod(options)
   options.args = parseDataType(options.args)
+  options.args.timeout = parseTimeout(options.args.timeout)
 
   return options
 }
@@ -319,6 +317,11 @@ function parseDataType(args: Args): Args {
     args.dataType = 'json'
   }
   return args
+}
+
+function parseTimeout(p: any): number | null {
+  const value = typeof p === 'number' && p >= 0 ? Math.ceil(p) : null
+  return value === null || ! Number.isSafeInteger(value) ? null : value
 }
 
 

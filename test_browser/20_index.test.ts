@@ -120,7 +120,7 @@ describe(filename, () => {
       }
 
       const args = { ...initArgs }
-      args.timeout = 1
+      args.timeout = Math.random() * 10
 
       get(url, args).subscribe(
         () => {
@@ -157,7 +157,7 @@ describe(filename, () => {
       )
       setTimeout(() => {
         abortController.abort()
-      }, 1)
+      }, (Math.random() * 10))
     })
   })
 
