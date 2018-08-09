@@ -73,19 +73,26 @@ export function rxfetch<T extends ObbRetType = ObbRetType>(
     req$ = defer(() => (<NonNullable<Args['fetchModule']>> fetchModule)(<Request> input))
   }
 
-  let ret$ = req$.pipe(
-    concatMap(handleResponseError),
-  )
-
 
   /* istanbul ignore else */
   if (timeoutValue && timeoutValue >= 0) {
-    ret$ = ret$.pipe(timeout(timeoutValue))
+    req$ = req$.pipe(
+      timeout(timeoutValue),
+      catchError(err => {
+        if (args.abortController && !args.abortController.signal.aborted) {
+          args.abortController.abort()
+        }
+        throw err
+      }),
+    )
   }
 
-  return ret$.pipe(
+  const ret$ = req$.pipe(
+    concatMap(handleResponseError),
     switchMap<Response, T>(res => parseResponseType(res, dataType)),
   )
+
+  return ret$
 }
 
 
@@ -160,6 +167,161 @@ export function buildQueryString(url: string, data: RxRequestInit['data']): stri
 }
 
 
+export interface ArgsRequestInitCombined {
+  args: Args
+  requestInit: RequestInit
+}
+
+
+/** Split RxRequestInit object to RequestInit and Args */
+function splitInitArgs(rxInitOpts: RxRequestInit): ArgsRequestInitCombined {
+  const args: Args = {}
+
+  /* istanbul ignore else */
+  if (rxInitOpts.abortController && typeof rxInitOpts.abortController.abort === 'function') {
+    args.abortController = rxInitOpts.abortController
+    delete rxInitOpts.abortController
+  }
+
+  /* istanbul ignore else */
+  if (typeof rxInitOpts.contentType !== 'undefined') {
+    args.contentType = rxInitOpts.contentType
+    delete rxInitOpts.contentType
+  }
+
+  /* istanbul ignore else */
+  if (typeof rxInitOpts.data !== 'undefined') {
+    args.data = rxInitOpts.data
+    delete rxInitOpts.data
+  }
+
+  /* istanbul ignore else */
+  if (rxInitOpts.dataType) {
+    args.dataType = rxInitOpts.dataType
+    delete rxInitOpts.dataType
+  }
+
+  /* istanbul ignore else */
+  if (rxInitOpts.fetchModule) {
+    args.fetchModule = rxInitOpts.fetchModule
+    delete rxInitOpts.fetchModule
+  }
+
+  /* istanbul ignore else */
+  if (rxInitOpts.headersInitClass) {
+    args.headersInitClass = rxInitOpts.headersInitClass
+    delete rxInitOpts.headersInitClass
+  }
+
+  /* istanbul ignore else */
+  if (typeof rxInitOpts.processData !== 'undefined') {
+    args.processData = rxInitOpts.processData
+    delete rxInitOpts.processData
+  }
+
+  /* istanbul ignore else */
+  if (typeof rxInitOpts.timeout !== 'undefined') {
+    args.timeout = rxInitOpts.timeout
+    delete rxInitOpts.timeout
+  }
+
+  return {
+    args,
+    requestInit: <RequestInit> { ...rxInitOpts },
+  }
+}
+
+
+export function parseInitOpts(init?: RxRequestInit): ArgsRequestInitCombined {
+  const initOpts: RxRequestInit = init ? { ...initialRxRequestInit, ...init } : { ...initialRxRequestInit }
+  let options = splitInitArgs(initOpts)
+
+  options = parseAbortController(options)
+  options = parseHeaders(options)
+  options = parseMethod(options)
+  options.args = parseDataType(options.args)
+
+  return options
+}
+
+function parseAbortController(options: ArgsRequestInitCombined): ArgsRequestInitCombined {
+  const { args, requestInit } = options
+
+  /* istanbul ignore else */
+  if (! args.abortController || ! args.abortController.signal || typeof args.abortController.abort !== 'function') {
+    /* istanbul ignore else */
+    if (typeof AbortController === 'function') {
+      args.abortController = new AbortController()
+    }
+  }
+  /* istanbul ignore else */
+  if (args.abortController) {
+    requestInit.signal = args.abortController.signal
+  }
+
+  return { args, requestInit }
+}
+
+function parseHeaders(options: ArgsRequestInitCombined): ArgsRequestInitCombined {
+  const { args, requestInit } = options
+  const headersInitClass = args.headersInitClass
+    ? args.headersInitClass
+    : (typeof Headers === 'function' ? Headers : null)
+
+  if (! headersInitClass) {
+    throw new TypeError('Headers not defined')
+  }
+  let headers = <Headers> requestInit.headers
+
+  /* istanbul ignore else */
+  if (! headers || typeof headers.has !== 'function') {
+    headers = requestInit.headers
+      ? <Headers> new headersInitClass(requestInit.headers)
+      : <Headers> new headersInitClass()
+  }
+
+  /* istanbul ignore else */
+  if (! headers.has('Accept')) {
+    headers.set('Accept', 'application/json, text/html, text/javascript, text/plain, */*')
+  }
+
+  requestInit.headers = headers
+
+  return { args, requestInit }
+}
+
+
+function parseMethod(options: ArgsRequestInitCombined): ArgsRequestInitCombined {
+  const { args, requestInit } = options
+
+  switch (requestInit.method) {
+    case 'DELETE':
+    case 'POST':
+    case 'PUT':
+      if (args.contentType === false) {
+        break
+      }
+      else if (args.contentType) {
+        (<Headers> requestInit.headers).set('Content-Type', args.contentType)
+      }
+      /* istanbul ignore else */
+      else if (! (<Headers> requestInit.headers).has('Content-Type')) {
+        (<Headers> requestInit.headers).set('Content-Type', 'application/x-www-form-urlencoded')
+      }
+      break
+  }
+  return { args, requestInit }
+}
+
+function parseDataType(args: Args): Args {
+  /* istanbul ignore else */
+  if (! args.dataType) {
+    args.dataType = 'json'
+  }
+  return args
+}
+
+
 function handleResponseError(resp: Response): Observable<Response> {
   /* istanbul ignore else */
   if (resp.ok) {
@@ -203,126 +365,4 @@ function parseResponseType(response: Response, dataType: RxRequestInit['dataType
     }
   }
   return of(response)
-}
-
-export interface ArgsRequestInitCombined {
-  args: Args
-  requestInit: RequestInit
-}
-
-
-/** Split RxRequestInit object to RequestInit and Args */
-function splitInitArgs(rxInitOpts: RxRequestInit): ArgsRequestInitCombined {
-  const args: Args = {}
-
-  if (typeof rxInitOpts.contentType !== 'undefined') {
-    args.contentType = rxInitOpts.contentType
-    delete rxInitOpts.contentType
-  }
-
-  if (typeof rxInitOpts.data !== 'undefined') {
-    args.data = rxInitOpts.data
-    delete rxInitOpts.data
-  }
-
-  if (rxInitOpts.dataType) {
-    args.dataType = rxInitOpts.dataType
-    delete rxInitOpts.dataType
-  }
-
-  if (rxInitOpts.fetchModule) {
-    args.fetchModule = rxInitOpts.fetchModule
-    delete rxInitOpts.fetchModule
-  }
-
-  if (rxInitOpts.headersInitClass) {
-    args.headersInitClass = rxInitOpts.headersInitClass
-    delete rxInitOpts.headersInitClass
-  }
-
-  if (typeof rxInitOpts.processData !== 'undefined') {
-    args.processData = rxInitOpts.processData
-    delete rxInitOpts.processData
-  }
-
-  if (typeof rxInitOpts.timeout !== 'undefined') {
-    args.timeout = rxInitOpts.timeout
-    delete rxInitOpts.timeout
-  }
-
-  return {
-    args,
-    requestInit: <RequestInit> { ...rxInitOpts },
-  }
-}
-
-
-export function parseInitOpts(init?: RxRequestInit): ArgsRequestInitCombined {
-  const initOpts: RxRequestInit = init ? { ...initialRxRequestInit, ...init } : { ...initialRxRequestInit }
-  let options = splitInitArgs(initOpts)
-
-  options = parseHeaders(options)
-  options = parseMethod(options)
-  options.args = parseDataType(options.args)
-
-  return options
-}
-
-function parseHeaders(options: ArgsRequestInitCombined): ArgsRequestInitCombined {
-  const { args, requestInit } = options
-  const headersInitClass = args.headersInitClass
-    ? args.headersInitClass
-    : (typeof Headers === 'function' ? Headers : null)
-
-  if (! headersInitClass) {
-    throw new TypeError('Headers not defined')
-  }
-  let headers = <Headers> requestInit.headers
-
-  /* istanbul ignore else  */
-  if (! headers || typeof headers.has !== 'function') {
-    headers = requestInit.headers
-      ? <Headers> new headersInitClass(requestInit.headers)
-      : <Headers> new headersInitClass()
-  }
-
-  /* istanbul ignore else  */
-  if (! headers.has('Accept')) {
-    headers.set('Accept', 'application/json, text/html, text/javascript, text/plain, */*')
-  }
-
-  requestInit.headers = headers
-
-  return { args, requestInit }
-}
-
-
-function parseMethod(options: ArgsRequestInitCombined): ArgsRequestInitCombined {
-  const { args, requestInit } = options
-
-  switch (requestInit.method) {
-    case 'DELETE':
-    case 'POST':
-    case 'PUT':
-      if (args.contentType === false) {
-        break
-      }
-      else if (args.contentType) {
-        (<Headers> requestInit.headers).set('Content-Type', args.contentType)
-      }
-      /* istanbul ignore else  */
-      else if (! (<Headers> requestInit.headers).has('Content-Type')) {
-        (<Headers> requestInit.headers).set('Content-Type', 'application/x-www-form-urlencoded')
-      }
-      break
-  }
-  return { args, requestInit }
-}
-
-function parseDataType(args: Args): Args {
-  /* istanbul ignore else  */
-  if (! args.dataType) {
-    args.dataType = 'json'
-  }
-  return args
 }

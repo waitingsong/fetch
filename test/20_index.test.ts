@@ -1,13 +1,14 @@
 /// <reference types="mocha" />
 
+// import AbortController from 'abort-controller'
 import nodefetch, { Headers } from 'node-fetch'
 import * as assert from 'power-assert'
+import { TimeoutError } from 'rxjs'
 
 import { get, getGloalRequestInit, put, setGloalRequestInit, RxRequestInit } from '../src/index'
 import { httpErrorMsgPrefix, initialRxRequestInit } from '../src/lib/config'
 import { basename } from '../src/shared/index'
 
-import { PDATA } from './model'
 
 
 const filename = basename(__filename)
@@ -114,6 +115,54 @@ describe(filename, () => {
         },
       )
     })
+  })
+
+  describe('Should get() works with AbortSignal', () => {
+    const url = 'https://github.com/waitingsong/rxxfetch#readme'
+    const initArgs = <RxRequestInit> {
+      dataType: 'text',
+      fetchModule: nodefetch,
+      headersInitClass: Headers,
+    }
+
+    it('with timeout (node-fetch not support AbortSignal yet)', resolve => {
+      const args = { ...initArgs }
+      // args.abortController = new AbortController()
+      args.timeout = 1
+
+      get(url, args).subscribe(
+        () => {
+          assert(false, 'Should throw timeoutError but NOT')
+          resolve()
+        },
+        err => {
+          assert(err && err instanceof TimeoutError, err)
+          resolve()
+        },
+      )
+    })
+
+    // node-fetch not support AbortSignal yet
+    // it('by calling abortController.abort()', resolve => {
+    //   const args = { ...initArgs }
+    //   const abortController = new AbortController()
+    //   args.abortController = abortController
+    //   args.timeout = 30000
+
+    //   get(url, args).subscribe(
+    //     next => {
+    //       assert(false, 'Should got abortError in error() but go into next()')
+    //       resolve()
+    //     },
+    //     err => {
+    //       assert(err && err.name === 'AbortError', err)
+    //       resolve()
+    //     },
+    //   )
+    //   setTimeout(() => {
+    //     abortController.abort()
+    //   }, 1)
+    // })
   })
 
 })

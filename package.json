@@ -62,6 +62,7 @@
     "@types/rewire": "^2.5.28",
     "@types/rimraf": "latest",
     "@types/yargs": "latest",
+    "abort-controller": "^1.0.2",
     "coveralls": "^3.0.0",
     "eslint": "^5.0.1",
     "form-data": "^2.3.2",

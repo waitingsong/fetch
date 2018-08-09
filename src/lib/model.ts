@@ -4,7 +4,7 @@ export type ObbRetType = ArrayBuffer | Blob | FormData | Response | string | obj
 export type ContentType = string
 
 export interface Args {
-  /** for abort request process */
+  /** instance of AbortController to aborting Request */
   abortController?: AbortController
   /** Content-Type, jQuery behavior, default "application/x-www-form-urlencoded; charset=UTF-8" during POST */
   contentType?: false | ContentType
