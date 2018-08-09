@@ -2,7 +2,7 @@
 
 import * as assert from 'power-assert'
 
-import fetch, { RxRequestInit } from '../src/index'
+import { fetch, RxRequestInit } from '../src/index'
 
 
 const filename = '20_rxfetch.test.ts'

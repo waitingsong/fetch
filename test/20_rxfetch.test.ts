@@ -3,7 +3,7 @@
 import nodefetch, { Headers } from 'node-fetch'
 import * as assert from 'power-assert'
 
-import fetch, { Args, RxRequestInit } from '../src/index'
+import { fetch, RxRequestInit } from '../src/index'
 import { basename } from '../src/shared/index'
 
 
