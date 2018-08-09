@@ -2,17 +2,18 @@
 
 import * as assert from 'power-assert'
 
-import { getGloalRequestInit, setGloalRequestInit } from '../src/index'
-import { initialRxRequestInit } from '../src/lib/config'
+import { get, getGloalRequestInit, put, setGloalRequestInit } from '../src/index'
+import { httpErrorMsgPrefix, initialRxRequestInit } from '../src/lib/config'
 
 
 const filename = '20_index.test.ts'
 const defaultInit = getGloalRequestInit()
 
 describe(filename, () => {
-  after(() => {
+  afterEach(() => {
     setGloalRequestInit(defaultInit)
   })
+
 
   describe('Should getGloalRequestInit() works', () => {
     const initData = getGloalRequestInit()
@@ -65,5 +66,43 @@ describe(filename, () => {
     })
   })
 
+
+  describe('Should handleResponseError works', () => {
+    it('got status 404', resolve => {
+      const url = 'https://httpbin.org/method-not-exists'
+
+      get(url).subscribe(
+        () => {
+          assert(false, 'Should go into error() but not next()')
+          resolve()
+        },
+        (err: Error) => {
+          assert(
+            err && err.message.indexOf(`${httpErrorMsgPrefix}404`) === 0,
+            'Should got 404 error ',
+          )
+          resolve()
+        },
+      )
+    })
+
+    it('got status 405', resolve => {
+      const url = 'https://httpbin.org/post'  // url for POST
+
+      get(url).subscribe(
+        () => {
+          assert(false, 'Should go into error() but not next()')
+          resolve()
+        },
+        (err: Error) => {
+          assert(
+            err && err.message.indexOf(`${httpErrorMsgPrefix}405`) === 0,
+            'Should got 405 error ',
+          )
+          resolve()
+        },
+      )
+    })
+  })
 
 })

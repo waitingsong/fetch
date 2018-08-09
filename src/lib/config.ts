@@ -6,7 +6,6 @@ export const initialRxRequestInit: RxRequestInit = {
   method: 'GET',
   processData: true,
   timeout: null,
-  throwErrorIfHigher400: true,
 
   cache: 'default',
   credentials: 'same-origin',
@@ -14,3 +13,5 @@ export const initialRxRequestInit: RxRequestInit = {
   redirect: 'follow',
   referrer: 'client',
 }
+
+export const httpErrorMsgPrefix = 'Fetch error status:'

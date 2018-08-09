@@ -1,10 +1,13 @@
 /// <reference types="mocha" />
 
+import nodefetch, { Headers } from 'node-fetch'
 import * as assert from 'power-assert'
 
-import { getGloalRequestInit, setGloalRequestInit } from '../src/index'
-import { initialRxRequestInit } from '../src/lib/config'
+import { get, getGloalRequestInit, put, setGloalRequestInit, RxRequestInit } from '../src/index'
+import { httpErrorMsgPrefix, initialRxRequestInit } from '../src/lib/config'
 import { basename } from '../src/shared/index'
+
+import { PDATA } from './model'
 
 
 const filename = basename(__filename)
@@ -62,6 +65,54 @@ describe(filename, () => {
       const initData = getGloalRequestInit()
 
       assert(initData && initData.timeout === timeout)
+    })
+  })
+
+
+  describe('Should handleResponseError works', () => {
+    const initArgs = <RxRequestInit> {
+      dataType: 'text',
+      fetchModule: nodefetch,
+      fetchHeadersClass: Headers,
+      timeout: 20 * 1000,
+    }
+
+    it('got status 404', resolve => {
+      const url = 'https://httpbin.org/method-not-exists'
+      const args = { ...initArgs }
+
+      get(url, args).subscribe(
+        () => {
+          assert(false, 'Should go into error() but not next()')
+          resolve()
+        },
+        (err: Error) => {
+          assert(
+            err && err.message.indexOf(`${httpErrorMsgPrefix}404`) === 0,
+            'Should got 404 error ',
+          )
+          resolve()
+        },
+      )
+    })
+
+    it('got status 405', resolve => {
+      const url = 'https://httpbin.org/post'  // url for POST
+      const args = { ...initArgs }
+
+      get(url, args).subscribe(
+        () => {
+          assert(false, 'Should go into error() but not next()')
+          resolve()
+        },
+        (err: Error) => {
+          assert(
+            err && err.message.indexOf(`${httpErrorMsgPrefix}405`) === 0,
+            'Should got 405 error ',
+          )
+          resolve()
+        },
+      )
     })
   })
 

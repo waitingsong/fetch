@@ -2,7 +2,7 @@ import * as QueryString from 'qs'
 import { defer, of, throwError, Observable } from 'rxjs'
 import { catchError, concatMap, map, switchMap, tap, timeout } from 'rxjs/operators'
 
-import { initialRxRequestInit } from './config'
+import { httpErrorMsgPrefix, initialRxRequestInit } from './config'
 import { Args, ObbRetType, RxRequestInit } from './model'
 import { assertNever } from './shared'
 
@@ -45,9 +45,6 @@ export function rxfetch<T extends ObbRetType = ObbRetType>(
   }
 
   const dataType: RxRequestInit['dataType'] = initOpts.dataType
-  const throwErrorIfHigher400 = typeof initOpts.throwErrorIfHigher400 === 'boolean'
-    ? initOpts.throwErrorIfHigher400
-    : true
   const timeoutValue = (initOpts.timeout && initOpts.timeout >= 0 && Number.isSafeInteger(initOpts.timeout))
     ? initOpts.timeout
     : null
@@ -73,7 +70,6 @@ export function rxfetch<T extends ObbRetType = ObbRetType>(
     delete initOpts.dataType
     delete initOpts.contentType
     delete initOpts.timeout
-    delete initOpts.throwErrorIfHigher400
 
     req$ = defer(() => (<NonNullable<Args['fetchModule']>> fetchModule)(input, initOpts))
   }
@@ -81,26 +77,13 @@ export function rxfetch<T extends ObbRetType = ObbRetType>(
     req$ = defer(() => (<NonNullable<Args['fetchModule']>> fetchModule)(<Request> input))
   }
 
-
   let ret$ = req$.pipe(
-    tap((res: Response) => {
-      /* istanbul ignore else */
-      if (!res.ok) {
-        throw new Error(`Fetch error status: ${res.status}`)
-      }
-    }),
+    concatMap(handleResponseError),
   )
 
   /* istanbul ignore else */
   if (timeoutValue && timeoutValue >= 0) {
     ret$ = ret$.pipe(timeout(timeoutValue))
-  }
-
-  /* istanbul ignore else */
-  if (throwErrorIfHigher400) {
-    ret$ = ret$.pipe(
-      concatMap(res => preParseResponse(res, throwErrorIfHigher400)),
-    )
   }
 
   return ret$.pipe(
@@ -180,18 +163,19 @@ export function buildQueryString(url: string, data: RxRequestInit['data']): stri
 }
 
 
-/** Throw error for throwErrorIfHigher400 */
-function preParseResponse(resp: Response, throwErrorIfHigher400: boolean): Observable<Response> {
+function handleResponseError(resp: Response): Observable<Response> {
   /* istanbul ignore else */
-  if (throwErrorIfHigher400 && resp.status >= 400) {
-    return defer(() => resp.text()).pipe(
-      catchError((err: Error) => of(err ? err.toString() : 'unknow error')),
-      map((txt: string) => {
-        throw new TypeError(`Fetch error status: ${resp.status}\nResponse: ` + txt)
-      }),
-    )
+  if (resp.ok) {
+    return of(resp)
   }
-  return of(resp)
+  const status = resp.status
+
+  return defer(() => resp.text()).pipe(
+    catchError((err: Error) => of(err ? err.toString() : 'unknow error')),
+    map((txt: string) => {
+      throw new Error(`${httpErrorMsgPrefix}${status}\nResponse:` + txt)
+    }),
+  )
 }
 
 

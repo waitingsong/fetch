@@ -17,8 +17,6 @@ export interface Args {
   processData?: boolean
   /** msec default Infinity */
   timeout?: number | null
-  /** throw error if response.status higher then 400, default true as traditional */
-  throwErrorIfHigher400?: boolean
 }
 
 export interface RxRequestInit extends RequestInit, Args {
