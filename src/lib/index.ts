@@ -160,7 +160,12 @@ export function getGloalRequestInit(): Readonly<RxRequestInit> {
 
 
 export function buildQueryString(url: string, data: RxRequestInit['data']): string {
-  return data ? `${url}?${QueryString.stringify(data)}` : url
+  /* istanbul ignore else */
+  if (data && typeof data === 'object' && Object.keys(data).length) {
+    const ps = QueryString.stringify(data)
+    return url.includes('?') ? `${url}&${ps}` : `${url}?${ps}`
+  }
+  return url
 }
 
 

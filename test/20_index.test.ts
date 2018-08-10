@@ -6,7 +6,13 @@ import * as assert from 'power-assert'
 import rewire = require('rewire')
 import { TimeoutError } from 'rxjs'
 
-import { get, getGloalRequestInit, put, setGloalRequestInit, RxRequestInit } from '../src/index'
+import {
+  buildQueryString,
+  get,
+  getGloalRequestInit,
+  setGloalRequestInit,
+  RxRequestInit,
+} from '../src/index'
 import { httpErrorMsgPrefix, initialRxRequestInit } from '../src/lib/config'
 import { basename } from '../src/shared/index'
 
@@ -213,6 +219,47 @@ describe(filename, () => {
         const ret = fn(value)
         assert(ret === null, `Should got result NULL, but got "${ret}" `)
       }
+    })
+  })
+
+})
+
+
+describe(filename, () => {
+  const fnName = 'buildQuery'
+
+  describe(`Should ${fnName}() works`, () => {
+    it('without data', () => {
+      const url = 'https://httpbin.org/method-not-exists'
+      const ret = buildQueryString(url, {})
+      assert(ret === url, `Should got result "${url}", but got "${ret}" `)
+    })
+
+    it('without data', () => {
+      const url = 'https://httpbin.org/method-not-exists?foo=3'
+      const ret = buildQueryString(url, {})
+      assert(ret === url, `Should got result "${url}", but got "${ret}" `)
+    })
+
+    it('with data', () => {
+      const url = 'https://httpbin.org/method-not-exists'
+      const ret = buildQueryString(url, { foo: 1 })
+      const expect = url + '?foo=1'
+      assert(ret === expect, `Should got result "${expect}", but got "${ret}" `)
+    })
+
+    it('with data', () => {
+      const url = 'https://httpbin.org/method-not-exists?bar=2'
+      const ret = buildQueryString(url, { foo: 1 })
+      const expect = url + '&foo=1'
+      assert(ret === expect, `Should got result "${expect}", but got "${ret}" `)
+    })
+
+    it('with data', () => {
+      const url = 'https://httpbin.org/method-not-exists?bar=2'
+      const ret = buildQueryString(url, { foo: 1, barz: [1, 2] })
+      const expect = url + '&foo=1&barz%5B0%5D=1&barz%5B1%5D=2'
+      assert(ret === expect, `Should got result "${expect}", but got "${ret}" `)
     })
   })
 

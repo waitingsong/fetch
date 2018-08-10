@@ -3,7 +3,13 @@
 import * as assert from 'power-assert'
 import { TimeoutError } from 'rxjs'
 
-import { get, getGloalRequestInit, setGloalRequestInit, RxRequestInit } from '../src/index'
+import {
+  buildQueryString,
+  get,
+  getGloalRequestInit,
+  setGloalRequestInit,
+  RxRequestInit,
+} from '../src/index'
 import { httpErrorMsgPrefix, initialRxRequestInit } from '../src/lib/config'
 
 
@@ -158,6 +164,47 @@ describe(filename, () => {
       setTimeout(() => {
         abortController.abort()
       }, (Math.random() * 10))
+    })
+  })
+
+})
+
+
+describe(filename, () => {
+  const fnName = 'buildQuery'
+
+  describe(`Should ${fnName}() works`, () => {
+    it('without data', () => {
+      const url = 'https://httpbin.org/method-not-exists'
+      const ret = buildQueryString(url, {})
+      assert(ret === url, `Should got result "${url}", but got "${ret}" `)
+    })
+
+    it('without data', () => {
+      const url = 'https://httpbin.org/method-not-exists?foo=3'
+      const ret = buildQueryString(url, {})
+      assert(ret === url, `Should got result "${url}", but got "${ret}" `)
+    })
+
+    it('with data', () => {
+      const url = 'https://httpbin.org/method-not-exists'
+      const ret = buildQueryString(url, { foo: 1 })
+      const expect = url + '?foo=1'
+      assert(ret === expect, `Should got result "${expect}", but got "${ret}" `)
+    })
+
+    it('with data', () => {
+      const url = 'https://httpbin.org/method-not-exists?bar=2'
+      const ret = buildQueryString(url, { foo: 1 })
+      const expect = url + '&foo=1'
+      assert(ret === expect, `Should got result "${expect}", but got "${ret}" `)
+    })
+
+    it('with data', () => {
+      const url = 'https://httpbin.org/method-not-exists?bar=2'
+      const ret = buildQueryString(url, { foo: 1, barz: [1, 2] })
+      const expect = url + '&foo=1&barz%5B0%5D=1&barz%5B1%5D=2'
+      assert(ret === expect, `Should got result "${expect}", but got "${ret}" `)
     })
   })
 
