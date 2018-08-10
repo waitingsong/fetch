@@ -241,7 +241,7 @@ export function parseInitOpts(init?: RxRequestInit): ArgsRequestInitCombined {
   options = parseAbortController(options)
   options = parseHeaders(options)
   options = parseMethod(options)
-  options.args = parseDataType(options.args)
+  options.args.dataType = parseDataType(options.args.dataType)
   options.args.timeout = parseTimeout(options.args.timeout)
 
   return options
@@ -316,12 +316,12 @@ function parseMethod(options: ArgsRequestInitCombined): ArgsRequestInitCombined 
   return { args, requestInit }
 }
 
-function parseDataType(args: Args): Args {
+function parseDataType(value: any): Required<Args['dataType']> {
   /* istanbul ignore else */
-  if (! args.dataType) {
-    args.dataType = 'json'
+  if (typeof value === 'string' && ['arrayBuffer', 'blob', 'formData', 'json', 'text', 'raw'].includes(value)) {
+    return <Args['dataType']> value
   }
-  return args
+  return 'json'
 }
 
 function parseTimeout(p: any): number | null {

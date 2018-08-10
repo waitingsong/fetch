@@ -11,6 +11,7 @@ import {
   get,
   getGloalRequestInit,
   setGloalRequestInit,
+  Args,
   RxRequestInit,
 } from '../src/index'
 import { httpErrorMsgPrefix, initialRxRequestInit } from '../src/lib/config'
@@ -261,6 +262,37 @@ describe(filename, () => {
       const expect = url + '&foo=1&barz%5B0%5D=1&barz%5B1%5D=2'
       assert(ret === expect, `Should got result "${expect}", but got "${ret}" `)
     })
+  })
+
+})
+
+
+describe(filename, () => {
+  const fnName = 'parseDataType'
+  const fn = <(value: any) => Required<Args['dataType']>> mods.__get__(fnName)
+
+  describe(`Should ${fnName}() works`, () => {
+    it('with blank', () => {
+      const ret = fn('')
+      assert(ret === 'json', `Should got result "json", but got "${ret}" `)
+    })
+
+    it('with invalid value', () => {
+      let ret = fn('fake')
+      assert(ret === 'json', `Should got result "json", but got "${ret}" `)
+
+      ret = fn(null)
+      assert(ret === 'json', `Should got result "json", but got "${ret}" `)
+
+      ret = fn(0)
+      assert(ret === 'json', `Should got result "json", but got "${ret}" `)
+    })
+
+    it('with valid string', () => {
+      const ret = fn('raw')
+      assert(ret === 'raw', `Should got result "json", but got "${ret}" `)
+    })
+
   })
 
 })
