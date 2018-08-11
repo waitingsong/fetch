@@ -267,28 +267,53 @@ function parseAbortController(options: ArgsRequestInitCombined): ArgsRequestInit
 
 function parseHeaders(options: ArgsRequestInitCombined): ArgsRequestInitCombined {
   const { args, requestInit } = options
-  const headersInitClass = args.headersInitClass
-    ? args.headersInitClass
-    : (typeof Headers === 'function' ? Headers : null)
 
-  if (! headersInitClass) {
-    throw new TypeError('Headers not defined')
+  if (args.headersInitClass) {
+    let headers = <Headers> new args.headersInitClass()
+
+    if (requestInit.headers) {
+      const obj = Object.getOwnPropertyDescriptor(requestInit.headers, 'has')
+      // Headers instance
+      if (typeof Headers !== 'undefined' && requestInit.headers instanceof Headers) {
+        const reqHeader = requestInit.headers
+
+        // @ts-ignore for karma
+        for (const [key, value] of reqHeader.entries()) {
+          headers.set(key, value)
+        }
+      }
+      // Headers instance
+      else if (obj && typeof obj.value === 'function') {
+        const reqHeader = <Headers> requestInit.headers
+
+        // @ts-ignore for karma
+        for (const [key, value] of reqHeader.entries()) {
+          headers.set(key, value)
+        }
+      }
+      else {  // key:value|array
+        headers = new args.headersInitClass(requestInit.headers)
+      }
+    }
+    requestInit.headers = headers
   }
-  let headers = <Headers> requestInit.headers
+  else {  // browser native
+    if (requestInit.headers) {
+      /* istanbul ignore else */
+      // @ts-ignore
+      if (typeof requestInit.headers.has !== 'function') { // key:value|array
+        requestInit.headers = new Headers(requestInit.headers)
+      }
+    }
+    else {
+      requestInit.headers = new Headers()
+    }
+  }
 
   /* istanbul ignore else */
-  if (! headers || typeof headers.has !== 'function') {
-    headers = requestInit.headers
-      ? <Headers> new headersInitClass(requestInit.headers)
-      : <Headers> new headersInitClass()
+  if (! (<Headers> requestInit.headers).has('Accept')) {
+    (<Headers> requestInit.headers).set('Accept', 'application/json, text/html, text/javascript, text/plain, */*')
   }
-
-  /* istanbul ignore else */
-  if (! headers.has('Accept')) {
-    headers.set('Accept', 'application/json, text/html, text/javascript, text/plain, */*')
-  }
-
-  requestInit.headers = headers
 
   return { args, requestInit }
 }

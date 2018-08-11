@@ -12,6 +12,8 @@ import {
 } from '../src/index'
 import { httpErrorMsgPrefix, initialRxRequestInit } from '../src/lib/config'
 
+import { HttpbinRetCookie } from '../test/model'
+
 
 const filename = '20_index.test.ts'
 const defaultInit = getGloalRequestInit()
@@ -205,6 +207,69 @@ describe(filename, () => {
       const ret = buildQueryString(url, { foo: 1, barz: [1, 2] })
       const expect = url + '&foo=1&barz%5B0%5D=1&barz%5B1%5D=2'
       assert(ret === expect, `Should got result "${expect}", but got "${ret}" `)
+    })
+  })
+
+})
+
+
+// SKIP native Fetch not support set Request cookie yet!
+describe.skip(filename, () => {
+  // const url = 'https://httpbin.org/cookies/set/foo/' + value
+  const url = 'https://httpbin.org/cookies'
+  const initArgs = <RxRequestInit> {
+    credentials: 'include',
+  }
+
+  describe('Should works with cookies', () => {
+    it('send custom cookies', resolve => {
+      const args = { ...initArgs }
+      const fvalue = Math.random()
+      const bvalue = Math.random()
+      const zvalue = 'a<b>c&d"e\'f'
+      args.headers = {
+        Cookie: `foo=${fvalue};bar=${bvalue};barz=${zvalue}`,
+      }
+
+      get<HttpbinRetCookie>(url, args).subscribe(
+        next => {
+          assert(next && next.cookies)
+          assert(next.cookies.foo === fvalue.toString())
+          assert(next.cookies.bar === bvalue.toString())
+          assert(next.cookies.barz === zvalue.toString())
+
+          resolve()
+        },
+        err => {
+          assert(false, err)
+          resolve()
+        },
+      )
+    })
+
+    it('send custom cookies', resolve => {
+      const args = { ...initArgs }
+      const fvalue = Math.random()
+      const bvalue = Math.random()
+      const zvalue = 'a<b>c&d"e\'f'
+      args.headers = {
+        Cookie: `foo=${fvalue}; bar=${bvalue}; barz=${zvalue}`,
+      }
+
+      get<HttpbinRetCookie>(url, args).subscribe(
+        next => {
+          assert(next && next.cookies)
+          assert(next.cookies.foo === fvalue.toString())
+          assert(next.cookies.bar === bvalue.toString())
+          assert(next.cookies.barz === zvalue.toString())
+
+          resolve()
+        },
+        err => {
+          assert(false, err)
+          resolve()
+        },
+      )
     })
   })
 

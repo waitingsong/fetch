@@ -27,3 +27,9 @@ export interface PDATA {
     foo: string,
   }
 }
+
+export interface HttpbinRetCookie {
+  cookies: {
+    [prop: string]: string,
+  }
+}

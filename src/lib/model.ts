@@ -10,11 +10,15 @@ export interface Args {
   contentType?: false | ContentType
   /** send to server, resolve to query string during GET|DELETE and key/value pairs during POST */
   data?: object
-  /** expect data type returned from server. jQuery behavior. default "json" */
+  /**
+   * expect data type returned from server. jQuery behavior.
+   * default "json"
+   * return Response object without parse if set to "raw"
+   */
   dataType?: 'arrayBuffer' | 'blob' | 'formData' | 'json' | 'text' | 'raw'
   /** pass a fetch() module for isomorphic usage such as node-fetch or isomorphic-fetch */
   fetchModule?: (input: string | Request, init?: RequestInit) => Promise<Response | any>
-  headersInitClass?: typeof Headers | any
+  headersInitClass?: typeof Headers | HeadersFixed | any
   /** whether process Args.data automatically. jQuery behavior */
   processData?: boolean
   /** msec default Infinity */
@@ -25,3 +29,9 @@ export interface RxRequestInit extends RequestInit, Args {
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE'
   referrer?: 'client' | 'no-referrer'
 }
+
+/** for karma test */
+export interface HeadersFixed extends Headers {
+  [prop: string]: any
+}
+

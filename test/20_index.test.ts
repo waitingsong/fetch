@@ -17,6 +17,7 @@ import {
 import { httpErrorMsgPrefix, initialRxRequestInit } from '../src/lib/config'
 import { basename } from '../src/shared/index'
 
+import { HttpbinRetCookie } from './model'
 
 
 const filename = basename(__filename)
@@ -293,6 +294,70 @@ describe(filename, () => {
       assert(ret === 'raw', `Should got result "json", but got "${ret}" `)
     })
 
+  })
+
+})
+
+
+describe(filename, () => {
+  // const url = 'https://httpbin.org/cookies/set/foo/' + value
+  const url = 'https://httpbin.org/cookies'
+  const initArgs = <RxRequestInit> {
+    fetchModule: nodefetch,
+    headersInitClass: Headers,
+    credentials: 'include',
+  }
+
+  describe('Should works with cookies', () => {
+    it('send custom cookies', resolve => {
+      const args = { ...initArgs }
+      const fvalue = Math.random()
+      const bvalue = Math.random()
+      const zvalue = 'a<b>c&d"e\'f'
+      args.headers = {
+        Cookie: `foo=${fvalue};bar=${bvalue};barz=${zvalue}`,
+      }
+
+      get<HttpbinRetCookie>(url, args).subscribe(
+        next => {
+          assert(next && next.cookies)
+          assert(next.cookies.foo === fvalue.toString())
+          assert(next.cookies.bar === bvalue.toString())
+          assert(next.cookies.barz === zvalue.toString())
+
+          resolve()
+        },
+        err => {
+          assert(false, err)
+          resolve()
+        },
+      )
+    })
+
+    it('send custom cookies', resolve => {
+      const args = { ...initArgs }
+      const fvalue = Math.random()
+      const bvalue = Math.random()
+      const zvalue = 'a<b>c&d"e\'f'
+      args.headers = {
+        Cookie: `foo=${fvalue}; bar=${bvalue}; barz=${zvalue}`,
+      }
+
+      get<HttpbinRetCookie>(url, args).subscribe(
+        next => {
+          assert(next && next.cookies)
+          assert(next.cookies.foo === fvalue.toString())
+          assert(next.cookies.bar === bvalue.toString())
+          assert(next.cookies.barz === zvalue.toString())
+
+          resolve()
+        },
+        err => {
+          assert(false, err)
+          resolve()
+        },
+      )
+    })
   })
 
 })
