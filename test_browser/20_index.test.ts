@@ -204,8 +204,8 @@ describe(filename, () => {
 
     it('with data', () => {
       const url = 'https://httpbin.org/method-not-exists?bar=2'
-      const ret = buildQueryString(url, { foo: 1, barz: [1, 2] })
-      const expect = url + '&foo=1&barz%5B0%5D=1&barz%5B1%5D=2'
+      const ret = buildQueryString(url, { foo: 1, baz: [1, 2] })
+      const expect = url + '&foo=1&baz%5B0%5D=1&baz%5B1%5D=2'
       assert(ret === expect, `Should got result "${expect}", but got "${ret}" `)
     })
   })
@@ -224,19 +224,19 @@ describe.skip(filename, () => {
   describe('Should works with cookies', () => {
     it('send custom cookies', resolve => {
       const args = { ...initArgs }
-      const fvalue = Math.random()
-      const bvalue = Math.random()
-      const zvalue = 'a<b>c&d"e\'f'
+      const foo = Math.random()
+      const bar = Math.random()
+      const baz = 'a<b>c&d"e\'f'
       args.headers = {
-        Cookie: `foo=${fvalue};bar=${bvalue};barz=${zvalue}`,
+        Cookie: `foo=${foo};bar=${bar};baz=${baz}`,
       }
 
       get<HttpbinRetCookie>(url, args).subscribe(
         next => {
           assert(next && next.cookies)
-          assert(next.cookies.foo === fvalue.toString())
-          assert(next.cookies.bar === bvalue.toString())
-          assert(next.cookies.barz === zvalue.toString())
+          assert(next.cookies.foo === foo.toString())
+          assert(next.cookies.bar === bar.toString())
+          assert(next.cookies.baz === baz)
 
           resolve()
         },
@@ -249,19 +249,19 @@ describe.skip(filename, () => {
 
     it('send custom cookies', resolve => {
       const args = { ...initArgs }
-      const fvalue = Math.random()
-      const bvalue = Math.random()
-      const zvalue = 'a<b>c&d"e\'f'
+      const foo = Math.random()
+      const bar = Math.random()
+      const baz = 'a<b>c&d"e\'f'
       args.headers = {
-        Cookie: `foo=${fvalue}; bar=${bvalue}; barz=${zvalue}`,
+        Cookie: `foo=${foo}; bar=${bar}; baz=${baz}`,
       }
 
       get<HttpbinRetCookie>(url, args).subscribe(
         next => {
           assert(next && next.cookies)
-          assert(next.cookies.foo === fvalue.toString())
-          assert(next.cookies.bar === bvalue.toString())
-          assert(next.cookies.barz === zvalue.toString())
+          assert(next.cookies.foo === foo.toString())
+          assert(next.cookies.bar === bar.toString())
+          assert(next.cookies.baz === baz)
 
           resolve()
         },

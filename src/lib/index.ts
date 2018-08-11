@@ -180,6 +180,12 @@ function splitInitArgs(rxInitOpts: RxRequestInit): ArgsRequestInitCombined {
   const args: Args = {}
 
   /* istanbul ignore else */
+  if (typeof rxInitOpts.cookies !== 'undefined') {
+    args.cookies = rxInitOpts.cookies
+    delete rxInitOpts.cookies
+  }
+
+  /* istanbul ignore else */
   if (rxInitOpts.abortController && typeof rxInitOpts.abortController.abort === 'function') {
     args.abortController = rxInitOpts.abortController
     delete rxInitOpts.abortController
@@ -238,31 +244,15 @@ export function parseInitOpts(init?: RxRequestInit): ArgsRequestInitCombined {
   const initOpts: RxRequestInit = init ? { ...initialRxRequestInit, ...init } : { ...initialRxRequestInit }
   let options = splitInitArgs(initOpts)
 
+  options = parseHeaders(options) // at first!
+
   options = parseAbortController(options)
-  options = parseHeaders(options)
+  options = paraseCookies(options)
   options = parseMethod(options)
   options.args.dataType = parseDataType(options.args.dataType)
   options.args.timeout = parseTimeout(options.args.timeout)
 
   return options
-}
-
-function parseAbortController(options: ArgsRequestInitCombined): ArgsRequestInitCombined {
-  const { args, requestInit } = options
-
-  /* istanbul ignore else */
-  if (! args.abortController || ! args.abortController.signal || typeof args.abortController.abort !== 'function') {
-    /* istanbul ignore else */
-    if (typeof AbortController === 'function') {
-      args.abortController = new AbortController()
-    }
-  }
-  /* istanbul ignore else */
-  if (args.abortController) {
-    requestInit.signal = args.abortController.signal
-  }
-
-  return { args, requestInit }
 }
 
 function parseHeaders(options: ArgsRequestInitCombined): ArgsRequestInitCombined {
@@ -318,6 +308,62 @@ function parseHeaders(options: ArgsRequestInitCombined): ArgsRequestInitCombined
   return { args, requestInit }
 }
 
+function parseAbortController(options: ArgsRequestInitCombined): ArgsRequestInitCombined {
+  const { args, requestInit } = options
+
+  /* istanbul ignore else */
+  if (! args.abortController || ! args.abortController.signal || typeof args.abortController.abort !== 'function') {
+    /* istanbul ignore else */
+    if (typeof AbortController === 'function') {
+      args.abortController = new AbortController()
+    }
+  }
+  /* istanbul ignore else */
+  if (args.abortController) {
+    requestInit.signal = args.abortController.signal
+  }
+
+  return { args, requestInit }
+}
+
+function paraseCookies(options: ArgsRequestInitCombined): ArgsRequestInitCombined {
+  const { args, requestInit } = options
+  const data = args.cookies
+  const arr = <string[]> []
+
+  if (data && typeof data === 'object') {
+    for (let [key, value] of Object.entries(data)) {
+      if (key && typeof key === 'string') {
+        key = key.trim()
+        if (! key) {
+          continue
+        }
+
+        value = typeof value === 'string' || typeof value === 'number' ? value.toString().trim() : ''
+        arr.push(`${key}=${value}`)
+      }
+    }
+  }
+
+  if (arr.length) {
+    let cookies = (<Headers> requestInit.headers).get('Cookie')
+
+    if (cookies) {
+      cookies = cookies.trim()
+      if (cookies.slice(-1) === ';') {
+        cookies = cookies.slice(0, -1)
+      }
+
+      (<Headers> requestInit.headers).set('Cookie', `${cookies}; ` + arr.join('; '))
+    }
+    else {
+      (<Headers> requestInit.headers).set('Cookie', arr.join('; '))
+    }
+  }
+
+  return { args, requestInit }
+}
+
 
 function parseMethod(options: ArgsRequestInitCombined): ArgsRequestInitCombined {
   const { args, requestInit } = options
@@ -365,7 +411,7 @@ function handleResponseError(resp: Response): Observable<Response> {
   return defer(() => resp.text()).pipe(
     catchError((err: Error) => of(err ? err.toString() : 'unknow error')),
     map((txt: string) => {
-      throw new Error(`${httpErrorMsgPrefix}${status}\nResponse:` + txt)
+      throw new Error(`${ httpErrorMsgPrefix }${ status }\nResponse: ` + txt)
     }),
   )
 }

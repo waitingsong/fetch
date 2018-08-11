@@ -6,6 +6,8 @@ export type ContentType = string
 export interface Args {
   /** instance of AbortController to aborting Request */
   abortController?: AbortController
+  /** append custom cookies with key:value object */
+  cookies?: { [key: string]: string | number | null }
   /** Content-Type, jQuery behavior, default "application/x-www-form-urlencoded; charset=UTF-8" during POST */
   contentType?: false | ContentType
   /** send to server, resolve to query string during GET|DELETE and key/value pairs during POST */

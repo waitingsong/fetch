@@ -259,8 +259,8 @@ describe(filename, () => {
 
     it('with data', () => {
       const url = 'https://httpbin.org/method-not-exists?bar=2'
-      const ret = buildQueryString(url, { foo: 1, barz: [1, 2] })
-      const expect = url + '&foo=1&barz%5B0%5D=1&barz%5B1%5D=2'
+      const ret = buildQueryString(url, { foo: 1, baz: [1, 2] })
+      const expect = url + '&foo=1&baz%5B0%5D=1&baz%5B1%5D=2'
       assert(ret === expect, `Should got result "${expect}", but got "${ret}" `)
     })
   })
@@ -309,21 +309,25 @@ describe(filename, () => {
   }
 
   describe('Should works with cookies', () => {
-    it('send custom cookies', resolve => {
+    it('cookies pass by args.cookies', resolve => {
       const args = { ...initArgs }
-      const fvalue = Math.random()
-      const bvalue = Math.random()
-      const zvalue = 'a<b>c&d"e\'f'
-      args.headers = {
-        Cookie: `foo=${fvalue};bar=${bvalue};barz=${zvalue}`,
-      }
+      const foo = Math.random()
+      const bar = Math.random()
+      const baz = 'a<b>c&d"e\'f'
+
+      args.cookies = { foo, bar, baz }
 
       get<HttpbinRetCookie>(url, args).subscribe(
         next => {
-          assert(next && next.cookies)
-          assert(next.cookies.foo === fvalue.toString())
-          assert(next.cookies.bar === bvalue.toString())
-          assert(next.cookies.barz === zvalue.toString())
+          try {
+            assert(next && next.cookies)
+            assert(next.cookies.foo === foo.toString())
+            assert(next.cookies.bar === bar.toString())
+            assert(next.cookies.baz === baz)
+          }
+          catch (ex) {
+            assert(false, ex)
+          }
 
           resolve()
         },
@@ -334,13 +338,38 @@ describe(filename, () => {
       )
     })
 
-    it('send custom cookies', resolve => {
+    it('custom cookies pass by args.headers', resolve => {
+      const args = { ...initArgs }
+      const foo = Math.random()
+      const bar = Math.random()
+      const baz = 'a<b>c&d"e\'f'
+      args.headers = {
+        Cookie: `foo=${foo};bar=${bar};baz=${baz}`,
+      }
+
+      get<HttpbinRetCookie>(url, args).subscribe(
+        next => {
+          assert(next && next.cookies)
+          assert(next.cookies.foo === foo.toString())
+          assert(next.cookies.bar === bar.toString())
+          assert(next.cookies.baz === baz.toString())
+
+          resolve()
+        },
+        err => {
+          assert(false, err)
+          resolve()
+        },
+      )
+    })
+
+    it('custom cookies pass by args.headers', resolve => {
       const args = { ...initArgs }
       const fvalue = Math.random()
       const bvalue = Math.random()
       const zvalue = 'a<b>c&d"e\'f'
       args.headers = {
-        Cookie: `foo=${fvalue}; bar=${bvalue}; barz=${zvalue}`,
+        Cookie: `foo=${fvalue}; bar=${bvalue}; baz=${zvalue}`,
       }
 
       get<HttpbinRetCookie>(url, args).subscribe(
@@ -348,7 +377,37 @@ describe(filename, () => {
           assert(next && next.cookies)
           assert(next.cookies.foo === fvalue.toString())
           assert(next.cookies.bar === bvalue.toString())
-          assert(next.cookies.barz === zvalue.toString())
+          assert(next.cookies.baz === zvalue.toString())
+
+          resolve()
+        },
+        err => {
+          assert(false, err)
+          resolve()
+        },
+      )
+    })
+
+    it('cookies pass by both args.cookies and args.headers', resolve => {
+      const args = { ...initArgs }
+      const foo = Math.random()
+      const bar = Math.random()
+      const baz = 'a<b>c&d"e\'f'
+
+      args.cookies = { foo, bar, baz }
+      args.headers = {
+        Cookie: `foo2=${foo};bar2=${bar};baz2=${baz}`,
+      }
+
+      get<HttpbinRetCookie>(url, args).subscribe(
+        next => {
+          assert(next && next.cookies)
+          assert(next.cookies.foo === foo.toString())
+          assert(next.cookies.bar === bar.toString())
+          assert(next.cookies.baz === baz)
+          assert(next.cookies.foo2 === foo.toString())
+          assert(next.cookies.bar2 === bar.toString())
+          assert(next.cookies.baz2 === baz)
 
           resolve()
         },
