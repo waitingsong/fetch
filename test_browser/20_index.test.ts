@@ -5,6 +5,7 @@ import { TimeoutError } from 'rxjs'
 
 import {
   buildQueryString,
+  fetch,
   get,
   getGloalRequestInit,
   setGloalRequestInit,
@@ -262,6 +263,38 @@ describe.skip(filename, () => {
           assert(next.cookies.foo === foo.toString())
           assert(next.cookies.bar === bar.toString())
           assert(next.cookies.baz === baz)
+
+          resolve()
+        },
+        err => {
+          assert(false, err)
+          resolve()
+        },
+      )
+    })
+  })
+
+})
+
+
+// There is a restriction to access response headers when you are using Fetch API over CORS
+describe.skip(filename, () => {
+  const url = 'https://httpbin.org/get'
+  const initArgs = <RxRequestInit> {
+    dataType: 'raw',
+    method: 'OPTIONS',
+  }
+
+  describe('Should options works', () => {
+    it('retrieve allowed options from response header', resolve => {
+      const args = { ...initArgs }
+
+      fetch<Response>(url, args).subscribe(
+        res => {
+          assert(res && res.headers, 'response and response.headers should not empty')
+          const options = 'GET, POST, PUT, DELETE, PATCH, OPTIONS'
+          const value = res.headers.get('Access-Control-Allow-Methods')
+          assert(value && value === options, `Should get ${options} but got ${value}`)
 
           resolve()
         },

@@ -28,7 +28,7 @@ export interface Args {
 }
 
 export interface RxRequestInit extends RequestInit, Args {
-  method?: 'GET' | 'POST' | 'PUT' | 'DELETE'
+  method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'OPTIONS'
   referrer?: 'client' | 'no-referrer'
 }
 

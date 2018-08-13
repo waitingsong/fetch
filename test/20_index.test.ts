@@ -8,6 +8,7 @@ import { TimeoutError } from 'rxjs'
 
 import {
   buildQueryString,
+  fetch,
   get,
   getGloalRequestInit,
   setGloalRequestInit,
@@ -408,6 +409,39 @@ describe(filename, () => {
           assert(next.cookies.foo2 === foo.toString())
           assert(next.cookies.bar2 === bar.toString())
           assert(next.cookies.baz2 === baz)
+
+          resolve()
+        },
+        err => {
+          assert(false, err)
+          resolve()
+        },
+      )
+    })
+  })
+
+})
+
+
+describe(filename, () => {
+  const url = 'https://httpbin.org/get'
+  const initArgs = <RxRequestInit> {
+    dataType: 'raw',
+    fetchModule: nodefetch,
+    headersInitClass: Headers,
+    method: 'OPTIONS',
+  }
+
+  describe('Should options works', () => {
+    it('retrieve allowed options from response header', resolve => {
+      const args = { ...initArgs }
+
+      fetch<Response>(url, args).subscribe(
+        res => {
+          assert(res && res.headers)
+          const options = 'GET, POST, PUT, DELETE, PATCH, OPTIONS'
+          const value = res.headers.get('Access-Control-Allow-Methods')
+          assert(value && value === options)
 
           resolve()
         },
