@@ -120,6 +120,30 @@ describe(filename, () => {
       )
     })
 
+    it('send a file', resolve => {
+      const pdata = new FormData()
+      const p1 = Math.random().toString()
+      const content = '<a id="a"><b id="b">hey!</b></a>'
+      const blob = new Blob([content], { type: 'text/xml' })
+      pdata.append('p1', p1)
+      pdata.append('p2', blob, 'nameFoo')
+      const args: RxRequestInit = { ...initArgs, data: pdata, processData: false, contentType: false }
+
+      post<HttpbinPostResponse>(url, args).subscribe(
+        res => {
+          assert(res && res.url === url)
+
+          const { files, form } = res
+          assert(form && form.p1 === p1, `Should got "${p1}"`)
+          assert(files && files.p2 === content, `Should got "${content}"`)
+          resolve()
+        },
+        err => {
+          assert(false, err)
+          resolve()
+        },
+      )
+    })
   })
 
 })

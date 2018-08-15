@@ -3,9 +3,11 @@
 import * as FormData from 'form-data'
 import nodefetch, { Headers } from 'node-fetch'
 import * as assert from 'power-assert'
+import { defer } from 'rxjs'
+import { switchMap, tap } from 'rxjs/operators'
 
 import { post, RxRequestInit } from '../src/index'
-import { basename } from '../src/shared/index'
+import { basename, readFileAsync } from '../src/shared/index'
 
 import { HttpbinPostResponse } from './model'
 
@@ -113,6 +115,39 @@ describe(filename, () => {
       )
     })
 
+    it('send a txt file and key:value data', resolve => {
+      const read$ = defer(() => readFileAsync(`${__dirname}/p2.txt`))
+
+      read$.pipe(
+        switchMap((buf: Buffer) => {
+          const pdata = new FormData()
+          const p1 = Math.random().toString()
+          pdata.append('p1', p1)
+          pdata.append('p2', buf)
+          const args: RxRequestInit = { ...initArgs, data: pdata, processData: false, contentType: false }
+
+          return post<HttpbinPostResponse>(url, args).pipe(
+            tap(res => {
+              assert(res && res.url === url)
+
+              const form = res.form
+              const str = '<FileList><P00001.jpg /></FileList>'
+              assert(form && form.p1 === p1, `Should got "${p1}"`)
+              assert(form && form.p2 === str, `Should got "${str}"`)
+            }),
+          )
+        }),
+      )
+        .subscribe(
+          () => {
+            resolve()
+          },
+          err => {
+            assert(false, err)
+            resolve()
+          },
+        )
+    })
   })
 
 })
