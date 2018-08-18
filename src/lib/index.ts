@@ -1,14 +1,15 @@
 import * as QueryString from 'qs'
-import { defer, of, throwError, Observable } from 'rxjs'
-import { catchError, concatMap, map, switchMap, timeout } from 'rxjs/operators'
+import { defer, throwError, Observable } from 'rxjs'
+import { catchError, concatMap, switchMap, timeout } from 'rxjs/operators'
 
-import { httpErrorMsgPrefix, initialRxRequestInit } from './config'
+import { initialRxRequestInit } from './config'
 import { Args, ObbRetType, RxRequestInit } from './model'
-import { assertNever } from './shared'
+import { parseInitOpts } from './request'
+import { handleResponseError, parseResponseType } from './response'
 
 
 /**
- * fetch wrapper
+ * Observable fetch
  *
  * parameter init ignored during parameter input is typeof Request
  */
@@ -17,73 +18,14 @@ export function rxfetch<T extends ObbRetType = ObbRetType>(
   init?: RxRequestInit,
 ): Observable<T> {
 
+  /* istanbul ignore else */
   if (! input) {
     throwError(new TypeError('value of input invalid'))
   }
 
-  let req$: Observable<Response>
-
   const { args, requestInit } = parseInitOpts(init)
-
-
-  // let fetchModule: Args['fetchModule'] | null = typeof fetch === 'function' ? fetch : null
-  let fetchModule: Args['fetchModule'] | null = null
-
-  if (args.fetchModule) {
-    /* istanbul ignore else */
-    if (typeof args.fetchModule !== 'function') {
-      throwError(new TypeError('fetchModule is not Function'))
-    }
-    fetchModule = args.fetchModule
-  }
-  /* istanbul ignore else */
-  else if (typeof fetch === 'function') { // native fetch
-    fetchModule = fetch
-  }
-  else {
-    throwError(new TypeError('fetchModule/fetch not Function'))
-  }
-
   const dataType: RxRequestInit['dataType'] = args.dataType
-
-  if (typeof input === 'string') {
-    /* istanbul ignore else */
-    if (typeof args.data !== 'undefined') {
-      if (args.processData) {
-        if (['GET', 'DELETE'].includes(<string> requestInit.method)) {
-          input = buildQueryString(input, args.data)
-        }
-        else {
-          requestInit.body = QueryString.stringify(args.data)
-        }
-      }
-      else {
-        requestInit.body = <any> args.data
-      }
-
-      delete args.data
-    }
-
-    req$ = defer(() => (<NonNullable<Args['fetchModule']>> fetchModule)(input, requestInit))
-  }
-  else {
-    req$ = defer(() => (<NonNullable<Args['fetchModule']>> fetchModule)(<Request> input))
-  }
-
-
-  /* istanbul ignore else */
-  if (typeof args.timeout === 'number' && args.timeout >= 0) {
-    req$ = req$.pipe(
-      timeout(args.timeout),
-      catchError(err => {
-        if (args.abortController && !args.abortController.signal.aborted) {
-          args.abortController.abort()
-        }
-        throw err
-      }),
-    )
-  }
-
+  const req$ = _fetch(input, args, requestInit)
   const ret$ = req$.pipe(
     concatMap(handleResponseError),
     switchMap<Response, T>(res => parseResponseType(res, dataType)),
@@ -93,6 +35,7 @@ export function rxfetch<T extends ObbRetType = ObbRetType>(
 }
 
 
+/** Observable GET method of fetch() */
 export function get<T extends ObbRetType = ObbRetType>(input: string, init?: RxRequestInit): Observable<T> {
   /* istanbul ignore else */
   if (init) {
@@ -105,6 +48,7 @@ export function get<T extends ObbRetType = ObbRetType>(input: string, init?: RxR
 }
 
 
+/** Observable POST method of fetch() */
 export function post<T extends ObbRetType = ObbRetType>(input: string, init?: RxRequestInit): Observable<T> {
   /* istanbul ignore else */
   if (init) {
@@ -117,6 +61,7 @@ export function post<T extends ObbRetType = ObbRetType>(input: string, init?: Rx
 }
 
 
+/** Observable PUT method of fetch() */
 export function put<T extends ObbRetType = ObbRetType>(input: string, init?: RxRequestInit): Observable<T> {
   /* istanbul ignore else */
   if (init) {
@@ -129,6 +74,7 @@ export function put<T extends ObbRetType = ObbRetType>(input: string, init?: RxR
 }
 
 
+/** Observable DELETE method of fetch() */
 export function remove<T extends ObbRetType = ObbRetType>(input: string, init?: RxRequestInit): Observable<T> {
   /* istanbul ignore else */
   if (init) {
@@ -169,279 +115,79 @@ export function buildQueryString(url: string, data: RxRequestInit['data']): stri
 }
 
 
-export interface ArgsRequestInitCombined {
-  args: Args
-  requestInit: RequestInit
-}
-
-
-/** Split RxRequestInit object to RequestInit and Args */
-function splitInitArgs(rxInitOpts: RxRequestInit): ArgsRequestInitCombined {
-  const args: Args = {}
-
-  /* istanbul ignore else */
-  if (typeof rxInitOpts.cookies !== 'undefined') {
-    args.cookies = rxInitOpts.cookies
-    delete rxInitOpts.cookies
-  }
+/**
+ * fetch wrapper
+ *
+ * parameter init ignored during parameter input is typeof Request
+ */
+function _fetch(
+  input: Request | string,
+  args: Args,
+  requestInit: RequestInit,
+): Observable<Response> {
 
   /* istanbul ignore else */
-  if (rxInitOpts.abortController && typeof rxInitOpts.abortController.abort === 'function') {
-    args.abortController = rxInitOpts.abortController
-    delete rxInitOpts.abortController
+  if (! input) {
+    throwError(new TypeError('value of input invalid'))
   }
 
-  /* istanbul ignore else */
-  if (typeof rxInitOpts.contentType !== 'undefined') {
-    args.contentType = rxInitOpts.contentType
-    delete rxInitOpts.contentType
-  }
+  let req$: Observable<Response>
 
-  /* istanbul ignore else */
-  if (typeof rxInitOpts.data !== 'undefined') {
-    args.data = rxInitOpts.data
-    delete rxInitOpts.data
-  }
+  // let fetchModule: Args['fetchModule'] | null = typeof fetch === 'function' ? fetch : null
+  let fetchModule: Args['fetchModule'] | null = null
 
-  /* istanbul ignore else */
-  if (rxInitOpts.dataType) {
-    args.dataType = rxInitOpts.dataType
-    delete rxInitOpts.dataType
-  }
-
-  /* istanbul ignore else */
-  if (rxInitOpts.fetchModule) {
-    args.fetchModule = rxInitOpts.fetchModule
-    delete rxInitOpts.fetchModule
-  }
-
-  /* istanbul ignore else */
-  if (rxInitOpts.headersInitClass) {
-    args.headersInitClass = rxInitOpts.headersInitClass
-    delete rxInitOpts.headersInitClass
-  }
-
-  /* istanbul ignore else */
-  if (typeof rxInitOpts.processData !== 'undefined') {
-    args.processData = rxInitOpts.processData
-    delete rxInitOpts.processData
-  }
-
-  /* istanbul ignore else */
-  if (typeof rxInitOpts.timeout !== 'undefined') {
-    args.timeout = rxInitOpts.timeout
-    delete rxInitOpts.timeout
-  }
-
-  return {
-    args,
-    requestInit: <RequestInit> { ...rxInitOpts },
-  }
-}
-
-
-export function parseInitOpts(init?: RxRequestInit): ArgsRequestInitCombined {
-  const initOpts: RxRequestInit = init ? { ...initialRxRequestInit, ...init } : { ...initialRxRequestInit }
-  let options = splitInitArgs(initOpts)
-
-  options = parseHeaders(options) // at first!
-
-  options = parseAbortController(options)
-  options = paraseCookies(options)
-  options = parseMethod(options)
-  options.args.dataType = parseDataType(options.args.dataType)
-  options.args.timeout = parseTimeout(options.args.timeout)
-
-  return options
-}
-
-function parseHeaders(options: ArgsRequestInitCombined): ArgsRequestInitCombined {
-  const { args, requestInit } = options
-
-  if (args.headersInitClass) {
-    let headers = <Headers> new args.headersInitClass()
-
-    if (requestInit.headers) {
-      const obj = Object.getOwnPropertyDescriptor(requestInit.headers, 'has')
-      // Headers instance
-      if (typeof Headers !== 'undefined' && requestInit.headers instanceof Headers) {
-        const reqHeader = requestInit.headers
-
-        // @ts-ignore for karma
-        for (const [key, value] of reqHeader.entries()) {
-          headers.set(key, value)
-        }
-      }
-      // Headers instance
-      else if (obj && typeof obj.value === 'function') {
-        const reqHeader = <Headers> requestInit.headers
-
-        // @ts-ignore for karma
-        for (const [key, value] of reqHeader.entries()) {
-          headers.set(key, value)
-        }
-      }
-      else {  // key:value|array
-        headers = new args.headersInitClass(requestInit.headers)
-      }
-    }
-    requestInit.headers = headers
-  }
-  else {  // browser native
-    if (requestInit.headers) {
-      /* istanbul ignore else */
-      // @ts-ignore
-      if (typeof requestInit.headers.has !== 'function') { // key:value|array
-        requestInit.headers = new Headers(requestInit.headers)
-      }
-    }
-    else {
-      requestInit.headers = new Headers()
-    }
-  }
-
-  /* istanbul ignore else */
-  if (! (<Headers> requestInit.headers).has('Accept')) {
-    (<Headers> requestInit.headers).set('Accept', 'application/json, text/html, text/javascript, text/plain, */*')
-  }
-
-  return { args, requestInit }
-}
-
-function parseAbortController(options: ArgsRequestInitCombined): ArgsRequestInitCombined {
-  const { args, requestInit } = options
-
-  /* istanbul ignore else */
-  if (! args.abortController || ! args.abortController.signal || typeof args.abortController.abort !== 'function') {
+  if (args.fetchModule) {
     /* istanbul ignore else */
-    if (typeof AbortController === 'function') {
-      args.abortController = new AbortController()
+    if (typeof args.fetchModule !== 'function') {
+      throwError(new TypeError('fetchModule is not Function'))
     }
+    fetchModule = args.fetchModule
   }
   /* istanbul ignore else */
-  if (args.abortController) {
-    requestInit.signal = args.abortController.signal
+  else if (typeof fetch === 'function') { // native fetch
+    fetchModule = fetch
+  }
+  else {
+    throwError(new TypeError('fetchModule/fetch not Function'))
   }
 
-  return { args, requestInit }
-}
-
-function paraseCookies(options: ArgsRequestInitCombined): ArgsRequestInitCombined {
-  const { args, requestInit } = options
-  const data = args.cookies
-  const arr = <string[]> []
-
-  if (data && typeof data === 'object') {
-    for (let [key, value] of Object.entries(data)) {
-      if (key && typeof key === 'string') {
-        key = key.trim()
-        if (! key) {
-          continue
+  if (typeof input === 'string') {
+    /* istanbul ignore else */
+    if (typeof args.data !== 'undefined') {
+      if (args.processData) {
+        if (['GET', 'DELETE'].includes(<string> requestInit.method)) {
+          input = buildQueryString(input, args.data)
         }
-
-        value = typeof value === 'string' || typeof value === 'number' ? value.toString().trim() : ''
-        arr.push(`${key}=${value}`)
+        else {
+          requestInit.body = QueryString.stringify(args.data)
+        }
       }
+      else {
+        requestInit.body = <any> args.data
+      }
+
+      delete args.data
     }
+
+    req$ = defer(() => (<NonNullable<Args['fetchModule']>> fetchModule)(input, requestInit))
+  }
+  else {
+    req$ = defer(() => (<NonNullable<Args['fetchModule']>> fetchModule)(<Request> input))
   }
 
-  if (arr.length) {
-    let cookies = (<Headers> requestInit.headers).get('Cookie')
 
-    if (cookies) {
-      cookies = cookies.trim()
-      if (cookies.slice(-1) === ';') {
-        cookies = cookies.slice(0, -1)
-      }
-
-      (<Headers> requestInit.headers).set('Cookie', `${cookies}; ` + arr.join('; '))
-    }
-    else {
-      (<Headers> requestInit.headers).set('Cookie', arr.join('; '))
-    }
-  }
-
-  return { args, requestInit }
-}
-
-
-function parseMethod(options: ArgsRequestInitCombined): ArgsRequestInitCombined {
-  const { args, requestInit } = options
-
-  switch (requestInit.method) {
-    case 'DELETE':
-    case 'POST':
-    case 'PUT':
-      if (args.contentType === false) {
-        break
-      }
-      else if (args.contentType) {
-        (<Headers> requestInit.headers).set('Content-Type', args.contentType)
-      }
-      /* istanbul ignore else */
-      else if (! (<Headers> requestInit.headers).has('Content-Type')) {
-        (<Headers> requestInit.headers).set('Content-Type', 'application/x-www-form-urlencoded')
-      }
-      break
-  }
-  return { args, requestInit }
-}
-
-function parseDataType(value: any): Required<Args['dataType']> {
   /* istanbul ignore else */
-  if (typeof value === 'string' && ['arrayBuffer', 'blob', 'formData', 'json', 'text', 'raw'].includes(value)) {
-    return <Args['dataType']> value
+  if (typeof args.timeout === 'number' && args.timeout >= 0) {
+    req$ = req$.pipe(
+      timeout(args.timeout),
+      catchError(err => {
+        if (args.abortController && !args.abortController.signal.aborted) {
+          args.abortController.abort()
+        }
+        throw err
+      }),
+    )
   }
-  return 'json'
-}
 
-function parseTimeout(p: any): number | null {
-  const value = typeof p === 'number' && p >= 0 ? Math.ceil(p) : null
-  return value === null || ! Number.isSafeInteger(value) ? null : value
-}
-
-
-function handleResponseError(resp: Response): Observable<Response> {
-  /* istanbul ignore else */
-  if (resp.ok) {
-    return of(resp)
-  }
-  const status = resp.status
-
-  return defer(() => resp.text()).pipe(
-    catchError((err: Error) => of(err ? err.toString() : 'unknow error')),
-    map((txt: string) => {
-      throw new Error(`${ httpErrorMsgPrefix }${ status }\nResponse: ` + txt)
-    }),
-  )
-}
-
-
-function parseResponseType(response: Response, dataType: RxRequestInit['dataType']): Observable<ObbRetType> {
-  /* istanbul ignore else  */
-  if (dataType) {
-    switch (dataType) {
-      case 'arrayBuffer':
-        return defer(() => response.arrayBuffer())
-
-      case 'blob':
-        return defer(() => response.blob())
-
-      case 'formData':
-        return defer(() => response.formData())
-
-      case 'json':
-        return <Observable<object>> defer(() => response.json())
-
-      case 'raw':
-        return of(response)
-
-      case 'text':
-        return defer(() => response.text())
-
-      default:
-        assertNever(dataType)
-    }
-  }
-  return of(response)
+  return req$
 }
