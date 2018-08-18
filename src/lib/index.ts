@@ -1,11 +1,11 @@
 import * as QueryString from 'qs'
-import { defer, throwError, Observable } from 'rxjs'
+import { defer, of, throwError, Observable } from 'rxjs'
 import { catchError, concatMap, switchMap, timeout } from 'rxjs/operators'
 
 import { initialRxRequestInit } from './config'
 import { Args, ObbRetType, RxRequestInit } from './model'
-import { parseInitOpts } from './request'
-import { handleResponseError, parseResponseType } from './response'
+import { parseInitOpts, splitInitArgs } from './request'
+import { handleResponseError, parseResponseType, parseRespCookie } from './response'
 
 
 /**
@@ -22,11 +22,13 @@ export function rxfetch<T extends ObbRetType = ObbRetType>(
   if (! input) {
     throwError(new TypeError('value of input invalid'))
   }
-
-  const { args, requestInit } = parseInitOpts(init)
+  const initOpts: RxRequestInit = init ? { ...initialRxRequestInit, ...init } : { ...initialRxRequestInit }
+  const options = splitInitArgs(initOpts)
+  const { args, requestInit } = parseInitOpts(options)
   const dataType: RxRequestInit['dataType'] = args.dataType
   const req$ = _fetch(input, args, requestInit)
   const ret$ = req$.pipe(
+    concatMap(res => handleRedirect(res, args, requestInit)),
     concatMap(handleResponseError),
     switchMap<Response, T>(res => parseResponseType(res, dataType)),
   )
@@ -190,4 +192,43 @@ function _fetch(
   }
 
   return req$
+}
+
+
+/**
+ * Handle redirect case to retrieve cookies before jumping
+ *
+ * docs: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+ */
+export function handleRedirect(resp: Response, args: Args, init: RequestInit): Observable<Response> {
+  /* istanbul ignore else */
+  if (args.keepRedirectCookies === true && resp.status >= 301 && resp.status <= 308) {
+    const url = resp.headers.get('location')
+    const cookie = resp.headers.get('Set-Cookie')
+
+    /* istanbul ignore if */
+    if (! url) {
+      throwError('Redirect location is empty')
+    }
+    else {
+      const cookieObj = parseRespCookie(cookie)
+      if (cookieObj) {
+        args.cookies = args.cookies
+          ? { ...args.cookies, ...cookieObj }
+          : { ...cookieObj }
+      }
+      const options = parseInitOpts({ args, requestInit: init })
+
+      if (resp.status === 303) {
+        const ps = <RxRequestInit> { ...options.requestInit, ...options.args }
+        return get(url, ps)
+      }
+      else {
+
+        return _fetch(url, options.args, options.requestInit)
+      }
+
+    }
+  }
+  return of(resp)
 }

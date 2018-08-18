@@ -1,25 +1,8 @@
-import { initialRxRequestInit } from './config'
 import { Args, ArgsRequestInitCombined, RxRequestInit } from './model'
 
 
-export function parseInitOpts(init?: RxRequestInit): ArgsRequestInitCombined {
-  const initOpts: RxRequestInit = init ? { ...initialRxRequestInit, ...init } : { ...initialRxRequestInit }
-  let options = splitInitArgs(initOpts)
-
-  options = parseHeaders(options) // at first!
-
-  options = parseAbortController(options)
-  options = paraseCookies(options)
-  options = parseMethod(options)
-  options.args.dataType = parseDataType(options.args.dataType)
-  options.args.timeout = parseTimeout(options.args.timeout)
-
-  return options
-}
-
-
 /** Split RxRequestInit object to RequestInit and Args */
-function splitInitArgs(rxInitOpts: RxRequestInit): ArgsRequestInitCombined {
+export function splitInitArgs(rxInitOpts: RxRequestInit): ArgsRequestInitCombined {
   const args: Args = {}
 
   /* istanbul ignore else */
@@ -65,6 +48,12 @@ function splitInitArgs(rxInitOpts: RxRequestInit): ArgsRequestInitCombined {
   }
 
   /* istanbul ignore else */
+  if (typeof rxInitOpts.keepRedirectCookies !== 'undefined') {
+    args.keepRedirectCookies = !! rxInitOpts.keepRedirectCookies
+    delete rxInitOpts.keepRedirectCookies
+  }
+
+  /* istanbul ignore else */
   if (typeof rxInitOpts.processData !== 'undefined') {
     args.processData = rxInitOpts.processData
     delete rxInitOpts.processData
@@ -80,6 +69,20 @@ function splitInitArgs(rxInitOpts: RxRequestInit): ArgsRequestInitCombined {
     args,
     requestInit: <RequestInit> { ...rxInitOpts },
   }
+}
+
+
+export function parseInitOpts(options: ArgsRequestInitCombined): ArgsRequestInitCombined {
+  options = parseHeaders(options) // at first!
+
+  options = parseAbortController(options)
+  options = paraseCookies(options)
+  options = parseMethod(options)
+  options.args.dataType = parseDataType(options.args.dataType)
+  options.args.timeout = parseTimeout(options.args.timeout)
+  options.requestInit.redirect = parseRedirect(<boolean> options.args.keepRedirectCookies, options.requestInit.redirect)
+
+  return options
 }
 
 
@@ -230,4 +233,14 @@ function parseDataType(value: any): Required<Args['dataType']> {
 function parseTimeout(p: any): number | null {
   const value = typeof p === 'number' && p >= 0 ? Math.ceil(p) : null
   return value === null || ! Number.isSafeInteger(value) ? null : value
+}
+
+
+/** set redirect to 'manul' for retrieve cookies during 301/302 when keepRedirectCookies:TRUE */
+function parseRedirect(
+  keepRedirectCookies: boolean,
+  curValue: RequestInit['redirect'] | undefined,
+): RequestInit['redirect'] {
+
+  return keepRedirectCookies === true ? 'manual' : (curValue ? curValue : 'follow')
 }

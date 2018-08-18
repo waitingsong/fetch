@@ -26,6 +26,15 @@ export interface Args {
   /** pass a fetch() module for isomorphic usage such as node-fetch or isomorphic-fetch */
   fetchModule?: (input: string | Request, init?: RequestInit) => Promise<Response | any>
   headersInitClass?: typeof Headers | HeadersFixed | any
+
+  /**
+   * Under Node.js,
+   * Whether intercept 301-308 redirect and then do jumping with the cookies retrieved from the Response headers.
+   * Default is FALSE.
+   * There's no effect under Browsers
+   */
+  keepRedirectCookies?: boolean
+
   /** whether process Args.data automatically. jQuery behavior */
   processData?: boolean
 

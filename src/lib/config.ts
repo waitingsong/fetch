@@ -3,6 +3,7 @@ import { RxRequestInit } from './model'
 
 export const initialRxRequestInit: RxRequestInit = {
   dataType: 'json',
+  keepRedirectCookies: false,
   method: 'GET',
   processData: true,
   timeout: null,

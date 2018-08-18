@@ -2,7 +2,7 @@ import { defer, of, Observable } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 
 import { httpErrorMsgPrefix } from './config'
-import { ObbRetType, RxRequestInit } from './model'
+import { Args, ObbRetType, RxRequestInit } from './model'
 import { assertNever } from './shared'
 
 
@@ -49,4 +49,38 @@ export function parseResponseType(response: Response, dataType: RxRequestInit['d
     }
   }
   return of(response)
+}
+
+
+/** "foo=cookiefoo; Secure; Path=/" */
+export function parseRespCookie(cookie: string | null): Args['cookies'] {
+  /* istanbul ignore else  */
+  if (!cookie) {
+    return
+  }
+  const arr = cookie.split(/;/)
+
+  /* istanbul ignore else  */
+  if (!arr.length) {
+    return
+  }
+  const ret: Args['cookies'] = {}
+
+  for (let row of arr) {
+    row = row.trim()
+    /* istanbul ignore else  */
+    if (!row) {
+      continue
+    }
+    if (!row.includes('=')) {
+      continue
+    }
+    if (row.slice(0, 5) === 'Path=') {
+      continue
+    }
+    const [key, value] = row.split('=')
+    ret[key] = value
+  }
+
+  return ret
 }
