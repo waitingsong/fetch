@@ -1,9 +1,49 @@
-import { defer, of, Observable } from 'rxjs'
+import { defer, of, throwError, Observable } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 
 import { httpErrorMsgPrefix } from './config'
 import { Args, ObbRetType, RxRequestInit } from './model'
+import { _fetch } from './request'
 import { assertNever } from './shared'
+import { parseInitOpts } from './util'
+
+
+/**
+ * Handle redirect case to retrieve cookies before jumping under Node.js.
+ * There's no effect under Browser
+ *
+ * docs: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+ */
+export function handleRedirect(resp: Response, args: Args, init: RequestInit): Observable<Response> {
+  /* istanbul ignore else */
+  if (args.keepRedirectCookies === true && resp.status >= 301 && resp.status <= 308) {
+    const url = resp.headers.get('location')
+    const cookie = resp.headers.get('Set-Cookie')
+
+    /* istanbul ignore if */
+    if (! url) {
+      throwError('Redirect location is empty')
+    }
+    else {
+      const cookieObj = parseRespCookie(cookie)
+      if (cookieObj) {
+        args.cookies = args.cookies
+          ? { ...args.cookies, ...cookieObj }
+          : { ...cookieObj }
+      }
+      const options = parseInitOpts({ args, requestInit: init })
+
+      if (resp.status === 303) {
+        options.requestInit.method = 'GET'
+        return _fetch(url, options.args, options.requestInit)
+      }
+      else {
+        return _fetch(url, options.args, options.requestInit)
+      }
+    }
+  }
+  return of(resp)
+}
 
 
 export function handleResponseError(resp: Response): Observable<Response> {

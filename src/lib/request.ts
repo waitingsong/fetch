@@ -1,9 +1,32 @@
 import * as QueryString from 'qs'
-import { defer, Observable } from 'rxjs'
+import { defer, throwError, Observable } from 'rxjs'
 import { catchError, timeout } from 'rxjs/operators'
 
 import { Args } from './model'
 import { buildQueryString, selectFecthModule } from './util'
+
+
+/**
+ * fetch wrapper
+ *
+ * parameter init ignored during parameter input is typeof Request
+ */
+export function _fetch(
+  input: Request | string,
+  args: Args,
+  requestInit: RequestInit,
+): Observable<Response> {
+
+  /* istanbul ignore else */
+  if (! input) {
+    throwError(new TypeError('value of input invalid'))
+  }
+
+  let req$ = createObbRequest(input, args, requestInit)
+  req$ = parseRequestStream(req$, args)
+
+  return req$
+}
 
 
 /** Create Observable Request */

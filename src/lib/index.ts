@@ -1,10 +1,10 @@
-import { of, throwError, Observable } from 'rxjs'
+import { throwError, Observable } from 'rxjs'
 import { concatMap, switchMap } from 'rxjs/operators'
 
 import { initialRxRequestInit } from './config'
-import { Args, ObbRetType, RxRequestInit } from './model'
-import { createObbRequest, parseRequestStream } from './request'
-import { handleResponseError, parseResponseType, parseRespCookie } from './response'
+import { ObbRetType, RxRequestInit } from './model'
+import { _fetch } from './request'
+import { handleRedirect, handleResponseError, parseResponseType } from './response'
 import { parseInitOpts, splitInitArgs } from './util'
 
 
@@ -106,63 +106,3 @@ export function getGloalRequestInit(): Readonly<RxRequestInit> {
   return { ...initialRxRequestInit }
 }
 
-
-/**
- * fetch wrapper
- *
- * parameter init ignored during parameter input is typeof Request
- */
-function _fetch(
-  input: Request | string,
-  args: Args,
-  requestInit: RequestInit,
-): Observable<Response> {
-
-  /* istanbul ignore else */
-  if (! input) {
-    throwError(new TypeError('value of input invalid'))
-  }
-
-  let req$ = createObbRequest(input, args, requestInit)
-  req$ = parseRequestStream(req$, args)
-
-  return req$
-}
-
-
-/**
- * Handle redirect case to retrieve cookies before jumping under Node.js.
- * There's no effect under Browser
- *
- * docs: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
- */
-function handleRedirect(resp: Response, args: Args, init: RequestInit): Observable<Response> {
-  /* istanbul ignore else */
-  if (args.keepRedirectCookies === true && resp.status >= 301 && resp.status <= 308) {
-    const url = resp.headers.get('location')
-    const cookie = resp.headers.get('Set-Cookie')
-
-    /* istanbul ignore if */
-    if (! url) {
-      throwError('Redirect location is empty')
-    }
-    else {
-      const cookieObj = parseRespCookie(cookie)
-      if (cookieObj) {
-        args.cookies = args.cookies
-          ? { ...args.cookies, ...cookieObj }
-          : { ...cookieObj }
-      }
-      const options = parseInitOpts({ args, requestInit: init })
-
-      if (resp.status === 303) {
-        const ps = <RxRequestInit> { ...options.requestInit, ...options.args }
-        return get(url, ps)
-      }
-      else {
-        return _fetch(url, options.args, options.requestInit)
-      }
-    }
-  }
-  return of(resp)
-}
