@@ -15,7 +15,8 @@ import { parseInitOpts } from './util'
  * docs: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
  */
 export function handleRedirect(resp: Response, args: Args, init: RequestInit): Observable<Response> {
-  /* istanbul ignore else */
+  // test by test/30_cookie.test.ts
+  /* istanbul ignore next */
   if (args.keepRedirectCookies === true && resp.status >= 301 && resp.status <= 308) {
     const url = resp.headers.get('location')
     const cookie = resp.headers.get('Set-Cookie')
@@ -26,6 +27,7 @@ export function handleRedirect(resp: Response, args: Args, init: RequestInit): O
     }
     else {
       const cookieObj = parseRespCookie(cookie)
+      /* istanbul ignore else */
       if (cookieObj) {
         args.cookies = args.cookies
           ? { ...args.cookies, ...cookieObj }
