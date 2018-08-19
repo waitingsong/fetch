@@ -1,3 +1,4 @@
+/* istanbul ignore next  */
 export function ab2str(buf: ArrayBuffer) {
   const bufView = new Uint8Array(buf)
   const len = bufView.length
