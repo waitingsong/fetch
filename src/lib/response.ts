@@ -86,6 +86,7 @@ export function parseResponseType(response: Response, dataType: RxRequestInit['d
       case 'text':
         return defer(() => response.text())
 
+      /* istanbul ignore next  */
       default:
         assertNever(dataType)
     }
