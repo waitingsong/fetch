@@ -1,9 +1,9 @@
 import { of, throwError, Observable } from 'rxjs'
-import { catchError, concatMap, switchMap, timeout } from 'rxjs/operators'
+import { concatMap, switchMap } from 'rxjs/operators'
 
 import { initialRxRequestInit } from './config'
 import { Args, ObbRetType, RxRequestInit } from './model'
-import { createObbRequest } from './request'
+import { createObbRequest, parseRequestStream } from './request'
 import { handleResponseError, parseResponseType, parseRespCookie } from './response'
 import { parseInitOpts, splitInitArgs } from './util'
 
@@ -124,19 +124,7 @@ function _fetch(
   }
 
   let req$ = createObbRequest(input, args, requestInit)
-
-  /* istanbul ignore else */
-  if (typeof args.timeout === 'number' && args.timeout >= 0) {
-    req$ = req$.pipe(
-      timeout(args.timeout),
-      catchError(err => {
-        if (args.abortController && !args.abortController.signal.aborted) {
-          args.abortController.abort()
-        }
-        throw err
-      }),
-    )
-  }
+  req$ = parseRequestStream(req$, args)
 
   return req$
 }
