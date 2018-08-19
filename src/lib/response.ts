@@ -102,11 +102,6 @@ export function parseRespCookie(cookie: string | null): Args['cookies'] {
     return
   }
   const arr = cookie.split(/;/)
-
-  /* istanbul ignore else  */
-  if (!arr.length) {
-    return
-  }
   const ret: Args['cookies'] = {}
 
   for (let row of arr) {
@@ -125,5 +120,8 @@ export function parseRespCookie(cookie: string | null): Args['cookies'] {
     ret[key] = value
   }
 
-  return ret
+  /* istanbul ignore else  */
+  if (ret && Object.keys(ret).length) {
+    return ret
+  }
 }
