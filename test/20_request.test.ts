@@ -10,7 +10,7 @@ import { basename } from '../src/shared/index'
 
 
 const filename = basename(__filename)
-const mods = rewire('../src/lib/request')
+const mods = rewire('../src/lib/util')
 
 describe(filename, () => {
   const fnName = 'parseTimeout'

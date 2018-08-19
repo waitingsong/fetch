@@ -1,11 +1,11 @@
-import * as QueryString from 'qs'
-import { defer, of, throwError, Observable } from 'rxjs'
+import { of, throwError, Observable } from 'rxjs'
 import { catchError, concatMap, switchMap, timeout } from 'rxjs/operators'
 
 import { initialRxRequestInit } from './config'
 import { Args, ObbRetType, RxRequestInit } from './model'
-import { parseInitOpts, splitInitArgs } from './request'
+import { createObbRequest } from './request'
 import { handleResponseError, parseResponseType, parseRespCookie } from './response'
+import { parseInitOpts, splitInitArgs } from './util'
 
 
 /**
@@ -107,16 +107,6 @@ export function getGloalRequestInit(): Readonly<RxRequestInit> {
 }
 
 
-export function buildQueryString(url: string, data: RxRequestInit['data']): string {
-  /* istanbul ignore else */
-  if (data && typeof data === 'object' && Object.keys(data).length) {
-    const ps = QueryString.stringify(data)
-    return url.includes('?') ? `${url}&${ps}` : `${url}?${ps}`
-  }
-  return url
-}
-
-
 /**
  * fetch wrapper
  *
@@ -133,32 +123,7 @@ function _fetch(
     throwError(new TypeError('value of input invalid'))
   }
 
-  let req$: Observable<Response>
-  const fetchModule = selectFecthModule(args.fetchModule)
-
-  if (typeof input === 'string') {
-    /* istanbul ignore else */
-    if (typeof args.data !== 'undefined') {
-      if (args.processData) {
-        if (['GET', 'DELETE'].includes(<string> requestInit.method)) {
-          input = buildQueryString(input, args.data)
-        }
-        else {
-          requestInit.body = QueryString.stringify(args.data)
-        }
-      }
-      else {
-        requestInit.body = <any> args.data
-      }
-
-      delete args.data
-    }
-
-    req$ = defer(() => (<NonNullable<Args['fetchModule']>> fetchModule)(input, requestInit))
-  }
-  else {
-    req$ = defer(() => (<NonNullable<Args['fetchModule']>> fetchModule)(<Request> input))
-  }
+  let req$ = createObbRequest(input, args, requestInit)
 
   /* istanbul ignore else */
   if (typeof args.timeout === 'number' && args.timeout >= 0) {
@@ -176,28 +141,6 @@ function _fetch(
   return req$
 }
 
-
-/** select fetch instance from args.fetchModule or native */
-function selectFecthModule(mod: Args['fetchModule'] | null): Args['fetchModule'] {
-  let fetchModule: Args['fetchModule'] | null = null
-
-  if (mod) {
-    /* istanbul ignore else */
-    if (typeof mod !== 'function') {
-      throwError(new TypeError('fetchModule is not Function'))
-    }
-    fetchModule = mod
-  }
-  /* istanbul ignore else */
-  else if (typeof fetch === 'function') { // native fetch
-    fetchModule = fetch
-  }
-  else {
-    throwError(new TypeError('fetchModule/fetch not Function'))
-  }
-
-  return <Args['fetchModule']> fetchModule
-}
 
 /**
  * Handle redirect case to retrieve cookies before jumping under Node.js.
