@@ -134,24 +134,7 @@ function _fetch(
   }
 
   let req$: Observable<Response>
-
-  // let fetchModule: Args['fetchModule'] | null = typeof fetch === 'function' ? fetch : null
-  let fetchModule: Args['fetchModule'] | null = null
-
-  if (args.fetchModule) {
-    /* istanbul ignore else */
-    if (typeof args.fetchModule !== 'function') {
-      throwError(new TypeError('fetchModule is not Function'))
-    }
-    fetchModule = args.fetchModule
-  }
-  /* istanbul ignore else */
-  else if (typeof fetch === 'function') { // native fetch
-    fetchModule = fetch
-  }
-  else {
-    throwError(new TypeError('fetchModule/fetch not Function'))
-  }
+  const fetchModule = selectFecthModule(args.fetchModule)
 
   if (typeof input === 'string') {
     /* istanbul ignore else */
@@ -193,6 +176,28 @@ function _fetch(
   return req$
 }
 
+
+/** select fetch instance from args.fetchModule or native */
+function selectFecthModule(mod: Args['fetchModule'] | null): Args['fetchModule'] {
+  let fetchModule: Args['fetchModule'] | null = null
+
+  if (mod) {
+    /* istanbul ignore else */
+    if (typeof mod !== 'function') {
+      throwError(new TypeError('fetchModule is not Function'))
+    }
+    fetchModule = mod
+  }
+  /* istanbul ignore else */
+  else if (typeof fetch === 'function') { // native fetch
+    fetchModule = fetch
+  }
+  else {
+    throwError(new TypeError('fetchModule/fetch not Function'))
+  }
+
+  return <Args['fetchModule']> fetchModule
+}
 
 /**
  * Handle redirect case to retrieve cookies before jumping under Node.js.
