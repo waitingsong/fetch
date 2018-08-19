@@ -83,6 +83,8 @@ function parseTimeout(
     request$ = request$.pipe(
       timeout(timeoutValue),
       catchError(err => {
+        // test by test_browser/30_request.test.ts
+        /* istanbul ignore next */
         if (abortController && ! abortController.signal.aborted) {
           abortController.abort()
         }
