@@ -177,7 +177,6 @@ function _fetch(
     req$ = defer(() => (<NonNullable<Args['fetchModule']>> fetchModule)(<Request> input))
   }
 
-
   /* istanbul ignore else */
   if (typeof args.timeout === 'number' && args.timeout >= 0) {
     req$ = req$.pipe(
@@ -196,11 +195,12 @@ function _fetch(
 
 
 /**
- * Handle redirect case to retrieve cookies before jumping
+ * Handle redirect case to retrieve cookies before jumping under Node.js.
+ * There's no effect under Browser
  *
  * docs: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
  */
-export function handleRedirect(resp: Response, args: Args, init: RequestInit): Observable<Response> {
+function handleRedirect(resp: Response, args: Args, init: RequestInit): Observable<Response> {
   /* istanbul ignore else */
   if (args.keepRedirectCookies === true && resp.status >= 301 && resp.status <= 308) {
     const url = resp.headers.get('location')
@@ -224,10 +224,8 @@ export function handleRedirect(resp: Response, args: Args, init: RequestInit): O
         return get(url, ps)
       }
       else {
-
         return _fetch(url, options.args, options.requestInit)
       }
-
     }
   }
   return of(resp)
