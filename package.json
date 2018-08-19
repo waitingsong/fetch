@@ -63,6 +63,7 @@
     "@types/form-data": "^2.2.1",
     "@types/node-fetch": "^2.1.1",
     "abort-controller": "^1.0.2",
+    "abortcontroller-polyfill": "^1.1.9",
     "coveralls": "^3.0.0",
     "eslint": "^5.0.1",
     "form-data": "^2.3.2",

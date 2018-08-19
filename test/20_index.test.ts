@@ -1,9 +1,8 @@
 /// <reference types="mocha" />
 
-// import AbortController from 'abort-controller'
+// tslint:disable-next-line
 import nodefetch, { Headers } from 'node-fetch'
 import * as assert from 'power-assert'
-import { TimeoutError } from 'rxjs'
 
 import {
   buildQueryString,
@@ -124,57 +123,7 @@ describe(filename, () => {
     })
   })
 
-  describe('Should get() works with AbortSignal', () => {
-    const url = 'https://github.com/waitingsong/rxxfetch#readme'
-    const initArgs = <RxRequestInit> {
-      dataType: 'text',
-      fetchModule: nodefetch,
-      headersInitClass: Headers,
-    }
-
-    it('with timeout (node-fetch not support AbortSignal yet)', resolve => {
-      const args = { ...initArgs }
-      // args.abortController = new AbortController()
-      args.timeout = 1
-
-      get(url, args).subscribe(
-        () => {
-          assert(false, 'Should throw timeoutError but NOT')
-          resolve()
-        },
-        err => {
-          assert(err && err instanceof TimeoutError, err)
-          resolve()
-        },
-      )
-    })
-
-    // node-fetch not support AbortSignal yet
-    // it('by calling abortController.abort()', resolve => {
-    //   const args = { ...initArgs }
-    //   const abortController = new AbortController()
-    //   args.abortController = abortController
-    //   args.timeout = 60000
-
-    //   get(url, args).subscribe(
-    //     next => {
-    //       assert(false, 'Should got abortError in error() but go into next()')
-    //       resolve()
-    //     },
-    //     err => {
-    //       assert(err && err.name === 'AbortError', err)
-    //       resolve()
-    //     },
-    //   )
-    //   setTimeout(() => {
-    //     abortController.abort()
-    //   }, 1)
-    // })
-  })
-
 })
-
-
 
 
 describe(filename, () => {
