@@ -9,6 +9,7 @@
     "rxjs6",
     "http",
     "fetch",
+    "AbortController",
     "typescript"
   ],
   "engines": {
