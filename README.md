@@ -109,6 +109,18 @@ npm install rxxfetch
   }
   ```
 
+- Handle cookies when 302/303/307 redirect on Node.js, [CODE](https://github.com/waitingsong/rxxfetch/blob/master/test/30_cookie.test.ts)
+
+  ```ts
+  import nodefetch, { Headers } from 'node-fetch'
+
+  const args = <RxRequestInit> {
+    fetchModule: nodefetch,
+    headersInitClass: Headers,
+    keepRedirectCookies: true,  // <---- intercept redirect
+  }
+  ```
+
 
 ## License
 
