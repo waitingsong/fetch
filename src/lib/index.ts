@@ -4,7 +4,7 @@ import { concatMap } from 'rxjs/operators'
 import { initialRxRequestInit } from './config'
 import { ObbRetType, RxRequestInit } from './model'
 import { _fetch } from './request'
-import { handleRedirect, handleResponseError, parseResponseType } from './response'
+import { handleResponseError, parseResponseType } from './response'
 import { parseInitOpts, splitInitArgs } from './util'
 
 
@@ -28,7 +28,6 @@ export function rxfetch<T extends ObbRetType = ObbRetType>(
   const dataType: RxRequestInit['dataType'] = args.dataType
   const req$ = _fetch(input, args, requestInit)
   const ret$ = req$.pipe(
-    concatMap(res => handleRedirect(res, args, requestInit)),
     concatMap(handleResponseError),
     concatMap<Response, T>(res => parseResponseType(res, dataType)),
   )

@@ -1,9 +1,10 @@
 import * as QueryString from 'qs'
-import { defer, throwError, Observable } from 'rxjs'
-import { catchError, timeout } from 'rxjs/operators'
+import { defer, of, throwError, Observable } from 'rxjs'
+import { catchError, concatMap, timeout } from 'rxjs/operators'
 
 import { Args } from './model'
-import { buildQueryString, selectFecthModule } from './util'
+import { parseRespCookie } from './response'
+import { buildQueryString, parseInitOpts, selectFecthModule } from './util'
 
 
 /**
@@ -25,7 +26,9 @@ export function _fetch(
   let req$ = createObbRequest(input, args, requestInit)
   req$ = parseRequestStream(req$, args)
 
-  return req$
+  return req$.pipe(
+    concatMap(res => handleRedirect(res, args, requestInit)),
+  )
 }
 
 
@@ -94,4 +97,44 @@ function parseTimeout(
   }
 
   return request$
+}
+
+
+/**
+ * Handle redirect case to retrieve cookies before jumping under Node.js.
+ * There's no effect under Browser
+ *
+ * docs: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+ */
+export function handleRedirect(resp: Response, args: Args, init: RequestInit): Observable<Response> {
+  // test by test/30_cookie.test.ts
+  /* istanbul ignore next */
+  if (args.keepRedirectCookies === true && resp.status >= 301 && resp.status <= 308) {
+    const url = resp.headers.get('location')
+    const cookie = resp.headers.get('Set-Cookie')
+
+    /* istanbul ignore if */
+    if (! url) {
+      throwError('Redirect location is empty')
+    }
+    else {
+      const cookieObj = parseRespCookie(cookie)
+      /* istanbul ignore else */
+      if (cookieObj) {
+        args.cookies = args.cookies
+          ? { ...args.cookies, ...cookieObj }
+          : { ...cookieObj }
+      }
+      const options = parseInitOpts({ args, requestInit: init })
+
+      if (resp.status === 303) {
+        options.requestInit.method = 'GET'
+        return _fetch(url, options.args, options.requestInit)
+      }
+      else {
+        return _fetch(url, options.args, options.requestInit)
+      }
+    }
+  }
+  return of(resp)
 }
