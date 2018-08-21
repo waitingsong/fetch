@@ -49,6 +49,7 @@ export function parseResponseType(response: Response, dataType: RxRequestInit['d
         assertNever(dataType)
     }
   }
+  /* istanbul ignore next */
   return of(response)
 }
 
