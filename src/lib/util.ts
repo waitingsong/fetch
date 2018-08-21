@@ -255,7 +255,8 @@ function parseRedirect(
   curValue: RequestInit['redirect'] | undefined,
 ): RequestInit['redirect'] {
 
-  return keepRedirectCookies === true ? 'manual' : (curValue ? curValue : 'follow')
+  // not change value if on Browser
+  return keepRedirectCookies === true && typeof window !== 'undefined' ? 'manual' : (curValue ? curValue : 'follow')
 }
 
 /** Select fetch instance from args.fetchModule or native */
