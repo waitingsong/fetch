@@ -102,6 +102,7 @@ export function parseInitOpts(options: ArgsRequestInitCombined): ArgsRequestInit
 function parseHeaders(options: ArgsRequestInitCombined): ArgsRequestInitCombined {
   const { args, requestInit } = options
 
+  /* istanbul ignore else */
   if (args.headersInitClass) {
     const headers = requestInit.headers
       ? <Headers> new args.headersInitClass(requestInit.headers)
