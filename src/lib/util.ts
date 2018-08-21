@@ -103,45 +103,15 @@ function parseHeaders(options: ArgsRequestInitCombined): ArgsRequestInitCombined
   const { args, requestInit } = options
 
   if (args.headersInitClass) {
-    let headers = <Headers> new args.headersInitClass()
-
-    if (requestInit.headers) {
-      const obj = Object.getOwnPropertyDescriptor(requestInit.headers, 'has')
-      // Headers instance
-      if (typeof Headers !== 'undefined' && requestInit.headers instanceof Headers) {
-        const reqHeader = requestInit.headers
-
-        // @ts-ignore for karma
-        for (const [key, value] of reqHeader.entries()) {
-          headers.set(key, value)
-        }
-      }
-      // Headers instance
-      else if (obj && typeof obj.value === 'function') {
-        const reqHeader = <Headers> requestInit.headers
-
-        // @ts-ignore for karma
-        for (const [key, value] of reqHeader.entries()) {
-          headers.set(key, value)
-        }
-      }
-      else {  // key:value|array
-        headers = new args.headersInitClass(requestInit.headers)
-      }
-    }
+    const headers = requestInit.headers
+      ? <Headers> new args.headersInitClass(requestInit.headers)
+      : <Headers> new args.headersInitClass()
     requestInit.headers = headers
   }
   else {  // browser native
-    if (requestInit.headers) {
-      /* istanbul ignore else */
-      // @ts-ignore
-      if (typeof requestInit.headers.has !== 'function') { // key:value|array
-        requestInit.headers = new Headers(requestInit.headers)
-      }
-    }
-    else {
-      requestInit.headers = new Headers()
-    }
+    requestInit.headers = requestInit.headers
+      ? new Headers(requestInit.headers)
+      : new Headers()
   }
 
   /* istanbul ignore else */

@@ -1,11 +1,13 @@
 /// <reference types="mocha" />
 
+import nodefetch, { Headers as nodeHeaders } from 'node-fetch'
 import * as assert from 'power-assert'
 import rewire = require('rewire')
 
 import {
-  Args,
+  Args, ArgsRequestInitCombined, RxRequestInit,
 } from '../src/index'
+import { initialRxRequestInit } from '../src/lib/config'
 import { basename } from '../src/shared/index'
 
 
@@ -64,7 +66,7 @@ describe(filename, () => {
 
 describe(filename, () => {
   const fnName = 'parseDataType'
-  const fn = <(value: any) => Required<Args['dataType']>> mods.__get__(fnName)
+  const fn = <(value: any) => NonNullable<Args['dataType']>> mods.__get__(fnName)
 
   describe(`Should ${fnName}() works`, () => {
     it('with blank', () => {
@@ -86,6 +88,56 @@ describe(filename, () => {
     it('with valid string', () => {
       const ret = fn('raw')
       assert(ret === 'raw', `Should got result "json", but got "${ret}" `)
+    })
+  })
+
+})
+
+
+describe(filename, () => {
+  const fnName = 'parseHeaders'
+  const fn = <(options: ArgsRequestInitCombined) => ArgsRequestInitCombined> mods.__get__(fnName)
+  const initArgs = <RxRequestInit> {
+    fetchModule: nodefetch,
+    headersInitClass: nodeHeaders,
+  }
+
+  describe(`Should ${fnName}() works`, () => {
+    it('pass headers instance', () => {
+      const args = { ...initArgs }
+      const value = 'foo=' + Math.random()
+      const headers = new nodeHeaders()
+      headers.set('Cookie', value)
+
+      // @ts-ignore
+      const combined = <ArgsRequestInitCombined> {
+        args,
+        requestInit: {
+          headers,
+        },
+      }
+      const ret = fn(combined)
+      const retHeaders = <Headers> ret.requestInit.headers
+      assert(retHeaders && retHeaders.get('Cookie') === value)
+    })
+
+    it('pass headers key:value object', () => {
+      const args = { ...initArgs }
+      const value = 'foo=' + Math.random()
+      const headers = {
+        Cookie: value,
+      }
+
+      // @ts-ignore
+      const combined = <ArgsRequestInitCombined> {
+        args,
+        requestInit: {
+          headers,
+        },
+      }
+      const ret = fn(combined)
+      const retHeaders = <Headers> ret.requestInit.headers
+      assert(retHeaders && retHeaders.get('Cookie') === value)
     })
   })
 
