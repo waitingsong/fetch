@@ -42,8 +42,9 @@ describe(filename, () => {
   })
 
   describe('Should handle multiple redirect correctly', () => {
-    it('with keepRedirectCookies:true', resolve => {
-      const times = Math.round(Math.random() * 10)
+    const times = Math.round(Math.random() * 10)
+
+    it(`times: ${times} with keepRedirectCookies:true`, resolve => {
       const url = 'https://httpbin.org/redirect/' + times
       const args = { ...initArgs }
 
@@ -60,8 +61,7 @@ describe(filename, () => {
       )
     })
 
-    it('with keepRedirectCookies:false', resolve => {
-      const times = Math.round(Math.random() * 10)
+    it(`times: ${times} with keepRedirectCookies:false`, resolve => {
       const url = 'https://httpbin.org/redirect/' + times
       const args = { ...initArgs }
       args.keepRedirectCookies = false
