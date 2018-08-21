@@ -1,6 +1,6 @@
 # rxxfetch
 
-HTTP Fetch() 响应式实现，基于 rxjs6 封装，支持长青浏览器和 Node.js
+HTTP Fetch() 响应式接口，基于 rxjs6 封装，支持长青浏览器和 Node.js
 
 [![Version](https://img.shields.io/npm/v/rxxfetch.svg)](https://www.npmjs.com/package/rxxfetch)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
@@ -118,6 +118,19 @@ npm install rxxfetch
     fetchModule: nodefetch,
     headersInitClass: Headers,
     keepRedirectCookies: true,  // <---- intercept redirect
+  }
+  ```
+
+- 借助 `AbortController` 取消发出的请求, 详情见 [CODE](https://github.com/waitingsong/rxxfetch/blob/master/test/30_request.test.ts#L20)
+
+  ```ts
+  import { abortableFetch, AbortController } from 'abortcontroller-polyfill/dist/cjs-ponyfill.js'
+  import nodefetch, { Headers } from 'node-fetch'
+
+  const { fetch } = abortableFetch(nodefetch)
+  const args = <RxRequestInit> {
+    fetchModule: fetch,
+    headersInitClass: Headers,
   }
   ```
 

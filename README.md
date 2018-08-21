@@ -121,6 +121,19 @@ npm install rxxfetch
   }
   ```
 
+- Cancel an request via `AbortController`, details in [CODE](https://github.com/waitingsong/rxxfetch/blob/master/test/30_request.test.ts#L20)
+
+  ```ts
+  import { abortableFetch, AbortController } from 'abortcontroller-polyfill/dist/cjs-ponyfill.js'
+  import nodefetch, { Headers } from 'node-fetch'
+
+  const { fetch } = abortableFetch(nodefetch)
+  const args = <RxRequestInit> {
+    fetchModule: fetch,
+    headersInitClass: Headers,
+  }
+  ```
+
 
 ## License
 
