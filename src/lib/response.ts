@@ -22,35 +22,33 @@ export function handleResponseError(resp: Response): Observable<Response> {
 }
 
 
-export function parseResponseType(response: Response, dataType: RxRequestInit['dataType']): Observable<ObbRetType> {
-  /* istanbul ignore else  */
-  if (dataType) {
-    switch (dataType) {
-      case 'arrayBuffer':
-        return defer(() => response.arrayBuffer())
+export function parseResponseType(
+  response: Response,
+  dataType: NonNullable<RxRequestInit['dataType']>,
+): Observable<ObbRetType> {
 
-      case 'blob':
-        return defer(() => response.blob())
+  switch (dataType) {
+    case 'arrayBuffer':
+      return defer(() => response.arrayBuffer())
 
-      case 'formData':
-        return defer(() => response.formData())
+    case 'blob':
+      return defer(() => response.blob())
 
-      case 'json':
-        return <Observable<object>> defer(() => response.json())
+    case 'formData':
+      return defer(() => response.formData())
 
-      case 'raw':
-        return of(response)
+    case 'json':
+      return <Observable<object>> defer(() => response.json())
 
-      case 'text':
-        return defer(() => response.text())
+    case 'raw':
+      return of(response)
 
-      /* istanbul ignore next  */
-      default:
-        assertNever(dataType)
-    }
+    case 'text':
+      return defer(() => response.text())
+
+    default:
+      return assertNever(dataType)
   }
-  /* istanbul ignore next */
-  return of(response)
 }
 
 

@@ -25,7 +25,7 @@ export function rxfetch<T extends ObbRetType = ObbRetType>(
   const initOpts: RxRequestInit = init ? { ...initialRxRequestInit, ...init } : { ...initialRxRequestInit }
   const options = splitInitArgs(initOpts)
   const { args, requestInit } = parseInitOpts(options)
-  const dataType: RxRequestInit['dataType'] = args.dataType
+  const dataType = <NonNullable<RxRequestInit['dataType']>> args.dataType
   const req$ = _fetch(input, args, requestInit)
   const ret$ = req$.pipe(
     concatMap(handleResponseError),

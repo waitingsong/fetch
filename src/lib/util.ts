@@ -234,10 +234,10 @@ function parseMethod(options: ArgsRequestInitCombined): ArgsRequestInitCombined 
 }
 
 
-function parseDataType(value: any): Required<Args['dataType']> {
+function parseDataType(value: any): NonNullable<Args['dataType']> {
   /* istanbul ignore else */
   if (typeof value === 'string' && ['arrayBuffer', 'blob', 'formData', 'json', 'text', 'raw'].includes(value)) {
-    return <Args['dataType']> value
+    return <NonNullable<Args['dataType']>> value
   }
   return 'json'
 }
