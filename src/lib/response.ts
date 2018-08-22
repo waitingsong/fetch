@@ -11,12 +11,13 @@ export function handleResponseError(resp: Response): Observable<Response> {
   if (resp.ok) {
     return of(resp)
   }
-  const status = resp.status
+  const { status, statusText } = resp
 
   return defer(() => resp.text()).pipe(
-    catchError((err: Error) => of(err ? err.toString() : 'unknow error')),
+    catchError((err: Error) => of(err.toString())),
     map((txt: string) => {
-      throw new Error(`${ httpErrorMsgPrefix }${ status }\nResponse: ` + txt)
+      const str = `${ httpErrorMsgPrefix }${ status }\nstatusText: ${statusText}\nResponse: ${txt}`
+      throw new Error(str)
     }),
   )
 }
