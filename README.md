@@ -9,6 +9,15 @@ Observable HTTP Fetch() wrapped by rxjs6, support browser and Node.js
 [![Coverage Status](https://coveralls.io/repos/github/waitingsong/rxxfetch/badge.svg?branch=master)](https://coveralls.io/github/waitingsong/rxxfetch?branch=master)
 
 
+## Features
+
+- Observable ajax programing
+- Cancel an request via `AbortController`
+- Runs in Node.js and browsers. (Fetch API and Promises polyfills though)
+- Restful API `GET` `POST` `PUT` `DELETE` via `get()` `post()` `put()` `remove()`
+- Retrieve and append cookies during 30x redirect on Node.js (via keepRedirectCookies:true)
+- Apis support `Generics`, eg. `get<string>(url).subscribe(txt => console.info(txt.slice(0, 1)))`
+
 
 ## Installing
 
@@ -58,7 +67,7 @@ npm install rxxfetch
 
   get<string>(url, args).subscribe(
     txt => {
-      console.log(txt)
+      console.log(txt.slice(0, 10))
     },
     console.error,
   )

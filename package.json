@@ -2,15 +2,17 @@
   "name": "rxxfetch",
   "author": "waiting",
   "version": "1.4.0",
-  "description": "Observable HTTP fetch API for browser and Node.js. Handle 302/303 redirect correctly if parameter keepRedirectCookies TRUE for Node.js",
+  "description": "Observable HTTP fetch API for browser and Node.js. Handle 302/303 redirect correctly on Node.js",
   "keywords": [
     "rx",
     "rxjs",
     "rxjs6",
     "http",
     "fetch",
-    "AbortController",
+    "Generics",
     "typescript",
+    "Observable",
+    "AbortController",
     "303"
   ],
   "engines": {

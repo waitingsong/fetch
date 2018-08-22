@@ -9,6 +9,14 @@ HTTP Fetch() 响应式接口，基于 rxjs6 封装，支持长青浏览器和 No
 [![Coverage Status](https://coveralls.io/repos/github/waitingsong/rxxfetch/badge.svg?branch=master)](https://coveralls.io/github/waitingsong/rxxfetch?branch=master)
 
 
+## 特点
+
+- 响应式 ajax 编程
+- 通过 `AbortController` 取消一个请求
+- 支持浏览器和Node.js (可能需要 Fetch API 以及 Promises 插件兼容垫片)
+- 30x 重定向时可通过 keepRedirectCookies:true 参数提取并附加 cookies
+- Restful API `GET` `POST` `PUT` `DELETE` via `get()` `post()` `put()` `remove()`
+- 接口支持 `泛型`，例如 `get<string>(url).subscribe(txt => console.info(txt.slice(0, 1)))`
 
 ## 安装
 
@@ -58,7 +66,7 @@ npm install rxxfetch
 
   get<string>(url, args).subscribe(
     txt => {
-      console.log(txt)
+      console.log(txt.slice(0, 10))
     },
     console.error,
   )
