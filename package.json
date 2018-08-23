@@ -38,7 +38,7 @@
       "**/*.js",
       "**/*.test.ts",
       "**/*.d.ts",
-      "test",
+      "test*",
       "dist",
       "src/bin"
     ],
