@@ -1,6 +1,6 @@
 # rxxfetch
 
-Observable HTTP Fetch() wrapped by rxjs6, support browser and Node.js
+Observable HTTP Fetch() wrapped by [RxJS6](https://github.com/reactivex/rxjs), support browser and Node.js
 
 [![Version](https://img.shields.io/npm/v/rxxfetch.svg)](https://www.npmjs.com/package/rxxfetch)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)

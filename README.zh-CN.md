@@ -1,6 +1,6 @@
 # rxxfetch
 
-HTTP Fetch() 响应式接口，基于 rxjs6 封装，支持长青浏览器和 Node.js
+HTTP Fetch() 响应式接口，基于 [RxJS6](https://github.com/reactivex/rxjs) 封装，支持长青浏览器和 Node.js
 
 [![Version](https://img.shields.io/npm/v/rxxfetch.svg)](https://www.npmjs.com/package/rxxfetch)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
