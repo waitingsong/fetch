@@ -3,6 +3,8 @@
 import * as FormData from 'form-data'
 import { Response, ResponseInit } from 'node-fetch'
 import * as assert from 'power-assert'
+import { empty } from 'rxjs'
+import { catchError } from 'rxjs/operators'
 
 import {
   get,
@@ -209,8 +211,6 @@ describe(filename, () => {
     })
 
     it('with text', resolve => {
-      const size = Math.round(Math.random() * 100)
-      const ab = new ArrayBuffer(size)
       const foo = Math.random().toString()
       const resp = new Response(Buffer.from(foo), init)
 
@@ -223,6 +223,24 @@ describe(filename, () => {
         },
         err => {
           assert(false, err)
+          resolve()
+        },
+      )
+    })
+
+    it('with never value', resolve => {
+      const foo = 'neverValue:' + Math.random().toString()
+      const resp = new Response(Buffer.from(foo), init)
+
+      // @ts-ignore
+      parseResponseType<'text'>(resp, foo).subscribe(
+        () => {
+          assert(false, 'Should not go into here')
+
+          resolve()
+        },
+        (err: Error) => {
+          assert(err && err.message.includes(foo))
           resolve()
         },
       )

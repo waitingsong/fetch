@@ -230,6 +230,24 @@ describe(filename, () => {
         },
       )
     })
+
+    it('with never value', resolve => {
+      const foo = 'neverValue:' + Math.random().toString()
+      const resp = new Response(Buffer.from(foo), init)
+
+      // @ts-ignore
+      parseResponseType<'text'>(resp, foo).subscribe(
+        () => {
+          assert(false, 'Should not go into here')
+
+          resolve()
+        },
+        (err: Error) => {
+          assert(err && err.message.includes(foo))
+          resolve()
+        },
+      )
+    })
   })
 
 })

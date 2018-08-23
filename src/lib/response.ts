@@ -3,7 +3,7 @@ import { catchError, map } from 'rxjs/operators'
 
 import { httpErrorMsgPrefix } from './config'
 import { Args, RespDataType, RxRequestInit } from './model'
-import { assertNever } from './shared'
+import { assertNever, assertNeverObb } from './shared'
 
 
 export function handleResponseError(resp: Response): Observable<Response> {
@@ -47,7 +47,7 @@ export function parseResponseType<T extends NonNullable<RxRequestInit['dataType'
       return defer(() => response.text())
 
     default:
-      return assertNever(<never> dataType)
+      return assertNeverObb(<never> dataType)
   }
 }
 
