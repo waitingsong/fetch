@@ -89,7 +89,7 @@ export function parseInitOpts(options: ArgsRequestInitCombined): ArgsRequestInit
   options = parseHeaders(options) // at first!
 
   options = parseAbortController(options)
-  options = paraseCookies(options)
+  options = parseCookies(options)
   options = parseMethod(options)
   options.args.dataType = parseDataType(options.args.dataType)
   options.args.timeout = parseTimeout(options.args.timeout)
@@ -143,7 +143,7 @@ function parseAbortController(options: ArgsRequestInitCombined): ArgsRequestInit
 }
 
 
-function paraseCookies(options: ArgsRequestInitCombined): ArgsRequestInitCombined {
+function parseCookies(options: ArgsRequestInitCombined): ArgsRequestInitCombined {
   const { args, requestInit } = options
   const data = args.cookies
   const arr = <string[]> []
