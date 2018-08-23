@@ -3,7 +3,7 @@ import { catchError, map } from 'rxjs/operators'
 
 import { httpErrorMsgPrefix } from './config'
 import { Args, RespDataType, RxRequestInit } from './model'
-import { assertNever, assertNeverObb } from './shared'
+import { assertNeverObb } from './shared'
 
 
 export function handleResponseError(resp: Response): Observable<Response> {
