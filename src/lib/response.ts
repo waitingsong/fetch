@@ -2,7 +2,7 @@ import { defer, of, Observable } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 
 import { httpErrorMsgPrefix } from './config'
-import { Args, ObbRetType, RxRequestInit } from './model'
+import { Args, RespDataType, RxRequestInit } from './model'
 import { assertNever } from './shared'
 
 
@@ -22,11 +22,10 @@ export function handleResponseError(resp: Response): Observable<Response> {
   )
 }
 
-
-export function parseResponseType(
+export function parseResponseType<T extends NonNullable<RxRequestInit['dataType']> = 'json'>(
   response: Response,
-  dataType: NonNullable<RxRequestInit['dataType']>,
-): Observable<ObbRetType> {
+  dataType: T,
+): Observable<RespDataType[T]> {
 
   switch (dataType) {
     case 'arrayBuffer':
@@ -48,7 +47,7 @@ export function parseResponseType(
       return defer(() => response.text())
 
     default:
-      return assertNever(dataType)
+      return assertNever(<never> dataType)
   }
 }
 

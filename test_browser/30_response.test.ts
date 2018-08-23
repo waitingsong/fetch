@@ -7,7 +7,13 @@ import {
   Args,
 } from '../src/index'
 import { httpErrorMsgPrefix } from '../src/lib/config'
-import { handleResponseError, parseRespCookie } from '../src/lib/response'
+import {
+  handleResponseError,
+  parseResponseType,
+  parseRespCookie,
+} from '../src/lib/response'
+
+import { str2u8ab } from './util'
 
 
 const filename = '30_response.test.ts'
@@ -105,6 +111,7 @@ describe(filename, () => {
       handleResponseError(resp).subscribe(
         () => {
           assert(false, 'Should not go into here')
+
           resolve()
         },
         (err: Error) => {
@@ -113,8 +120,112 @@ describe(filename, () => {
           const reg = /Response: TypeError.+text/
           assert(msg.includes(`${httpErrorMsgPrefix}${status}`))
           assert(msg.includes('statusText: undefined'))
-          assert(reg.test(msg))
 
+          resolve()
+        },
+      )
+    })
+  })
+
+
+  describe('parseResponseType() works', () => {
+    const statusText = 'test resp'
+    const status = 200
+    const init = { status, statusText }
+
+    it('with arrayBuffer', resolve => {
+      const size = Math.round(Math.random() * 100)
+      const ab = new ArrayBuffer(size)
+      const resp = new Response(ab, init)
+
+      // @ts-ignore
+      parseResponseType<'arrayBuffer'>(resp, 'arrayBuffer').subscribe(
+        (buf: ArrayBuffer) => {
+          assert(buf && buf.byteLength === size)
+
+          resolve()
+        },
+        err => {
+          assert(false, err)
+          resolve()
+        },
+      )
+    })
+
+    // blob
+
+    /**
+     * formData() not supported by node-fetch yet.
+     * https://github.com/bitinn/node-fetch#iface-body
+     */
+    it('with formData (IE will fail)', resolve => {
+      const form = new FormData()
+      const p1 = Math.random().toString()
+      const p2 = Math.random().toString()
+      form.append('p1', p1)
+      form.append('p2', p2)
+      const resp = new Response(form, init)
+
+      // @ts-ignore
+      parseResponseType<'formData'>(resp, 'formData').subscribe(
+        ret => {
+          assert(ret && ret.get('p1') === p1)
+          assert(ret && ret.get('p2') === p2)
+
+          resolve()
+        },
+        (err: any) => {
+          assert(false, err.toString())
+          resolve()
+        },
+      )
+    })
+
+    it('with raw', resolve => {
+      const size = Math.round(Math.random() * 100)
+      const ab = new ArrayBuffer(size)
+      const resp = new Response(ab, init)
+
+      // @ts-ignore
+      parseResponseType<'raw'>(resp, 'raw').subscribe(
+        res => {
+          assert(res && res.status === status)
+          assert(res && res.statusText === statusText)
+
+          res.arrayBuffer()
+            .then(buf => {
+              assert(buf && buf.byteLength === size)
+              resolve()
+            })
+            .catch(err => {
+              assert(false, err)
+              resolve()
+            })
+
+        },
+        err => {
+          assert(false, err)
+          resolve()
+        },
+      )
+    })
+
+    it('with text', resolve => {
+      // const size = Math.round(Math.random() * 100)
+      // const ab = new ArrayBuffer(size)
+      const foo = Math.random().toString()
+      const ab = str2u8ab(foo)
+      const resp = new Response(ab, init)
+
+      // @ts-ignore
+      parseResponseType<'text'>(resp, 'text').subscribe(
+        txt => {
+          assert(txt && txt === foo)
+
+          resolve()
+        },
+        err => {
+          assert(false, err)
           resolve()
         },
       )

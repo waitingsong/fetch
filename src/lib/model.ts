@@ -1,5 +1,14 @@
 export type ObbRetType = ArrayBuffer | Blob | FormData | Response | string | object
 
+export interface RespDataType {
+  arrayBuffer: ArrayBuffer
+  blob: Blob
+  formData: FormData
+  json: object
+  text: string
+  raw: Response
+}
+
 /** see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type */
 export type ContentType = string
 
