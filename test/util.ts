@@ -9,6 +9,7 @@ export function ab2str(buf: ArrayBuffer) {
   return bstr.join('')
 }
 
+/* istanbul ignore next  */
 /** string to ArrayBuffer */
 export function str2ab(str: string): ArrayBuffer {
   const buf = new ArrayBuffer(str.length * 2)
@@ -19,6 +20,7 @@ export function str2ab(str: string): ArrayBuffer {
   return buf
 }
 
+/* istanbul ignore next  */
 /** string to Uint8ArrayBuffer */
 export function str2u8ab(s: string): Uint8Array {
   const buf = new ArrayBuffer(s.length)
