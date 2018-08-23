@@ -150,8 +150,10 @@ function parseCookies(options: ArgsRequestInitCombined): ArgsRequestInitCombined
 
   if (data && typeof data === 'object') {
     for (let [key, value] of Object.entries(data)) {
+      /* istanbul ignore else */
       if (key && typeof key === 'string') {
         key = key.trim()
+        /* istanbul ignore else */
         if (! key) {
           continue
         }

@@ -142,3 +142,97 @@ describe(filename, () => {
   })
 
 })
+
+
+describe(filename, () => {
+  const fnName = 'parseCookies'
+  const fn = <(options: ArgsRequestInitCombined) => ArgsRequestInitCombined> mods.__get__(fnName)
+  const initArgs = <RxRequestInit> {
+    fetchModule: nodefetch,
+    headersInitClass: nodeHeaders,
+  }
+
+  describe(`Should ${fnName}() works`, () => {
+    it('with valid data', () => {
+      const args = { ...initArgs }
+      const value = 'foo=' + Math.random()
+      const headers = new nodeHeaders()
+      const p1 = Math.random()
+      const p2 = Math.random().toString()
+      const cookies = { p1, p2 }
+
+      headers.set('Cookie', value)
+      args.cookies = cookies
+      // @ts-ignore
+      const combined = <ArgsRequestInitCombined> {
+        args,
+        requestInit: { headers },
+      }
+      const ret = fn(combined)
+      const retHeaders = <Headers> ret.requestInit.headers
+
+      assert(retHeaders && retHeaders.get('Cookie') === `${value}; p1=${p1}; p2=${p2}`)
+    })
+
+    it('with partial valid data', () => {
+      const args = { ...initArgs }
+      const value = 'foo=' + Math.random()
+      const headers = new nodeHeaders()
+      const p1 = Math.random()
+      const p2 = Math.random().toString()
+      const cookies = {
+        p1,
+        p2,
+        ' ': 'foo',
+        [Symbol.for('foo')]: 'bar',
+      }
+
+      headers.set('Cookie', value)
+      args.cookies = cookies
+      // @ts-ignore
+      const combined = <ArgsRequestInitCombined> {
+        args,
+        requestInit: { headers },
+      }
+      const ret = fn(combined)
+      const retHeaders = <Headers> ret.requestInit.headers
+
+      assert(retHeaders && retHeaders.get('Cookie') === `${value}; p1=${p1}; p2=${p2}`)
+    })
+
+    it('with enumerable Symbol key', () => {
+      const args = { ...initArgs }
+      const value = 'foo=' + Math.random()
+      const headers = new nodeHeaders()
+      const p1 = Math.random()
+      const p2 = Math.random().toString()
+      const p3 = Math.random().toString()
+      const cookies = {
+        p1,
+        p2,
+        ' ': 'foo',
+        [Symbol.for('foo')]: 'bar',
+      }
+
+      Object.defineProperty(cookies, 'bar', {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: p3,
+      })
+
+      headers.set('Cookie', value)
+      args.cookies = cookies
+      // @ts-ignore
+      const combined = <ArgsRequestInitCombined> {
+        args,
+        requestInit: { headers },
+      }
+      const ret = fn(combined)
+      const retHeaders = <Headers> ret.requestInit.headers
+
+      assert(retHeaders && retHeaders.get('Cookie') === `${value}; p1=${p1}; p2=${p2}; bar=${p3}`)
+    })
+  })
+
+})
