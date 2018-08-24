@@ -115,61 +115,6 @@ describe(filename, () => {
     })
   })
 
-
-  describe('Should get() works with AbortSignal', () => {
-    const url = 'https://github.com/waitingsong/rxxfetch#readme'
-    const initArgs = <RxRequestInit> {
-      dataType: 'text',
-    }
-
-    it('with timeout', resolve => {
-      if (typeof AbortController !== 'function') {
-        resolve()
-        return
-      }
-
-      const args = { ...initArgs }
-      args.timeout = Math.random() * 10
-
-      get(url, args).subscribe(
-        () => {
-          assert(false, 'Should throw timeoutError but NOT')
-          resolve()
-        },
-        err => {
-          assert(err && err instanceof TimeoutError, err)
-          resolve()
-        },
-      )
-    })
-
-    it('by calling abortController.abort()', resolve => {
-      if (typeof AbortController !== 'function') {
-        resolve()
-        return
-      }
-
-      const args = { ...initArgs }
-      const abortController = new AbortController()
-      args.abortController = abortController
-      args.timeout = 60000
-
-      get(url, args).subscribe(
-        next => {
-          assert(false, 'Should got abortError in error() but go into next()')
-          resolve()
-        },
-        err => {
-          assert(err && err.name === 'AbortError', err)
-          resolve()
-        },
-      )
-      setTimeout(() => {
-        abortController.abort()
-      }, (Math.random() * 10))
-    })
-  })
-
 })
 
 
