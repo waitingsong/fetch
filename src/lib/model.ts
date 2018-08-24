@@ -3,6 +3,7 @@ export type ObbRetType = ArrayBuffer | Blob | FormData | Response | string | obj
 export interface RespDataType {
   arrayBuffer: ArrayBuffer
   blob: Blob
+  /** Not supported with fetch polyfill */
   formData: FormData
   json: object
   text: string
