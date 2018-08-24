@@ -9,6 +9,8 @@
     "rxjs6",
     "http",
     "fetch",
+    "nodejs",
+    "Node.js",
     "Generics",
     "typescript",
     "Observable",
