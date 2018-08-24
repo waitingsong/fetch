@@ -44,7 +44,6 @@ describe(filename, () => {
       times = 3
     }
     it(`times: ${times} with keepRedirectCookies:true`, resolve => {
-      const times = Math.round(Math.random() * 10)
       const url = 'https://httpbin.org/redirect/' + times
       const args = { ...initArgs }
 
@@ -62,7 +61,6 @@ describe(filename, () => {
     })
 
     it(`times: ${times} with keepRedirectCookies:false`, resolve => {
-      const times = Math.round(Math.random() * 10)
       const url = 'https://httpbin.org/redirect/' + times
       const args = { ...initArgs }
       args.keepRedirectCookies = false
