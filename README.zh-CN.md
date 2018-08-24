@@ -16,7 +16,7 @@ HTTP Fetch() 响应式接口，基于 [RxJS6](https://github.com/reactivex/rxjs)
 - 支持浏览器和Node.js (可能需要 Fetch API 以及 Promises 插件兼容垫片)
 - 30x 重定向时可通过 keepRedirectCookies:true 参数提取并附加 cookies
 - Restful API `GET` `POST` `PUT` `DELETE` via `get()` `post()` `put()` `remove()`
-- 接口支持 `泛型`，例如 `get<string>(url).subscribe(txt => console.info(txt.slice(0, 1)))`
+- 接口支持 `泛型`，例如 `get<string>(url).subscribe(txt => console.info(txt.slice(1)))`
 
 ## 安装
 
@@ -26,87 +26,88 @@ npm install rxxfetch
 
 ## 使用
 
-- Get 获取 json 结果
+### Get JSON
 
-  ```ts
-  import { get, RxRequestInit } from 'rxxfetch'
+```ts
+import { get, RxRequestInit } from 'rxxfetch'
 
-  const url = 'https://httpbin.org/get'
+const url = 'https://httpbin.org/get'
 
-  get<HttpbinGetResponse>(url, args).subscribe(
-    json => {
-      console.log(json.url)
-    },
-    console.error,
-  )
+get<HttpbinGetResponse>(url, args).subscribe(
+  json => {
+    console.log(json.url)
+  },
+  console.error,
+)
 
-  /** GET Response Interface of httpbin.org */
-  export interface HttpbinGetResponse {
-    args: any
-    headers: {
-      Accept: string
-      Connection: string
-      Host: string
-      'User-Agent': string,
-    }
-    origin: string  // ip
-    url: string
+/** GET Response Interface of httpbin.org */
+export interface HttpbinGetResponse {
+  args: any
+  headers: {
+    Accept: string
+    Connection: string
+    Host: string
+    'User-Agent': string,
   }
-  ```
+  origin: string  // ip
+  url: string
+}
+```
 
-- Get 获取 txt 结果
+### Get HTML
 
-  ```ts
-  import { get, RxRequestInit } from 'rxxfetch'
+```ts
+import { get, RxRequestInit } from 'rxxfetch'
 
-  const url = 'https://httpbin.org/get'
-  const args: RxRequestInit = {
-    dataType: 'text'
-  }
+const url = 'https://httpbin.org/get'
+const args: RxRequestInit = {
+  dataType: 'text'
+}
 
-  get<string>(url, args).subscribe(
-    txt => {
-      console.log(txt.slice(0, 10))
-    },
-    console.error,
-  )
+get<string>(url, args).subscribe(
+  txt => {
+    console.log(txt.slice(0, 10))
+  },
+  console.error,
+)
+```
 
-  ```
+### Post
 
-- Post 提交数据
+```ts
+import { post, RxRequestInit } from 'rxxfetch'
 
-  ```ts
-  import { post, RxRequestInit } from 'rxxfetch'
+const url = 'https://httpbin.org/post'
+const pdata = {
+  p1: Math.random(),
+  p2: Math.random().toString(),
+}
+const args: RxRequestInit = {
+  data: pdata
+}
 
-  const url = 'https://httpbin.org/post'
-  const pdata = {
-    p1: Math.random(),
-    p2: Math.random().toString(),
-  }
-  const args: RxRequestInit = {
-    data: pdata
-  }
+post<HttpbinPostResponse>(url, args).subscribe(
+  res => {
+    const form = res.form
+    assert(form && form.p1 === pdata.p1.toString(), `Should got "${pdata.p1}"`)
+    assert(form && form.p2 === pdata.p2, `Should got "${pdata.p2}"`)
+  },
+)
 
-  post<HttpbinPostResponse>(url, args).subscribe(
-    res => {
-      const form = res.form
-      assert(form && form.p1 === pdata.p1.toString(), `Should got "${pdata.p1}"`)
-      assert(form && form.p2 === pdata.p2, `Should got "${pdata.p2}"`)
-    },
-  )
+/** POST Response Interface of httpbin.org */
+export interface HttpbinPostResponse extends HttpbinGetResponse {
+  data: string
+  files: any
+  form: any
+  json: any
+}
+```
 
-  /** POST Response Interface of httpbin.org */
-  export interface HttpbinPostResponse extends HttpbinGetResponse {
-    data: string
-    files: any
-    form: any
-    json: any
-  }
-  ```
+### `PUT` `REMOVE` goto [TEST](https://github.com/waitingsong/rxxfetch/tree/master/test_browser)
 
-- 包括 `PUT` `REMOVE` 请求类型的更多演示请见 [Test](https://github.com/waitingsong/rxxfetch/tree/master/test_browser)
+### On Node.js
 
-- Node.js 先要一些扩展包，详情见 [Test](https://github.com/waitingsong/rxxfetch/tree/master/test)
+- Needs some polylfill, details in [TEST](https://github.com/waitingsong/rxxfetch/blob/master/test/20_post.test.ts#L22)
 
   ```ts
   import nodefetch, { Headers } from 'node-fetch'
@@ -135,18 +136,21 @@ npm install rxxfetch
   import { abortableFetch, AbortController } from 'abortcontroller-polyfill/dist/cjs-ponyfill.js'
   import nodefetch, { Headers } from 'node-fetch'
 
-  const { fetch } = abortableFetch(nodefetch)
+  const { fetch } = abortableFetch(nodefetch) // <-- polyfilling fetch
   const args = <RxRequestInit> {
     fetchModule: fetch,
     headersInitClass: Headers,
   }
   ```
 
+## Demos
+
+- [Browser](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/)
+- [Node.js](https://github.com/waitingsong/rxxfetch/blob/master/test/)
 
 ## License
 
 [MIT](LICENSE)
-
 
 ### Languages
 
