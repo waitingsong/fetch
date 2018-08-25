@@ -10,6 +10,7 @@ import { HttpbinPostResponse, PDATA } from '../test/model'
 const filename = '20_remove.test.ts'
 
 describe(filename, () => {
+  beforeEach(resolve => setTimeout(resolve, 2000))
 
   describe('Should remove() works with httpbin.org', () => {
     const url = 'https://httpbin.org/delete'
@@ -121,7 +122,6 @@ describe(filename, () => {
         },
       )
     })
-
   })
 
 })

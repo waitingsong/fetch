@@ -8,6 +8,7 @@ import { HttpbinPostResponse } from '../test/model'
 const filename = '20_post.test.ts'
 
 describe(filename, () => {
+  beforeEach(resolve => setTimeout(resolve, 2000))
 
   describe('Should post() works with httpbin.org', () => {
     const url = 'https://httpbin.org/post'

@@ -8,6 +8,7 @@ import { fetch, RxRequestInit } from '../src/index'
 const filename = '20_rxfetch.test.ts'
 
 describe(filename, () => {
+  beforeEach(resolve => setTimeout(resolve, 2000))
 
   describe('Should rxfetch() throw error with invalid input', () => {
     it('with blank string', resolve => {
@@ -76,8 +77,6 @@ describe(filename, () => {
         },
       )
     })
-
   })
 
 })
-

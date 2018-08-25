@@ -15,6 +15,7 @@ import { HttpbinPostResponse } from './model'
 const filename = basename(__filename)
 
 describe(filename, () => {
+  beforeEach(resolve => setTimeout(resolve, 2000))
 
   describe('Should put() works with httpbin.org', () => {
     const url = 'https://httpbin.org/put'

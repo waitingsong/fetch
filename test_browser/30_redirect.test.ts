@@ -14,6 +14,8 @@ import { HttpbinGetResponse } from '../test/model'
 const filename = '30_redirect.test.ts'
 
 describe(filename, () => {
+  beforeEach(resolve => setTimeout(resolve, 2000))
+
   const initArgs = <RxRequestInit> {
     keepRedirectCookies: true,  // ignored on browser
   }

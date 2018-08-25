@@ -12,6 +12,8 @@ import { ab2str } from './util'
 const filename = '20_get.test.ts'
 
 describe(filename, () => {
+  beforeEach(resolve => setTimeout(resolve, 2000))
+
   describe('Should get() works with httpbin.org', () => {
     const url = 'https://httpbin.org/get'
     const initArgs = <RxRequestInit> { }

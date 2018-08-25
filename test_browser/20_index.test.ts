@@ -20,6 +20,8 @@ const filename = '20_index.test.ts'
 const defaultInit = getGloalRequestInit()
 
 describe(filename, () => {
+  beforeEach(resolve => setTimeout(resolve, 2000))
+
   afterEach(() => {
     setGloalRequestInit(defaultInit)
   })
@@ -119,6 +121,8 @@ describe(filename, () => {
 
 
 describe(filename, () => {
+  beforeEach(resolve => setTimeout(resolve, 2000))
+
   const fnName = 'buildQuery'
 
   describe(`Should ${fnName}() works`, () => {
@@ -161,6 +165,8 @@ describe(filename, () => {
 
 // SKIP native Fetch not support set Request cookie yet!
 describe.skip(filename, () => {
+  beforeEach(resolve => setTimeout(resolve, 2000))
+
   // const url = 'https://httpbin.org/cookies/set/foo/' + value
   const url = 'https://httpbin.org/cookies'
   const initArgs = <RxRequestInit> {
@@ -224,6 +230,8 @@ describe.skip(filename, () => {
 
 // There is a restriction to access response headers when you are using Fetch API over CORS
 describe.skip(filename, () => {
+  beforeEach(resolve => setTimeout(resolve, 2000))
+
   const url = 'https://httpbin.org/get'
   const initArgs = <RxRequestInit> {
     dataType: 'raw',

@@ -10,6 +10,7 @@ import { basename } from '../src/shared/index'
 const filename = basename(__filename)
 
 describe(filename, () => {
+  beforeEach(resolve => setTimeout(resolve, 2000))
 
   describe('Should rxfetch() throw error with invalid input', () => {
     const initArgs = <RxRequestInit> {
@@ -104,7 +105,6 @@ describe(filename, () => {
         },
       )
     })
-
   })
 
 })

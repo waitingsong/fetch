@@ -15,6 +15,8 @@ import {
 const filename = '30_request.test.ts'
 
 describe(filename, () => {
+  beforeEach(resolve => setTimeout(resolve, 2000))
+
   describe('Should get() works with AbortSignal', () => {
     const url = 'https://github.com/waitingsong/rxxfetch#readme'
     const initArgs = <RxRequestInit> {

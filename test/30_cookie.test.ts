@@ -15,6 +15,8 @@ import { HttpbinRetCookie } from './model'
 const filename = basename(__filename)
 
 describe(filename, () => {
+  beforeEach(resolve => setTimeout(resolve, 2000))
+
   const initArgs = <RxRequestInit> {
     credentials: 'include',
     fetchModule: nodefetch,

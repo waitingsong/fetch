@@ -16,6 +16,8 @@ import { HttpbinGetResponse } from './model'
 const filename = basename(__filename)
 
 describe(filename, () => {
+  beforeEach(resolve => setTimeout(resolve, 2000))
+
   const initArgs = <RxRequestInit> {
     fetchModule: nodefetch,
     headersInitClass: Headers,

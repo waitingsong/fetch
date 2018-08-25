@@ -22,9 +22,12 @@ const filename = basename(__filename)
 const defaultInit = getGloalRequestInit()
 
 describe(filename, () => {
+  beforeEach(resolve => setTimeout(resolve, 2000))
+
   afterEach(() => {
     setGloalRequestInit(defaultInit)
   })
+
 
   describe('Should getGloalRequestInit() works', () => {
     const initData = getGloalRequestInit()
@@ -127,6 +130,8 @@ describe(filename, () => {
 
 
 describe(filename, () => {
+  beforeEach(resolve => setTimeout(resolve, 2000))
+
   const fnName = 'buildQuery'
 
   describe(`Should ${fnName}() works`, () => {
@@ -168,6 +173,8 @@ describe(filename, () => {
 
 
 describe(filename, () => {
+  beforeEach(resolve => setTimeout(resolve, 2000))
+
   // const url = 'https://httpbin.org/cookies/set/foo/' + value
   const url = 'https://httpbin.org/cookies'
   const initArgs = <RxRequestInit> {
@@ -291,6 +298,8 @@ describe(filename, () => {
 
 
 describe(filename, () => {
+  beforeEach(resolve => setTimeout(resolve, 2000))
+
   const url = 'https://httpbin.org/get'
   const initArgs = <RxRequestInit> {
     dataType: 'raw',

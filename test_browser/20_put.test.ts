@@ -9,6 +9,7 @@ import { HttpbinPostResponse } from '../test/model'
 const filename = '20_put.test.ts'
 
 describe(filename, () => {
+  beforeEach(resolve => setTimeout(resolve, 2000))
 
   describe('Should put() works with httpbin.org', () => {
     const url = 'https://httpbin.org/put'

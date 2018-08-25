@@ -21,6 +21,8 @@ import {
 const filename = '30_response.test.ts'
 
 describe(filename, () => {
+  beforeEach(resolve => setTimeout(resolve, 2000))
+
   describe('parseRespCookie() works', () => {
     it('with valid input', () => {
       const value = Math.random().toString()
