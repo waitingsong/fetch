@@ -40,11 +40,8 @@ describe(filename, () => {
   })
 
   describe('Should handle multiple redirect correctly (ignore value of keepRedirectCookies)', () => {
-    let times = Math.round(Math.random() * 10)
+    const times = 2
 
-    if (times > 3 || ! times) {
-      times = 3
-    }
     it(`times: ${times} with keepRedirectCookies:true`, resolve => {
       const url = 'https://httpbin.org/redirect/' + times
       const args = { ...initArgs }
