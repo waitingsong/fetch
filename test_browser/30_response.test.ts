@@ -160,6 +160,9 @@ describe(filename, function() {
     const init = { status, statusText }
 
     it('with arrayBuffer', resolve => {
+      if (! ArrayBuffer && typeof ArrayBuffer.isView !== 'function') {
+        return resolve()
+      }
       const size = Math.round(Math.random() * 100)
       const ab = new ArrayBuffer(size)
       const resp = new Response(ab, init)
