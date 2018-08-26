@@ -128,6 +128,29 @@ describe(filename, function() {
         },
       )
     })
+
+    it('no error with bare:true', resolve => {
+      const statusText = 'test resp error'
+      const status = 500
+      const init = { status, statusText }
+      const resp = new Response('', init)
+
+      // @ts-ignore
+      handleResponseError(resp, true).subscribe(
+        res => {
+          assert(res
+            && res.ok === false
+            && res.status === status
+            && res.statusText.includes(statusText))
+          resolve()
+        },
+        () => {
+          assert(false, 'Should not go into here')
+
+          resolve()
+        },
+      )
+    })
   })
 
 

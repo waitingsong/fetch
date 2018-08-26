@@ -26,7 +26,7 @@ describe(filename, function() {
   }
 
   describe('Should works with keepRedirectCookies:true', () => {
-    it('by get()', resolve => {
+    it('set by get()', resolve => {
       const value = Math.random().toString()
       const url = 'https://httpbin.org/cookies/set/foo/' + value
       const args = { ...initArgs }
@@ -35,6 +35,53 @@ describe(filename, function() {
         next => {
           assert(next && next.cookies)
           assert(next.cookies.foo === value)
+          resolve()
+        },
+        err => {
+          assert(false, err)
+          resolve()
+        },
+      )
+    })
+  })
+
+  describe('Should works with keepRedirectCookies:false', () => {
+    it('retrieve cookies with bare:true and redirect:"manual"', resolve => {
+      const value = Math.random().toString()
+      const url = 'https://httpbin.org/cookies/set/foo/' + value
+      const args = { ...initArgs }
+
+      args.dataType = 'bare'
+      args.redirect = 'manual'  // !
+      args.keepRedirectCookies = false
+
+      get<Response>(url, args).subscribe(
+        res => {
+          assert(res && ! res.ok)
+          const cookies = res.headers.get('Set-Cookie')
+          assert(cookies && cookies.includes(`foo=${value};`))
+          resolve()
+        },
+        err => {
+          assert(false, err)
+          resolve()
+        },
+      )
+    })
+
+    it('retrieve cookies with bare:true', resolve => {
+      const value = Math.random().toString()
+      const url = 'https://httpbin.org/cookies/set/foo/' + value
+      const args = { ...initArgs }
+
+      args.dataType = 'bare'
+      args.keepRedirectCookies = false
+
+      get<Response>(url, args).subscribe(
+        res => {
+          assert(res && res.ok)
+          const cookies = res.headers.get('Set-Cookie')
+          assert(! cookies)
           resolve()
         },
         err => {

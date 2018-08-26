@@ -6,9 +6,9 @@ import { Args, RespDataType, RxRequestInit } from './model'
 import { assertNeverObb } from './shared'
 
 
-export function handleResponseError(resp: Response): Observable<Response> {
+export function handleResponseError(resp: Response, bare: boolean = false): Observable<Response> {
   /* istanbul ignore else */
-  if (resp.ok) {
+  if (resp.ok || bare) {
     return of(resp)
   }
   const { status, statusText } = resp
@@ -30,6 +30,9 @@ export function parseResponseType<T extends NonNullable<RxRequestInit['dataType'
   switch (dataType) {
     case 'arrayBuffer':
       return defer(() => response.arrayBuffer())
+
+    case 'bare':
+      return of(response)
 
     case 'blob':
       return defer(() => response.blob())

@@ -2,6 +2,8 @@ export type ObbRetType = ArrayBuffer | Blob | FormData | Response | string | obj
 
 export interface RespDataType {
   arrayBuffer: ArrayBuffer
+  /** same to raw but regardless of response status */
+  bare: Response
   blob: Blob
   /** Not supported with fetch polyfill yet */
   formData: FormData
@@ -31,7 +33,7 @@ export interface Args {
    * Default "json"
    * Return Response object without parse if set to "raw"
    */
-  dataType?: 'arrayBuffer' | 'blob' | 'formData' | 'json' | 'text' | 'raw'
+  dataType?: keyof RespDataType
 
   /** Pass a fetch() module for isomorphic usage such as node-fetch or isomorphic-fetch */
   fetchModule?: (input: string | Request, init?: RequestInit) => Promise<Response | any>
