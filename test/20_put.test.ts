@@ -14,7 +14,8 @@ import { HttpbinPostResponse } from './model'
 
 const filename = basename(__filename)
 
-describe(filename, () => {
+describe(filename, function() {
+  this.retries(3)
   beforeEach(resolve => setTimeout(resolve, 2000))
 
   describe('Should put() works with httpbin.org', () => {

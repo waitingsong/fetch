@@ -7,7 +7,8 @@ import { fetch, RxRequestInit } from '../src/index'
 
 const filename = '20_rxfetch.test.ts'
 
-describe(filename, () => {
+describe(filename, function() {
+  this.retries(3)
   beforeEach(resolve => setTimeout(resolve, 2000))
 
   describe('Should rxfetch() throw error with invalid input', () => {

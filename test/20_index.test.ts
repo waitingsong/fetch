@@ -21,7 +21,8 @@ import { HttpbinRetCookie } from './model'
 const filename = basename(__filename)
 const defaultInit = getGloalRequestInit()
 
-describe(filename, () => {
+describe(filename, function() {
+  this.retries(3)
   beforeEach(resolve => setTimeout(resolve, 2000))
 
   afterEach(() => {
@@ -129,7 +130,8 @@ describe(filename, () => {
 })
 
 
-describe(filename, () => {
+describe(filename, function() {
+  this.retries(3)
   beforeEach(resolve => setTimeout(resolve, 2000))
 
   const fnName = 'buildQuery'
@@ -172,7 +174,8 @@ describe(filename, () => {
 })
 
 
-describe(filename, () => {
+describe(filename, function() {
+  this.retries(3)
   beforeEach(resolve => setTimeout(resolve, 2000))
 
   // const url = 'https://httpbin.org/cookies/set/foo/' + value
@@ -297,7 +300,8 @@ describe(filename, () => {
 })
 
 
-describe(filename, () => {
+describe(filename, function() {
+  this.retries(3)
   beforeEach(resolve => setTimeout(resolve, 2000))
 
   const url = 'https://httpbin.org/get'

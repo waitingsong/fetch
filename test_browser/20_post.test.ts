@@ -7,7 +7,8 @@ import { HttpbinPostResponse } from '../test/model'
 
 const filename = '20_post.test.ts'
 
-describe(filename, () => {
+describe(filename, function() {
+  this.retries(3)
   beforeEach(resolve => setTimeout(resolve, 2000))
 
   describe('Should post() works with httpbin.org', () => {

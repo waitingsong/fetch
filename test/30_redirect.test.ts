@@ -15,7 +15,8 @@ import { HttpbinGetResponse } from './model'
 
 const filename = basename(__filename)
 
-describe(filename, () => {
+describe(filename, function() {
+  this.retries(3)
   beforeEach(resolve => setTimeout(resolve, 2000))
 
   const initArgs = <RxRequestInit> {

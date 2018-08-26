@@ -9,7 +9,8 @@ import { basename } from '../src/shared/index'
 
 const filename = basename(__filename)
 
-describe(filename, () => {
+describe(filename, function() {
+  this.retries(3)
   beforeEach(resolve => setTimeout(resolve, 2000))
 
   describe('Should rxfetch() throw error with invalid input', () => {

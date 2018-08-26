@@ -19,7 +19,8 @@ import { HttpbinRetCookie } from '../test/model'
 const filename = '20_index.test.ts'
 const defaultInit = getGloalRequestInit()
 
-describe(filename, () => {
+describe(filename, function() {
+  this.retries(3)
   beforeEach(resolve => setTimeout(resolve, 2000))
 
   afterEach(() => {
@@ -120,7 +121,8 @@ describe(filename, () => {
 })
 
 
-describe(filename, () => {
+describe(filename, function() {
+  this.retries(3)
   beforeEach(resolve => setTimeout(resolve, 2000))
 
   const fnName = 'buildQuery'
@@ -164,7 +166,8 @@ describe(filename, () => {
 
 
 // SKIP native Fetch not support set Request cookie yet!
-describe.skip(filename, () => {
+describe.skip(filename, function() {
+  this.retries(3)
   beforeEach(resolve => setTimeout(resolve, 2000))
 
   // const url = 'https://httpbin.org/cookies/set/foo/' + value
@@ -229,7 +232,8 @@ describe.skip(filename, () => {
 
 
 // There is a restriction to access response headers when you are using Fetch API over CORS
-describe.skip(filename, () => {
+describe.skip(filename, function() {
+  this.retries(3)
   beforeEach(resolve => setTimeout(resolve, 2000))
 
   const url = 'https://httpbin.org/get'

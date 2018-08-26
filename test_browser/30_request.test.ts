@@ -14,7 +14,8 @@ import {
 
 const filename = '30_request.test.ts'
 
-describe(filename, () => {
+describe(filename, function() {
+  this.retries(3)
   beforeEach(resolve => setTimeout(resolve, 2000))
 
   describe('Should get() works with AbortSignal', () => {

@@ -18,7 +18,8 @@ import { str2u8ab } from './util'
 
 const filename = '30_response.test.ts'
 
-describe(filename, () => {
+describe(filename, function() {
+  this.retries(3)
   beforeEach(resolve => setTimeout(resolve, 2000))
 
   describe('parseRespCookie() works', () => {

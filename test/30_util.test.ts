@@ -14,7 +14,8 @@ import { basename } from '../src/shared/index'
 const filename = basename(__filename)
 const mods = rewire('../src/lib/util')
 
-describe(filename, () => {
+describe(filename, function() {
+  this.retries(3)
   beforeEach(resolve => setTimeout(resolve, 2000))
 
   const fnName = 'parseTimeout'
@@ -66,7 +67,8 @@ describe(filename, () => {
 })
 
 
-describe(filename, () => {
+describe(filename, function() {
+  this.retries(3)
   beforeEach(resolve => setTimeout(resolve, 2000))
 
   const fnName = 'parseDataType'
@@ -98,7 +100,8 @@ describe(filename, () => {
 })
 
 
-describe(filename, () => {
+describe(filename, function() {
+  this.retries(3)
   beforeEach(resolve => setTimeout(resolve, 2000))
 
   const fnName = 'parseHeaders'
@@ -150,7 +153,8 @@ describe(filename, () => {
 })
 
 
-describe(filename, () => {
+describe(filename, function() {
+  this.retries(3)
   beforeEach(resolve => setTimeout(resolve, 2000))
 
   const fnName = 'parseCookies'
