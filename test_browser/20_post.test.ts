@@ -1,6 +1,7 @@
 /// <reference types="mocha" />
 
 import * as assert from 'power-assert'
+import { retry } from 'rxjs/operators'
 
 import { post, RxRequestInit } from '../src/index'
 import { HttpbinPostResponse } from '../test/model'
@@ -9,7 +10,7 @@ const filename = '20_post.test.ts'
 
 describe(filename, function() {
   this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 5000))
+  beforeEach(resolve => setTimeout(resolve, 15000))
 
   describe('Should post() works with httpbin.org', () => {
     const url = 'https://httpbin.org/post'
@@ -101,25 +102,28 @@ describe(filename, function() {
 
       const args: RxRequestInit = { ...initArgs, data: pdata, processData: false, contentType: false }
 
-      post<HttpbinPostResponse>(url, args).subscribe(
-        res => {
-          assert(res && res.url === url)
-
-          try {
-            const form = res.form
-            assert(form && form.p1 === p1, `Should got "${p1}"`)
-            assert(form && form.p2 === p2, `Should got "${p2}"`)
-          }
-          catch (ex) {
-            assert(false, ex)
-          }
-          resolve()
-        },
-        err => {
-          assert(false, err)
-          resolve()
-        },
+      post<HttpbinPostResponse>(url, args).pipe(
+        retry(2),
       )
+        .subscribe(
+          res => {
+            assert(res && res.url === url)
+
+            try {
+              const form = res.form
+              assert(form && form.p1 === p1, `Should got "${p1}"`)
+              assert(form && form.p2 === p2, `Should got "${p2}"`)
+            }
+            catch (ex) {
+              assert(false, ex)
+            }
+            resolve()
+          },
+          err => {
+            assert(false, err)
+            resolve()
+          },
+        )
     })
 
     it('send a file', resolve => {
@@ -131,20 +135,23 @@ describe(filename, function() {
       pdata.append('p2', blob, 'nameFoo')
       const args: RxRequestInit = { ...initArgs, data: pdata, processData: false, contentType: false }
 
-      post<HttpbinPostResponse>(url, args).subscribe(
-        res => {
-          assert(res && res.url === url)
-
-          const { files, form } = res
-          assert(form && form.p1 === p1, `Should got "${p1}"`)
-          assert(files && files.p2 === content, `Should got "${content}"`)
-          resolve()
-        },
-        err => {
-          assert(false, err)
-          resolve()
-        },
+      post<HttpbinPostResponse>(url, args).pipe(
+        retry(2),
       )
+        .subscribe(
+          res => {
+            assert(res && res.url === url)
+
+            const { files, form } = res
+            assert(form && form.p1 === p1, `Should got "${p1}"`)
+            assert(files && files.p2 === content, `Should got "${content}"`)
+            resolve()
+          },
+          err => {
+            assert(false, err)
+            resolve()
+          },
+        )
     })
   })
 

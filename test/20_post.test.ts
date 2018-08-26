@@ -4,7 +4,7 @@ import * as FormData from 'form-data'
 import nodefetch, { Headers } from 'node-fetch'
 import * as assert from 'power-assert'
 import { defer } from 'rxjs'
-import { switchMap, tap } from 'rxjs/operators'
+import { retry, switchMap, tap } from 'rxjs/operators'
 
 import { post, RxRequestInit } from '../src/index'
 import { basename, readFileAsync } from '../src/shared/index'
@@ -16,7 +16,7 @@ const filename = basename(__filename)
 
 describe(filename, function() {
   this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 5000))
+  beforeEach(resolve => setTimeout(resolve, 15000))
 
   describe('Should post() works with httpbin.org', () => {
     const url = 'https://httpbin.org/post'
@@ -96,7 +96,9 @@ describe(filename, function() {
 
       const args: RxRequestInit = { ...initArgs, data: pdata, processData: false, contentType: false }
 
-      post<HttpbinPostResponse>(url, args).subscribe(
+      post<HttpbinPostResponse>(url, args).pipe(
+        retry(2),
+      ).subscribe(
         res => {
           assert(res && res.url === url)
 
@@ -129,6 +131,7 @@ describe(filename, function() {
           const args: RxRequestInit = { ...initArgs, data: pdata, processData: false, contentType: false }
 
           return post<HttpbinPostResponse>(url, args).pipe(
+            retry(2),
             tap(res => {
               assert(res && res.url === url)
 
