@@ -1,4 +1,4 @@
-# rxxfetch
+# RxxFetch
 
 Observable HTTP Fetch() wrapped by [RxJS6](https://github.com/reactivex/rxjs), support browser and Node.js
 
@@ -8,16 +8,30 @@ Observable HTTP Fetch() wrapped by [RxJS6](https://github.com/reactivex/rxjs), s
 [![Build status](https://ci.appveyor.com/api/projects/status/gsxo6hg06av6gw02/branch/master?svg=true)](https://ci.appveyor.com/project/waitingsong/rxxfetch/branch/master)
 [![Coverage Status](https://coveralls.io/repos/github/waitingsong/rxxfetch/badge.svg?branch=master)](https://coveralls.io/github/waitingsong/rxxfetch?branch=master)
 
-
 ## Features
 
-- Reactive Ajax programing
+- Reactive Ajax programming
 - Request Cancelable via `AbortController`
 - Runs in Node.js and browsers. (Fetch API and Promises polyfills though)
 - Restful API `GET` `POST` `PUT` `DELETE` via `get()` `post()` `put()` `remove()`
 - Retrieve and append cookies during 30x redirect on Node.js (via keepRedirectCookies:true)
 - Apis support `Generics`, eg. `get<string>(url).subscribe(txt => console.info(txt.slice(1)))`
 
+## Browser support
+
+[![Build Status](https://saucelabs.com/browser-matrix/waitingsong.svg)](https://saucelabs.com/u/waitingsong)
+
+- Should work fine without polyfills in every modern browser
+- IE11 needs polyfills [whatwg-fetch](https://github.com/github/fetch/), [es6-shim](https://github.com/paulmillr/es6-shim/), [es7-shim](http://github.com/es-shims/es7-shim/)
+- Edge14 has 1 failure on [remove() with form data](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/20_remove.test.ts#L112)
+- Safari 11 (Mac OS X/iOS) may get failure on [abortController.abort()](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_request.test.ts#L48)
+ with `TypeError: Origin http://localhost:9876 is not allowed by Access-Control-Allow-Origin`
+- Mobile Safari 10.0.0 (iOS 10.3.0) may get failure on [abortController.abort()](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_request.test.ts#L48)
+  with `TypeError: Type error`
+- Mobile Safari 9.0.0 (iOS 9.3.0) may get failure on [redirect](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_redirect.test.ts) 
+ with `AssertionError: TypeError: Network request failed`
+- Android 4.4 will get failure on [parseResponseType()](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_response.test.ts#L162) 
+ with `TypeError: Object function ArrayBuffer() { [native code] } has no method 'isView'`
 
 ## Installing
 

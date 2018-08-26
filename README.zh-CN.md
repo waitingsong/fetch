@@ -1,4 +1,4 @@
-# rxxfetch
+# RxxFetch
 
 HTTP Fetch() 响应式接口，基于 [RxJS6](https://github.com/reactivex/rxjs) 封装，支持长青浏览器和 Node.js
 
@@ -8,7 +8,6 @@ HTTP Fetch() 响应式接口，基于 [RxJS6](https://github.com/reactivex/rxjs)
 [![Build status](https://ci.appveyor.com/api/projects/status/gsxo6hg06av6gw02/branch/master?svg=true)](https://ci.appveyor.com/project/waitingsong/rxxfetch/branch/master)
 [![Coverage Status](https://coveralls.io/repos/github/waitingsong/rxxfetch/badge.svg?branch=master)](https://coveralls.io/github/waitingsong/rxxfetch?branch=master)
 
-
 ## 特点
 
 - 响应式 ajax 编程
@@ -17,6 +16,23 @@ HTTP Fetch() 响应式接口，基于 [RxJS6](https://github.com/reactivex/rxjs)
 - 30x 重定向时可通过 keepRedirectCookies:true 参数提取并附加 cookies
 - Restful API `GET` `POST` `PUT` `DELETE` via `get()` `post()` `put()` `remove()`
 - 接口支持 `泛型`，例如 `get<string>(url).subscribe(txt => console.info(txt.slice(1)))`
+
+## Browser support
+
+[![Build Status](https://saucelabs.com/browser-matrix/waitingsong.svg)](https://saucelabs.com/u/waitingsong)
+
+- 长青浏览器基本不需要垫片
+- IE11 需要这些垫片 [whatwg-fetch](https://github.com/github/fetch/), [es6-shim](https://github.com/paulmillr/es6-shim/), [es7-shim](http://github.com/es-shims/es7-shim/)
+- Edge14 has 1 failed on [remove() with form data](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/20_remove.test.ts#L112)
+- Safari 11 (Mac OS X) has 1 failed on [abortController.abort()](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_request.test.ts#L48) with `TypeError: Origin http://localhost:9876 is not allowed by Access-Control-Allow-Origin`
+- Safari 11 (Mac OS X/iOS) may get failure on [abortController.abort()](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_request.test.ts#L48)
+ with `TypeError: Origin http://localhost:9876 is not allowed by Access-Control-Allow-Origin`
+- Mobile Safari 10.0.0 (iOS 10.3.0) may get failure on [abortController.abort()](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_request.test.ts#L48)
+  with `TypeError: Type error`
+- Mobile Safari 9.0.0 (iOS 9.3.0) may get failure on [redirect](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_redirect.test.ts) 
+ with `AssertionError: TypeError: Network request failed`
+- Android 4.4 will get failure on [parseResponseType()](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_response.test.ts#L162) 
+ with `TypeError: Object function ArrayBuffer() { [native code] } has no method 'isView'`
 
 ## 安装
 
