@@ -160,6 +160,7 @@ describe(filename, function() {
     const init = { status, statusText }
 
     it('with arrayBuffer', resolve => {
+      // @ts-ignore
       if (! ArrayBuffer && typeof ArrayBuffer.isView !== 'function') {
         return resolve()
       }
