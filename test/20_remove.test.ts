@@ -13,7 +13,7 @@ const filename = basename(__filename)
 
 describe(filename, function() {
   this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 2000))
+  beforeEach(resolve => setTimeout(resolve, 5000))
 
   describe('Should remove() works with httpbin.org', () => {
     const url = 'https://httpbin.org/delete'
@@ -99,8 +99,8 @@ describe(filename, function() {
 
           try {
             const form = res.form
-            assert(form && form.p1 === p1, `Should got "${p1}"`)
-            assert(form && form.p2 === p2, `Should got "${p2}"`)
+            assert(form && form.p1 === p1, `Should get "${p1}", but got "${form && form.p1}"`)
+            assert(form && form.p2 === p2, `Should get "${p2}", but got "${form && form.p2}" `)
           }
           catch (ex) {
             assert(false, ex)
