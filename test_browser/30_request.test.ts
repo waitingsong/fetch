@@ -45,7 +45,7 @@ describe(filename, function() {
       )
     })
 
-    it('by calling abortController.abort()', resolve => {
+    it.skip('by calling abortController.abort()', resolve => {
       const args = { ...initArgs }
       const abortController = new AbortController()
       args.abortController = abortController
