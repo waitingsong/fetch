@@ -45,8 +45,11 @@ describe(filename, function() {
           try {
             assert(res && res.args, 'Should response.args not empty')
             assert(res.url === url + '?' + QueryString.stringify(pdata))
-            assert(res.args.p1 === pdata.p1.toString(), `Should got ${pdata.p1}`)
-            assert(res.args.p2 === pdata.p2, `Should got ${pdata.p2}`)
+            assert(
+              res.args.p1 === pdata.p1.toString(),
+              `Should p1 get ${pdata.p1}, but got "${res.args && res.args.p1}"`,
+            )
+            assert(res.args.p2 === pdata.p2, `Should p2 get ${pdata.p2}, but got "${res.args && res.args.p2}"`)
           }
           catch (ex) {
             assert(false, ex)
@@ -78,9 +81,15 @@ describe(filename, function() {
           try {
             assert(res && res.args, 'Should response.args not empty')
             assert(res.url === sendUrl, `Should get ${sendUrl}, but got ${res.url}`)
-            assert(res.args.p1 === pdata.p1.toString(), `Should got ${pdata.p1}`)
-            assert(res.args.p2 === pdata.p2, `Should got ${pdata.p2}`)
-            assert(pdata.p3 && res.args['p3[foo]'] === pdata.p3.foo, `Should got ${pdata!.p3!.foo}`)
+            assert(
+              res.args.p1 === pdata.p1.toString(),
+              `Should p1 get ${pdata.p1}, but got "${res.args && res.args.p1}"`,
+            )
+            assert(res.args.p2 === pdata.p2, `Should p2 get ${pdata.p2}, bug got ${res.args && res.args.p2}`)
+            assert(
+              pdata.p3 && res.args['p3[foo]'] === pdata.p3.foo,
+              `Should get ${pdata!.p3!.foo}, but got "${res.args && res.args['p3[foo]'].toString()}"`,
+            )
           }
           catch (ex) {
             assert(false, ex)
@@ -109,8 +118,8 @@ describe(filename, function() {
 
           try {
             const form = res.form
-            assert(form && form.p1 === p1, `Should get "${p1}", but got "${form && form.p1}" `)
-            assert(form && form.p2 === p2, `Should get "${p2}", but got "${form && form.p2}" `)
+            assert(form && form.p1 === p1, `Should p1 get "${p1}", but got "${form && form.p1}"`)
+            assert(form && form.p2 === p2, `Should p2 get "${p2}", but got "${form && form.p2}"`)
           }
           catch (ex) {
             assert(false, ex)
