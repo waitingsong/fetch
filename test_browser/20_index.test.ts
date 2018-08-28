@@ -1,7 +1,6 @@
 /// <reference types="mocha" />
 
 import * as assert from 'power-assert'
-import { TimeoutError } from 'rxjs'
 
 import {
   buildQueryString,
@@ -81,7 +80,6 @@ describe(filename, () => {
 
 describe(filename, function() {
   this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 1000))
 
   describe('Should handleResponseError works', () => {
     it('got status 404', resolve => {
@@ -234,7 +232,6 @@ describe.skip(filename, function() {
 // There is a restriction to access response headers when you are using Fetch API over CORS
 describe.skip(filename, function() {
   this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 2000))
 
   const url = 'https://httpbin.org/get'
   const initArgs = <RxRequestInit> {

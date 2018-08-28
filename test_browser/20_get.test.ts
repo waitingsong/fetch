@@ -13,7 +13,6 @@ const filename = '20_get.test.ts'
 
 describe(filename, function() {
   this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 1000))
 
   describe('Should get() works with httpbin.org', () => {
     const url = 'https://httpbin.org/get'
@@ -138,6 +137,12 @@ describe(filename, function() {
     })
   })
 
+})
+
+
+describe(filename, function() {
+  this.retries(3)
+  beforeEach(resolve => setTimeout(resolve, 1000))
 
   describe('Should get() dataType:"json" works with httpbin.org', () => {
     const url = 'https://httpbin.org/get'

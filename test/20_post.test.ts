@@ -16,7 +16,7 @@ const filename = basename(__filename)
 
 describe(filename, function() {
   this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 5000))
+  beforeEach(resolve => setTimeout(resolve, 2000))
 
   describe('Should post() works with httpbin.org', () => {
     const url = 'https://httpbin.org/post'

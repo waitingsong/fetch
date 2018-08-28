@@ -16,7 +16,7 @@ const filename = basename(__filename)
 
 describe(filename, function() {
   this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 2000))
+  beforeEach(resolve => setTimeout(resolve, 1000))
 
   describe('Should put() works with httpbin.org', () => {
     const url = 'https://httpbin.org/put'

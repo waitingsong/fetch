@@ -14,9 +14,7 @@ import { basename } from '../src/shared/index'
 const filename = basename(__filename)
 const mods = rewire('../src/lib/util')
 
-describe(filename, function() {
-  this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 2000))
+describe(filename, () => {
 
   const fnName = 'parseTimeout'
   const fn = <(p: any) => number | null> mods.__get__(fnName)
@@ -67,10 +65,7 @@ describe(filename, function() {
 })
 
 
-describe(filename, function() {
-  this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 2000))
-
+describe(filename, () => {
   const fnName = 'parseDataType'
   const fn = <(value: any) => NonNullable<Args['dataType']>> mods.__get__(fnName)
 
@@ -100,10 +95,7 @@ describe(filename, function() {
 })
 
 
-describe(filename, function() {
-  this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 2000))
-
+describe(filename, () => {
   const fnName = 'parseHeaders'
   const fn = <(options: ArgsRequestInitCombined) => ArgsRequestInitCombined> mods.__get__(fnName)
   const initArgs = <RxRequestInit> {
@@ -153,10 +145,7 @@ describe(filename, function() {
 })
 
 
-describe(filename, function() {
-  this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 2000))
-
+describe(filename, () => {
   const fnName = 'parseCookies'
   const fn = <(options: ArgsRequestInitCombined) => ArgsRequestInitCombined> mods.__get__(fnName)
   const initArgs = <RxRequestInit> {

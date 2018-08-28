@@ -82,7 +82,6 @@ describe(filename, () => {
 
 describe(filename, function() {
   this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 1000))
 
   describe('Should handleResponseError works', () => {
     const initArgs = <RxRequestInit> {
@@ -176,7 +175,7 @@ describe(filename, () => {
 
 describe(filename, function() {
   this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 2000))
+  beforeEach(resolve => setTimeout(resolve, 1000))
 
   // const url = 'https://httpbin.org/cookies/set/foo/' + value
   const url = 'https://httpbin.org/cookies'
@@ -302,7 +301,6 @@ describe(filename, function() {
 
 describe(filename, function() {
   this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 2000))
 
   const url = 'https://httpbin.org/get'
   const initArgs = <RxRequestInit> {

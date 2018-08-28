@@ -13,7 +13,7 @@ const filename = basename(__filename)
 
 describe(filename, function() {
   this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 5000))
+  beforeEach(resolve => setTimeout(resolve, 1000))
 
   describe('Should remove() works with httpbin.org', () => {
     const url = 'https://httpbin.org/delete'
@@ -93,7 +93,7 @@ describe(filename, function() {
       )
     })
 
-    it('send form', resolve => {
+    it.skip('send form', resolve => {
       const pdata = new FormData()
       const p1 = Math.random().toString()
       const p2 = Math.random().toString()
