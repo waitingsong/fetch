@@ -410,3 +410,86 @@ describe(filename, () => {
   })
 
 })
+
+
+describe(filename, () => {
+  const fnName = 'parseRedirect'
+  const fn = <(
+    keepRedirectCookies: boolean,
+    curValue: RequestInit['redirect'] | undefined,
+  ) => RequestInit['redirect']> mods.__get__(fnName)
+
+  describe(`Should ${fnName}() works with keepRedirectCookies:true`, () => {
+    it('expect "follow" to "manual"', () => {
+      const keepRedirectCookies = true
+      const curValue: RequestInit['redirect'] = 'follow'
+      const ret = fn(keepRedirectCookies, curValue)
+
+      assert(ret === 'manual')
+    })
+
+    it('expect "error" not changed', () => {
+      const keepRedirectCookies = true
+      const curValue: RequestInit['redirect'] = 'error'
+      const ret = fn(keepRedirectCookies, curValue)
+
+      assert(ret === curValue)
+    })
+
+    it('expect "follow" not changed under Browser (mocked on Node.js)', () => {
+      const keepRedirectCookies = true
+      const curValue: RequestInit['redirect'] = 'follow'
+      // @ts-ignore
+      global.window = true
+      const ret = fn(keepRedirectCookies, curValue)
+
+      assert(ret === curValue)
+      // @ts-ignore
+      delete global.window
+    })
+
+    it('expect "error" not changed under Browser (mocked on Node.js)', () => {
+      const keepRedirectCookies = true
+      const curValue: RequestInit['redirect'] = 'error'
+      // @ts-ignore
+      global.window = true
+      const ret = fn(keepRedirectCookies, curValue)
+
+      assert(ret === curValue)
+      // @ts-ignore
+      delete global.window
+    })
+  })
+
+  describe(`Should ${fnName}() works with keepRedirectCookies:false`, () => {
+    it('expect passed value', () => {
+      const keepRedirectCookies = false
+
+      let curValue: RequestInit['redirect'] = 'error'
+      let ret = fn(keepRedirectCookies, curValue)
+      assert(ret === curValue)
+
+      curValue = 'manual'
+      ret = fn(keepRedirectCookies, curValue)
+      assert(ret === curValue)
+
+      curValue = 'follow'
+      ret = fn(keepRedirectCookies, curValue)
+      assert(ret === curValue)
+    })
+
+    it('expect default value "follow"', () => {
+      const keepRedirectCookies = false
+
+      // @ts-ignore
+      let ret = fn(keepRedirectCookies, '')
+      assert(ret === 'follow')
+
+      // @ts-ignore
+      ret = fn(keepRedirectCookies, null)
+      assert(ret === 'follow')
+    })
+  })
+
+})
+

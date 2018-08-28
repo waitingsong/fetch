@@ -222,14 +222,25 @@ function parseTimeout(p: any): number | null {
 }
 
 
-/** set redirect to 'manul' for retrieve cookies during 301/302 when keepRedirectCookies:TRUE */
+/**
+ * set redirect to 'manul' for retrieve cookies during 301/302 when keepRedirectCookies:TRUE
+ * and current value only when "follow"
+ */
 function parseRedirect(
   keepRedirectCookies: boolean,
   curValue: RequestInit['redirect'] | undefined,
 ): RequestInit['redirect'] {
 
   // not change value if on Browser
-  return keepRedirectCookies === true && typeof window === 'undefined' ? 'manual' : (curValue ? curValue : 'follow')
+  /* istanbul ignore else */
+  if (keepRedirectCookies === true && typeof window === 'undefined') {
+    /* istanbul ignore else */
+    if (curValue === 'follow') {
+      return 'manual'
+    }
+  }
+
+  return curValue ? curValue : 'follow'
 }
 
 /** Select fetch instance from args.fetchModule or native */
