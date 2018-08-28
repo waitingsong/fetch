@@ -12,7 +12,7 @@ HTTP Fetch() 响应式接口，基于 [RxJS6](https://github.com/reactivex/rxjs)
 
 - 响应式 ajax 编程
 - 通过 `AbortController` 取消一个请求
-- 支持浏览器和Node.js (可能需要 Fetch API 以及 Promises 插件兼容垫片)
+- 支持浏览器和Node.js (需要 [node-fetch](https://www.npmjs.com/package/node-fetch) 垫片)
 - 30x 重定向时可通过 keepRedirectCookies:true 参数提取并附加 cookies
 - Restful API `GET` `POST` `PUT` `DELETE` via `get()` `post()` `put()` `remove()`
 - 接口支持 `泛型`，例如 `get<string>(url).subscribe(txt => console.info(txt.slice(1)))`
@@ -42,7 +42,7 @@ npm install rxxfetch
 
 ## 使用
 
-### Get JSON
+### GET JSON
 
 ```ts
 import { get, RxRequestInit } from 'rxxfetch'
@@ -70,7 +70,7 @@ export interface HttpbinGetResponse {
 }
 ```
 
-### Get HTML
+### GET HTML
 
 ```ts
 import { get, RxRequestInit } from 'rxxfetch'
@@ -88,7 +88,7 @@ get<string>(url, args).subscribe(
 )
 ```
 
-### Post
+### POST
 
 ```ts
 import { post, RxRequestInit } from 'rxxfetch'

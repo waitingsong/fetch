@@ -12,7 +12,7 @@ Observable HTTP Fetch() wrapped by [RxJS6](https://github.com/reactivex/rxjs), s
 
 - Reactive Ajax programming
 - Request Cancelable via `AbortController`
-- Runs in Node.js and browsers. (Fetch API and Promises polyfills though)
+- Runs in browsers and Node.js ([node-fetch](https://www.npmjs.com/package/node-fetch) polyfill though)
 - Restful API `GET` `POST` `PUT` `DELETE` via `get()` `post()` `put()` `remove()`
 - Retrieve and append cookies during 30x redirect on Node.js (via keepRedirectCookies:true)
 - Apis support `Generics`, eg. `get<string>(url).subscribe(txt => console.info(txt.slice(1)))`
@@ -41,7 +41,7 @@ npm install rxxfetch
 
 ## Usage
 
-### Get JSON
+### GET JSON
 
 ```ts
 import { get, RxRequestInit } from 'rxxfetch'
@@ -69,7 +69,7 @@ export interface HttpbinGetResponse {
 }
 ```
 
-### Get HTML
+### GET HTML
 
 ```ts
 import { get, RxRequestInit } from 'rxxfetch'
@@ -87,7 +87,7 @@ get<string>(url, args).subscribe(
 )
 ```
 
-### Post
+### POST
 
 ```ts
 import { post, RxRequestInit } from 'rxxfetch'
