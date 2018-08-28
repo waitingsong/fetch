@@ -1,6 +1,7 @@
 /// <reference types="mocha" />
 
 import * as FormData from 'form-data'
+import { createReadStream } from 'fs'
 import nodefetch, { Headers } from 'node-fetch'
 import * as assert from 'power-assert'
 import { defer } from 'rxjs'
@@ -119,7 +120,7 @@ describe(filename, function() {
       )
     })
 
-    it('send a txt file and key:value data', resolve => {
+    it('send a txt file and key:value data via FormData', resolve => {
       const read$ = defer(() => readFileAsync(`${__dirname}/p2.txt`))
 
       read$.pipe(
@@ -152,6 +153,45 @@ describe(filename, function() {
             resolve()
           },
         )
+    })
+
+    it('send an image file via stream', resolve => {
+      const path = `${__dirname}/images/loading-1.gif`
+      const readerStream = createReadStream(path)
+      const readerStream2 = createReadStream(path)
+      const args: RxRequestInit = { ...initArgs, data: readerStream, processData: false, contentType: false }
+      const stream$ = post<HttpbinPostResponse>(url, args).pipe(
+        retry(2),
+        tap(res => {
+          const base64 = buf.toString('base64')
+          assert(res && res.url === url)
+          assert(
+            res.data && res.data === 'data:application/octet-stream;base64,' + base64,
+            `Should get "${base64.slice(0, 50)}..." but got ${res && res.data}`,
+          )
+        }),
+      )
+      let buf: Buffer = Buffer.alloc(0)
+
+      readerStream2.on('data', (data: Buffer) => {
+        buf = Buffer.concat([buf, data])
+      })
+      readerStream2.on('error', data => {
+        assert(false, 'read file failed')
+        resolve()
+      })
+
+      readerStream2.on('end', () => {
+        stream$.subscribe(
+          () => {
+            resolve()
+          },
+          err => {
+            assert(false, err)
+            resolve()
+          },
+        )
+      })
     })
   })
 
