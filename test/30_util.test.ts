@@ -10,6 +10,7 @@ import {
   Args, ArgsRequestInitCombined, RxRequestInit,
 } from '../src/index'
 import { initialRxRequestInit } from '../src/lib/config'
+import { selectFecthModule } from '../src/lib/util'
 import { basename } from '../src/shared/index'
 
 
@@ -362,6 +363,49 @@ describe(filename, () => {
       const defaults = 'application/x-www-form-urlencoded'
 
       assert(headersRet && headersRet.get('Content-Type') === defaults)
+    })
+  })
+
+})
+
+
+describe(filename, () => {
+  const fnName = 'selectFecthModule'
+
+  describe(`Should ${fnName}() works`, () => {
+    it('without parameter', () => {
+      try {
+        selectFecthModule(null)
+        assert(false, 'Should get error but NOT')
+      }
+      catch {
+        assert(true)
+      }
+    })
+
+    it('with invalid parameter', () => {
+      try {
+        // @ts-ignore
+        selectFecthModule('foo')
+        assert(false, 'Should get error but NOT')
+      }
+      catch {
+        assert(true)
+      }
+    })
+
+    it('with valid parameter', () => {
+      // @ts-ignore
+      const ret = selectFecthModule(nodefetch)
+      assert(ret === nodefetch)
+    })
+
+    it('with global parameter', () => {
+      // @ts-ignore
+      global.fetch = nodefetch
+      // @ts-ignore
+      const ret = selectFecthModule(nodefetch)
+      assert(ret === nodefetch)
     })
   })
 
