@@ -111,7 +111,7 @@ describe(filename, function() {
         (err: Error) => {
           assert(
             err && err.message.indexOf(`${httpErrorMsgPrefix}405`) === 0,
-            'Should got 405 error ',
+            `Should get 405 error but got ${err.message}`,
           )
           resolve()
         },
