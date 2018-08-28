@@ -18,7 +18,7 @@ import { str2u8ab } from './util'
 
 const filename = '30_response.test.ts'
 
-describe.only(filename, () => {
+describe(filename, () => {
 
   describe('parseRespCookie() works', () => {
     it('with valid input', () => {
