@@ -20,9 +20,7 @@ import {
 
 const filename = '30_response.test.ts'
 
-describe(filename, function() {
-  this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 2000))
+describe(filename, () => {
 
   describe('parseRespCookie() works', () => {
     it('with valid input', () => {

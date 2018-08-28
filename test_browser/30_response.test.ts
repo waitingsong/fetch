@@ -18,9 +18,7 @@ import { str2u8ab } from './util'
 
 const filename = '30_response.test.ts'
 
-describe(filename, function() {
-  this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 2000))
+describe.only(filename, () => {
 
   describe('parseRespCookie() works', () => {
     it('with valid input', () => {
@@ -212,9 +210,8 @@ describe(filename, function() {
     })
 
     it('with raw', resolve => {
-      const size = Math.round(Math.random() * 100)
-      const ab = new ArrayBuffer(size)
-      const resp = new Response(ab, init)
+      const foo = 'fooValue:' + Math.random().toString()
+      const resp = new Response(foo, init)
 
       // @ts-ignore
       parseResponseType<'raw'>(resp, 'raw').subscribe(
@@ -222,9 +219,9 @@ describe(filename, function() {
           assert(res && res.status === status)
           assert(res && res.statusText === statusText)
 
-          res.arrayBuffer()
-            .then(buf => {
-              assert(buf && buf.byteLength === size)
+          res.text()
+            .then(txt => {
+              assert(txt && txt === foo)
               resolve()
             })
             .catch(err => {
@@ -241,11 +238,10 @@ describe(filename, function() {
     })
 
     it('with text', resolve => {
-      // const size = Math.round(Math.random() * 100)
-      // const ab = new ArrayBuffer(size)
-      const foo = Math.random().toString()
-      const ab = str2u8ab(foo)
-      const resp = new Response(ab, init)
+      // const foo = Math.random().toString()
+      // const ab = str2u8ab(foo)
+      const foo = 'fooValue:' + Math.random().toString()
+      const resp = new Response(foo, init)
 
       // @ts-ignore
       parseResponseType<'text'>(resp, 'text').subscribe(
@@ -263,7 +259,7 @@ describe(filename, function() {
 
     it('with never value', resolve => {
       const foo = 'neverValue:' + Math.random().toString()
-      const resp = new Response(Buffer.from(foo), init)
+      const resp = new Response(foo, init)
 
       // @ts-ignore
       parseResponseType<'text'>(resp, foo).subscribe(
