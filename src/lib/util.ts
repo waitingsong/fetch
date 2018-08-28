@@ -169,11 +169,17 @@ function parseCookies(options: ArgsRequestInitCombined): ArgsRequestInitCombined
 
     if (cookies) {
       cookies = cookies.trim()
+      let ret = arr.join('; ')
+      /* istanbul ignore if */
       if (cookies.slice(-1) === ';') {
         cookies = cookies.slice(0, -1)
+        ret = `${cookies}; ` + ret
+      }
+      else {
+        ret = `${cookies}; ` + ret
       }
 
-      (<Headers> requestInit.headers).set('Cookie', `${cookies}; ` + arr.join('; '))
+      (<Headers> requestInit.headers).set('Cookie', ret)
     }
     else {
       (<Headers> requestInit.headers).set('Cookie', arr.join('; '))
