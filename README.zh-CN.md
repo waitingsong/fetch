@@ -16,6 +16,7 @@ HTTP Fetch() 响应式接口，基于 [RxJS6](https://github.com/reactivex/rxjs)
 - 30x 重定向时可通过 keepRedirectCookies:true 参数提取并附加 cookies
 - Restful API `GET` `POST` `PUT` `DELETE` via `get()` `post()` `put()` `remove()`
 - 接口支持 `泛型`，例如 `get<string>(url).subscribe(txt => console.info(txt.slice(1)))`
+- 支持 Node.js 以文本或者流的形式发送文件
 
 ## Browser support
 
@@ -158,6 +159,10 @@ export interface HttpbinPostResponse extends HttpbinGetResponse {
     headersInitClass: Headers,
   }
   ```
+
+- POST FILE
+  - via `FormData`, goto [CODE](https://github.com/waitingsong/rxxfetch/blob/master/test/20_post.test.ts#L123)
+  - via `Stream`, goto [CODE](https://github.com/waitingsong/rxxfetch/blob/master/test/20_post.test.ts#L158)
 
 ## Demos
 

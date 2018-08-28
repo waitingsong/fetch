@@ -16,6 +16,7 @@ Observable HTTP Fetch() wrapped by [RxJS6](https://github.com/reactivex/rxjs), s
 - Restful API `GET` `POST` `PUT` `DELETE` via `get()` `post()` `put()` `remove()`
 - Retrieve and append cookies during 30x redirect on Node.js (via keepRedirectCookies:true)
 - Apis support `Generics`, eg. `get<string>(url).subscribe(txt => console.info(txt.slice(1)))`
+- Send file via `FormData` or `Stream` on Node.js
 
 ## Browser support
 
@@ -157,6 +158,10 @@ export interface HttpbinPostResponse extends HttpbinGetResponse {
     headersInitClass: Headers,
   }
   ```
+
+- POST FILE
+  - via `FormData`, goto [CODE](https://github.com/waitingsong/rxxfetch/blob/master/test/20_post.test.ts#L123)
+  - via `Stream`, goto [CODE](https://github.com/waitingsong/rxxfetch/blob/master/test/20_post.test.ts#L158)
 
 ## Demos
 
