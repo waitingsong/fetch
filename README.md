@@ -23,7 +23,7 @@ Observable HTTP Fetch() wrapped by [RxJS6](https://github.com/reactivex/rxjs), s
 
 - Should work fine without polyfills in every modern browser
 - IE11 needs polyfills [whatwg-fetch](https://github.com/github/fetch/), [es6-shim](https://github.com/paulmillr/es6-shim/), [es7-shim](http://github.com/es-shims/es7-shim/)
-- Edge14 has 1 failure on [remove() with form data](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/20_remove.test.ts#L112)
+- Edge14 has 1 failure on [remove() with form data](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/20_remove.test.ts#L106)
 - Safari 11 (Mac OS X/iOS) may get failure on [abortController.abort()](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_request.test.ts#L46)
  with `TypeError: Origin http://localhost:9876 is not allowed by Access-Control-Allow-Origin`
 - Mobile Safari 10.0.0 (iOS 10.3.0) may get failure on [abortController.abort()](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_request.test.ts#L46)
