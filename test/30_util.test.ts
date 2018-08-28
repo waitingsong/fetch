@@ -287,3 +287,82 @@ describe(filename, () => {
   })
 
 })
+
+
+describe(filename, () => {
+  const fnName = 'parseMethod'
+  const fn = <(options: ArgsRequestInitCombined) => ArgsRequestInitCombined> mods.__get__(fnName)
+  const initArgs = <RxRequestInit> { }
+
+  describe(`Should ${fnName}() works without method`, () => {
+    it('with contentType:false', () => {
+      const args = { ...initArgs }
+      args.contentType = false
+      // @ts-ignore
+      const combined = <ArgsRequestInitCombined> {
+        args,
+        requestInit: {},
+      }
+      // @ts-ignore
+      const ret = fn(combined)
+      const headers = <Headers> ret.requestInit.headers
+
+      assert(! headers)
+
+    })
+  })
+
+  describe(`Should ${fnName}() works with method:POST`, () => {
+    it('with contentType:false', () => {
+      const args = { ...initArgs }
+      args.contentType = false
+      const headers = new nodeHeaders()
+      // @ts-ignore
+      const combined = <ArgsRequestInitCombined> {
+        args,
+        requestInit: { method: 'POST', headers },
+      }
+
+      // @ts-ignore
+      const ret = fn(combined)
+      const headersRet = <Headers> ret.requestInit.headers
+
+      assert(headersRet && ! headersRet.get('Content-Type'))
+    })
+
+    it('with contentType', () => {
+      const args = { ...initArgs }
+      args.contentType = Math.random().toString()
+      const headers = new nodeHeaders()
+      // @ts-ignore
+      const combined = <ArgsRequestInitCombined> {
+        args,
+        requestInit: { method: 'POST', headers },
+      }
+
+      // @ts-ignore
+      const ret = fn(combined)
+      const headersRet = <Headers> ret.requestInit.headers
+
+      assert(headersRet && headersRet.get('Content-Type') === args.contentType)
+    })
+
+    it('default contentType "application/x-www-form-urlencoded"', () => {
+      const args = { ...initArgs }
+      const headers = new nodeHeaders()
+      // @ts-ignore
+      const combined = <ArgsRequestInitCombined> {
+        args,
+        requestInit: { method: 'POST', headers },
+      }
+
+      // @ts-ignore
+      const ret = fn(combined)
+      const headersRet = <Headers> ret.requestInit.headers
+      const defaults = 'application/x-www-form-urlencoded'
+
+      assert(headersRet && headersRet.get('Content-Type') === defaults)
+    })
+  })
+
+})
