@@ -1,5 +1,7 @@
 /// <reference types="mocha" />
 
+// tslint:disable-next-line
+import { abortableFetch, AbortController } from 'abortcontroller-polyfill/dist/cjs-ponyfill.js'
 import nodefetch, { Headers as nodeHeaders } from 'node-fetch'
 import * as assert from 'power-assert'
 import rewire = require('rewire')
@@ -233,6 +235,54 @@ describe(filename, () => {
       const retHeaders = <Headers> ret.requestInit.headers
 
       assert(retHeaders && retHeaders.get('Cookie') === `${value}; p1=${p1}; p2=${p2}; bar=${p3}`)
+    })
+  })
+
+})
+
+
+describe(filename, () => {
+  const fnName = 'parseAbortController'
+  const fn = <(options: ArgsRequestInitCombined) => ArgsRequestInitCombined> mods.__get__(fnName)
+  const initArgs = <RxRequestInit> { }
+
+  describe(`Should ${fnName}() works`, () => {
+    it('with AbortController', () => {
+      const args = { ...initArgs }
+      args.abortController = new AbortController()
+      // @ts-ignore
+      const combined = <ArgsRequestInitCombined> {
+        args,
+        requestInit: {},
+      }
+      // @ts-ignore
+      const ret = fn(combined)
+      const { args: args2, requestInit: init2 } = ret
+
+      assert(args2.abortController && typeof args2.abortController.abort === 'function' && init2.signal)
+      // @ts-ignore
+      assert(typeof init2.signal === 'object' && args2.abortController.signal === init2.signal)
+      // @ts-ignore
+      delete global.AbortController
+    })
+
+    it('without AbortController', () => {
+      const args = { ...initArgs }
+      // @ts-ignore
+      const combined = <ArgsRequestInitCombined> {
+        args,
+        requestInit: {},
+      }
+      // @ts-ignore
+      global.AbortController = AbortController
+      const ret = fn(combined)
+      const { args: args2, requestInit: init2 } = ret
+
+      assert(args2.abortController && typeof args2.abortController.abort === 'function' && init2.signal)
+      // @ts-ignore
+      assert(typeof init2.signal === 'object' && args2.abortController.signal === init2.signal)
+      // @ts-ignore
+      delete global.AbortController
     })
   })
 
