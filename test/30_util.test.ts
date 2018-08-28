@@ -403,8 +403,7 @@ describe(filename, () => {
     it('with global parameter', () => {
       // @ts-ignore
       global.fetch = nodefetch
-      // @ts-ignore
-      const ret = selectFecthModule(nodefetch)
+      const ret = selectFecthModule(null)
       assert(ret === nodefetch)
     })
   })

@@ -33,7 +33,6 @@ describe(filename, () => {
     })
 
     it('with global parameter', () => {
-      // @ts-ignore
       const ret = selectFecthModule(null)
       assert(ret === fetch)
     })
