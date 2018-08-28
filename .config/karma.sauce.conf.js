@@ -24,7 +24,7 @@ const sl_launchers = {
   sl_edge_14_Windows10: createCustomLauncher('MicrosoftEdge', '14.14393', 'Windows 10'),
   sl_edge_13_Windows10: createCustomLauncher('MicrosoftEdge', '13.10586', 'Windows 10'),
 
-  sl_chrome_dev_Windows10: createCustomLauncher('chrome', 'dev', 'Windows 10'),
+  // sl_chrome_dev_Windows10: createCustomLauncher('chrome', 'dev', 'Windows 10'),
   sl_chrome_latest_Windows10: createCustomLauncher('chrome', 'latest', 'Windows 10'),
   // sl_chrome_32_Windows10: createCustomLauncher('chrome', '32', 'Windows 10'),
 
@@ -34,10 +34,10 @@ const sl_launchers = {
   sl_chrome_latest_Windows7: createCustomLauncher('chrome', 'latest', 'Windows 7'),
   sl_chrome_32_Windows7: createCustomLauncher('chrome', '32', 'Windows 7'),
 
-  sl_chrome_dev_Mac10_13: createCustomLauncher('chrome', 'dev', 'macOS 10.13'),
+  // sl_chrome_dev_Mac10_13: createCustomLauncher('chrome', 'dev', 'macOS 10.13'),
   sl_chrome_latest_Mac10_13: createCustomLauncher('chrome', 'latest', 'macOS 10.13'),
 
-  sl_firefox_dev_Windows10: createCustomLauncher('firefox', 'dev', 'Windows 10'),
+  // sl_firefox_dev_Windows10: createCustomLauncher('firefox', 'dev', 'Windows 10'),
   sl_firefox_latest_Windows10: createCustomLauncher('firefox', 'latest', 'Windows 10'),
   // sl_firefox_30_Windows10: createCustomLauncher('firefox', '30', 'Windows 10'), 
 
