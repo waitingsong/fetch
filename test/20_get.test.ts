@@ -17,7 +17,7 @@ const filename = basename(__filename)
 
 describe(filename, function() {
   this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 2000))
+  beforeEach(resolve => setTimeout(resolve, 1000))
 
   describe('Should get() works with github.com', () => {
     const url = 'https://github.com/waitingsong/rxxfetch#readme'

@@ -16,9 +16,7 @@ import { basename } from '../src/shared/index'
 
 const filename = basename(__filename)
 
-describe(filename, function() {
-  this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 2000))
+describe(filename, () => {
 
   describe('Should get() works with AbortSignal', () => {
     const url = 'https://github.com/waitingsong/rxxfetch#readme'
@@ -72,7 +70,7 @@ describe(filename, function() {
       )
       setTimeout(() => {
         abortController.abort()
-      }, 1)
+      }, 10)
     })
   })
 
