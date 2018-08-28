@@ -161,7 +161,7 @@ describe(filename, function() {
 
     it('with arrayBuffer', resolve => {
       // @ts-ignore
-      if (! ArrayBuffer && typeof ArrayBuffer.isView !== 'function') {
+      if (! ArrayBuffer || typeof ArrayBuffer.isView !== 'function') {
         return resolve()
       }
       const size = Math.round(Math.random() * 100)
