@@ -160,6 +160,7 @@ describe(filename, function() {
       const readerStream = createReadStream(path)
       const readerStream2 = createReadStream(path)
       const args: RxRequestInit = { ...initArgs, data: readerStream, processData: false, contentType: false }
+      let buf: Buffer = Buffer.alloc(0)
       const stream$ = post<HttpbinPostResponse>(url, args).pipe(
         retry(2),
         tap(res => {
@@ -171,7 +172,6 @@ describe(filename, function() {
           )
         }),
       )
-      let buf: Buffer = Buffer.alloc(0)
 
       readerStream2.on('data', (data: Buffer) => {
         buf = Buffer.concat([buf, data])
