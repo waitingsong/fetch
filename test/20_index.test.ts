@@ -21,10 +21,7 @@ import { HttpbinRetCookie } from './model'
 const filename = basename(__filename)
 const defaultInit = getGloalRequestInit()
 
-describe(filename, function() {
-  this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 2000))
-
+describe(filename, () => {
   afterEach(() => {
     setGloalRequestInit(defaultInit)
   })
@@ -80,6 +77,12 @@ describe(filename, function() {
     })
   })
 
+})
+
+
+describe(filename, function() {
+  this.retries(3)
+  beforeEach(resolve => setTimeout(resolve, 1000))
 
   describe('Should handleResponseError works', () => {
     const initArgs = <RxRequestInit> {
@@ -130,10 +133,7 @@ describe(filename, function() {
 })
 
 
-describe(filename, function() {
-  this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 2000))
-
+describe(filename, () => {
   const fnName = 'buildQuery'
 
   describe(`Should ${fnName}() works`, () => {
@@ -318,10 +318,10 @@ describe(filename, function() {
 
       fetch<Response>(url, args).subscribe(
         res => {
-          assert(res && res.headers)
+          assert(res && res.headers, 'response and response.headers should not empty')
           const options = 'GET, POST, PUT, DELETE, PATCH, OPTIONS'
           const value = res.headers.get('Access-Control-Allow-Methods')
-          assert(value && value === options)
+          assert(value && value === options, `Should get ${options} but got ${value}`)
 
           resolve()
         },

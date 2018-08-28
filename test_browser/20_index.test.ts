@@ -19,10 +19,7 @@ import { HttpbinRetCookie } from '../test/model'
 const filename = '20_index.test.ts'
 const defaultInit = getGloalRequestInit()
 
-describe(filename, function() {
-  this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 2000))
-
+describe(filename, () => {
   afterEach(() => {
     setGloalRequestInit(defaultInit)
   })
@@ -79,6 +76,12 @@ describe(filename, function() {
     })
   })
 
+})
+
+
+describe(filename, function() {
+  this.retries(3)
+  beforeEach(resolve => setTimeout(resolve, 1000))
 
   describe('Should handleResponseError works', () => {
     it('got status 404', resolve => {
@@ -121,10 +124,7 @@ describe(filename, function() {
 })
 
 
-describe(filename, function() {
-  this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 2000))
-
+describe(filename, () => {
   const fnName = 'buildQuery'
 
   describe(`Should ${fnName}() works`, () => {
