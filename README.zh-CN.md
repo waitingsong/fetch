@@ -25,13 +25,13 @@ HTTP Fetch() 响应式接口，基于 [RxJS6](https://github.com/reactivex/rxjs)
 - IE11 需要这些垫片 [whatwg-fetch](https://github.com/github/fetch/), [es6-shim](https://github.com/paulmillr/es6-shim/), [es7-shim](http://github.com/es-shims/es7-shim/)
 - Edge14 has 1 failed on [remove() with form data](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/20_remove.test.ts#L112)
 - Safari 11 (Mac OS X) has 1 failed on [abortController.abort()](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_request.test.ts#L48) with `TypeError: Origin http://localhost:9876 is not allowed by Access-Control-Allow-Origin`
-- Safari 11 (Mac OS X/iOS) may get failure on [abortController.abort()](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_request.test.ts#L48)
+- Safari 11 (Mac OS X/iOS) may get failure on [abortController.abort()](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_request.test.ts#L46)
  with `TypeError: Origin http://localhost:9876 is not allowed by Access-Control-Allow-Origin`
-- Mobile Safari 10.0.0 (iOS 10.3.0) may get failure on [abortController.abort()](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_request.test.ts#L48)
+- Mobile Safari 10.0.0 (iOS 10.3.0) may get failure on [abortController.abort()](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_request.test.ts#L46)
   with `TypeError: Type error`
 - Mobile Safari 9.0.0 (iOS 9.3.0) may get failure on [redirect](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_redirect.test.ts) 
  with `AssertionError: TypeError: Network request failed`
-- Android 4.4 will get failure on [parseResponseType()](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_response.test.ts#L162) 
+- Android 4.4 will get failure on [parseResponseType()](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_response.test.ts#L160) 
  with `TypeError: Object function ArrayBuffer() { [native code] } has no method 'isView'`
 
 ## 安装
