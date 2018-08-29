@@ -155,7 +155,7 @@ describe(filename, function() {
         )
     })
 
-    it('send an image file via stream', resolve => {
+    it('send an image file via Buffer', resolve => {
       const path = `${__dirname}/images/loading-1.gif`
       const readerStream = createReadStream(path)
       const readerStream2 = createReadStream(path)

@@ -153,6 +153,29 @@ describe(filename, function() {
           },
         )
     })
+
+    it.skip('send a file via Blob', resolve => {
+      const content = '<a id="a"><b id="b">hey!</b></a>'
+      const blob = new Blob([content], { type: 'text/xml' })
+      const args: RxRequestInit = { ...initArgs, data: blob, processData: false, contentType: false }
+
+      post<HttpbinPostResponse>(url, args).pipe(
+        retry(2),
+      )
+        .subscribe(
+          res => {
+            assert(res && res.url === url)
+
+            const { data } = res
+            assert(data && data === content, `Should get "${content}", but got "${data}"`)
+            resolve()
+          },
+          err => {
+            assert(false, err)
+            resolve()
+          },
+        )
+    })
   })
 
 })
