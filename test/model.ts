@@ -1,5 +1,24 @@
+import { JsonType } from '../src/index'
+
+/**
+ * OR with index signature
+ *
+ * export interface HttpbinRetCookie {
+ *  cookies: {
+ *    [prop: string]: string,
+ *  }
+ *  [key: string]: any  // <------- index signature
+ * }
+ */
+export interface HttpbinRetCookie extends JsonType {
+  cookies: {
+    [prop: string]: string,
+  }
+}
+
+
 /** GET Response Interface of httpbin.org */
-export interface HttpbinGetResponse {
+export interface HttpbinGetResponse extends JsonType {
   args: any
   headers: {
     Accept: string
@@ -25,11 +44,5 @@ export interface PDATA {
   p2: string
   p3?: {
     foo: string,
-  }
-}
-
-export interface HttpbinRetCookie {
-  cookies: {
-    [prop: string]: string,
   }
 }

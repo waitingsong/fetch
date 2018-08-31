@@ -1,4 +1,11 @@
-export type ObbRetType = ArrayBuffer | Blob | FormData | Response | string | object
+export type ObbRetType = ArrayBuffer | Blob | FormData | Response | string | JsonType
+
+export type PlainJsonValueType = boolean | number | string | null | undefined
+
+/** key-value pairs object */
+export interface JsonType {
+  [key: string]: PlainJsonValueType | PlainJsonValueType[] | JsonType
+}
 
 export interface RespDataType {
   arrayBuffer: ArrayBuffer
@@ -7,7 +14,7 @@ export interface RespDataType {
   blob: Blob
   /** Not supported with fetch polyfill yet */
   formData: FormData
-  json: object
+  json: JsonType
   text: string
   raw: Response
 }
@@ -26,7 +33,7 @@ export interface Args {
   contentType?: false | ContentType
 
   /** Send to server, resolve to query string during GET|DELETE and key/value pairs during POST */
-  data?: object
+  data?: JsonType | object
 
   /**
    * Expect data type returned from server. jQuery behavior.

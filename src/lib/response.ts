@@ -2,7 +2,7 @@ import { defer, of, Observable } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 
 import { httpErrorMsgPrefix } from './config'
-import { Args, RespDataType, RxRequestInit } from './model'
+import { Args, JsonType, RespDataType, RxRequestInit } from './model'
 import { assertNeverObb } from './shared'
 
 
@@ -22,7 +22,7 @@ export function handleResponseError(resp: Response, bare: boolean = false): Obse
   )
 }
 
-export function parseResponseType<T extends NonNullable<RxRequestInit['dataType']> = 'json'>(
+export function parseResponseType<T extends NonNullable<RxRequestInit['dataType']>>(
   response: Response,
   dataType: T,
 ): Observable<RespDataType[T]> {
@@ -41,7 +41,7 @@ export function parseResponseType<T extends NonNullable<RxRequestInit['dataType'
       return defer(() => response.formData())
 
     case 'json':
-      return <Observable<object>> defer(() => response.json())
+      return <Observable<JsonType>> defer(() => response.json())
 
     case 'raw':
       return of(response)
