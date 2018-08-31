@@ -33,7 +33,7 @@ export interface Args {
   contentType?: false | ContentType
 
   /** Send to server, resolve to query string during GET|DELETE and key/value pairs during POST */
-  data?: JsonType | object
+  data?: JsonType | Blob | FormData | object
 
   /**
    * Expect data type returned from server. jQuery behavior.
