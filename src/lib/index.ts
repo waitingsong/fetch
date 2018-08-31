@@ -27,9 +27,9 @@ export function rxfetch<T extends ObbRetType = ObbRetType>(
   const { args, requestInit } = parseInitOpts(options)
   const dataType = <NonNullable<RxRequestInit['dataType']>> args.dataType
   const req$ = _fetch(input, args, requestInit)
-  const ret$ = req$.pipe(
+  const ret$ = <Observable<T>> req$.pipe(
     concatMap(res => handleResponseError(res, dataType === 'bare')),
-    concatMap<Response, T>(res => parseResponseType(res, dataType)),
+    concatMap(res => parseResponseType(res, dataType)),
   )
 
   return ret$
