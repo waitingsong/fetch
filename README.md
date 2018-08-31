@@ -45,7 +45,7 @@ npm install rxxfetch
 ### GET JSON
 
 ```ts
-import { get, RxRequestInit } from 'rxxfetch'
+import { get, JsonType } from 'rxxfetch'
 
 const url = 'https://httpbin.org/get'
 
@@ -57,7 +57,7 @@ get<HttpbinGetResponse>(url, args).subscribe(
 )
 
 /** GET Response Interface of httpbin.org */
-export interface HttpbinGetResponse {
+export interface HttpbinGetResponse extends JsonType {
   args: any
   headers: {
     Accept: string
