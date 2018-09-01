@@ -31,7 +31,7 @@ export function str2u8ab(s: string): Uint8Array {
   const bufView = new Uint8Array(buf)
 
   for (let i = 0, len = s.length; i < len; i++) {
-    // tslint:disable:no-bitwise
+    // tslint:disable-next-line:no-bitwise
     bufView[i] = s.charCodeAt(i) & 0xFF
   }
 
