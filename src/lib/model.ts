@@ -27,13 +27,13 @@ export interface Args {
   abortController?: AbortController
 
   /** Append custom cookies with key:value object */
-  cookies?: { [key: string]: string | number | null }
+  cookies?: { [key: string]: string | number | null } | null
 
   /** Content-Type, jQuery behavior, default "application/x-www-form-urlencoded; charset=UTF-8" during POST */
   contentType?: false | ContentType
 
   /** Send to server, resolve to query string during GET|DELETE and key/value pairs during POST */
-  data?: JsonType | Blob | FormData | object
+  data?: JsonType | Blob | FormData | object | null
 
   /**
    * Expect data type returned from server. jQuery behavior.
