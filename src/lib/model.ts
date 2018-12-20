@@ -7,6 +7,11 @@ export interface JsonType {
   [key: string]: PlainJsonValueType | PlainJsonValueType[] | JsonType | JsonType[]
 }
 
+/** Same as jQuery v3 `JQuery.PlainObject` */
+export interface PlainObject<T = any> {
+  [key: string]: T
+}
+
 export interface RespDataType {
   arrayBuffer: ArrayBuffer
   /** same to raw but regardless of response status */
