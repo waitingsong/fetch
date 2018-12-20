@@ -19,6 +19,7 @@ diff-dump/
 .mvn
 .factorypath
 nbproject/
+/www
 
 dbconfig.json
 
@@ -39,6 +40,13 @@ src/config.properties
 .tern-project
 
 
+# for gradle
+.gradle
+gradle-app.setting
+!gradle-wrapper.jar
+.gradletasknamecache
+
+
 # for oracle
 *.~pck
 
@@ -55,6 +63,7 @@ nbdist/
 
 *~
 *.sw[mnpcod]
+*.log
 *.tmp
 *.tmp.*
 log.txt
