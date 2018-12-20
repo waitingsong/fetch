@@ -4,7 +4,7 @@ export type PlainJsonValueType = boolean | number | string | null | undefined
 
 /** key-value pairs object */
 export interface JsonType {
-  [key: string]: PlainJsonValueType | PlainJsonValueType[] | JsonType
+  [key: string]: PlainJsonValueType | PlainJsonValueType[] | JsonType | JsonType[]
 }
 
 export interface RespDataType {
