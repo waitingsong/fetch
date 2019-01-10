@@ -21,6 +21,7 @@ HTTP Fetch() 响应式接口，基于 [RxJS6](https://github.com/reactivex/rxjs)
 ## Browser support
 
 [![Build Status](https://saucelabs.com/browser-matrix/waitingsong.svg)](https://saucelabs.com/u/waitingsong)
+[![Build Status](./assets/sauce.png)]
 
 - 长青浏览器基本不需要垫片
 - IE11 需要这些垫片 [whatwg-fetch](https://github.com/github/fetch/), [es6-shim](https://github.com/paulmillr/es6-shim/), [es7-shim](http://github.com/es-shims/es7-shim/)

@@ -21,6 +21,7 @@ Observable HTTP Fetch() wrapped by [RxJS6](https://github.com/reactivex/rxjs), s
 ## Browser support
 
 [![Build Status](https://saucelabs.com/browser-matrix/waitingsong.svg)](https://saucelabs.com/u/waitingsong)
+[![Build Status](./assets/sauce.png)]
 
 - Should work fine without polyfills in every modern browser
 - IE11 needs polyfills [whatwg-fetch](https://github.com/github/fetch/), [es6-shim](https://github.com/paulmillr/es6-shim/), [es7-shim](http://github.com/es-shims/es7-shim/)
