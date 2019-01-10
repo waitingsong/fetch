@@ -1,9 +1,10 @@
 import { defer, of, Observable } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 
+import { assertNeverObb } from '../shared/index'
+
 import { httpErrorMsgPrefix } from './config'
 import { Args, JsonType, RespDataType, RxRequestInit } from './model'
-import { assertNeverObb } from './shared'
 
 
 export function handleResponseError(resp: Response, bare: boolean = false): Observable<Response> {
