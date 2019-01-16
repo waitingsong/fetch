@@ -69,6 +69,7 @@
     "@types/form-data": "^2.2.1",
     "@types/node-fetch": "^2.1.1",
     "abortcontroller-polyfill": "^1.1.9",
+    "conventional-changelog": "^3.0.5",
     "coveralls": "^3.0.0",
     "eslint": "^5.11.1",
     "form-data": "^2.3.2",
