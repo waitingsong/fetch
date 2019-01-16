@@ -1,4 +1,3 @@
-import * as assert_ from 'assert'
 import {
   access,
   chmod,
@@ -40,7 +39,6 @@ import {
 import { promisify } from 'util'
 
 
-export const assert = assert_
 export const closeAsync = promisify(close)
 export const chmodAsync = promisify(chmod)
 export const copyFileAsync = promisify(copyFile)
@@ -231,12 +229,6 @@ export interface WriteFileOptions {
   flag?: string
 }
 
-export function assertNever(x: never): never {
-  throw new Error('Assert Never Unexpected object: ' + x)
-}
-export function assertNeverObb(x: never): Observable<never> {
-  return throwError(new Error('Assert Never Unexpected object: ' + x))
-}
 
 /* istanbul ignore next */
 /**
