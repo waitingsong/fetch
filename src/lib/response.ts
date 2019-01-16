@@ -1,7 +1,7 @@
 import { defer, of, Observable } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 
-import { assertNeverObb } from '../shared/index'
+import { assertNeverRx } from '../shared/asset'
 
 import { httpErrorMsgPrefix } from './config'
 import { Args, JsonType, RespDataType, RxRequestInit } from './model'
@@ -51,7 +51,7 @@ export function parseResponseType<T extends NonNullable<RxRequestInit['dataType'
       return defer(() => response.text())
 
     default:
-      return assertNeverObb(<never> dataType)
+      return assertNeverRx(<never> dataType)
   }
 }
 
