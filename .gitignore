@@ -20,11 +20,13 @@ diff-dump/
 .factorypath
 nbproject/
 /www
+.githooks
 
 dbconfig.json
 
 !.vscode/settings.json.example
 !settings/*.example
+
 
 
 # for java
