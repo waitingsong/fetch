@@ -1,6 +1,7 @@
 /// <reference types="mocha" />
 
 // tslint:disable-next-line
+import { basename } from '@waiting/shared-core'
 import nodefetch, { Headers } from 'node-fetch'
 import * as assert from 'power-assert'
 
@@ -13,7 +14,6 @@ import {
   RxRequestInit,
 } from '../src/index'
 import { httpErrorMsgPrefix, initialRxRequestInit } from '../src/lib/config'
-import { basename } from '../src/shared/index'
 
 import { HttpbinRetCookie } from './model'
 

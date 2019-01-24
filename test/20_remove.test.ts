@@ -1,12 +1,12 @@
 /// <reference types="mocha" />
 
+import { basename } from '@waiting/shared-core'
 import * as FormData from 'form-data'
 import nodefetch, { Headers } from 'node-fetch'
 import * as assert from 'power-assert'
 import * as QueryString from 'qs'
 
 import { remove, RxRequestInit } from '../src/index'
-import { basename } from '../src/shared/index'
 import { HttpbinPostResponse, PDATA } from '../test/model'
 
 const filename = basename(__filename)

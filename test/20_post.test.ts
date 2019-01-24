@@ -1,5 +1,6 @@
 /// <reference types="mocha" />
 
+import { basename, readFileAsync } from '@waiting/shared-core'
 import * as FormData from 'form-data'
 import { createReadStream } from 'fs'
 import nodefetch, { Headers } from 'node-fetch'
@@ -8,7 +9,6 @@ import { defer } from 'rxjs'
 import { retry, switchMap, tap } from 'rxjs/operators'
 
 import { post, RxRequestInit } from '../src/index'
-import { basename, readFileAsync } from '../src/shared/index'
 
 import { HttpbinPostResponse } from './model'
 

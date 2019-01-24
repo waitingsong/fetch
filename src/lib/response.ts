@@ -1,7 +1,6 @@
+import { assertNeverRx } from '@waiting/shared-core'
 import { defer, of, Observable } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
-
-import { assertNeverRx } from '../shared/asset'
 
 import { httpErrorMsgPrefix } from './config'
 import { Args, JsonType, RespDataType, RxRequestInit } from './model'

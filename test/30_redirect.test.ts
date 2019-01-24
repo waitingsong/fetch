@@ -1,5 +1,6 @@
 /// <reference types="mocha" />
 
+import { basename } from '@waiting/shared-core'
 import nodefetch, { Headers } from 'node-fetch'
 import * as assert from 'power-assert'
 
@@ -8,7 +9,6 @@ import {
   post,
   RxRequestInit,
 } from '../src/index'
-import { basename } from '../src/shared/index'
 
 import { HttpbinGetResponse } from './model'
 

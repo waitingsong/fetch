@@ -1,5 +1,6 @@
 /// <reference types="mocha" />
 
+import { basename } from '@waiting/shared-core'
 // tslint:disable-next-line
 import { abortableFetch, AbortController } from 'abortcontroller-polyfill/dist/cjs-ponyfill.js'
 import nodefetch, { Headers as nodeHeaders } from 'node-fetch'
@@ -11,7 +12,6 @@ import {
 } from '../src/index'
 import { initialRxRequestInit } from '../src/lib/config'
 import { selectFecthModule } from '../src/lib/util'
-import { basename } from '../src/shared/index'
 
 
 const filename = basename(__filename)

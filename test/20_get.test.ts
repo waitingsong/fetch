@@ -1,13 +1,13 @@
 /// <reference types="mocha" />
 
+import {
+  basename,
+} from '@waiting/shared-core'
 import nodefetch, { Headers } from 'node-fetch'
 import * as assert from 'power-assert'
 import * as QueryString from 'qs'
 
 import { get, RxRequestInit } from '../src/index'
-import {
-  basename,
-} from '../src/shared/index'
 
 import { HttpbinGetResponse, PDATA } from './model'
 import { ab2str } from './util'

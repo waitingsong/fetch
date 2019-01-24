@@ -3,8 +3,6 @@
 import * as FormData from 'form-data'
 import { Response, ResponseInit } from 'node-fetch'
 import * as assert from 'power-assert'
-import { empty } from 'rxjs'
-import { catchError } from 'rxjs/operators'
 
 import {
   get,
