@@ -143,6 +143,30 @@ describe(filename, () => {
       const retHeaders = <Headers> ret.requestInit.headers
       assert(retHeaders && retHeaders.get('Cookie') === value)
     })
+
+    it('throw TypeError without passing HeadersClass', () => {
+      const args = { ...initArgs }
+      const value = 'foo=' + Math.random()
+      const headers = new nodeHeaders()
+      headers.set('Cookie', value)
+
+      args.headersInitClass = null
+
+      // @ts-ignore
+      const combined = <ArgsRequestInitCombined> {
+        args,
+        requestInit: {
+          headers,
+        },
+      }
+      try {
+        fn(combined)
+        assert(false, 'Should throw Error, but not')
+      }
+      catch (ex) {
+        assert(ex instanceof TypeError, 'Should throw TypeError, but got Error')
+      }
+    })
   })
 
 })

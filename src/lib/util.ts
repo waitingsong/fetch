@@ -103,16 +103,20 @@ function parseHeaders(options: ArgsRequestInitCombined): ArgsRequestInitCombined
   const { args, requestInit } = options
 
   /* istanbul ignore else */
-  if (args.headersInitClass) {
+  if (args.headersInitClass) {  // node.js need pass headers class
     const headers = requestInit.headers
       ? <Headers> new args.headersInitClass(requestInit.headers)
       : <Headers> new args.headersInitClass()
     requestInit.headers = headers
   }
-  else {  // browser native
+  else if (typeof Headers === 'function') { // browser native
     requestInit.headers = requestInit.headers
       ? new Headers(requestInit.headers)
       : new Headers()
+  }
+  else {
+    throw new TypeError(`parseHeaders(): Headers Class undefined.
+If running under Node.js, it must pass HeaderClass such come from package "node-fetch".`)
   }
 
   /* istanbul ignore else */
