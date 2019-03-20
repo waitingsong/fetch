@@ -2,12 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-# [1.12.0](https://github.com/waitingsong/rxxfetch/compare/v1.11.4...v1.12.0) (2019-03-20)
+## [1.12.1](https://github.com/waitingsong/rxxfetch/compare/v1.12.0...v1.12.1) (2019-03-20)
 
 
 ### Features
 
-* **types:** add AjaxResp<T> ([f36008e](https://github.com/waitingsong/rxxfetch/commit/f36008e))
+* check args.headersInitClass within parseHeaders() ([52931c9](https://github.com/waitingsong/rxxfetch/commit/52931c9))
 
 
 
