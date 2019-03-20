@@ -80,3 +80,11 @@ export interface ArgsRequestInitCombined {
   args: Args
   requestInit: RequestInit
 }
+
+export interface AjaxResp <T = any> {
+  /** 0: no error */
+  err: number
+  dat?: T
+  msg?: string | null
+  [key: string]: any
+}
