@@ -1,6 +1,7 @@
 /// <reference types="mocha" />
 
 import {
+  ab2str,
   basename,
 } from '@waiting/shared-core'
 import nodefetch, { Headers } from 'node-fetch'
@@ -10,7 +11,6 @@ import * as QueryString from 'qs'
 import { get, RxRequestInit } from '../src/index'
 
 import { HttpbinGetResponse, PDATA } from './model'
-import { ab2str } from './util'
 
 
 const filename = basename(__filename)

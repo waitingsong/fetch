@@ -1,12 +1,13 @@
 /// <reference types="mocha" />
 
+import {
+  ab2str,
+} from '@waiting/shared-core'
 import * as assert from 'power-assert'
 import * as QueryString from 'qs'
 
 import { get, RxRequestInit } from '../src/index'
 import { HttpbinGetResponse, PDATA } from '../test/model'
-
-import { ab2str } from './util'
 
 
 const filename = '20_get.test.ts'

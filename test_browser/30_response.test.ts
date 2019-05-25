@@ -13,8 +13,6 @@ import {
   parseRespCookie,
 } from '../src/lib/response'
 
-import { str2u8ab } from './util'
-
 
 const filename = '30_response.test.ts'
 
@@ -238,8 +236,6 @@ describe(filename, () => {
     })
 
     it('with text', resolve => {
-      // const foo = Math.random().toString()
-      // const ab = str2u8ab(foo)
       const foo = 'fooValue:' + Math.random().toString()
       const resp = new Response(foo, init)
 
