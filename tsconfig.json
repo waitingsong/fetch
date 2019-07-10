@@ -1,23 +1,18 @@
 {
   "compilerOptions": {
-    "alwaysStrict": true,
-    "charset": "utf8",
     "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "importHelpers": false,
     "inlineSourceMap": false,
     "module": "ES6",
     "moduleResolution": "node",
     "newLine": "lf",
-    "noImplicitAny": true,
-    "noImplicitThis": true,
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "outDir": "./dist",
     "pretty": true,
     "skipLibCheck": true,
-    "sourceMap": false,
     "strict": true,
     "target": "ES2017"
   },
@@ -25,12 +20,14 @@
     "src/**/*"
   ],
   "exclude": [
-    "asset/",
-    "dist/",
-    "test/",
-    "/test_browser*",
-    "node_modules*",
     "**/*.d.ts",
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "asset",
+    "dist",
+    "node_modules*",
+    "src/app/public",
+    "src/app/views",
+    "test",
+    "/test_browser*"
   ]
 }
