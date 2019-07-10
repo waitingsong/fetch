@@ -402,7 +402,7 @@ describe(filename, () => {
         selectFecthModule(null)
         assert(false, 'Should get error but NOT')
       }
-      catch {
+      catch (ex) {
         assert(true)
       }
     })
@@ -413,7 +413,7 @@ describe(filename, () => {
         selectFecthModule('foo')
         assert(false, 'Should get error but NOT')
       }
-      catch {
+      catch (ex) {
         assert(true)
       }
     })
