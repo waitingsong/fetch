@@ -1,6 +1,6 @@
 export type ObbRetType = ArrayBuffer | Blob | FormData | Response | string | JsonType
 
-export type PlainJsonValueType = boolean | number | string | null | undefined
+export type PlainJsonValueType = boolean | number | string | null
 
 /** key-value pairs object */
 export interface JsonType {
