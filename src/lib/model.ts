@@ -12,9 +12,10 @@ export interface PlainObject<T = any> {
   [key: string]: T
 }
 
+export type RespDataTypeName = keyof RespDataType
 export interface RespDataType {
   arrayBuffer: ArrayBuffer
-  /** same to raw but regardless of response status */
+  /** Same to raw but regardless of response status */
   bare: Response
   blob: Blob
   /** Not supported with fetch polyfill yet */
@@ -23,6 +24,7 @@ export interface RespDataType {
   text: string
   raw: Response
 }
+
 
 /** See https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type */
 export type ContentType = string
@@ -45,7 +47,7 @@ export interface Args {
    * Default "json"
    * Return Response object without parse if set to "raw"
    */
-  dataType?: keyof RespDataType
+  dataType?: RespDataTypeName
 
   /** Pass a fetch() module for isomorphic usage such as node-fetch or isomorphic-fetch */
   fetchModule?: (input: string | Request, init?: RequestInit) => Promise<Response | any>

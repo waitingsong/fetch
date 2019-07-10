@@ -2,7 +2,7 @@ import { defer, of, Observable } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 
 import { httpErrorMsgPrefix } from './config'
-import { Args, JsonType, RespDataType, RxRequestInit } from './model'
+import { Args, JsonType, ObbRetType, RespDataType, RespDataTypeName } from './model'
 import { assertNeverRx } from './shared'
 
 
@@ -22,36 +22,48 @@ export function handleResponseError(resp: Response, bare: boolean = false): Obse
   )
 }
 
-export function parseResponseType<T extends NonNullable<RxRequestInit['dataType']>>(
+
+export function parseResponseType<T extends RespDataTypeName>(
   response: Response,
   dataType: T,
 ): Observable<RespDataType[T]> {
 
+  let ret: Observable<ObbRetType>
+
   switch (dataType) {
     case 'arrayBuffer':
-      return defer(() => response.arrayBuffer())
+      ret = defer(() => response.arrayBuffer())
+      break
 
     case 'bare':
-      return of(response)
+      ret = of(response)
+      break
 
     case 'blob':
-      return defer(() => response.blob())
+      ret = defer(() => response.blob())
+      break
 
     case 'formData':
-      return defer(() => response.formData())
+      ret = defer(() => response.formData())
+      break
 
     case 'json':
-      return <Observable<JsonType>> defer(() => response.json())
+      ret = <Observable<JsonType>> defer(() => response.json())
+      break
 
     case 'raw':
-      return of(response)
+      ret = of(response)
+      break
 
     case 'text':
-      return defer(() => response.text())
+      ret = defer(() => response.text())
+      break
 
     default:
       return assertNeverRx(<never> dataType)
   }
+
+  return <Observable<RespDataType[T]>> ret
 }
 
 
