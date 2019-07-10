@@ -1,6 +1,23 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [1.13.0](https://github.com/waitingsong/rxxfetch/compare/v1.12.1...v1.13.0) (2019-07-10)
+
+
+### Features
+
+* **types:** strip undefined from PlainJsonValueType ([ed1ef51](https://github.com/waitingsong/rxxfetch/commit/ed1ef51))
+
+
+### Tests
+
+* update target to 'ESNEXT' ([f8fcfdb](https://github.com/waitingsong/rxxfetch/commit/f8fcfdb))
+* use ab2str() from deps ([38b646d](https://github.com/waitingsong/rxxfetch/commit/38b646d))
+* **browser:** revert to use local ab2str() ([c3e1a9f](https://github.com/waitingsong/rxxfetch/commit/c3e1a9f))
+* **syntax:** fix for node.js v8 ([172a61d](https://github.com/waitingsong/rxxfetch/commit/172a61d))
+
+
 
 ## [1.12.1](https://github.com/waitingsong/rxxfetch/compare/v1.12.0...v1.12.1) (2019-03-20)
 
