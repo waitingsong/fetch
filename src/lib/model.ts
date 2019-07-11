@@ -1,8 +1,8 @@
-export type ObbRetType = ArrayBuffer | Blob | FormData | Response | string | JsonType
+export type ObbRetType = ArrayBuffer | Blob | FormData | Response | string | JsonType | void | never
 
-export type PlainJsonValueType = boolean | number | string | null
+export type PlainJsonValueType = boolean | number | string | null | undefined
 
-/** key-value pairs object */
+/** key-value pairs object parsed from Response */
 export interface JsonType {
   [key: string]: PlainJsonValueType | PlainJsonValueType[] | JsonType | JsonType[]
 }
@@ -83,10 +83,10 @@ export interface ArgsRequestInitCombined {
   requestInit: RequestInit
 }
 
-export interface AjaxResp <T = any> {
+/** Custom response data structure */
+export interface AjaxResp <T extends JsonType = JsonType> extends JsonType {
   /** 0: no error */
   err: number
   dat?: T
   msg?: string | null
-  [key: string]: any
 }
