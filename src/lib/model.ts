@@ -1,8 +1,13 @@
+/** Typeof original Response data */
 export type ObbRetType = ArrayBuffer | Blob | FormData | Response | string | JsonType | void | never
 
+/** Value of key-value pairs object */
 export type PlainJsonValueType = boolean | number | string | null | undefined
 
-/** key-value pairs object parsed from Response */
+/**
+ * Typeof JSON object parsed from Response data
+ * simple key-value pairs object.
+ */
 export interface JsonType {
   [key: string]: PlainJsonValueType | PlainJsonValueType[] | JsonType | JsonType[]
 }
@@ -15,7 +20,7 @@ export interface PlainObject<T = any> {
 export type RespDataTypeName = keyof RespDataType
 export interface RespDataType {
   arrayBuffer: ArrayBuffer
-  /** Same to raw but regardless of response status */
+  /** Same as RespDataType['raw'] but regardless of response status */
   bare: Response
   blob: Blob
   /** Not supported with fetch polyfill yet */
@@ -29,6 +34,7 @@ export interface RespDataType {
 /** See https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type */
 export type ContentType = string
 
+/** RxRequestInit extends from */
 export interface Args {
   /** Instance of AbortController to aborting Request */
   abortController?: AbortController
@@ -78,12 +84,13 @@ export interface HeadersFixed extends Headers {
   [prop: string]: any
 }
 
+/** Inner use */
 export interface ArgsRequestInitCombined {
   args: Args
   requestInit: RequestInit
 }
 
-/** Custom response data structure */
+/** Custom response json data structure */
 export interface AjaxResp <T extends JsonType = JsonType> extends JsonType {
   /** 0: no error */
   err: number
