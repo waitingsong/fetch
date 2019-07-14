@@ -81,18 +81,18 @@
 				</ul>
 				<h2 id="browser-support">Browser support</h2>
 				<p><a href="https://saucelabs.com/u/waitingsong"><img src="https://saucelabs.com/browser-matrix/waitingsong.svg" alt="Build Status"></a>
-				[<img src="./assets/sauce.png" alt="Build Status">]</p>
+				<img src="./assets/sauce.png" alt="Build Status"></p>
 				<ul>
 					<li>Should work fine without polyfills in every modern browser</li>
 					<li>IE11 needs polyfills <a href="https://github.com/github/fetch/">whatwg-fetch</a>, <a href="https://github.com/paulmillr/es6-shim/">es6-shim</a>, <a href="http://github.com/es-shims/es7-shim/">es7-shim</a></li>
-					<li>Edge14 has 1 failure on <a href="https://github.com/waitingsong/rxxfetch/blob/master/test_browser/20_remove.test.ts#L106">remove() with form data</a></li>
-					<li>Safari 11 (Mac OS X/iOS) may get failure on <a href="https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_request.test.ts#L46">abortController.abort()</a>
+					<li>Edge14 has 1 failure on <a href="https://github.com/waitingsong/rxxfetch/blob/master/test_browser/20_remove.test.ts#L99">remove() with form data</a></li>
+					<li>Safari 11 (Mac OS X/iOS) may get failure on <a href="https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_abort.test.ts#L44">abortController.abort()</a>
 					with <code>TypeError: Origin http://localhost:9876 is not allowed by Access-Control-Allow-Origin</code></li>
-					<li>Mobile Safari 10.0.0 (iOS 10.3.0) may get failure on <a href="https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_request.test.ts#L46">abortController.abort()</a>
+					<li>Mobile Safari 10.0.0 (iOS 10.3.0) may get failure on <a href="https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_abort.test.ts#L44">abortController.abort()</a>
 					with <code>TypeError: Type error</code></li>
 					<li>Mobile Safari 9.0.0 (iOS 9.3.0) may get failure on <a href="https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_redirect.test.ts">redirect</a>
 					with <code>AssertionError: TypeError: Network request failed</code></li>
-					<li>Android 4.4 will get failure on <a href="https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_response.test.ts#L160">parseResponseType()</a>
+					<li>Android 4.4 will get failure on <a href="https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_response.test.ts#L152">parseResponseType()</a>
 					with <code>TypeError: Object function ArrayBuffer() { [native code] } has no method &#39;isView&#39;</code></li>
 				</ul>
 				<h2 id="installing">Installing</h2>
@@ -166,37 +166,16 @@ post&lt;HttpbinPostResponse&gt;(url, args).subscribe(
 				<h3 id="put-remove-goto-test"><code>PUT</code> <code>REMOVE</code> goto <a href="https://github.com/waitingsong/rxxfetch/tree/master/test_browser">TEST</a></h3>
 				<h3 id="on-node-js">On Node.js</h3>
 				<ul>
-					<li><p>Needs some polylfill, details in <a href="https://github.com/waitingsong/rxxfetch/blob/master/test/20_post.test.ts#L22">TEST</a></p>
-						<pre><code class="language-ts"><span class="hljs-keyword">import</span> nodefetch, { Headers } <span class="hljs-keyword">from</span> <span class="hljs-string">'node-fetch'</span>
-
-<span class="hljs-keyword">const</span> args = &lt;RxRequestInit&gt; {
-  fetchModule: nodefetch,
-  headersInitClass: Headers,
-}</code></pre>
-					</li>
 					<li><p>Handle cookies when 302/303/307 redirect on Node.js, <a href="https://github.com/waitingsong/rxxfetch/blob/master/test/30_cookie.test.ts">CODE</a></p>
-						<pre><code class="language-ts"><span class="hljs-keyword">import</span> nodefetch, { Headers } <span class="hljs-keyword">from</span> <span class="hljs-string">'node-fetch'</span>
-
-<span class="hljs-keyword">const</span> args = &lt;RxRequestInit&gt; {
-  fetchModule: nodefetch,
-  headersInitClass: Headers,
+						<pre><code class="language-ts"><span class="hljs-keyword">const</span> args = &lt;RxRequestInit&gt; {
   keepRedirectCookies: <span class="hljs-literal">true</span>,  <span class="hljs-comment">// &lt;---- intercept redirect</span>
 }</code></pre>
 					</li>
-					<li><p>Cancel an request via <code>AbortController</code>, details in <a href="https://github.com/waitingsong/rxxfetch/blob/master/test/30_request.test.ts#L20">CODE</a></p>
-						<pre><code class="language-ts"><span class="hljs-keyword">import</span> { abortableFetch, AbortController } <span class="hljs-keyword">from</span> <span class="hljs-string">'abortcontroller-polyfill/dist/cjs-ponyfill.js'</span>
-<span class="hljs-keyword">import</span> nodefetch, { Headers } <span class="hljs-keyword">from</span> <span class="hljs-string">'node-fetch'</span>
-
-<span class="hljs-keyword">const</span> { fetch } = abortableFetch(nodefetch) <span class="hljs-comment">// &lt;-- polyfilling fetch</span>
-<span class="hljs-keyword">const</span> args = &lt;RxRequestInit&gt; {
-  fetchModule: fetch,
-  headersInitClass: Headers,
-}</code></pre>
+					<li><p>Cancel an request via <code>AbortController</code>, details in <a href="https://github.com/waitingsong/rxxfetch/blob/master/test/30_abort.test.ts#L19">CODE</a></p>
 					</li>
-					<li><p>POST FILE</p>
-						<ul>
-							<li>via <code>FormData</code>, goto <a href="https://github.com/waitingsong/rxxfetch/blob/master/test/20_post.test.ts#L123">CODE</a></li>
-							<li>via <code>Stream</code>, goto <a href="https://github.com/waitingsong/rxxfetch/blob/master/test/20_post.test.ts#L158">CODE</a></li>
+					<li>POST FILE<ul>
+							<li>via <code>FormData</code>, goto <a href="https://github.com/waitingsong/rxxfetch/blob/master/test/20_post.test.ts#L116">CODE</a></li>
+							<li>via <code>Stream</code>, goto <a href="https://github.com/waitingsong/rxxfetch/blob/master/test/20_post.test.ts#L151">CODE</a></li>
 						</ul>
 					</li>
 				</ul>
