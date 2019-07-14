@@ -2,8 +2,7 @@
 
 import { basename } from '@waiting/shared-core'
 // tslint:disable-next-line
-import { abortableFetch, AbortController } from 'abortcontroller-polyfill/dist/cjs-ponyfill.js'
-import nodefetch, { Headers } from 'node-fetch'
+import { AbortController } from 'abortcontroller-polyfill/dist/cjs-ponyfill.js'
 import * as assert from 'power-assert'
 import { TimeoutError } from 'rxjs'
 
@@ -20,17 +19,34 @@ describe(filename, () => {
 
   describe('Should get() works with AbortSignal', () => {
     const url = 'https://github.com/waitingsong/rxxfetch#readme'
-    const { fetch: fetchNew } = abortableFetch(nodefetch)
     const initArgs = <RxRequestInit> {
       dataType: 'text',
-      fetchModule: fetchNew,
-      headersInitClass: Headers,
     }
 
     it('with timeout', resolve => {
-      const args = { ...initArgs }
-      args.abortController = new AbortController()
-      args.timeout = Math.random() * 10
+      const args = {
+        ...initArgs,
+        timeout: Math.random() * 10,
+      }
+
+      get(url, args).subscribe(
+        () => {
+          assert(false, 'Should throw timeoutError but NOT')
+          resolve()
+        },
+        err => {
+          assert(err && err instanceof TimeoutError, err)
+          resolve()
+        },
+      )
+    })
+
+    it('with passing abortController and timeout', resolve => {
+      const args = {
+        ...initArgs,
+        abortController: new AbortController(),
+        timeout: Math.random() * 10,
+      }
 
       get(url, args).subscribe(
         () => {
@@ -48,11 +64,12 @@ describe(filename, () => {
       )
     })
 
-    it('by calling abortController.abort()', resolve => {
-      const args = { ...initArgs }
-      const abortController = new AbortController()
-      args.abortController = abortController
-      args.timeout = 60000
+    it('cancel manually', resolve => {
+      const args = {
+        ...initArgs,
+        abortController: new AbortController(),
+        timeout: 60000,
+      }
 
       get(url, args).subscribe(
         next => {
@@ -69,7 +86,7 @@ describe(filename, () => {
         },
       )
       setTimeout(() => {
-        abortController.abort()
+        args.abortController.abort()
       }, 10)
     })
   })

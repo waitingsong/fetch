@@ -1,5 +1,3 @@
-/// <reference types="mocha" />
-
 import { basename } from '@waiting/shared-core'
 // tslint:disable-next-line
 import { abortableFetch, AbortController } from 'abortcontroller-polyfill/dist/cjs-ponyfill.js'
@@ -101,10 +99,7 @@ describe(filename, () => {
 describe(filename, () => {
   const fnName = 'parseHeaders'
   const fn = <(options: ArgsRequestInitCombined) => ArgsRequestInitCombined> mods.__get__(fnName)
-  const initArgs = <RxRequestInit> {
-    fetchModule: nodefetch,
-    headersInitClass: nodeHeaders,
-  }
+  const initArgs = { ...initialRxRequestInit }
 
   describe(`Should ${fnName}() works`, () => {
     it('pass headers instance', () => {
@@ -175,10 +170,7 @@ describe(filename, () => {
 describe(filename, () => {
   const fnName = 'parseCookies'
   const fn = <(options: ArgsRequestInitCombined) => ArgsRequestInitCombined> mods.__get__(fnName)
-  const initArgs = <RxRequestInit> {
-    fetchModule: nodefetch,
-    headersInitClass: nodeHeaders,
-  }
+  const initArgs = { ...initialRxRequestInit }
 
   describe(`Should ${fnName}() works`, () => {
     it('with valid data', () => {
@@ -269,10 +261,10 @@ describe(filename, () => {
 describe(filename, () => {
   const fnName = 'parseAbortController'
   const fn = <(options: ArgsRequestInitCombined) => ArgsRequestInitCombined> mods.__get__(fnName)
-  const initArgs = <RxRequestInit> { }
+  const initArgs = { ...initialRxRequestInit }
 
   describe(`Should ${fnName}() works`, () => {
-    it('with AbortController', () => {
+    it('with passing AbortController', () => {
       const args = { ...initArgs }
       args.abortController = new AbortController()
       // @ts-ignore
@@ -291,7 +283,7 @@ describe(filename, () => {
       delete global.AbortController
     })
 
-    it('without AbortController', () => {
+    it('with global AbortController', () => {
       const args = { ...initArgs }
       // @ts-ignore
       const combined = <ArgsRequestInitCombined> {

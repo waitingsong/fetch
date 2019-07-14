@@ -1,8 +1,5 @@
-/// <reference types="mocha" />
-
 // tslint:disable-next-line
 import { basename } from '@waiting/shared-core'
-import nodefetch, { Headers } from 'node-fetch'
 import * as assert from 'power-assert'
 
 import {
@@ -85,9 +82,8 @@ describe(filename, function() {
 
   describe('Should handleResponseError works', () => {
     const initArgs = <RxRequestInit> {
+      ...initialRxRequestInit,
       dataType: 'text',
-      fetchModule: nodefetch,
-      headersInitClass: Headers,
     }
 
     it('got status 404', resolve => {
@@ -180,8 +176,7 @@ describe(filename, function() {
   // const url = 'https://httpbin.org/cookies/set/foo/' + value
   const url = 'https://httpbin.org/cookies'
   const initArgs = <RxRequestInit> {
-    fetchModule: nodefetch,
-    headersInitClass: Headers,
+    ...initialRxRequestInit,
     credentials: 'include',
   }
 
@@ -304,9 +299,8 @@ describe(filename, function() {
 
   const url = 'https://httpbin.org/get'
   const initArgs = <RxRequestInit> {
+    ...initialRxRequestInit,
     dataType: 'raw',
-    fetchModule: nodefetch,
-    headersInitClass: Headers,
     method: 'OPTIONS',
   }
 

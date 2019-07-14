@@ -1,10 +1,7 @@
-/// <reference types="mocha" />
-
 import {
   ab2str,
   basename,
 } from '@waiting/shared-core'
-import nodefetch, { Headers } from 'node-fetch'
 import * as assert from 'power-assert'
 import * as QueryString from 'qs'
 
@@ -20,10 +17,7 @@ describe(filename, function() {
 
   describe('Should get() works with httpbin.org', () => {
     const url = 'https://httpbin.org/get'
-    const initArgs = <RxRequestInit> {
-      fetchModule: nodefetch,
-      headersInitClass: Headers,
-    }
+    const initArgs = <RxRequestInit> {}
 
     it('with dataType:"arrayBuffer"', resolve => {
       const args = { ...initArgs }
@@ -152,8 +146,6 @@ describe(filename, function() {
       p2: Math.random().toString(),
     }
     const initArgs = <RxRequestInit> {
-      fetchModule: nodefetch,
-      headersInitClass: Headers,
       timeout: 20 * 1000,
       dataType: 'json',
     }
@@ -237,10 +229,7 @@ describe(filename, function() {
 
   describe('Should get() works with httpbin.org', () => {
     const url = 'https://httpbin.org/get'
-    const initArgs = <RxRequestInit> {
-      fetchModule: nodefetch,
-      headersInitClass: Headers,
-    }
+    const initArgs = <RxRequestInit> {}
 
     it('with dataType:"arrayBuffer"', resolve => {
       const args = { ...initArgs }
@@ -369,8 +358,6 @@ describe(filename, function() {
       p2: Math.random().toString(),
     }
     const initArgs = <RxRequestInit> {
-      fetchModule: nodefetch,
-      headersInitClass: Headers,
       timeout: 20 * 1000,
       dataType: 'json',
     }

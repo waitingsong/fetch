@@ -1,3 +1,8 @@
+// @ts-ignore
+// eslint-disable-next-line
+import { abortableFetch } from 'abortcontroller-polyfill/dist/cjs-ponyfill.js' // tslint:disable-line
+import _fetch, { Headers as _Headers } from 'node-fetch'
+
 import { RxRequestInit } from './model'
 
 
@@ -14,5 +19,17 @@ export const initialRxRequestInit: RxRequestInit = {
   redirect: 'follow',
   referrer: 'client',
 }
+
+// for node.js
+if (typeof window === 'undefined') {
+  if (typeof fetch !== 'function') {
+    initialRxRequestInit.fetchModule = abortableFetch(_fetch).fetch
+  }
+
+  if (typeof Headers !== 'function') {
+    initialRxRequestInit.headersInitClass = _Headers
+  }
+}
+
 
 export const httpErrorMsgPrefix = 'Fetch error status:'

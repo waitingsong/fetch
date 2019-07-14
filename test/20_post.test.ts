@@ -1,9 +1,6 @@
-/// <reference types="mocha" />
-
 import { basename, readFileAsync } from '@waiting/shared-core'
 import * as FormData from 'form-data'
 import { createReadStream } from 'fs'
-import nodefetch, { Headers } from 'node-fetch'
 import * as assert from 'power-assert'
 import { defer } from 'rxjs'
 import { retry, switchMap, tap } from 'rxjs/operators'
@@ -21,10 +18,7 @@ describe(filename, function() {
 
   describe('Should post() works with httpbin.org', () => {
     const url = 'https://httpbin.org/post'
-    const initArgs = <RxRequestInit> {
-      fetchModule: nodefetch,
-      headersInitClass: Headers,
-    }
+    const initArgs = <RxRequestInit> {}
 
     it('send key:value object data', resolve => {
       const pdata = {

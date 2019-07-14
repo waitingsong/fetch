@@ -1,3 +1,6 @@
+// @ts-ignore
+// tslint:disable-next-line: no-submodule-imports
+import { AbortController as _AbortController } from 'abortcontroller-polyfill/dist/cjs-ponyfill.js'
 import * as QueryString from 'qs'
 import { throwError } from 'rxjs'
 
@@ -21,62 +24,61 @@ export function splitInitArgs(rxInitOpts: RxRequestInit): ArgsRequestInitCombine
   /* istanbul ignore else */
   if (typeof rxInitOpts.cookies !== 'undefined') {
     args.cookies = rxInitOpts.cookies
-    delete rxInitOpts.cookies
   }
+  delete rxInitOpts.cookies
 
-  /* istanbul ignore else */
   if (rxInitOpts.abortController && typeof rxInitOpts.abortController.abort === 'function') {
     args.abortController = rxInitOpts.abortController
-    delete rxInitOpts.abortController
   }
+  delete rxInitOpts.abortController
 
   /* istanbul ignore else */
   if (typeof rxInitOpts.contentType !== 'undefined') {
     args.contentType = rxInitOpts.contentType
-    delete rxInitOpts.contentType
   }
+  delete rxInitOpts.contentType
 
   /* istanbul ignore else */
   if (typeof rxInitOpts.data !== 'undefined') {
     args.data = rxInitOpts.data
-    delete rxInitOpts.data
   }
+  delete rxInitOpts.data
 
   /* istanbul ignore else */
   if (rxInitOpts.dataType) {
     args.dataType = rxInitOpts.dataType
-    delete rxInitOpts.dataType
   }
+  delete rxInitOpts.dataType
 
   /* istanbul ignore else */
   if (rxInitOpts.fetchModule) {
     args.fetchModule = rxInitOpts.fetchModule
-    delete rxInitOpts.fetchModule
   }
+  delete rxInitOpts.fetchModule
 
   /* istanbul ignore else */
   if (rxInitOpts.headersInitClass) {
     args.headersInitClass = rxInitOpts.headersInitClass
-    delete rxInitOpts.headersInitClass
   }
+  delete rxInitOpts.headersInitClass
 
   /* istanbul ignore else */
   if (typeof rxInitOpts.keepRedirectCookies !== 'undefined') {
     args.keepRedirectCookies = !! rxInitOpts.keepRedirectCookies
-    delete rxInitOpts.keepRedirectCookies
   }
+  delete rxInitOpts.keepRedirectCookies
 
   /* istanbul ignore else */
   if (typeof rxInitOpts.processData !== 'undefined') {
     args.processData = rxInitOpts.processData
-    delete rxInitOpts.processData
   }
+  delete rxInitOpts.processData
 
   /* istanbul ignore else */
   if (typeof rxInitOpts.timeout !== 'undefined') {
     args.timeout = rxInitOpts.timeout
-    delete rxInitOpts.timeout
   }
+  delete rxInitOpts.timeout
 
   return {
     args,
@@ -132,11 +134,10 @@ function parseAbortController(options: ArgsRequestInitCombined): ArgsRequestInit
   const { args, requestInit } = options
 
   /* istanbul ignore else */
-  if (! args.abortController || ! args.abortController.signal || typeof args.abortController.abort !== 'function') {
-    /* istanbul ignore else */
-    if (typeof AbortController === 'function') {
-      args.abortController = new AbortController()
-    }
+  if (!args.abortController || !args.abortController.signal || typeof args.abortController.abort !== 'function') {
+    args.abortController = typeof AbortController === 'function'
+      ? new AbortController()
+      : new _AbortController()
   }
   /* istanbul ignore else */
   if (args.abortController) {

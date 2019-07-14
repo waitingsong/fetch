@@ -23,19 +23,18 @@ HTTP Fetch() 响应式接口，基于 [RxJS6](https://github.com/reactivex/rxjs)
 ## Browser support
 
 [![Build Status](https://saucelabs.com/browser-matrix/waitingsong.svg)](https://saucelabs.com/u/waitingsong)
-[![Build Status](./assets/sauce.png)]
+![Build Status](./assets/sauce.png)
 
 - 长青浏览器基本不需要垫片
 - IE11 需要这些垫片 [whatwg-fetch](https://github.com/github/fetch/), [es6-shim](https://github.com/paulmillr/es6-shim/), [es7-shim](http://github.com/es-shims/es7-shim/)
 - Edge14 has 1 failed on [remove() with form data](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/20_remove.test.ts#L106)
-- Safari 11 (Mac OS X) has 1 failed on [abortController.abort()](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_request.test.ts#L48) with `TypeError: Origin http://localhost:9876 is not allowed by Access-Control-Allow-Origin`
-- Safari 11 (Mac OS X/iOS) may get failure on [abortController.abort()](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_request.test.ts#L46)
+- Safari 11 (Mac OS X/iOS) may get failure on [abortController.abort()](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_abort.test.ts#L44)
  with `TypeError: Origin http://localhost:9876 is not allowed by Access-Control-Allow-Origin`
-- Mobile Safari 10.0.0 (iOS 10.3.0) may get failure on [abortController.abort()](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_request.test.ts#L46)
+- Mobile Safari 10.0.0 (iOS 10.3.0) may get failure on [abortController.abort()](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_abort.test.ts#L44)
   with `TypeError: Type error`
 - Mobile Safari 9.0.0 (iOS 9.3.0) may get failure on [redirect](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_redirect.test.ts) 
  with `AssertionError: TypeError: Network request failed`
-- Android 4.4 will get failure on [parseResponseType()](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_response.test.ts#L160) 
+- Android 4.4 will get failure on [parseResponseType()](https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_response.test.ts#L152) 
  with `TypeError: Object function ArrayBuffer() { [native code] } has no method 'isView'`
 
 ## 安装
@@ -127,45 +126,18 @@ export interface HttpbinPostResponse extends HttpbinGetResponse {
 
 ### On Node.js
 
-- Needs some polylfill, details in [TEST](https://github.com/waitingsong/rxxfetch/blob/master/test/20_post.test.ts#L22)
-
-  ```ts
-  import nodefetch, { Headers } from 'node-fetch'
-
-  const args = <RxRequestInit> {
-    fetchModule: nodefetch,
-    headersInitClass: Headers,
-  }
-  ```
-
 - Node.js 下保留 302/303/307 重定向的 cookie 值，[CODE](https://github.com/waitingsong/rxxfetch/blob/master/test/30_cookie.test.ts)
 
   ```ts
-  import nodefetch, { Headers } from 'node-fetch'
-
   const args = <RxRequestInit> {
-    fetchModule: nodefetch,
-    headersInitClass: Headers,
     keepRedirectCookies: true,  // <---- intercept redirect
   }
   ```
 
-- 借助 `AbortController` 取消发出的请求, 详情见 [CODE](https://github.com/waitingsong/rxxfetch/blob/master/test/30_request.test.ts#L20)
-
-  ```ts
-  import { abortableFetch, AbortController } from 'abortcontroller-polyfill/dist/cjs-ponyfill.js'
-  import nodefetch, { Headers } from 'node-fetch'
-
-  const { fetch } = abortableFetch(nodefetch) // <-- polyfilling fetch
-  const args = <RxRequestInit> {
-    fetchModule: fetch,
-    headersInitClass: Headers,
-  }
-  ```
-
+- 借助 `AbortController` 取消发出的请求, 详情见 [CODE](https://github.com/waitingsong/rxxfetch/blob/master/test/30_abort.test.ts#L19)
 - POST FILE
-  - via `FormData`, goto [CODE](https://github.com/waitingsong/rxxfetch/blob/master/test/20_post.test.ts#L123)
-  - via `Stream`, goto [CODE](https://github.com/waitingsong/rxxfetch/blob/master/test/20_post.test.ts#L158)
+  - via `FormData`, goto [CODE](https://github.com/waitingsong/rxxfetch/blob/master/test/20_post.test.ts#L116)
+  - via `Stream`, goto [CODE](https://github.com/waitingsong/rxxfetch/blob/master/test/20_post.test.ts#L151)
 
 ## Demos
 

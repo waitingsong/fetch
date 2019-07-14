@@ -70,7 +70,10 @@ export interface Args {
   /** whether process Args.data automatically. jQuery behavior */
   processData?: boolean
 
-  /** msec Default value Infinity */
+  /**
+   * Request timeout in msec. default value Infinity.
+   * Also for aborting reqeust via abortController
+   */
   timeout?: number | null
 }
 

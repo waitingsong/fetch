@@ -1,8 +1,5 @@
-/// <reference types="mocha" />
-
 import { basename } from '@waiting/shared-core'
 import * as FormData from 'form-data'
-import nodefetch, { Headers } from 'node-fetch'
 import * as assert from 'power-assert'
 
 import { put, RxRequestInit } from '../src/index'
@@ -18,10 +15,7 @@ describe(filename, function() {
 
   describe('Should put() works with httpbin.org', () => {
     const url = 'https://httpbin.org/put'
-    const initArgs = <RxRequestInit> {
-      fetchModule: nodefetch,
-      headersInitClass: Headers,
-    }
+    const initArgs = <RxRequestInit> {}
 
     it('send key:value object data', resolve => {
       const pdata = {
