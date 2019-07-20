@@ -16,6 +16,12 @@ before_install:
   - npm i rollup typescript eslint nyc
   - npm install
 
+#services:
+#  - postgresql
+#addons:
+#  postgresql: "9.6"
+#before_script:
+#  - psql -U postgres -c "create database db_ci_test;"
 
 install: true
 
