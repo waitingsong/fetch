@@ -2,9 +2,8 @@ if: tag IS blank
 
 language: node_js
 node_js:
-- '8'
-- '10'
-- '12'
+  - '10'
+  - '12'
 
 cache:
   directories:
