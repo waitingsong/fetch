@@ -1,4 +1,6 @@
 {
+  "editor.minimap.renderCharacters": false,
+  "editor.renderFinalNewline": false,
   "editor.tabSize": 2,
   "editor.wordWrap": "on",
   "eslint.autoFixOnSave": true,
@@ -12,7 +14,6 @@
     },
     "typescriptreact" 
   ],
-  "files.insertFinalNewline": true,
   "files.eol": "\n",
   "files.exclude": {
     "USE_GITIGNORE": true,
@@ -48,6 +49,7 @@
     "run": true,
     "tslint.json": true
   },
+  "files.insertFinalNewline": true,
   "files.watcherExclude": {
       "**/.classpath": true,
       "**/.factorypath": true,
@@ -79,10 +81,17 @@
     "files.trimTrailingWhitespace": false
   },
   "telemetry.enableTelemetry": false,
+  "typescript.autoClosingTags": false,
+  "typescript.experimental.useSeparateSyntaxServer": true,
   "typescript.format.enable": true,
   "typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
   "typescript.format.insertSpaceAfterTypeAssertion": true,
   "typescript.format.insertSpaceBeforeAndAfterBinaryOperators": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
+  "[typescript]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true
+  },
   "git.ignoreLimitWarning": true
 }
