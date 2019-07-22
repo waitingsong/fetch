@@ -2,9 +2,8 @@ if: tag IS blank
 
 language: node_js
 node_js:
-- '8'
-- '10'
-- '12'
+  - '10'
+  - '12'
 
 cache:
   directories:
@@ -16,6 +15,12 @@ before_install:
   - npm i rollup typescript eslint nyc
   - npm install
 
+#services:
+#  - postgresql
+#addons:
+#  postgresql: "9.6"
+#before_script:
+#  - psql -U postgres -c "create database db_ci_test;"
 
 install: true
 

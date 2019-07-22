@@ -108,7 +108,7 @@
       ]
     },
     {
-      "name": "Mocha TS Tests",
+      "name": "Mocha Tests",
       "type": "node",
       "args": [
         "-u",
@@ -116,11 +116,18 @@
         "--timeout",
         "999999",
         "--colors",
-        "${workspaceFolder}/test/**/**.test.ts"
+        // "${workspaceFolder}/test/**/**.test.ts"
       ],
+      "env": {
+        "NODE_ENV": "local",
+        "TS_NODE_PROJECT": "test/tsconfig.json",
+        "PGHOST": "",
+        "PGUSER": "",
+        "PGPASSWORD": "",
+      },
       "internalConsoleOptions": "openOnSessionStart",
       "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
-      "request": "launch"
+      "request": "launch",
     }
   ]
 }

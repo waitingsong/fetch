@@ -1,6 +1,6 @@
 --full-trace
 --timeout 60000 
 --bail
--r test/tshook.js 
+-r ts-node/register
 -r source-map-support/register
 -r intelli-espower-loader test/**/*.test.ts
