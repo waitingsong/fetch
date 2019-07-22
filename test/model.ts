@@ -21,12 +21,12 @@ export interface HttpbinRetCookie extends JsonType {
 export interface HttpbinGetResponse extends JsonType {
   args: any
   headers: {
-    Accept: string
-    Connection: string
-    Host: string
+    Accept: string,
+    Connection: string,
+    Host: string,
     'User-Agent': string,
   }
-  origin: string  // ip
+  origin: string // ip
   url: string
 }
 

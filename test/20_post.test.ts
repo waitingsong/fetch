@@ -1,6 +1,7 @@
+import { createReadStream } from 'fs'
+
 import { basename, readFileAsync } from '@waiting/shared-core'
 import * as FormData from 'form-data'
-import { createReadStream } from 'fs'
 import * as assert from 'power-assert'
 import { defer } from 'rxjs'
 import { retry, switchMap, tap } from 'rxjs/operators'
@@ -20,7 +21,7 @@ describe(filename, function() {
     const url = 'https://httpbin.org/post'
     const initArgs = <RxRequestInit> {}
 
-    it('send key:value object data', resolve => {
+    it('send key:value object data', (resolve) => {
       const pdata = {
         p1: Math.random(),
         p2: Math.random().toString(),
@@ -29,7 +30,7 @@ describe(filename, function() {
       args.data = { ...pdata }
 
       post<HttpbinPostResponse>(url, args).subscribe(
-        res => {
+        (res) => {
           assert(res && res.url === url)
 
           try {
@@ -42,14 +43,14 @@ describe(filename, function() {
           }
           resolve()
         },
-        err => {
+        (err) => {
           assert(false, err)
           resolve()
         },
       )
     })
 
-    it('send nested key:value object data', resolve => {
+    it('send nested key:value object data', (resolve) => {
       const pdata = {
         p1: Math.random(),
         p2: Math.random().toString(),
@@ -61,7 +62,7 @@ describe(filename, function() {
       args.data = { ...pdata }
 
       post<HttpbinPostResponse>(url, args).subscribe(
-        res => {
+        (res) => {
           assert(res && res.url === url)
 
           try {
@@ -75,26 +76,28 @@ describe(filename, function() {
           }
           resolve()
         },
-        err => {
+        (err) => {
           assert(false, err)
           resolve()
         },
       )
     })
 
-    it('send form', resolve => {
+    it('send form', (resolve) => {
       const pdata = new FormData()
       const p1 = Math.random()
       const p2 = Math.random().toString()
       pdata.append('p1', p1)
       pdata.append('p2', p2)
 
-      const args: RxRequestInit = { ...initArgs, data: pdata, processData: false, contentType: false }
+      const args: RxRequestInit = {
+        ...initArgs, data: pdata, processData: false, contentType: false,
+      }
 
       post<HttpbinPostResponse>(url, args).pipe(
         retry(2),
       ).subscribe(
-        res => {
+        (res) => {
           assert(res && res.url === url)
 
           try {
@@ -107,14 +110,14 @@ describe(filename, function() {
           }
           resolve()
         },
-        err => {
+        (err) => {
           assert(false, err)
           resolve()
         },
       )
     })
 
-    it('send a txt file and key:value data via FormData', resolve => {
+    it('send a txt file and key:value data via FormData', (resolve) => {
       const read$ = defer(() => readFileAsync(`${__dirname}/p2.txt`))
 
       read$.pipe(
@@ -123,11 +126,13 @@ describe(filename, function() {
           const p1 = Math.random().toString()
           pdata.append('p1', p1)
           pdata.append('p2', buf)
-          const args: RxRequestInit = { ...initArgs, data: pdata, processData: false, contentType: false }
+          const args: RxRequestInit = {
+            ...initArgs, data: pdata, processData: false, contentType: false,
+          }
 
           return post<HttpbinPostResponse>(url, args).pipe(
             retry(2),
-            tap(res => {
+            tap((res) => {
               assert(res && res.url === url)
 
               const form = res.form
@@ -142,22 +147,24 @@ describe(filename, function() {
           () => {
             resolve()
           },
-          err => {
+          (err) => {
             assert(false, err)
             resolve()
           },
         )
     })
 
-    it('send an image file via Buffer', resolve => {
+    it('send an image file via Buffer', (resolve) => {
       const path = `${__dirname}/images/loading-1.gif`
       const readerStream = createReadStream(path)
       const readerStream2 = createReadStream(path)
-      const args: RxRequestInit = { ...initArgs, data: readerStream, processData: false, contentType: false }
+      const args: RxRequestInit = {
+        ...initArgs, data: readerStream, processData: false, contentType: false,
+      }
       let buf: Buffer = Buffer.alloc(0)
       const stream$ = post<HttpbinPostResponse>(url, args).pipe(
         retry(2),
-        tap(res => {
+        tap((res) => {
           const base64 = buf.toString('base64')
           assert(res && res.url === url)
           assert(
@@ -170,7 +177,7 @@ describe(filename, function() {
       readerStream2.on('data', (data: Buffer) => {
         buf = Buffer.concat([buf, data])
       })
-      readerStream2.on('error', data => {
+      readerStream2.on('error', () => {
         assert(false, 'read file failed')
         resolve()
       })
@@ -180,7 +187,7 @@ describe(filename, function() {
           () => {
             resolve()
           },
-          err => {
+          (err) => {
             assert(false, err)
             resolve()
           },

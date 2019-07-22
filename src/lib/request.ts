@@ -39,6 +39,7 @@ export function createObbRequest(
   requestInit: RequestInit,
 ): Observable<Response> {
 
+  let inputNew = input
   const fetchModule = selectFecthModule(args.fetchModule)
 
   if (typeof input === 'string') {
@@ -46,21 +47,21 @@ export function createObbRequest(
     if (typeof args.data !== 'undefined') {
       if (args.processData) {
         if (['GET', 'DELETE'].includes(<string> requestInit.method)) {
-          input = buildQueryString(input, args.data)
+          inputNew = buildQueryString(input, args.data)
         }
         else {
           requestInit.body = QueryString.stringify(args.data)
         }
       }
       else {
-        requestInit.body = <any> args.data
+        requestInit.body = <RequestInit['body']> args.data
       }
     }
 
-    return defer(() => fetchModule(input, requestInit))
+    return defer(() => fetchModule(inputNew, requestInit))
   }
   else {
-    return defer(() => fetchModule(<Request> input))
+    return defer(() => fetchModule(input))
   }
 }
 
@@ -81,14 +82,16 @@ function parseTimeout(
   abortController: Args['abortController'],
 ): Observable<Response> {
 
+  let ret$ = request$
+
   /* istanbul ignore else */
   if (typeof timeoutValue === 'number' && timeoutValue >= 0) {
-    request$ = request$.pipe(
+    ret$ = request$.pipe(
       timeout(timeoutValue),
-      catchError(err => {
+      catchError((err) => {
         // test by test_browser/30_abort.test.ts
-        /* istanbul ignore next */
-        if (abortController && typeof abortController.abort === 'function' && !abortController.signal.aborted) {
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        if (abortController && typeof abortController.abort === 'function' && ! abortController.signal.aborted) {
           abortController.abort()
         }
         throw err
@@ -96,7 +99,7 @@ function parseTimeout(
     )
   }
 
-  return request$
+  return ret$
 }
 
 
@@ -114,10 +117,7 @@ export function handleRedirect(resp: Response, args: Args, init: RequestInit): O
     const cookie = resp.headers.get('Set-Cookie')
 
     /* istanbul ignore if */
-    if (! url) {
-      throwError('Redirect location is empty')
-    }
-    else {
+    if (url) {
       const cookieObj = parseRespCookie(cookie)
       /* istanbul ignore else */
       if (cookieObj) {
@@ -136,5 +136,9 @@ export function handleRedirect(resp: Response, args: Args, init: RequestInit): O
       }
     }
   }
+  else {
+    throwError('Redirect location is empty')
+  }
+
   return of(resp)
 }

@@ -12,7 +12,7 @@ describe(filename, () => {
       dataType: 'text',
     }
 
-    it('with blank string', resolve => {
+    it('with blank string', (resolve) => {
       const args = { ...initArgs }
 
       fetch('', args).subscribe(
@@ -26,7 +26,7 @@ describe(filename, () => {
       )
     })
 
-    it('with null', resolve => {
+    it('with null', (resolve) => {
       const args = { ...initArgs }
 
       // @ts-ignore
@@ -41,7 +41,7 @@ describe(filename, () => {
       )
     })
 
-    it('with undefined', resolve => {
+    it('with undefined', (resolve) => {
       const args = { ...initArgs }
 
       // @ts-ignore
@@ -66,7 +66,7 @@ describe(filename, () => {
     }
     initArgs.fetchModule = void 0
 
-    it('with invalid fetchModule', resolve => {
+    it('with invalid fetchModule', (resolve) => {
       const args = { ...initArgs }
       // @ts-ignore
       args.fetchModule = 'should Function'

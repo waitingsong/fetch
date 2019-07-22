@@ -60,7 +60,7 @@ describe(filename, () => {
 
 
   describe('handleResponseError() works', () => {
-    it('pass ok', resolve => {
+    it('pass ok', (resolve) => {
       const statusText = 'test resp'
       const status = 200
       const init = { status, statusText }
@@ -68,7 +68,7 @@ describe(filename, () => {
 
       // @ts-ignore
       handleResponseError(resp).subscribe(
-        res => {
+        (res) => {
           assert(res.size === 0)
           assert(res.status === 200)
           assert(res.statusText === statusText)
@@ -82,7 +82,7 @@ describe(filename, () => {
       )
     })
 
-    it('catch error', resolve => {
+    it('catch error', (resolve) => {
       const statusText = 'test resp error'
       const status = 500
       const init = { status, statusText }
@@ -95,7 +95,7 @@ describe(filename, () => {
           resolve()
         },
         (err: Error) => {
-          assert(!!err && err.message.length)
+          assert(!! err && err.message.length)
           const msg = err.message
           assert(msg.includes(`${httpErrorMsgPrefix}${status}`))
           assert(msg.includes(`statusText: ${statusText}`))
@@ -105,7 +105,7 @@ describe(filename, () => {
       )
     })
 
-    it('catch error with invalid Response', resolve => {
+    it('catch error with invalid Response', (resolve) => {
       const status = 500
       const resp = { ok: false, status }
 
@@ -116,7 +116,7 @@ describe(filename, () => {
           resolve()
         },
         (err: Error) => {
-          assert(!!err && err.message.length)
+          assert(!! err && err.message.length)
           const msg = err.message
           assert(msg.includes(`${httpErrorMsgPrefix}${status}`))
           assert(msg.includes('TypeError: resp.text is not a function'))
@@ -125,7 +125,7 @@ describe(filename, () => {
       )
     })
 
-    it('no error with bare:true', resolve => {
+    it('no error with bare:true', (resolve) => {
       const statusText = 'test resp error'
       const status = 500
       const init = { status, statusText }
@@ -133,7 +133,7 @@ describe(filename, () => {
 
       // @ts-ignore
       handleResponseError(resp, true).subscribe(
-        res => {
+        (res) => {
           assert(res
             && res.ok === false
             && res.status === status
@@ -155,7 +155,7 @@ describe(filename, () => {
     const status = 200
     const init = { status, statusText }
 
-    it('with arrayBuffer', resolve => {
+    it('with arrayBuffer', (resolve) => {
       const size = Math.round(Math.random() * 100)
       const ab = new ArrayBuffer(size)
       const resp = new Response(ab, init)
@@ -167,7 +167,7 @@ describe(filename, () => {
 
           resolve()
         },
-        err => {
+        (err) => {
           assert(false, err)
           resolve()
         },
@@ -180,7 +180,7 @@ describe(filename, () => {
      * formData() not supported by node-fetch yet.
      * https://github.com/bitinn/node-fetch#iface-body
      */
-    it.skip('with formData (not supported by node-fetch yet)', resolve => {
+    it.skip('with formData (not supported by node-fetch yet)', (resolve) => {
       const form = new FormData()
       const p1 = Math.random()
       const p2 = Math.random().toString()
@@ -190,67 +190,67 @@ describe(filename, () => {
 
       // @ts-ignore
       parseResponseType<'formData'>(resp, 'formData').subscribe(
-        ret => {
+        (ret) => {
           assert(ret && ret.get('p1') === p1)
           assert(ret && ret.get('p2') === p2)
 
           resolve()
         },
-        err => {
+        (err) => {
           assert(false, err)
           resolve()
         },
       )
     })
 
-    it('with raw', resolve => {
+    it('with raw', (resolve) => {
       const size = Math.round(Math.random() * 100)
       const ab = new ArrayBuffer(size)
       const resp = new Response(ab, init)
 
       // @ts-ignore
       parseResponseType<'raw'>(resp, 'raw').subscribe(
-        res => {
+        (res) => {
           assert(res && res.status === status)
           assert(res && res.statusText === statusText)
 
           res.arrayBuffer()
-            .then(buf => {
+            .then((buf) => {
               assert(buf && buf.byteLength === size)
               resolve()
             })
-            .catch(err => {
+            .catch((err) => {
               assert(false, err)
               resolve()
             })
 
         },
-        err => {
+        (err) => {
           assert(false, err)
           resolve()
         },
       )
     })
 
-    it('with text', resolve => {
+    it('with text', (resolve) => {
       const foo = Math.random().toString()
       const resp = new Response(Buffer.from(foo), init)
 
       // @ts-ignore
       parseResponseType<'text'>(resp, 'text').subscribe(
-        txt => {
+        (txt) => {
           assert(txt && txt === foo)
 
           resolve()
         },
-        err => {
+        (err) => {
           assert(false, err)
           resolve()
         },
       )
     })
 
-    it('with never value', resolve => {
+    it('with never value', (resolve) => {
       const foo = 'neverValue:' + Math.random().toString()
       const resp = new Response(Buffer.from(foo), init)
 

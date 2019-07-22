@@ -16,7 +16,7 @@ export function handleResponseError(resp: Response, bare: boolean = false): Obse
   return defer(() => resp.text()).pipe(
     catchError((err: Error) => of(err.toString())),
     map((txt: string) => {
-      const str = `${ httpErrorMsgPrefix }${ status }\nstatusText: ${statusText}\nResponse: ${txt}`
+      const str = `${httpErrorMsgPrefix}${status}\nstatusText: ${statusText}\nResponse: ${txt}`
       throw new Error(str)
     }),
   )
@@ -70,22 +70,23 @@ export function parseResponseType<T extends RespDataTypeName>(
 /** "foo=cookiefoo; Secure; Path=/" */
 export function parseRespCookie(cookie: string | null): Args['cookies'] {
   /* istanbul ignore else  */
-  if (!cookie) {
+  if (! cookie) {
     return
   }
+  // eslint-disable-next-line require-unicode-regexp
   const arr = cookie.split(/;/)
   const ret: Args['cookies'] = {}
 
   for (let row of arr) {
     row = row.trim()
     /* istanbul ignore else  */
-    if (!row) {
+    if (! row) {
       continue
     }
-    if (!row.includes('=')) {
+    if (! row.includes('=')) {
       continue
     }
-    if (row.slice(0, 5) === 'Path=') {
+    if (row.startsWith('Path=')) {
       continue
     }
     const [key, value] = row.split('=')

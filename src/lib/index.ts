@@ -38,53 +38,41 @@ export function rxfetch<T extends ObbRetType = JsonType>(
 
 /** Observable GET method of fetch() */
 export function get<T extends ObbRetType = JsonType>(input: string, init?: RxRequestInit): Observable<T> {
-  /* istanbul ignore else */
-  if (init) {
-    init.method = 'GET'
-  }
-  else {
-    init = { method: 'GET' }
-  }
-  return rxfetch<T>(input, init)
+  const ps: RxRequestInit = init
+    ? { ...init, method: 'GET' }
+    : { method: 'GET' }
+
+  return rxfetch<T>(input, ps)
 }
 
 
 /** Observable POST method of fetch() */
 export function post<T extends ObbRetType = JsonType>(input: string, init?: RxRequestInit): Observable<T> {
-  /* istanbul ignore else */
-  if (init) {
-    init.method = 'POST'
-  }
-  else {
-    init = { method: 'POST' }
-  }
-  return rxfetch<T>(input, init)
+  const ps: RxRequestInit = init
+    ? { ...init, method: 'POST' }
+    : { method: 'POST' }
+
+  return rxfetch<T>(input, ps)
 }
 
 
 /** Observable PUT method of fetch() */
 export function put<T extends ObbRetType = JsonType>(input: string, init?: RxRequestInit): Observable<T> {
-  /* istanbul ignore else */
-  if (init) {
-    init.method = 'PUT'
-  }
-  else {
-    init = { method: 'PUT' }
-  }
-  return rxfetch<T>(input, init)
+  const ps: RxRequestInit = init
+    ? { ...init, method: 'PUT' }
+    : { method: 'PUT' }
+
+  return rxfetch<T>(input, ps)
 }
 
 
 /** Observable DELETE method of fetch() */
 export function remove<T extends ObbRetType = JsonType>(input: string, init?: RxRequestInit): Observable<T> {
-  /* istanbul ignore else */
-  if (init) {
-    init.method = 'DELETE'
-  }
-  else {
-    init = { method: 'DELETE' }
-  }
-  return rxfetch<T>(input, init)
+  const ps: RxRequestInit = init
+    ? { ...init, method: 'DELETE' }
+    : { method: 'DELETE' }
+
+  return rxfetch<T>(input, ps)
 }
 
 

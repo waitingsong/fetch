@@ -27,6 +27,7 @@ export function splitInitArgs(rxInitOpts: RxRequestInit): ArgsRequestInitCombine
   }
   delete rxInitOpts.cookies
 
+  // eslint-disable-next-line @typescript-eslint/unbound-method
   if (rxInitOpts.abortController && typeof rxInitOpts.abortController.abort === 'function') {
     args.abortController = rxInitOpts.abortController
   }
@@ -88,16 +89,17 @@ export function splitInitArgs(rxInitOpts: RxRequestInit): ArgsRequestInitCombine
 
 
 export function parseInitOpts(options: ArgsRequestInitCombined): ArgsRequestInitCombined {
-  options = parseHeaders(options) // at first!
+  let opts = { ...options }
+  opts = parseHeaders(opts) // at first!
 
-  options = parseAbortController(options)
-  options = parseCookies(options)
-  options = parseMethod(options)
-  options.args.dataType = parseDataType(options.args.dataType)
-  options.args.timeout = parseTimeout(options.args.timeout)
-  options.requestInit.redirect = parseRedirect(<boolean> options.args.keepRedirectCookies, options.requestInit.redirect)
+  opts = parseAbortController(opts)
+  opts = parseCookies(opts)
+  opts = parseMethod(opts)
+  opts.args.dataType = parseDataType(opts.args.dataType)
+  opts.args.timeout = parseTimeout(opts.args.timeout)
+  opts.requestInit.redirect = parseRedirect(<boolean> opts.args.keepRedirectCookies, opts.requestInit.redirect)
 
-  return options
+  return opts
 }
 
 
@@ -105,7 +107,7 @@ function parseHeaders(options: ArgsRequestInitCombined): ArgsRequestInitCombined
   const { args, requestInit } = options
 
   /* istanbul ignore else */
-  if (args.headersInitClass) {  // node.js need pass headers class
+  if (args.headersInitClass) { // node.js need pass headers class
     const headers = requestInit.headers
       ? <Headers> new args.headersInitClass(requestInit.headers)
       : <Headers> new args.headersInitClass()
@@ -121,9 +123,11 @@ function parseHeaders(options: ArgsRequestInitCombined): ArgsRequestInitCombined
 If running under Node.js, it must pass HeaderClass such come from package "node-fetch".`)
   }
 
+  const { headers } = requestInit
+
   /* istanbul ignore else */
-  if (! (<Headers> requestInit.headers).has('Accept')) {
-    (<Headers> requestInit.headers).set('Accept', 'application/json, text/html, text/javascript, text/plain, */*')
+  if (! headers.has('Accept')) {
+    headers.set('Accept', 'application/json, text/html, text/javascript, text/plain, */*')
   }
 
   return { args, requestInit }
@@ -134,7 +138,8 @@ function parseAbortController(options: ArgsRequestInitCombined): ArgsRequestInit
   const { args, requestInit } = options
 
   /* istanbul ignore else */
-  if (!args.abortController || !args.abortController.signal || typeof args.abortController.abort !== 'function') {
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  if (! args.abortController || ! args.abortController.signal || typeof args.abortController.abort !== 'function') {
     args.abortController = typeof AbortController === 'function'
       ? new AbortController()
       : new _AbortController()
@@ -151,7 +156,7 @@ function parseAbortController(options: ArgsRequestInitCombined): ArgsRequestInit
 function parseCookies(options: ArgsRequestInitCombined): ArgsRequestInitCombined {
   const { args, requestInit } = options
   const data = args.cookies
-  const arr = <string[]> []
+  const arr = <string[]>[]
 
   if (data && typeof data === 'object') {
     for (let [key, value] of Object.entries(data)) {
@@ -170,13 +175,14 @@ function parseCookies(options: ArgsRequestInitCombined): ArgsRequestInitCombined
   }
 
   if (arr.length) {
-    let cookies = (<Headers> requestInit.headers).get('Cookie')
+    const headers = <Headers> requestInit.headers
+    let cookies = headers.get('Cookie')
 
     if (cookies) {
       cookies = cookies.trim()
       let ret = arr.join('; ')
       /* istanbul ignore if */
-      if (cookies.slice(-1) === ';') {
+      if (cookies.endsWith(';')) {
         cookies = cookies.slice(0, -1)
         ret = `${cookies}; ` + ret
       }
@@ -184,10 +190,10 @@ function parseCookies(options: ArgsRequestInitCombined): ArgsRequestInitCombined
         ret = `${cookies}; ` + ret
       }
 
-      (<Headers> requestInit.headers).set('Cookie', ret)
+      headers.set('Cookie', ret)
     }
     else {
-      (<Headers> requestInit.headers).set('Cookie', arr.join('; '))
+      headers.set('Cookie', arr.join('; '))
     }
   }
 
@@ -201,24 +207,27 @@ function parseMethod(options: ArgsRequestInitCombined): ArgsRequestInitCombined 
   switch (requestInit.method) {
     case 'DELETE':
     case 'POST':
-    case 'PUT':
+    case 'PUT': {
+      const headers = <Headers> requestInit.headers
+
       if (args.contentType === false) {
         break
       }
       else if (args.contentType) {
-        (<Headers> requestInit.headers).set('Content-Type', args.contentType)
+        headers.set('Content-Type', args.contentType)
       }
       /* istanbul ignore else */
-      else if (! (<Headers> requestInit.headers).has('Content-Type')) {
-        (<Headers> requestInit.headers).set('Content-Type', 'application/x-www-form-urlencoded')
+      else if (! headers.has('Content-Type')) {
+        headers.set('Content-Type', 'application/x-www-form-urlencoded')
       }
       break
+    }
   }
   return { args, requestInit }
 }
 
 
-function parseDataType(value: any): NonNullable<Args['dataType']> {
+function parseDataType(value: unknown): NonNullable<Args['dataType']> {
   /* istanbul ignore else */
   if (typeof value === 'string' && ['arrayBuffer', 'bare', 'blob', 'formData', 'json', 'text', 'raw'].includes(value)) {
     return <NonNullable<Args['dataType']>> value
@@ -227,8 +236,8 @@ function parseDataType(value: any): NonNullable<Args['dataType']> {
 }
 
 
-function parseTimeout(p: any): number | null {
-  const value = typeof p === 'number' && p >= 0 ? Math.ceil(p) : null
+function parseTimeout(ps: unknown): number | null {
+  const value = typeof ps === 'number' && ps >= 0 ? Math.ceil(ps) : null
   return value === null || ! Number.isSafeInteger(value) ? null : value
 }
 

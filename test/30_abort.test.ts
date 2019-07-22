@@ -23,7 +23,7 @@ describe(filename, () => {
       dataType: 'text',
     }
 
-    it('with timeout', resolve => {
+    it('with timeout', (resolve) => {
       const args = {
         ...initArgs,
         timeout: Math.random() * 10,
@@ -34,14 +34,14 @@ describe(filename, () => {
           assert(false, 'Should throw timeoutError but NOT')
           resolve()
         },
-        err => {
+        (err) => {
           assert(err && err instanceof TimeoutError, err)
           resolve()
         },
       )
     })
 
-    it('with passing abortController and timeout', resolve => {
+    it('with passing abortController and timeout', (resolve) => {
       const args = {
         ...initArgs,
         abortController: new AbortController(),
@@ -53,10 +53,11 @@ describe(filename, () => {
           assert(false, 'Should throw timeoutError but NOT')
           resolve()
         },
-        err => {
+        (err) => {
           assert(err && err instanceof TimeoutError, err)
           assert(
-            (<NonNullable<Args['abortController']>> args.abortController).signal.aborted,
+            // (<NonNullable<Args['abortController']>> args.abortController).signal.aborted,
+            !! args.abortController.signal.aborted,
             'Should args.abortController.signal.aborted be TRUE after timeout',
           )
           resolve()
@@ -64,7 +65,7 @@ describe(filename, () => {
       )
     })
 
-    it('cancel manually', resolve => {
+    it('cancel manually', (resolve) => {
       const args = {
         ...initArgs,
         abortController: new AbortController(),
@@ -72,14 +73,14 @@ describe(filename, () => {
       }
 
       get(url, args).subscribe(
-        next => {
+        () => {
           assert(false, 'Should got abortError in error() but go into next()')
           resolve()
         },
-        err => {
+        (err) => {
           assert(err && err.name === 'AbortError', err)
           assert(
-            (<NonNullable<Args['abortController']>> args.abortController).signal.aborted,
+            !! args.abortController.signal.aborted,
             'Should args.abortController.signal.aborted be TRUE after timeout',
           )
           resolve()
@@ -92,3 +93,4 @@ describe(filename, () => {
   })
 
 })
+

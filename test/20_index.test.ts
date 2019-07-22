@@ -86,7 +86,7 @@ describe(filename, function() {
       dataType: 'text',
     }
 
-    it('got status 404', resolve => {
+    it('got status 404', (resolve) => {
       const url = 'https://httpbin.org/method-not-exists'
       const args = { ...initArgs }
 
@@ -105,8 +105,8 @@ describe(filename, function() {
       )
     })
 
-    it('got status 405', resolve => {
-      const url = 'https://httpbin.org/post'  // url for POST
+    it('got status 405', (resolve) => {
+      const url = 'https://httpbin.org/post' // url for POST
       const args = { ...initArgs }
 
       get(url, args).subscribe(
@@ -181,7 +181,7 @@ describe(filename, function() {
   }
 
   describe('Should works with cookies', () => {
-    it('cookies pass by args.cookies', resolve => {
+    it('cookies pass by args.cookies', (resolve) => {
       const args = { ...initArgs }
       const foo = Math.random()
       const bar = Math.random()
@@ -190,7 +190,7 @@ describe(filename, function() {
       args.cookies = { foo, bar, baz }
 
       get<HttpbinRetCookie>(url, args).subscribe(
-        next => {
+        (next) => {
           try {
             assert(next && next.cookies)
             assert(next.cookies.foo === foo.toString())
@@ -203,14 +203,14 @@ describe(filename, function() {
 
           resolve()
         },
-        err => {
+        (err) => {
           assert(false, err)
           resolve()
         },
       )
     })
 
-    it('custom cookies pass by args.headers', resolve => {
+    it('custom cookies pass by args.headers', (resolve) => {
       const args = { ...initArgs }
       const foo = Math.random()
       const bar = Math.random()
@@ -220,7 +220,7 @@ describe(filename, function() {
       }
 
       get<HttpbinRetCookie>(url, args).subscribe(
-        next => {
+        (next) => {
           assert(next && next.cookies)
           assert(next.cookies.foo === foo.toString())
           assert(next.cookies.bar === bar.toString())
@@ -228,14 +228,14 @@ describe(filename, function() {
 
           resolve()
         },
-        err => {
+        (err) => {
           assert(false, err)
           resolve()
         },
       )
     })
 
-    it('custom cookies pass by args.headers', resolve => {
+    it('custom cookies pass by args.headers', (resolve) => {
       const args = { ...initArgs }
       const fvalue = Math.random()
       const bvalue = Math.random()
@@ -245,7 +245,7 @@ describe(filename, function() {
       }
 
       get<HttpbinRetCookie>(url, args).subscribe(
-        next => {
+        (next) => {
           assert(next && next.cookies)
           assert(next.cookies.foo === fvalue.toString())
           assert(next.cookies.bar === bvalue.toString())
@@ -253,14 +253,14 @@ describe(filename, function() {
 
           resolve()
         },
-        err => {
+        (err) => {
           assert(false, err)
           resolve()
         },
       )
     })
 
-    it('cookies pass by both args.cookies and args.headers', resolve => {
+    it('cookies pass by both args.cookies and args.headers', (resolve) => {
       const args = { ...initArgs }
       const foo = Math.random()
       const bar = Math.random()
@@ -272,7 +272,7 @@ describe(filename, function() {
       }
 
       get<HttpbinRetCookie>(url, args).subscribe(
-        next => {
+        (next) => {
           assert(next && next.cookies)
           assert(next.cookies.foo === foo.toString())
           assert(next.cookies.bar === bar.toString())
@@ -283,7 +283,7 @@ describe(filename, function() {
 
           resolve()
         },
-        err => {
+        (err) => {
           assert(false, err)
           resolve()
         },
@@ -305,11 +305,11 @@ describe(filename, function() {
   }
 
   describe('Should options works', () => {
-    it('retrieve allowed options from response header', resolve => {
+    it('retrieve allowed options from response header', (resolve) => {
       const args = { ...initArgs }
 
       fetch<Response>(url, args).subscribe(
-        res => {
+        (res) => {
           assert(res && res.headers, 'response and response.headers should not empty')
           const options = 'GET, POST, PUT, DELETE, PATCH, OPTIONS'
           const value = res.headers.get('Access-Control-Allow-Methods')
@@ -317,7 +317,7 @@ describe(filename, function() {
 
           resolve()
         },
-        err => {
+        (err) => {
           assert(false, err)
           resolve()
         },

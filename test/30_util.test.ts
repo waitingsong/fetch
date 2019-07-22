@@ -3,13 +3,13 @@ import { basename } from '@waiting/shared-core'
 import { abortableFetch, AbortController } from 'abortcontroller-polyfill/dist/cjs-ponyfill.js'
 import nodefetch, { Headers as nodeHeaders } from 'node-fetch'
 import * as assert from 'power-assert'
-import rewire = require('rewire')
 
-import {
-  Args, ArgsRequestInitCombined, RxRequestInit,
-} from '../src/index'
+import { Args, ArgsRequestInitCombined, RxRequestInit } from '../src/index'
 import { initialRxRequestInit } from '../src/lib/config'
 import { selectFecthModule } from '../src/lib/util'
+
+
+import rewire = require('rewire')
 
 
 const filename = basename(__filename)
@@ -36,7 +36,7 @@ describe(filename, () => {
     })
 
     it('with param positive float', () => {
-      const values = [1.2, 99.0, 1000.123, (Math.random() * 100)]
+      const values = [1.2, 99.0, 1000.123, Math.random() * 100]
 
       for (const value of values) {
         const ret = fn(value)

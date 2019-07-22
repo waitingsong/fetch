@@ -17,7 +17,7 @@ describe(filename, function() {
     const url = 'https://httpbin.org/put'
     const initArgs = <RxRequestInit> {}
 
-    it('send key:value object data', resolve => {
+    it('send key:value object data', (resolve) => {
       const pdata = {
         p1: Math.random(),
         p2: Math.random().toString(),
@@ -26,7 +26,7 @@ describe(filename, function() {
       args.data = { ...pdata }
 
       put<HttpbinPostResponse>(url, args).subscribe(
-        res => {
+        (res) => {
           assert(res && res.url === url)
 
           try {
@@ -39,14 +39,14 @@ describe(filename, function() {
           }
           resolve()
         },
-        err => {
+        (err) => {
           assert(false, err)
           resolve()
         },
       )
     })
 
-    it('send nested key:value object data', resolve => {
+    it('send nested key:value object data', (resolve) => {
       const pdata = {
         p1: Math.random(),
         p2: Math.random().toString(),
@@ -58,7 +58,7 @@ describe(filename, function() {
       args.data = { ...pdata }
 
       put<HttpbinPostResponse>(url, args).subscribe(
-        res => {
+        (res) => {
           assert(res && res.url === url)
 
           try {
@@ -72,24 +72,26 @@ describe(filename, function() {
           }
           resolve()
         },
-        err => {
+        (err) => {
           assert(false, err)
           resolve()
         },
       )
     })
 
-    it('send form', resolve => {
+    it('send form', (resolve) => {
       const pdata = new FormData()
       const p1 = Math.random()
       const p2 = Math.random().toString()
       pdata.append('p1', p1)
       pdata.append('p2', p2)
 
-      const args: RxRequestInit = { ...initArgs, data: pdata, processData: false, contentType: false }
+      const args: RxRequestInit = {
+        ...initArgs, data: pdata, processData: false, contentType: false,
+      }
 
       put<HttpbinPostResponse>(url, args).subscribe(
-        res => {
+        (res) => {
           assert(res && res.url === url)
 
           try {
@@ -102,7 +104,7 @@ describe(filename, function() {
           }
           resolve()
         },
-        err => {
+        (err) => {
           assert(false, err)
           resolve()
         },

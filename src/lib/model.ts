@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 /** Typeof original Response data */
 export type ObbRetType = ArrayBuffer | Blob | FormData | Response | string | JsonType | void | never
 
@@ -94,7 +96,7 @@ export interface ArgsRequestInitCombined {
 }
 
 /** Custom response json data structure */
-export interface AjaxResp <T extends JsonType = JsonType> extends JsonType {
+export interface AjaxResp<T extends JsonType = JsonType> extends JsonType {
   /** 0: no error */
   err: number
   dat?: T
