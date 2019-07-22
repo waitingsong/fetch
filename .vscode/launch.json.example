@@ -108,7 +108,7 @@
       ]
     },
     {
-      "name": "Mocha TS Tests",
+      "name": "Mocha Tests",
       "type": "node",
       "args": [
         "-u",
@@ -119,6 +119,8 @@
         // "${workspaceFolder}/test/**/**.test.ts"
       ],
       "env": {
+        "NODE_ENV": "local",
+        "TS_NODE_PROJECT": "test/tsconfig.json",
         "PGHOST": "",
         "PGUSER": "",
         "PGPASSWORD": "",

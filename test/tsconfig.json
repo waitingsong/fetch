@@ -6,17 +6,9 @@
     "noImplicitAny": false,
     "noImplicitThis": false,
     "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "target": "ESNEXT",
-    "types" : ["node"]
+    "target": "ESNEXT"
   },
   "include": [
     "**/*.ts"
-  ],
-  "exclude": [
-    "asset/",
-    "node_modules*",
-    "**/*.d.ts",
-    "**/*.spec.ts"
   ]
 }
