@@ -2,6 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "declaration": false,
-    "noUnusedLocals": false
+    "noUnusedLocals": false,
+    "tsBuildInfoFile": ".vscode/.tsbuildinfo.dev"
   }
 }
