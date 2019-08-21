@@ -1,3 +1,7 @@
+package-lock.json
+yarn.lock
+/agent.js
+/app.js
 app/**/*.js
 test/**/*.js
 config/**/*.js
@@ -14,11 +18,21 @@ install/
 target/
 build/
 run/
+diff-dump/
+.mvn
+.factorypath
+nbproject/
+/www
+.githooks
+.tsbuildinfo
+.tsbuildinfo.*
+*.__built-tables.ts
 
 dbconfig.json
 
 !.vscode/settings.json.example
 !settings/*.example
+
 
 
 # for java
@@ -27,11 +41,29 @@ gen/
 .springBeans/
 workspaces/
 WebRoot/WEB-INF/classes/
-/resource/database.properties
-/resource/webserviceConfig.xml
-/src/config.properties
+resource/database.properties
+resource/webserviceConfig.xml
+src/config.properties
 .buildpath
+.tern-project
 
+
+# for gradle
+.gradle
+gradle-app.setting
+!gradle-wrapper.jar
+.gradletasknamecache
+
+
+# for oracle
+*.~pck
+
+
+# NetBeans
+nbproject/private/
+nbbuild/
+nbdist/
+.nb-gradle/
 
 
 # Specifies intentionally untracked files to ignore when using Git
@@ -39,6 +71,7 @@ WebRoot/WEB-INF/classes/
 
 *~
 *.sw[mnpcod]
+*.log
 *.tmp
 *.tmp.*
 log.txt
@@ -47,10 +80,12 @@ log.txt
 .vscode/
 
 .idea/
+.ionic/
 .sourcemaps/
 .sass-cache/
 .tmp/
 .versions/
+www/
 dist/
 tmp/
 temp/
@@ -123,6 +158,7 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*.un~
 
 # Runtime data
 pids

@@ -2,23 +2,32 @@ if: tag IS blank
 
 language: node_js
 node_js:
-- '8'
-- '9'
+  - '10'
+  - '12'
 
 cache:
   directories:
     - node_modules
 
 before_install:
+  - openssl version
+  - npm root -g
+  - npm i rollup typescript eslint nyc
   - npm install
 
+#services:
+#  - postgresql
+#addons:
+#  postgresql: "9.6"
+#before_script:
+#  - psql -U postgres -c "create database db_ci_test;"
 
 install: true
 
 script:
   - npm run build
-  - npm run test:travis
+  #- npm run test
 
 after_success:
-    #  - npm run cov:coveralls
+  - npm run cov:coveralls
 
