@@ -28,12 +28,11 @@ do
       files=$(git diff --name-only --diff-filter=ACMR $remote_sha $local_sha| grep '\.ts$')
 
       if [[ $files != "" ]] ; then
-        # echo $files | xargs tslint -p tsconfig.json -e **/*.d.ts ./.githooks/* -t stylish 
         npm run lint
         rc=$?
         if [[ $rc != 0 ]] ; then
-          echo -e "拒绝: TSLint 语法校验失败!"
-          echo -e "ESLint错误代码信息参考 https://palantir.github.io/tslint/rules/ "
+          echo -e "拒绝: ESLint 语法校验失败!"
+          echo -e "ESLint错误代码信息参考 https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin/ "
           echo -e ""
           exit $rc
         fi
