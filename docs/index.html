@@ -60,7 +60,9 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="rxxfetch"><a href="https://waitingsong.github.io/rxxfetch/">RxxFetch</a></h1>
+				<a href="#a-hrefhttpswaitingsonggithubiorxxfetchrxxfetcha" id="a-hrefhttpswaitingsonggithubiorxxfetchrxxfetcha" style="color: inherit; text-decoration: none;">
+					<h1><a href="https://waitingsong.github.io/rxxfetch/">RxxFetch</a></h1>
+				</a>
 				<p>Observable HTTP Fetch() wrapped by <a href="https://github.com/reactivex/rxjs">RxJS6</a>, support browser and Node.js</p>
 				<p><a href="https://www.npmjs.com/package/rxxfetch"><img src="https://img.shields.io/npm/v/rxxfetch.svg" alt="Version"></a>
 					<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
@@ -69,7 +71,9 @@
 					<a href="https://ci.appveyor.com/project/waitingsong/rxxfetch/branch/master"><img src="https://ci.appveyor.com/api/projects/status/gsxo6hg06av6gw02/branch/master?svg=true" alt="Build status"></a>
 					<a href="https://coveralls.io/github/waitingsong/rxxfetch?branch=master"><img src="https://coveralls.io/repos/github/waitingsong/rxxfetch/badge.svg?branch=master" alt="Coverage Status"></a>
 				<a href="https://conventionalcommits.org"><img src="https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg" alt="Conventional Commits"></a></p>
-				<h2 id="features">Features</h2>
+				<a href="#features" id="features" style="color: inherit; text-decoration: none;">
+					<h2>Features</h2>
+				</a>
 				<ul>
 					<li>Reactive Ajax programming</li>
 					<li>Request Cancelable via <code>AbortController</code></li>
@@ -79,7 +83,9 @@
 					<li>Apis support <code>Generics</code>, eg. <code>get&lt;string&gt;(url).subscribe(txt =&gt; console.info(txt.slice(1)))</code></li>
 					<li>Send file via <code>FormData</code> or <code>Stream</code> on Node.js</li>
 				</ul>
-				<h2 id="browser-support">Browser support</h2>
+				<a href="#browser-support" id="browser-support" style="color: inherit; text-decoration: none;">
+					<h2>Browser support</h2>
+				</a>
 				<p><a href="https://saucelabs.com/u/waitingsong"><img src="https://saucelabs.com/browser-matrix/waitingsong.svg" alt="Build Status"></a>
 				<img src="./assets/sauce.png" alt="Build Status"></p>
 				<ul>
@@ -95,10 +101,16 @@
 					<li>Android 4.4 will get failure on <a href="https://github.com/waitingsong/rxxfetch/blob/master/test_browser/30_response.test.ts#L152">parseResponseType()</a>
 					with <code>TypeError: Object function ArrayBuffer() { [native code] } has no method &#39;isView&#39;</code></li>
 				</ul>
-				<h2 id="installing">Installing</h2>
+				<a href="#installing" id="installing" style="color: inherit; text-decoration: none;">
+					<h2>Installing</h2>
+				</a>
 				<pre><code class="language-bash">npm install rxxfetch</code></pre>
-				<h2 id="usage">Usage</h2>
-				<h3 id="get-json">GET JSON</h3>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
+				</a>
+				<a href="#get-json" id="get-json" style="color: inherit; text-decoration: none;">
+					<h3>GET JSON</h3>
+				</a>
 				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { <span class="hljs-keyword">get</span>, JsonType } <span class="hljs-keyword">from</span> <span class="hljs-string">'rxxfetch'</span>
 
 <span class="hljs-keyword">const</span> url = <span class="hljs-string">'https://httpbin.org/get'</span>
@@ -122,7 +134,9 @@
   origin: <span class="hljs-built_in">string</span>  <span class="hljs-comment">// ip</span>
   url: <span class="hljs-built_in">string</span>
 }</code></pre>
-				<h3 id="get-html">GET HTML</h3>
+				<a href="#get-html" id="get-html" style="color: inherit; text-decoration: none;">
+					<h3>GET HTML</h3>
+				</a>
 				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { <span class="hljs-keyword">get</span>, RxRequestInit } <span class="hljs-keyword">from</span> <span class="hljs-string">'rxxfetch'</span>
 
 <span class="hljs-keyword">const</span> url = <span class="hljs-string">'https://httpbin.org/get'</span>
@@ -136,7 +150,9 @@
   },
   <span class="hljs-built_in">console</span>.error,
 )</code></pre>
-				<h3 id="post">POST</h3>
+				<a href="#post" id="post" style="color: inherit; text-decoration: none;">
+					<h3>POST</h3>
+				</a>
 				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { post, RxRequestInit } <span class="hljs-keyword">from</span> <span class="hljs-string">'rxxfetch'</span>
 
 <span class="hljs-keyword">const</span> url = <span class="hljs-string">'https://httpbin.org/post'</span>
@@ -163,8 +179,12 @@ post&lt;HttpbinPostResponse&gt;(url, args).subscribe(
   form: <span class="hljs-built_in">any</span>
   json: <span class="hljs-built_in">any</span>
 }</code></pre>
-				<h3 id="put-remove-goto-test"><code>PUT</code> <code>REMOVE</code> goto <a href="https://github.com/waitingsong/rxxfetch/tree/master/test_browser">TEST</a></h3>
-				<h3 id="on-node-js">On Node.js</h3>
+				<a href="#codeputcode-coderemovecode-goto-a-hrefhttpsgithubcomwaitingsongrxxfetchtreemastertest_browsertesta" id="codeputcode-coderemovecode-goto-a-hrefhttpsgithubcomwaitingsongrxxfetchtreemastertest_browsertesta" style="color: inherit; text-decoration: none;">
+					<h3><code>PUT</code> <code>REMOVE</code> goto <a href="https://github.com/waitingsong/rxxfetch/tree/master/test_browser">TEST</a></h3>
+				</a>
+				<a href="#on-nodejs" id="on-nodejs" style="color: inherit; text-decoration: none;">
+					<h3>On Node.js</h3>
+				</a>
 				<ul>
 					<li><p>Handle cookies when 302/303/307 redirect on Node.js, <a href="https://github.com/waitingsong/rxxfetch/blob/master/test/30_cookie.test.ts">CODE</a></p>
 						<pre><code class="language-ts"><span class="hljs-keyword">const</span> args = &lt;RxRequestInit&gt; {
@@ -173,20 +193,27 @@ post&lt;HttpbinPostResponse&gt;(url, args).subscribe(
 					</li>
 					<li><p>Cancel an request via <code>AbortController</code>, details in <a href="https://github.com/waitingsong/rxxfetch/blob/master/test/30_abort.test.ts#L19">CODE</a></p>
 					</li>
-					<li>POST FILE<ul>
+					<li><p>POST FILE</p>
+						<ul>
 							<li>via <code>FormData</code>, goto <a href="https://github.com/waitingsong/rxxfetch/blob/master/test/20_post.test.ts#L116">CODE</a></li>
 							<li>via <code>Stream</code>, goto <a href="https://github.com/waitingsong/rxxfetch/blob/master/test/20_post.test.ts#L151">CODE</a></li>
 						</ul>
 					</li>
 				</ul>
-				<h2 id="demos">Demos</h2>
+				<a href="#demos" id="demos" style="color: inherit; text-decoration: none;">
+					<h2>Demos</h2>
+				</a>
 				<ul>
 					<li><a href="https://github.com/waitingsong/rxxfetch/blob/master/test_browser/">Browser</a></li>
 					<li><a href="https://github.com/waitingsong/rxxfetch/blob/master/test/">Node.js</a></li>
 				</ul>
-				<h2 id="license">License</h2>
+				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+					<h2>License</h2>
+				</a>
 				<p><a href="LICENSE">MIT</a></p>
-				<h3 id="languages">Languages</h3>
+				<a href="#languages" id="languages" style="color: inherit; text-decoration: none;">
+					<h3>Languages</h3>
+				</a>
 				<ul>
 					<li><a href="README.md">English</a></li>
 					<li><a href="README.zh-CN.md">中文</a></li>
@@ -203,9 +230,6 @@ post&lt;HttpbinPostResponse&gt;(url, args).subscribe(
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/ajaxresp.html" class="tsd-kind-icon">Ajax<wbr>Resp</a>
-					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/args.html" class="tsd-kind-icon">Args</a>
 					</li>
@@ -214,9 +238,6 @@ post&lt;HttpbinPostResponse&gt;(url, args).subscribe(
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/headersfixed.html" class="tsd-kind-icon">Headers<wbr>Fixed</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/jsontype.html" class="tsd-kind-icon">Json<wbr>Type</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="interfaces/plainobject.html" class="tsd-kind-icon">Plain<wbr>Object</a>
@@ -232,9 +253,6 @@ post&lt;HttpbinPostResponse&gt;(url, args).subscribe(
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#obbrettype" class="tsd-kind-icon">Obb<wbr>Ret<wbr>Type</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#plainjsonvaluetype" class="tsd-kind-icon">Plain<wbr>Json<wbr>Value<wbr>Type</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#respdatatypename" class="tsd-kind-icon">Resp<wbr>Data<wbr>Type<wbr>Name</a>
@@ -277,6 +295,7 @@ post&lt;HttpbinPostResponse&gt;(url, args).subscribe(
 				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
 				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
@@ -325,7 +344,7 @@ post&lt;HttpbinPostResponse&gt;(url, args).subscribe(
 	</div>
 </footer>
 <div class="container tsd-generator">
-	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
 </div>
 <div class="overlay"></div>
 <script src="assets/js/main.js"></script>
