@@ -97,10 +97,3 @@ export interface ArgsRequestInitCombined {
   requestInit: RequestInit
 }
 
-/** Custom response json data structure */
-export interface AjaxResp<T extends JsonType = JsonType> extends JsonType {
-  /** 0: no error */
-  err: number
-  dat?: T
-  msg?: string | null
-}
