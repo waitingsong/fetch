@@ -6,7 +6,8 @@
 # Date: 2019.01.21
 #
 
-git config --local push.followTags true \
+git init \
+  && git config --local push.followTags true \
   && git config --local core.hooksPath ./.githooks \
   && git config --local fetch.prune true \
   && git config --local push.recurseSubmodules check \

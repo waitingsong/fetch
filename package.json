@@ -1,38 +1,29 @@
 {
-  "name": "rxxfetch",
+  "name": "npm-base",
   "author": "waiting",
-  "version": "2.0.1",
-  "description": "Observable HTTP fetch API for browser and Node.js. Handle 302/303 redirect correctly on Node.js",
+  "version": "0.0.1",
+  "description": "npm boilerplate",
   "keywords": [
-    "rx",
-    "rxjs",
-    "rxjs6",
-    "http",
-    "fetch",
-    "nodejs",
-    "Node.js",
-    "Generics",
+    "种子项目",
     "typescript",
-    "Observable",
-    "AbortController",
-    "303"
+    "ts"
   ],
   "engines": {
-    "node": ">=8.10.0"
+    "node": ">=10.13.0"
   },
   "bin": {},
-  "browser": "./dist/rxxfetch.esm.js",
-  "es2015": "./dist/rxxfetch.esm.js",
+  "browser": "",
+  "es2015": "",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bugs": {
-    "url": "https://github.com/waitingsong/rxxfetch/issues"
+    "url": "https://github.com/waitingsong/npm-base/issues"
   },
-  "homepage": "https://github.com/waitingsong/rxxfetch#readme",
+  "homepage": "https://github.com/waitingsong/npm-base#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/waitingsong/rxxfetch.git"
+    "url": "git+https://github.com/waitingsong/npm-base.git"
   },
   "license": "MIT",
   "nyc": {
@@ -57,55 +48,49 @@
     "all": true
   },
   "dependencies": {
-    "@types/node-fetch": "^2.1.1",
-    "@types/qs": "^6.5.1",
-    "abortcontroller-polyfill": "^1.3.0",
-    "form-data": "^2.5.0",
-    "node-fetch": "^2.6.0",
-    "qs": "^6.7.0",
     "rxjs": "^6.5.2"
   },
   "devDependencies": {
     "@types/mocha": "*",
-    "@types/node": "^12.0.2",
+    "@types/node": "*",
     "@types/power-assert": "*",
     "@types/rewire": "*",
     "@types/rimraf": "*",
     "@types/yargs": "^13.0.0",
-    "@waiting/eslint-config": "^1.8.0",
-    "@waiting/shared-core": "^1.9.1",
+    "@waiting/eslint-config": "^2.1.0",
     "coveralls": "^3.0.5",
     "cross-env": "^5.2.0",
-    "eslint": "^6.0.0",
+    "eslint": "^6.2.0",
+    "espower-typescript": "^9.0.2",
     "intelli-espower-loader": "^1.0.1",
     "mocha": "^6.1.4",
     "mocha-lcov-reporter": "^1.3.0",
     "nyc": "^14.1.1",
     "power-assert": ">=1.5",
     "rewire": "^4.0.0",
-    "rimraf": "^2.6.2",
+    "rimraf": "^3.0.0",
     "rollup-plugin-commonjs": "^10.0.0",
     "rollup-plugin-node-resolve": "^5.0.1",
     "rollup-plugin-terser": "^5.0.0",
     "rxrunscript": "^5.2.0",
-    "ts-node": "^8.1.0",
+    "ts-node": "^8.3.0",
     "typescript": "^3.5.0",
-    "yargs": "^12.0.1"
+    "yargs": "^14.0.0"
   },
   "scripts": {
     "bp:add": "git remote add bp https://github.com/waitingsong/npm-base",
     "bp:sync": "git fetch --all -v && git merge bp/master -m \"Merge remote-tracking branch 'bp/master'\"",
-    "build": "npm run clean && npm run lint && npm run lint:t && npm run tsc && npm run rp",
+    "build": "npm run lint && npm run tsc && npm run rp",
     "devbuild": "npm run clean && npm run tsc:dev && npm run rp",
-    "clean": "rm -rf dist/*",
+    "clean": "rm -rf dist/* .vscode/.tsbuildinfo .vscode/.tsbuildinfo.* ",
     "cov": "cross-env TS_NODE_PROJECT=test/tsconfig.json nyc mocha",
     "cov:coveralls": "cross-env TS_NODE_PROJECT=test/tsconfig.json nyc mocha && nyc report --reporter=text-lcov | coveralls",
     "doc": "typedoc src/index.ts src/lib/index.ts src/lib/model.ts",
     "jslint": "eslint --fix dist/**/*.js",
     "link_global": "npm link typescript",
-    "lint": "eslint --fix src/**/*.{ts,js}",
-    "lint:t": "eslint --fix test/**/*.{ts,js}",
-    "prepublishOnly": "npm run build",
+    "lint": "eslint --fix {src,test}/**/*.ts",
+    "postpublish": "git push origin --follow-tags",
+    "prepublishOnly": "npm run clean && npm run build",
     "release": "standard-version -r",
     "release:first": "standard-version --first-release",
     "repo:init": "sh .githooks/init-repo.sh",

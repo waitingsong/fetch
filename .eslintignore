@@ -4,4 +4,8 @@
 .git/
 app/public/
 app/view/
+node_modules*/
+
+commitlint.config.js
+rollup.*.js
 

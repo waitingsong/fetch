@@ -8,14 +8,19 @@
 .nyc_output
 .travis.yml
 .vscode
+.tsbuildinfo
+.tsbuildinfo.*
 
 appveyor.yml
 coverage
 demo
 docs
+log
+logs
 node_modules*
 npm-shrinkwrap.json
 rollup.config.js
+run
 src
 test
 test_browser*

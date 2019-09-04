@@ -24,6 +24,9 @@ diff-dump/
 nbproject/
 /www
 .githooks
+.tsbuildinfo
+.tsbuildinfo.*
+*.__built-tables.ts
 
 dbconfig.json
 

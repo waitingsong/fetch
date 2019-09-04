@@ -1,7 +1,7 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "declaration": false, 
+    "declaration": false,
     "module": "commonjs",
     "noImplicitAny": false,
     "noImplicitThis": false,
@@ -10,5 +10,11 @@
   },
   "include": [
     "**/*.ts"
+  ],
+  "exclude": [
+    "asset/",
+    "node_modules*",
+    "**/*.d.ts",
+    "**/*.spec.ts"
   ]
 }
