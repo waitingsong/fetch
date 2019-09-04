@@ -19,9 +19,9 @@ describe(filename, () => {
 
   describe('Should get() works with AbortSignal', () => {
     const url = 'https://github.com/waitingsong/rxxfetch#readme'
-    const initArgs = <RxRequestInit> {
+    const initArgs = {
       dataType: 'text',
-    }
+    } as RxRequestInit
 
     it('with timeout', (resolve) => {
       const args = {

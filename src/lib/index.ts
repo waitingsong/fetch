@@ -25,11 +25,11 @@ export function rxfetch<T extends ObbRetType = JsonType>(
   const initOpts: RxRequestInit = init ? { ...initialRxRequestInit, ...init } : { ...initialRxRequestInit }
   const options = splitInitArgs(initOpts)
   const { args, requestInit } = parseInitOpts(options)
-  const dataType = <NonNullable<RxRequestInit['dataType']>> args.dataType
+  const dataType = args.dataType as NonNullable<RxRequestInit['dataType']>
   const req$ = _fetch(input, args, requestInit)
   const ret$ = req$.pipe(
     concatMap(res => handleResponseError(res, dataType === 'bare')),
-    concatMap(res => <Observable<T>> parseResponseType(res, dataType)),
+    concatMap(res => parseResponseType(res, dataType) as Observable<T>),
   )
 
   return ret$

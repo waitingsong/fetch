@@ -19,11 +19,11 @@ describe(filename, function() {
   this.retries(3)
   beforeEach(resolve => setTimeout(resolve, 2000))
 
-  const initArgs = <RxRequestInit> {
+  const initArgs = {
     fetchModule: nodefetch,
     headersInitClass: Headers,
     keepRedirectCookies: true, // intercept redirect
-  }
+  } as RxRequestInit
 
   describe('Should handle 303 redirect correctly with keepRedirectCookies:true', () => {
     it('Should post() be redirected to get()', (resolve) => {

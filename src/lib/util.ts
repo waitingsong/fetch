@@ -83,7 +83,7 @@ export function splitInitArgs(rxInitOpts: RxRequestInit): ArgsRequestInitCombine
 
   return {
     args,
-    requestInit: <RequestInit> { ...rxInitOpts },
+    requestInit: { ...rxInitOpts } as RequestInit,
   }
 }
 
@@ -97,7 +97,7 @@ export function parseInitOpts(options: ArgsRequestInitCombined): ArgsRequestInit
   opts = parseMethod(opts)
   opts.args.dataType = parseDataType(opts.args.dataType)
   opts.args.timeout = parseTimeout(opts.args.timeout)
-  opts.requestInit.redirect = parseRedirect(<boolean> opts.args.keepRedirectCookies, opts.requestInit.redirect)
+  opts.requestInit.redirect = parseRedirect(opts.args.keepRedirectCookies as boolean, opts.requestInit.redirect)
 
   return opts
 }
@@ -109,8 +109,8 @@ function parseHeaders(options: ArgsRequestInitCombined): ArgsRequestInitCombined
   /* istanbul ignore else */
   if (args.headersInitClass) { // node.js need pass headers class
     const headers = requestInit.headers
-      ? <Headers> new args.headersInitClass(requestInit.headers)
-      : <Headers> new args.headersInitClass()
+      ? new args.headersInitClass(requestInit.headers) as Headers
+      : new args.headersInitClass() as Headers
     requestInit.headers = headers
   }
   else if (typeof Headers === 'function') { // browser native
@@ -156,7 +156,7 @@ function parseAbortController(options: ArgsRequestInitCombined): ArgsRequestInit
 function parseCookies(options: ArgsRequestInitCombined): ArgsRequestInitCombined {
   const { args, requestInit } = options
   const data = args.cookies
-  const arr = <string[]>[]
+  const arr: string[] = []
 
   if (data && typeof data === 'object') {
     for (let [key, value] of Object.entries(data)) {
@@ -175,7 +175,7 @@ function parseCookies(options: ArgsRequestInitCombined): ArgsRequestInitCombined
   }
 
   if (arr.length) {
-    const headers = <Headers> requestInit.headers
+    const headers = requestInit.headers as Headers
     let cookies = headers.get('Cookie')
 
     if (cookies) {
@@ -208,7 +208,7 @@ function parseMethod(options: ArgsRequestInitCombined): ArgsRequestInitCombined 
     case 'DELETE':
     case 'POST':
     case 'PUT': {
-      const headers = <Headers> requestInit.headers
+      const headers = requestInit.headers as Headers
 
       if (args.contentType === false) {
         break
@@ -230,7 +230,7 @@ function parseMethod(options: ArgsRequestInitCombined): ArgsRequestInitCombined 
 function parseDataType(value: unknown): NonNullable<Args['dataType']> {
   /* istanbul ignore else */
   if (typeof value === 'string' && ['arrayBuffer', 'bare', 'blob', 'formData', 'json', 'text', 'raw'].includes(value)) {
-    return <NonNullable<Args['dataType']>> value
+    return value as NonNullable<Args['dataType']>
   }
   return 'json'
 }
@@ -282,5 +282,5 @@ export function selectFecthModule(mod: Args['fetchModule'] | null): NonNullable<
     throwError(new TypeError('fetchModule/fetch not Function'))
   }
 
-  return <NonNullable<Args['fetchModule']>> fetchModule
+  return fetchModule as NonNullable<Args['fetchModule']>
 }

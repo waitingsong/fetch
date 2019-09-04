@@ -8,9 +8,9 @@ const filename = basename(__filename)
 
 describe(filename, () => {
   describe('Should rxfetch() throw error with invalid input', () => {
-    const initArgs = <RxRequestInit> {
+    const initArgs = {
       dataType: 'text',
-    }
+    } as RxRequestInit
 
     it('with blank string', (resolve) => {
       const args = { ...initArgs }
@@ -61,9 +61,9 @@ describe(filename, () => {
 
   describe('Should rxfetch() throw error with invalid parameter init', () => {
     const url = 'https://httpbin.org/get'
-    const initArgs = <RxRequestInit> {
+    const initArgs = {
       dataType: 'text',
-    }
+    } as RxRequestInit
     initArgs.fetchModule = void 0
 
     it('with invalid fetchModule', (resolve) => {

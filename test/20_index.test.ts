@@ -1,4 +1,3 @@
-// tslint:disable-next-line
 import { basename } from '@waiting/shared-core'
 import * as assert from 'power-assert'
 
@@ -81,10 +80,10 @@ describe(filename, function() {
   this.retries(3)
 
   describe('Should handleResponseError works', () => {
-    const initArgs = <RxRequestInit> {
+    const initArgs = {
       ...initialRxRequestInit,
       dataType: 'text',
-    }
+    } as RxRequestInit
 
     it('got status 404', (resolve) => {
       const url = 'https://httpbin.org/method-not-exists'
@@ -175,10 +174,10 @@ describe(filename, function() {
 
   // const url = 'https://httpbin.org/cookies/set/foo/' + value
   const url = 'https://httpbin.org/cookies'
-  const initArgs = <RxRequestInit> {
+  const initArgs = {
     ...initialRxRequestInit,
     credentials: 'include',
-  }
+  } as RxRequestInit
 
   describe('Should works with cookies', () => {
     it('cookies pass by args.cookies', (resolve) => {
@@ -298,11 +297,11 @@ describe(filename, function() {
   this.retries(3)
 
   const url = 'https://httpbin.org/get'
-  const initArgs = <RxRequestInit> {
+  const initArgs = {
     ...initialRxRequestInit,
     dataType: 'raw',
     method: 'OPTIONS',
-  }
+  } as RxRequestInit
 
   describe('Should options works', () => {
     it('retrieve allowed options from response header', (resolve) => {

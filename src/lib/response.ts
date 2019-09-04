@@ -6,7 +6,7 @@ import { Args, JsonType, ObbRetType, RespDataType, RespDataTypeName } from './mo
 import { assertNeverRx } from './shared'
 
 
-export function handleResponseError(resp: Response, bare: boolean = false): Observable<Response> {
+export function handleResponseError(resp: Response, bare = false): Observable<Response> {
   /* istanbul ignore else */
   if (resp.ok || bare) {
     return of(resp)
@@ -48,7 +48,7 @@ export function parseResponseType<T extends RespDataTypeName>(
       break
 
     case 'json':
-      ret = <Observable<JsonType>> defer(() => response.json())
+      ret = defer(() => response.json()) as Observable<JsonType>
       break
 
     case 'raw':
@@ -60,10 +60,10 @@ export function parseResponseType<T extends RespDataTypeName>(
       break
 
     default:
-      return assertNeverRx(<never> dataType)
+      return assertNeverRx(dataType as never)
   }
 
-  return <Observable<RespDataType[T]>> ret
+  return ret as Observable<RespDataType[T]>
 }
 
 

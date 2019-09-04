@@ -17,7 +17,7 @@ describe(filename, function() {
 
   describe('Should get() works with httpbin.org', () => {
     const url = 'https://httpbin.org/get'
-    const initArgs = <RxRequestInit> {}
+    const initArgs = {} as RxRequestInit
 
     it('with dataType:"arrayBuffer"', (resolve) => {
       const args = { ...initArgs }
@@ -51,7 +51,7 @@ describe(filename, function() {
           assert(blob && blob.size > 0)
 
           fr.onloadend = () => {
-            const buf = <ArrayBuffer> fr.result
+            const buf = fr.result as ArrayBuffer
             assert(buf && buf.byteLength > 0)
 
             const txt = buf.byteLength ? ab2str(buf) : ''
@@ -145,10 +145,10 @@ describe(filename, function() {
       p1: Math.random(),
       p2: Math.random().toString(),
     }
-    const initArgs = <RxRequestInit> {
+    const initArgs = {
       timeout: 20 * 1000,
       dataType: 'json',
-    }
+    } as RxRequestInit
 
     it('without query data', (resolve) => {
       const args = { ...initArgs }
@@ -230,7 +230,7 @@ describe(filename, function() {
 
   describe('Should get() works with httpbin.org', () => {
     const url = 'https://httpbin.org/get'
-    const initArgs = <RxRequestInit> {}
+    const initArgs = {} as RxRequestInit
 
     it('with dataType:"arrayBuffer"', (resolve) => {
       const args = { ...initArgs }
@@ -264,7 +264,7 @@ describe(filename, function() {
           assert(blob && blob.size > 0)
 
           fr.onloadend = () => {
-            const buf = <ArrayBuffer> fr.result
+            const buf = fr.result as ArrayBuffer
             assert(buf && buf.byteLength > 0)
 
             const txt = buf.byteLength ? ab2str(buf) : ''
@@ -358,10 +358,10 @@ describe(filename, function() {
       p1: Math.random(),
       p2: Math.random().toString(),
     }
-    const initArgs = <RxRequestInit> {
+    const initArgs = {
       timeout: 20 * 1000,
       dataType: 'json',
-    }
+    } as RxRequestInit
 
     it('without query data', (resolve) => {
       const args = { ...initArgs }

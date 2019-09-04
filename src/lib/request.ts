@@ -46,7 +46,7 @@ export function createObbRequest(
     /* istanbul ignore else */
     if (typeof args.data !== 'undefined') {
       if (args.processData) {
-        if (['GET', 'DELETE'].includes(<string> requestInit.method)) {
+        if (['GET', 'DELETE'].includes(requestInit.method as string)) {
           inputNew = buildQueryString(input, args.data)
         }
         else {
@@ -54,7 +54,7 @@ export function createObbRequest(
         }
       }
       else {
-        requestInit.body = <RequestInit['body']> args.data
+        requestInit.body = args.data as RequestInit['body']
       }
     }
 

@@ -16,7 +16,7 @@ describe(filename, function() {
 
   describe('Should remove() works with httpbin.org', () => {
     const url = 'https://httpbin.org/delete'
-    const initArgs = <RxRequestInit> {}
+    const initArgs = {} as RxRequestInit
 
     it('send key:value object data', (resolve) => {
       const pdata: PDATA = {

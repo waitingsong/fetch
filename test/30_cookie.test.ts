@@ -18,12 +18,12 @@ describe(filename, function() {
   this.retries(3)
   beforeEach(resolve => setTimeout(resolve, 2000))
 
-  const initArgs = <RxRequestInit> {
+  const initArgs = {
     credentials: 'include',
     fetchModule: nodefetch,
     headersInitClass: Headers,
     keepRedirectCookies: true, // intercept redirect
-  }
+  } as RxRequestInit
 
   describe('Should works with keepRedirectCookies:true', () => {
     it('set by get()', (resolve) => {

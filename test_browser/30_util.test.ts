@@ -1,11 +1,6 @@
-/// <reference types="mocha" />
-
-// tslint:disable-next-line
 import * as assert from 'power-assert'
 
-import {
-  Args, ArgsRequestInitCombined, RxRequestInit,
-} from '../src/index'
+import { Args, ArgsRequestInitCombined, RxRequestInit } from '../src/index'
 import { selectFecthModule } from '../src/lib/util'
 
 

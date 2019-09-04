@@ -15,7 +15,7 @@ describe(filename, function() {
 
   describe('Should put() works with httpbin.org', () => {
     const url = 'https://httpbin.org/put'
-    const initArgs = <RxRequestInit> {}
+    const initArgs = {} as RxRequestInit
 
     it('send key:value object data', (resolve) => {
       const pdata = {

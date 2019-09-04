@@ -19,7 +19,7 @@ describe(filename, function() {
 
   describe('Should post() works with httpbin.org', () => {
     const url = 'https://httpbin.org/post'
-    const initArgs = <RxRequestInit> {}
+    const initArgs = {} as RxRequestInit
 
     it('send key:value object data', (resolve) => {
       const pdata = {

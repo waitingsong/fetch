@@ -18,7 +18,7 @@ const mods = rewire('../src/lib/util')
 describe(filename, () => {
 
   const fnName = 'parseTimeout'
-  const fn = <(p: any) => number | null> mods.__get__(fnName)
+  const fn = mods.__get__(fnName) as (p: any) => number | null
 
   describe(`Should ${fnName}() works`, () => {
     it('with param zero', () => {
@@ -68,7 +68,7 @@ describe(filename, () => {
 
 describe(filename, () => {
   const fnName = 'parseDataType'
-  const fn = <(value: any) => NonNullable<Args['dataType']>> mods.__get__(fnName)
+  const fn = mods.__get__(fnName) as (value: any) => NonNullable<Args['dataType']>
 
   describe(`Should ${fnName}() works`, () => {
     it('with blank', () => {
@@ -98,7 +98,7 @@ describe(filename, () => {
 
 describe(filename, () => {
   const fnName = 'parseHeaders'
-  const fn = <(options: ArgsRequestInitCombined) => ArgsRequestInitCombined> mods.__get__(fnName)
+  const fn = mods.__get__(fnName) as (options: ArgsRequestInitCombined) => ArgsRequestInitCombined
   const initArgs = { ...initialRxRequestInit }
 
   describe(`Should ${fnName}() works`, () => {
@@ -109,14 +109,14 @@ describe(filename, () => {
       headers.set('Cookie', value)
 
       // @ts-ignore
-      const combined = <ArgsRequestInitCombined> {
+      const combined = {
         args,
         requestInit: {
           headers,
         },
-      }
+      } as ArgsRequestInitCombined
       const ret = fn(combined)
-      const retHeaders = <Headers> ret.requestInit.headers
+      const retHeaders = ret.requestInit.headers as Headers
       assert(retHeaders && retHeaders.get('Cookie') === value)
     })
 
@@ -128,14 +128,14 @@ describe(filename, () => {
       }
 
       // @ts-ignore
-      const combined = <ArgsRequestInitCombined> {
+      const combined = {
         args,
         requestInit: {
           headers,
         },
-      }
+      } as ArgsRequestInitCombined
       const ret = fn(combined)
-      const retHeaders = <Headers> ret.requestInit.headers
+      const retHeaders = ret.requestInit.headers as Headers
       assert(retHeaders && retHeaders.get('Cookie') === value)
     })
 
@@ -148,12 +148,12 @@ describe(filename, () => {
       args.headersInitClass = null
 
       // @ts-ignore
-      const combined = <ArgsRequestInitCombined> {
+      const combined = {
         args,
         requestInit: {
           headers,
         },
-      }
+      } as ArgsRequestInitCombined
       try {
         fn(combined)
         assert(false, 'Should throw Error, but not')
@@ -169,7 +169,7 @@ describe(filename, () => {
 
 describe(filename, () => {
   const fnName = 'parseCookies'
-  const fn = <(options: ArgsRequestInitCombined) => ArgsRequestInitCombined> mods.__get__(fnName)
+  const fn = mods.__get__(fnName) as (options: ArgsRequestInitCombined) => ArgsRequestInitCombined
   const initArgs = { ...initialRxRequestInit }
 
   describe(`Should ${fnName}() works`, () => {
@@ -184,12 +184,12 @@ describe(filename, () => {
       headers.set('Cookie', value)
       args.cookies = cookies
       // @ts-ignore
-      const combined = <ArgsRequestInitCombined> {
+      const combined = {
         args,
         requestInit: { headers },
-      }
+      } as ArgsRequestInitCombined
       const ret = fn(combined)
-      const retHeaders = <Headers> ret.requestInit.headers
+      const retHeaders = ret.requestInit.headers as Headers
 
       assert(retHeaders && retHeaders.get('Cookie') === `${value}; p1=${p1}; p2=${p2}`)
     })
@@ -210,12 +210,12 @@ describe(filename, () => {
       headers.set('Cookie', value)
       args.cookies = cookies
       // @ts-ignore
-      const combined = <ArgsRequestInitCombined> {
+      const combined = {
         args,
         requestInit: { headers },
-      }
+      } as ArgsRequestInitCombined
       const ret = fn(combined)
-      const retHeaders = <Headers> ret.requestInit.headers
+      const retHeaders = ret.requestInit.headers as Headers
 
       assert(retHeaders && retHeaders.get('Cookie') === `${value}; p1=${p1}; p2=${p2}`)
     })
@@ -244,12 +244,12 @@ describe(filename, () => {
       headers.set('Cookie', value)
       args.cookies = cookies
       // @ts-ignore
-      const combined = <ArgsRequestInitCombined> {
+      const combined = {
         args,
         requestInit: { headers },
-      }
+      } as ArgsRequestInitCombined
       const ret = fn(combined)
-      const retHeaders = <Headers> ret.requestInit.headers
+      const retHeaders = ret.requestInit.headers as Headers
 
       assert(retHeaders && retHeaders.get('Cookie') === `${value}; p1=${p1}; p2=${p2}; bar=${p3}`)
     })
@@ -260,7 +260,7 @@ describe(filename, () => {
 
 describe(filename, () => {
   const fnName = 'parseAbortController'
-  const fn = <(options: ArgsRequestInitCombined) => ArgsRequestInitCombined> mods.__get__(fnName)
+  const fn = mods.__get__(fnName) as (options: ArgsRequestInitCombined) => ArgsRequestInitCombined
   const initArgs = { ...initialRxRequestInit }
 
   describe(`Should ${fnName}() works`, () => {
@@ -268,10 +268,10 @@ describe(filename, () => {
       const args = { ...initArgs }
       args.abortController = new AbortController()
       // @ts-ignore
-      const combined = <ArgsRequestInitCombined> {
+      const combined = {
         args,
         requestInit: {},
-      }
+      } as ArgsRequestInitCombined
       // @ts-ignore
       const ret = fn(combined)
       const { args: args2, requestInit: init2 } = ret
@@ -286,10 +286,10 @@ describe(filename, () => {
     it('with global AbortController', () => {
       const args = { ...initArgs }
       // @ts-ignore
-      const combined = <ArgsRequestInitCombined> {
+      const combined = {
         args,
         requestInit: {},
-      }
+      } as ArgsRequestInitCombined
       // @ts-ignore
       global.AbortController = AbortController
       const ret = fn(combined)
@@ -308,21 +308,21 @@ describe(filename, () => {
 
 describe(filename, () => {
   const fnName = 'parseMethod'
-  const fn = <(options: ArgsRequestInitCombined) => ArgsRequestInitCombined> mods.__get__(fnName)
-  const initArgs = <RxRequestInit> { }
+  const fn = mods.__get__(fnName) as (options: ArgsRequestInitCombined) => ArgsRequestInitCombined
+  const initArgs = {} as RxRequestInit
 
   describe(`Should ${fnName}() works without method`, () => {
     it('with contentType:false', () => {
       const args = { ...initArgs }
       args.contentType = false
       // @ts-ignore
-      const combined = <ArgsRequestInitCombined> {
+      const combined = {
         args,
         requestInit: {},
-      }
+      } as ArgsRequestInitCombined
       // @ts-ignore
       const ret = fn(combined)
-      const headers = <Headers> ret.requestInit.headers
+      const headers = ret.requestInit.headers as Headers
 
       assert(! headers)
 
@@ -335,14 +335,14 @@ describe(filename, () => {
       args.contentType = false
       const headers = new nodeHeaders()
       // @ts-ignore
-      const combined = <ArgsRequestInitCombined> {
+      const combined = {
         args,
         requestInit: { method: 'POST', headers },
-      }
+      } as ArgsRequestInitCombined
 
       // @ts-ignore
       const ret = fn(combined)
-      const headersRet = <Headers> ret.requestInit.headers
+      const headersRet = ret.requestInit.headers as Headers
 
       assert(headersRet && ! headersRet.get('Content-Type'))
     })
@@ -352,14 +352,14 @@ describe(filename, () => {
       args.contentType = Math.random().toString()
       const headers = new nodeHeaders()
       // @ts-ignore
-      const combined = <ArgsRequestInitCombined> {
+      const combined = {
         args,
         requestInit: { method: 'POST', headers },
-      }
+      } as ArgsRequestInitCombined
 
       // @ts-ignore
       const ret = fn(combined)
-      const headersRet = <Headers> ret.requestInit.headers
+      const headersRet = ret.requestInit.headers as Headers
 
       assert(headersRet && headersRet.get('Content-Type') === args.contentType)
     })
@@ -368,14 +368,14 @@ describe(filename, () => {
       const args = { ...initArgs }
       const headers = new nodeHeaders()
       // @ts-ignore
-      const combined = <ArgsRequestInitCombined> {
+      const combined = {
         args,
         requestInit: { method: 'POST', headers },
-      }
+      } as ArgsRequestInitCombined
 
       // @ts-ignore
       const ret = fn(combined)
-      const headersRet = <Headers> ret.requestInit.headers
+      const headersRet = ret.requestInit.headers as Headers
       const defaults = 'application/x-www-form-urlencoded'
 
       assert(headersRet && headersRet.get('Content-Type') === defaults)
@@ -429,10 +429,10 @@ describe(filename, () => {
 
 describe(filename, () => {
   const fnName = 'parseRedirect'
-  const fn = <(
+  const fn = mods.__get__(fnName) as (
     keepRedirectCookies: boolean,
     curValue: RequestInit['redirect'] | undefined,
-  ) => RequestInit['redirect']> mods.__get__(fnName)
+  ) => RequestInit['redirect']
 
   describe(`Should ${fnName}() works with keepRedirectCookies:true`, () => {
     it('expect "follow" to "manual"', () => {
