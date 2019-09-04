@@ -1,18 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  JsonResp,
+  JsonType,
+  PlainJsonValue,
+} from '@waiting/shared-types'
+
+
+export {
+  JsonResp,
+  JsonType,
+  PlainJsonValue,
+}
 
 /** Typeof original Response data */
 export type ObbRetType = ArrayBuffer | Blob | FormData | Response | string | JsonType | void | never
 
-/** Value of key-value pairs object */
-export type PlainJsonValueType = boolean | number | string | null | undefined
-
-/**
- * Typeof JSON object parsed from Response data
- * simple key-value pairs object.
- */
-export interface JsonType {
-  [key: string]: PlainJsonValueType | PlainJsonValueType[] | JsonType | JsonType[]
-}
 
 /** Same as jQuery v3 `JQuery.PlainObject` */
 export interface PlainObject<T = any> {
