@@ -1,7 +1,7 @@
 {
   "name": "@waiting/egg-fetch",
   "author": "waiting",
-  "version": "0.1.0",
+  "version": "2.1.1",
   "description": "fetch for egg, midway",
   "eggPlugin": {
     "name": "fetch"
@@ -36,11 +36,11 @@
     "@waiting/shared-core": "3",
     "@waiting/shared-types": "3",
     "rxjs": "^6.5.2",
-    "rxxfetch": "^2.1.0"
+    "rxxfetch": "^2.1.1"
   },
   "devDependencies": {
-    "egg": "^2.23.0",
-    "cross-env": "6"
+    "cross-env": "6",
+    "egg": "^2.23.0"
   },
   "engines": {
     "node": ">=10.16.0"
