@@ -24,12 +24,12 @@
   "module": "./index.js",
   "types": "./index.d.ts",
   "bugs": {
-    "url": "https://github.com/waitingsong/egg-fetch/issues"
+    "url": "https://github.com/waitingsong/rxxfetch/issues"
   },
-  "homepage": "https://waitingsong.github.io/egg-fetch",
+  "homepage": "https://waitingsong.github.io/rxxfetch/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/waitingsong/egg-fetch.git"
+    "url": "git+https://github.com/waitingsong/rxxfetch.git"
   },
   "license": "MIT",
   "dependencies": {
