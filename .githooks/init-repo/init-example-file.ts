@@ -6,7 +6,7 @@ import { copyFileAsync, isPathAccessible, join, readDirAsync } from './init-util
 
 // const rootDir = join(__dirname, '..')
 export async function genFileFromExample(rootDir: string, list: string[]): Promise<string[]> {
-  const copied = <string[]> []
+  const copied: string[] = []
 
   for (const dir of list) {
     const path = join(rootDir, dir.replace(/\.{2,}/, '/'))

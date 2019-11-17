@@ -54,3 +54,32 @@ export function isPathAccessible(path: string): Promise<boolean> {
 export function genRandomInt(max: number): number {
   return Math.floor(Math.random() * Math.floor(max))
 }
+
+
+export async function cpGlobalConfigsToPkgs(
+  baseDir: string,
+  configPaths: string[],
+  pkgBase: string,
+): Promise<string[]> {
+
+  const pkgs = await readDirAsync(pkgBase)
+  const ret: string[] = []
+
+  for (const pkg of pkgs) {
+    for (const path of configPaths) {
+      try {
+        const dst = `${pkg}/${path}`
+        await copyFileAsync(
+          join(baseDir, path),
+          join(pkgBase, dst),
+        )
+        ret.push(dst)
+      }
+      catch (ex) {
+        console.log(ex.message)
+      }
+    }
+  }
+
+  return ret
+}

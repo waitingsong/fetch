@@ -5,6 +5,8 @@
   "excludeProtected": true,
   "gitRevision": "master",
   "ignoreCompilerErrors": true,
-  "mode": "file",
-  "out": "docs"
+  "mode": "modules",
+  "module": "commonjs",
+  "out": "docs",
+  "target": "ES6"
 }

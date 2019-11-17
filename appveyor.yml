@@ -11,8 +11,8 @@ cache:
 
 environment:
   matrix:
-    - nodejs_version: "10"
     - nodejs_version: "12"
+    - nodejs_version: "13"
 
 platform:
   - x64
@@ -20,8 +20,10 @@ platform:
 install:
   - ps: Install-Product node $env:nodejs_version $env:platform
   - npm root -g
-  - npm i rollup typescript eslint nyc
-  - npm install
+  - echo %APPVEYOR_REPO_COMMIT_MESSAGE%
+  - npm i -g lerna
+  - npm run bootstrap
+  - echo %APPVEYOR_REPO_COMMIT_MESSAGE% | .\\node_modules\\.bin\\commitlint 
 
 #services:
 #  - postgresql101
@@ -37,10 +39,10 @@ test_script:
   - node --version
   - npm --version
   - npm run build
-  #- npm run test
+  - npm run test
 
 on_success:
-  - npm run cov:coveralls
+  #- npm run cov:coveralls
 
 build: off
 deploy: off

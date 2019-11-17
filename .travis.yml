@@ -1,9 +1,12 @@
 if: tag IS blank
 
+git:
+  depth: 10
+
 language: node_js
 node_js:
-  - '10'
   - '12'
+  - '13'
 
 cache:
   directories:
@@ -12,8 +15,10 @@ cache:
 before_install:
   - openssl version
   - npm root -g
-  - npm i rollup typescript eslint nyc
-  - npm install
+  - echo $TRAVIS_COMMIT_MESSAGE
+  - npm i -g lerna
+  - npm run bootstrap
+  - echo "$TRAVIS_COMMIT_MESSAGE" | node_modules/.bin/commitlint 
 
 #services:
 #  - postgresql
@@ -26,8 +31,8 @@ install: true
 
 script:
   - npm run build
-  #- npm run test
+  - npm run test
 
 after_success:
-  - npm run cov:coveralls
+  #- npm run cov:coveralls
 
