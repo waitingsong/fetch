@@ -18,71 +18,72 @@ export function buildQueryString(url: string, data: RxRequestInit['data']): stri
 
 /** Split RxRequestInit object to RequestInit and Args */
 export function splitInitArgs(rxInitOpts: RxRequestInit): ArgsRequestInitCombined {
+  const tmpObj: RxRequestInit = { ...rxInitOpts }
   const args: Args = {}
 
   /* istanbul ignore else */
-  if (typeof rxInitOpts.cookies !== 'undefined') {
-    args.cookies = rxInitOpts.cookies
+  if (typeof tmpObj.cookies !== 'undefined') {
+    args.cookies = tmpObj.cookies
   }
-  delete rxInitOpts.cookies
+  delete tmpObj.cookies
 
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  if (rxInitOpts.abortController && typeof rxInitOpts.abortController.abort === 'function') {
-    args.abortController = rxInitOpts.abortController
+  if (tmpObj.abortController && typeof tmpObj.abortController.abort === 'function') {
+    args.abortController = tmpObj.abortController
   }
-  delete rxInitOpts.abortController
+  delete tmpObj.abortController
 
   /* istanbul ignore else */
-  if (typeof rxInitOpts.contentType !== 'undefined') {
-    args.contentType = rxInitOpts.contentType
+  if (typeof tmpObj.contentType !== 'undefined') {
+    args.contentType = tmpObj.contentType
   }
-  delete rxInitOpts.contentType
+  delete tmpObj.contentType
 
   /* istanbul ignore else */
-  if (typeof rxInitOpts.data !== 'undefined') {
-    args.data = rxInitOpts.data
+  if (typeof tmpObj.data !== 'undefined') {
+    args.data = tmpObj.data
   }
-  delete rxInitOpts.data
+  delete tmpObj.data
 
   /* istanbul ignore else */
-  if (rxInitOpts.dataType) {
-    args.dataType = rxInitOpts.dataType
+  if (tmpObj.dataType) {
+    args.dataType = tmpObj.dataType
   }
-  delete rxInitOpts.dataType
+  delete tmpObj.dataType
 
   /* istanbul ignore else */
-  if (rxInitOpts.fetchModule) {
-    args.fetchModule = rxInitOpts.fetchModule
+  if (tmpObj.fetchModule) {
+    args.fetchModule = tmpObj.fetchModule
   }
-  delete rxInitOpts.fetchModule
+  delete tmpObj.fetchModule
 
   /* istanbul ignore else */
-  if (rxInitOpts.headersInitClass) {
-    args.headersInitClass = rxInitOpts.headersInitClass
+  if (tmpObj.headersInitClass) {
+    args.headersInitClass = tmpObj.headersInitClass
   }
-  delete rxInitOpts.headersInitClass
+  delete tmpObj.headersInitClass
 
   /* istanbul ignore else */
-  if (typeof rxInitOpts.keepRedirectCookies !== 'undefined') {
-    args.keepRedirectCookies = !! rxInitOpts.keepRedirectCookies
+  if (typeof tmpObj.keepRedirectCookies !== 'undefined') {
+    args.keepRedirectCookies = !! tmpObj.keepRedirectCookies
   }
-  delete rxInitOpts.keepRedirectCookies
+  delete tmpObj.keepRedirectCookies
 
   /* istanbul ignore else */
-  if (typeof rxInitOpts.processData !== 'undefined') {
-    args.processData = rxInitOpts.processData
+  if (typeof tmpObj.processData !== 'undefined') {
+    args.processData = tmpObj.processData
   }
-  delete rxInitOpts.processData
+  delete tmpObj.processData
 
   /* istanbul ignore else */
-  if (typeof rxInitOpts.timeout !== 'undefined') {
-    args.timeout = rxInitOpts.timeout
+  if (typeof tmpObj.timeout !== 'undefined') {
+    args.timeout = tmpObj.timeout
   }
-  delete rxInitOpts.timeout
+  delete tmpObj.timeout
 
   return {
     args,
-    requestInit: { ...rxInitOpts } as RequestInit,
+    requestInit: { ...tmpObj } as RequestInit,
   }
 }
 
