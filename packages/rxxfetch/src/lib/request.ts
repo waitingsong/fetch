@@ -44,7 +44,7 @@ export function createObbRequest(
 
   if (typeof input === 'string') {
     /* istanbul ignore else */
-    if (typeof args.data !== 'undefined') {
+    if (typeof args.data !== 'undefined') { // override the value of body
       if (args.processData) {
         if (['GET', 'DELETE'].includes(requestInit.method as string)) {
           inputNew = buildQueryString(input, args.data)

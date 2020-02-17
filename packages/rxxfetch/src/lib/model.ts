@@ -49,7 +49,10 @@ export interface Args {
   /** Content-Type, jQuery behavior, default "application/x-www-form-urlencoded; charset=UTF-8" during POST */
   contentType?: false | ContentType
 
-  /** Send to server, resolve to query string during GET|DELETE and key/value pairs during POST */
+  /**
+   * Send to server, resolve to query string during GET|DELETE and key/value pairs during POST.
+   * If not undefined then will override the value of `body`
+   **/
   data?: JsonType | Blob | FormData | object | null
 
   /**
