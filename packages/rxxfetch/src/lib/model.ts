@@ -74,7 +74,10 @@ export interface Args {
    */
   keepRedirectCookies?: boolean
 
-  /** whether process Args.data automatically. jQuery behavior */
+  /**
+   * Whether process Args.data automatically. jQuery behavior.
+   * Default: true
+   */
   processData?: boolean
 
   /**
