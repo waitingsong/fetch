@@ -226,6 +226,7 @@ function parseMethod(options: ArgsRequestInitCombined): ArgsRequestInitCombined 
 }
 
 
+/** Parse type of return data */
 function parseDataType(value: unknown): NonNullable<Args['dataType']> {
   /* istanbul ignore else */
   if (typeof value === 'string' && ['arrayBuffer', 'bare', 'blob', 'formData', 'json', 'text', 'raw'].includes(value)) {
