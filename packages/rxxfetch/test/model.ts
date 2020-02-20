@@ -19,6 +19,9 @@ export interface HttpbinRetCookie {
 /** GET Response Interface of httpbin.org */
 export interface HttpbinGetResponse {
   args: any
+  brotli?: boolean
+  deflated?: boolean
+  gzipped?: boolean
   headers: {
     Accept: string,
     Connection: string,
