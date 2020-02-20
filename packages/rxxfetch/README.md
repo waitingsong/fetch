@@ -22,9 +22,8 @@ Observable HTTP Fetch() wrapped by [RxJS6](https://github.com/reactivex/rxjs), s
 - Apis support `Generics`, eg. `get<string>(url).subscribe(txt => console.info(txt.slice(1)))`
 - Send file via `FormData` or `Stream` on Node.js
 
-## Browser support
+## Browser support (v2.x)
 
-[![Build Status](https://saucelabs.com/browser-matrix/waitingsong.svg)](https://saucelabs.com/u/waitingsong)
 ![Build Status](./assets/sauce.png)
 
 - Should work fine without polyfills in every modern browser

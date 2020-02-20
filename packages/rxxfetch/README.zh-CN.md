@@ -22,9 +22,8 @@ HTTP Fetch() 响应式接口，基于 [RxJS6](https://github.com/reactivex/rxjs)
 - 接口支持 `泛型`，例如 `get<string>(url).subscribe(txt => console.info(txt.slice(1)))`
 - 支持 Node.js 以文本或者流的形式发送文件
 
-## Browser support
+## Browser support (v2.x)
 
-[![Build Status](https://saucelabs.com/browser-matrix/waitingsong.svg)](https://saucelabs.com/u/waitingsong)
 ![Build Status](./assets/sauce.png)
 
 - 长青浏览器基本不需要垫片
