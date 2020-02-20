@@ -4,7 +4,7 @@ import { abortableFetch, AbortController } from 'abortcontroller-polyfill/dist/c
 import nodefetch, { Headers as nodeHeaders } from 'node-fetch'
 import * as assert from 'power-assert'
 
-import { Args, ArgsRequestInitCombined, RxRequestInit } from '../src/index'
+import { Args, ArgsRequestInitCombined, RxRequestInit, ContentTypeList } from '../src/index'
 import { initialRxRequestInit } from '../src/lib/config'
 import { selectFecthModule } from '../src/lib/util'
 
@@ -376,7 +376,7 @@ describe(filename, () => {
       // @ts-ignore
       const ret = fn(combined)
       const headersRet = ret.requestInit.headers as Headers
-      const defaults = 'application/x-www-form-urlencoded'
+      const defaults = ContentTypeList.formUrlencoded
 
       assert(headersRet && headersRet.get('Content-Type') === defaults)
     })

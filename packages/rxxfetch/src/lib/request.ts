@@ -1,10 +1,14 @@
-import * as QueryString from 'qs'
 import { defer, of, throwError, Observable } from 'rxjs'
 import { catchError, concatMap, timeout } from 'rxjs/operators'
 
 import { Args } from './model'
 import { parseRespCookie } from './response'
-import { buildQueryString, parseInitOpts, selectFecthModule } from './util'
+import {
+  parseInitOpts,
+  selectFecthModule,
+  parseRequestGetLikeData,
+  parseRequestPostLikeData,
+} from './util'
 
 
 /**
@@ -43,28 +47,43 @@ export function createObbRequest(
   const fetchModule = selectFecthModule(args.fetchModule)
 
   if (typeof input === 'string') {
-    /* istanbul ignore else */
-    if (typeof args.data !== 'undefined') { // override the value of body
-      if (args.processData) {
-        if (['GET', 'DELETE'].includes(requestInit.method as string)) {
-          inputNew = buildQueryString(input, args.data)
-        }
-        else {
-          requestInit.body = QueryString.stringify(args.data)
-        }
+
+    if (['GET', 'DELETE'].includes(requestInit.method as string)) {
+      inputNew = parseRequestGetLikeData(input, args)
+    }
+    else if (['POST', 'PUT', 'OPTIONS'].includes(requestInit.method as string)) {
+      const body: NonNullable<RequestInit['body']> | undefined = parseRequestPostLikeData(args)
+      if (typeof body !== 'undefined') {
+        requestInit.body = body
       }
-      else {
-        requestInit.body = args.data as RequestInit['body']
-      }
+    }
+    else {
+      throw new TypeError(`Invalid method value: "${requestInit.method}"`)
     }
 
     return defer(() => fetchModule(inputNew, requestInit))
+
+    /* istanbul ignore else */
+    // if (typeof args.data !== 'undefined') { // override the value of body
+    //   if (args.processData) {
+    //     if (['GET', 'DELETE'].includes(requestInit.method as string)) {
+    //       inputNew = buildQueryString(input, args.data)
+    //     }
+    //     else {
+    //       requestInit.body = QueryString.stringify(args.data)
+    //     }
+    //   }
+    //   else {
+    //     requestInit.body = args.data as RequestInit['body']
+    //   }
+    // }
+
+    // return defer(() => fetchModule(inputNew, requestInit))
   }
   else {
     return defer(() => fetchModule(input))
   }
 }
-
 
 export function parseRequestStream(
   request$: Observable<Response>,

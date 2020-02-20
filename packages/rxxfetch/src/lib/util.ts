@@ -2,8 +2,9 @@
 import { AbortController as _AbortController } from 'abortcontroller-polyfill/dist/cjs-ponyfill.js'
 import * as QueryString from 'qs'
 import { throwError } from 'rxjs'
+import * as NodeFormData from 'form-data'
 
-import { Args, ArgsRequestInitCombined, RxRequestInit } from './model'
+import { Args, ArgsRequestInitCombined, RxRequestInit, ContentTypeList } from './model'
 
 
 export function buildQueryString(url: string, data: RxRequestInit['data']): string {
@@ -218,7 +219,7 @@ function parseMethod(options: ArgsRequestInitCombined): ArgsRequestInitCombined 
       }
       /* istanbul ignore else */
       else if (! headers.has('Content-Type')) {
-        headers.set('Content-Type', 'application/x-www-form-urlencoded')
+        headers.set('Content-Type', ContentTypeList.formUrlencoded)
       }
       break
     }
@@ -285,3 +286,72 @@ export function selectFecthModule(mod: Args['fetchModule'] | null): NonNullable<
 
   return fetchModule as NonNullable<Args['fetchModule']>
 }
+
+
+/**
+ * Return input url string
+ */
+export function parseRequestGetLikeData(input: string, args: Args): string {
+  let url = ''
+
+  if (typeof args.data === 'undefined') {
+    url = input
+  }
+  else if (args.processData) { // override the value of body by args.data
+    url = buildQueryString(input, args.data)
+  }
+  else {
+    throw new TypeError(
+      'Typeof args.data invalid for GET/DELETE when args.processData not true, type is :' + typeof args.data,
+    )
+  }
+
+  return url
+}
+
+
+export function parseRequestPostLikeData(args: Args): NonNullable<RequestInit['body']> | undefined {
+  let body: NonNullable<RequestInit['body']> | undefined
+  const { data } = args
+
+  if (typeof data === 'string') {
+    body = data
+  }
+  else if (typeof data === 'undefined' || data === null) {
+    // void
+  }
+  else if (typeof FormData !== 'undefined' && data instanceof FormData) {
+    body = data
+  }
+  else if (typeof NodeFormData !== 'undefined' && data instanceof NodeFormData) {
+    // @ts-ignore
+    body = data
+  }
+  else if (typeof Blob !== 'undefined' && data instanceof Blob) {
+    body = data
+  }
+  else if (typeof ArrayBuffer !== 'undefined' && data instanceof ArrayBuffer) {
+    body = data
+  }
+  else if (typeof URLSearchParams !== 'undefined' && data instanceof URLSearchParams) {
+    body = data
+  }
+  else if (typeof ReadableStream !== 'undefined' && data instanceof ReadableStream) {
+    body = data
+  }
+  else { // json object or Array, or other
+    // eslint-disable-next-line no-lonely-if
+    if (args.processData && args.contentType && args.contentType.includes('json')) {
+      body = JSON.stringify(data)
+    }
+    else if (args.processData) {
+      body = QueryString.stringify(data)
+    }
+    else {
+      body = data as NonNullable<RequestInit['body']>
+    }
+  }
+
+  return body
+}
+

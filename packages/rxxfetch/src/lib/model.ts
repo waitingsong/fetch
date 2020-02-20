@@ -35,8 +35,15 @@ export interface RespDataType {
 }
 
 
-/** See https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type */
-export type ContentType = string
+/** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type */
+export type ContentType = string | ContentTypeList
+export enum ContentTypeList {
+  formDataPartial = 'multipart/form-data; boundary=',
+  formUrlencoded = 'application/x-www-form-urlencoded; charset=utf-8',
+  html = 'text/html; charset=utf-8',
+  json = 'application/json; charset=utf-8',
+  plain = 'text/plain',
+}
 
 /** RxRequestInit extends from */
 export interface Args {
@@ -53,7 +60,7 @@ export interface Args {
    * Send to server, resolve to query string during GET|DELETE and key/value pairs during POST.
    * If not undefined then will override the value of `body`
    **/
-  data?: JsonType | Blob | FormData | object | null
+  data?: string | JsonType | Blob | FormData | object | null
 
   /**
    * Expect data type returned from server. jQuery behavior.
@@ -91,6 +98,9 @@ export interface RxRequestInit extends RequestInit, Args {
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'OPTIONS'
   referrer?: 'client' | 'no-referrer'
 }
+
+export type GetLikeMethod = 'GET' | 'DELETE'
+export type PostLikeMethod = Exclude<NonNullable<RxRequestInit['method']>, GetLikeMethod>
 
 /** For karma test */
 export interface HeadersFixed extends Headers {
