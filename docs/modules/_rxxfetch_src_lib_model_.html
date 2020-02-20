@@ -67,6 +67,12 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
+							<h3>Enumerations</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-enum tsd-parent-kind-external-module"><a href="../enums/_rxxfetch_src_lib_model_.contenttypelist.html" class="tsd-kind-icon">Content<wbr>Type<wbr>List</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
 							<h3>Interfaces</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/_rxxfetch_src_lib_model_.args.html" class="tsd-kind-icon">Args</a></li>
@@ -81,7 +87,9 @@
 							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-type-alias tsd-parent-kind-external-module"><a href="_rxxfetch_src_lib_model_.html#contenttype" class="tsd-kind-icon">Content<wbr>Type</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-external-module"><a href="_rxxfetch_src_lib_model_.html#getlikemethod" class="tsd-kind-icon">Get<wbr>Like<wbr>Method</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-external-module"><a href="_rxxfetch_src_lib_model_.html#obbrettype" class="tsd-kind-icon">Obb<wbr>Ret<wbr>Type</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-external-module"><a href="_rxxfetch_src_lib_model_.html#postlikemethod" class="tsd-kind-icon">Post<wbr>Like<wbr>Method</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-external-module"><a href="_rxxfetch_src_lib_model_.html#respdatatypename" class="tsd-kind-icon">Resp<wbr>Data<wbr>Type<wbr>Name</a></li>
 							</ul>
 						</section>
@@ -93,17 +101,29 @@
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module">
 					<a name="contenttype" class="tsd-anchor"></a>
 					<h3>Content<wbr>Type</h3>
-					<div class="tsd-signature tsd-kind-icon">Content<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<div class="tsd-signature tsd-kind-icon">Content<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="../enums/_rxxfetch_src_lib_model_.contenttypelist.html" class="tsd-signature-type">ContentTypeList</a></div>
 					<aside class="tsd-sources">
 						<ul>
 							<li>Defined in <a href="https://github.com/waitingsong/rxxfetch/blob/master/packages/rxxfetch/src/lib/model.ts#L39">rxxfetch/src/lib/model.ts:39</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>See <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type">https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type</a></p>
-						</div>
+						<dl class="tsd-comment-tags">
+							<dt>see</dt>
+							<dd><p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type">https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type</a></p>
+							</dd>
+						</dl>
 					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module">
+					<a name="getlikemethod" class="tsd-anchor"></a>
+					<h3>Get<wbr>Like<wbr>Method</h3>
+					<div class="tsd-signature tsd-kind-icon">Get<wbr>Like<wbr>Method<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"GET"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"DELETE"</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/waitingsong/rxxfetch/blob/master/packages/rxxfetch/src/lib/model.ts#L102">rxxfetch/src/lib/model.ts:102</a></li>
+						</ul>
+					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module">
 					<a name="obbrettype" class="tsd-anchor"></a>
@@ -121,9 +141,19 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module">
+					<a name="postlikemethod" class="tsd-anchor"></a>
+					<h3>Post<wbr>Like<wbr>Method</h3>
+					<div class="tsd-signature tsd-kind-icon">Post<wbr>Like<wbr>Method<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Exclude</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NonNullable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">RxRequestInit</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">"method"</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><a href="_rxxfetch_src_lib_model_.html#getlikemethod" class="tsd-signature-type">GetLikeMethod</a><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/waitingsong/rxxfetch/blob/master/packages/rxxfetch/src/lib/model.ts#L103">rxxfetch/src/lib/model.ts:103</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module">
 					<a name="respdatatypename" class="tsd-anchor"></a>
 					<h3>Resp<wbr>Data<wbr>Type<wbr>Name</h3>
-					<div class="tsd-signature tsd-kind-icon">Resp<wbr>Data<wbr>Type<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">keyof RespDataType</span></div>
+					<div class="tsd-signature tsd-kind-icon">Resp<wbr>Data<wbr>Type<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">keyof </span><a href="../interfaces/_rxxfetch_src_lib_model_.respdatatype.html" class="tsd-signature-type">RespDataType</a></div>
 					<aside class="tsd-sources">
 						<ul>
 							<li>Defined in <a href="https://github.com/waitingsong/rxxfetch/blob/master/packages/rxxfetch/src/lib/model.ts#L24">rxxfetch/src/lib/model.ts:24</a></li>
@@ -139,21 +169,21 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_egg_fetch_src_lib_index_.html">"egg-<wbr>fetch/src/lib/index"</a>
+						<a href="_egg_fetch_src_lib_model_.html">&quot;egg-<wbr>fetch/src/lib/model&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_egg_fetch_src_lib_model_.html">"egg-<wbr>fetch/src/lib/model"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_rxxfetch_src_lib_index_.html">"rxxfetch/src/lib/index"</a>
+						<a href="_rxxfetch_src_lib_index_.html">&quot;rxxfetch/src/lib/index&quot;</a>
 					</li>
 					<li class="current tsd-kind-external-module">
-						<a href="_rxxfetch_src_lib_model_.html">"rxxfetch/src/lib/model"</a>
+						<a href="_rxxfetch_src_lib_model_.html">&quot;rxxfetch/src/lib/model&quot;</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-enum tsd-parent-kind-external-module">
+						<a href="../enums/_rxxfetch_src_lib_model_.contenttypelist.html" class="tsd-kind-icon">Content<wbr>Type<wbr>List</a>
+					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="../interfaces/_rxxfetch_src_lib_model_.args.html" class="tsd-kind-icon">Args</a>
 					</li>
@@ -176,7 +206,13 @@
 						<a href="_rxxfetch_src_lib_model_.html#contenttype" class="tsd-kind-icon">Content<wbr>Type</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
+						<a href="_rxxfetch_src_lib_model_.html#getlikemethod" class="tsd-kind-icon">Get<wbr>Like<wbr>Method</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
 						<a href="_rxxfetch_src_lib_model_.html#obbrettype" class="tsd-kind-icon">Obb<wbr>Ret<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
+						<a href="_rxxfetch_src_lib_model_.html#postlikemethod" class="tsd-kind-icon">Post<wbr>Like<wbr>Method</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
 						<a href="_rxxfetch_src_lib_model_.html#respdatatypename" class="tsd-kind-icon">Resp<wbr>Data<wbr>Type<wbr>Name</a>

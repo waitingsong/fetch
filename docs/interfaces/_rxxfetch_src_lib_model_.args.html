@@ -115,7 +115,7 @@
 					<div class="tsd-signature tsd-kind-icon">abort<wbr>Controller<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AbortController</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/waitingsong/rxxfetch/blob/master/packages/rxxfetch/src/lib/model.ts#L44">rxxfetch/src/lib/model.ts:44</a></li>
+							<li>Defined in <a href="https://github.com/waitingsong/rxxfetch/blob/master/packages/rxxfetch/src/lib/model.ts#L51">rxxfetch/src/lib/model.ts:51</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -130,7 +130,7 @@
 					<div class="tsd-signature tsd-kind-icon">content<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><a href="../modules/_rxxfetch_src_lib_model_.html#contenttype" class="tsd-signature-type">ContentType</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/waitingsong/rxxfetch/blob/master/packages/rxxfetch/src/lib/model.ts#L50">rxxfetch/src/lib/model.ts:50</a></li>
+							<li>Defined in <a href="https://github.com/waitingsong/rxxfetch/blob/master/packages/rxxfetch/src/lib/model.ts#L57">rxxfetch/src/lib/model.ts:57</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -142,10 +142,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="cookies" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> cookies</h3>
-					<div class="tsd-signature tsd-kind-icon">cookies<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
+					<div class="tsd-signature tsd-kind-icon">cookies<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/waitingsong/rxxfetch/blob/master/packages/rxxfetch/src/lib/model.ts#L47">rxxfetch/src/lib/model.ts:47</a></li>
+							<li>Defined in <a href="https://github.com/waitingsong/rxxfetch/blob/master/packages/rxxfetch/src/lib/model.ts#L54">rxxfetch/src/lib/model.ts:54</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -157,15 +157,16 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="data" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> data</h3>
-					<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">JsonType</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Blob</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">FormData</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
+					<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">JsonType</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Blob</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">FormData</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/waitingsong/rxxfetch/blob/master/packages/rxxfetch/src/lib/model.ts#L53">rxxfetch/src/lib/model.ts:53</a></li>
+							<li>Defined in <a href="https://github.com/waitingsong/rxxfetch/blob/master/packages/rxxfetch/src/lib/model.ts#L63">rxxfetch/src/lib/model.ts:63</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Send to server, resolve to query string during GET|DELETE and key/value pairs during POST</p>
+							<p>Send to server, resolve to query string during GET|DELETE and key/value pairs during POST.
+							If not undefined then will override the value of <code>body</code></p>
 						</div>
 					</div>
 				</section>
@@ -175,7 +176,7 @@
 					<div class="tsd-signature tsd-kind-icon">data<wbr>Type<span class="tsd-signature-symbol">:</span> <a href="../modules/_rxxfetch_src_lib_model_.html#respdatatypename" class="tsd-signature-type">RespDataTypeName</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/waitingsong/rxxfetch/blob/master/packages/rxxfetch/src/lib/model.ts#L60">rxxfetch/src/lib/model.ts:60</a></li>
+							<li>Defined in <a href="https://github.com/waitingsong/rxxfetch/blob/master/packages/rxxfetch/src/lib/model.ts#L70">rxxfetch/src/lib/model.ts:70</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -189,10 +190,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="fetchmodule" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> fetch<wbr>Module</h3>
-					<div class="tsd-signature tsd-kind-icon">fetch<wbr>Module<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
+					<div class="tsd-signature tsd-kind-icon">fetch<wbr>Module<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Request</span>, init<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">RequestInit</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Response</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/waitingsong/rxxfetch/blob/master/packages/rxxfetch/src/lib/model.ts#L63">rxxfetch/src/lib/model.ts:63</a></li>
+							<li>Defined in <a href="https://github.com/waitingsong/rxxfetch/blob/master/packages/rxxfetch/src/lib/model.ts#L73">rxxfetch/src/lib/model.ts:73</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -200,48 +201,24 @@
 							<p>Pass a fetch() module for isomorphic usage such as node-fetch or isomorphic-fetch</p>
 						</div>
 					</div>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-siganture">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property tsd-is-not-exported">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Request</span>, init<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">RequestInit</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Response</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-parameters-title">Parameters</h4>
-										<ul class="tsd-parameters">
-											<li>
-												<h5>input: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Request</span></h5>
-											</li>
-											<li>
-												<h5><span class="tsd-flag ts-flagOptional">Optional</span> init: <span class="tsd-signature-type">RequestInit</span></h5>
-											</li>
-										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Response</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="headersinitclass" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> headers<wbr>Init<wbr>Class</h3>
-					<div class="tsd-signature tsd-kind-icon">headers<wbr>Init<wbr>Class<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><a href="_rxxfetch_src_lib_model_.headersfixed.html" class="tsd-signature-type">HeadersFixed</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">any</span></div>
+					<div class="tsd-signature tsd-kind-icon">headers<wbr>Init<wbr>Class<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">typeof </span><a href="_rxxfetch_src_lib_model_.headersfixed.html#headers" class="tsd-signature-type">Headers</a><span class="tsd-signature-symbol"> | </span><a href="_rxxfetch_src_lib_model_.headersfixed.html" class="tsd-signature-type">HeadersFixed</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/waitingsong/rxxfetch/blob/master/packages/rxxfetch/src/lib/model.ts#L64">rxxfetch/src/lib/model.ts:64</a></li>
+							<li>Defined in <a href="https://github.com/waitingsong/rxxfetch/blob/master/packages/rxxfetch/src/lib/model.ts#L74">rxxfetch/src/lib/model.ts:74</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="keepredirectcookies" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> keep<wbr>Redirect<wbr>Cookies</h3>
-					<div class="tsd-signature tsd-kind-icon">keep<wbr>Redirect<wbr>Cookies<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<div class="tsd-signature tsd-kind-icon">keep<wbr>Redirect<wbr>Cookies<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/waitingsong/rxxfetch/blob/master/packages/rxxfetch/src/lib/model.ts#L72">rxxfetch/src/lib/model.ts:72</a></li>
+							<li>Defined in <a href="https://github.com/waitingsong/rxxfetch/blob/master/packages/rxxfetch/src/lib/model.ts#L82">rxxfetch/src/lib/model.ts:82</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -256,15 +233,16 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="processdata" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> process<wbr>Data</h3>
-					<div class="tsd-signature tsd-kind-icon">process<wbr>Data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<div class="tsd-signature tsd-kind-icon">process<wbr>Data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/waitingsong/rxxfetch/blob/master/packages/rxxfetch/src/lib/model.ts#L75">rxxfetch/src/lib/model.ts:75</a></li>
+							<li>Defined in <a href="https://github.com/waitingsong/rxxfetch/blob/master/packages/rxxfetch/src/lib/model.ts#L88">rxxfetch/src/lib/model.ts:88</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>whether process Args.data automatically. jQuery behavior</p>
+							<p>Whether process Args.data automatically. jQuery behavior.
+							Default: true</p>
 						</div>
 					</div>
 				</section>
@@ -274,7 +252,7 @@
 					<div class="tsd-signature tsd-kind-icon">timeout<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/waitingsong/rxxfetch/blob/master/packages/rxxfetch/src/lib/model.ts#L81">rxxfetch/src/lib/model.ts:81</a></li>
+							<li>Defined in <a href="https://github.com/waitingsong/rxxfetch/blob/master/packages/rxxfetch/src/lib/model.ts#L94">rxxfetch/src/lib/model.ts:94</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -293,21 +271,21 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_egg_fetch_src_lib_index_.html">"egg-<wbr>fetch/src/lib/index"</a>
+						<a href="../modules/_egg_fetch_src_lib_model_.html">&quot;egg-<wbr>fetch/src/lib/model&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_egg_fetch_src_lib_model_.html">"egg-<wbr>fetch/src/lib/model"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_rxxfetch_src_lib_index_.html">"rxxfetch/src/lib/index"</a>
+						<a href="../modules/_rxxfetch_src_lib_index_.html">&quot;rxxfetch/src/lib/index&quot;</a>
 					</li>
 					<li class="current tsd-kind-external-module">
-						<a href="../modules/_rxxfetch_src_lib_model_.html">"rxxfetch/src/lib/model"</a>
+						<a href="../modules/_rxxfetch_src_lib_model_.html">&quot;rxxfetch/src/lib/model&quot;</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-enum tsd-parent-kind-external-module">
+						<a href="../enums/_rxxfetch_src_lib_model_.contenttypelist.html" class="tsd-kind-icon">Content<wbr>Type<wbr>List</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-external-module">
@@ -366,7 +344,13 @@
 						<a href="../modules/_rxxfetch_src_lib_model_.html#contenttype" class="tsd-kind-icon">Content<wbr>Type</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
+						<a href="../modules/_rxxfetch_src_lib_model_.html#getlikemethod" class="tsd-kind-icon">Get<wbr>Like<wbr>Method</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
 						<a href="../modules/_rxxfetch_src_lib_model_.html#obbrettype" class="tsd-kind-icon">Obb<wbr>Ret<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
+						<a href="../modules/_rxxfetch_src_lib_model_.html#postlikemethod" class="tsd-kind-icon">Post<wbr>Like<wbr>Method</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
 						<a href="../modules/_rxxfetch_src_lib_model_.html#respdatatypename" class="tsd-kind-icon">Resp<wbr>Data<wbr>Type<wbr>Name</a>
