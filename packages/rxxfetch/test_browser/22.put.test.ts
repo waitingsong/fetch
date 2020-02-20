@@ -1,7 +1,7 @@
 /* eslint-disable max-lines-per-function */
 import * as assert from 'power-assert'
 
-import { put, RxRequestInit } from '../src/index'
+import { put, RxRequestInit, ContentTypeList } from '../src/index'
 import { HttpbinPostResponse } from '../test/model'
 
 
@@ -14,6 +14,7 @@ describe(filename, function() {
   describe('Should put() works with httpbin.org', () => {
     const url = 'https://httpbin.org/put'
     const initArgs = {
+      contentType: ContentTypeList.formUrlencoded,
       timeout: 60 * 1000,
     } as RxRequestInit
 

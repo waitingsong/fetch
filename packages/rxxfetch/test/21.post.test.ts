@@ -6,7 +6,7 @@ import * as assert from 'power-assert'
 import { defer } from 'rxjs'
 import { retry, switchMap, tap } from 'rxjs/operators'
 
-import { post, RxRequestInit } from '../src/index'
+import { post, RxRequestInit, ContentTypeList } from '../src/index'
 
 import { HttpbinPostResponse } from './model'
 
@@ -19,7 +19,9 @@ describe(filename, function() {
 
   describe('Should post() works with httpbin.org', () => {
     const url = 'https://httpbin.org/post'
-    const initArgs = {} as RxRequestInit
+    const initArgs = {
+      contentType: ContentTypeList.formUrlencoded,
+    } as RxRequestInit
 
     it('send key:value object data', (resolve) => {
       const pdata = {

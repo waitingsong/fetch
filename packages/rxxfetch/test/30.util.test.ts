@@ -376,7 +376,7 @@ describe(filename, () => {
       // @ts-ignore
       const ret = fn(combined)
       const headersRet = ret.requestInit.headers as Headers
-      const defaults = ContentTypeList.formUrlencoded
+      const defaults = ContentTypeList.json
 
       assert(headersRet && headersRet.get('Content-Type') === defaults)
     })

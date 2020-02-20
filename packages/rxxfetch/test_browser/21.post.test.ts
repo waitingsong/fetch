@@ -2,7 +2,7 @@
 import * as assert from 'power-assert'
 import { retry } from 'rxjs/operators'
 
-import { post, RxRequestInit } from '../src/index'
+import { post, RxRequestInit, ContentTypeList } from '../src/index'
 import { HttpbinPostResponse } from '../test/model'
 
 
@@ -15,6 +15,7 @@ describe(filename, function() {
   describe('Should post() works with httpbin.org', () => {
     const url = 'https://httpbin.org/post'
     const initArgs = {
+      contentType: ContentTypeList.formUrlencoded,
       timeout: 60 * 1000,
     } as RxRequestInit
 

@@ -2,7 +2,7 @@ import { basename } from '@waiting/shared-core'
 import * as FormData from 'form-data'
 import * as assert from 'power-assert'
 
-import { put, RxRequestInit } from '../src/index'
+import { put, RxRequestInit, ContentTypeList } from '../src/index'
 
 import { HttpbinPostResponse } from './model'
 
@@ -15,7 +15,9 @@ describe(filename, function() {
 
   describe('Should put() works with httpbin.org', () => {
     const url = 'https://httpbin.org/put'
-    const initArgs = {} as RxRequestInit
+    const initArgs = {
+      contentType: ContentTypeList.formUrlencoded,
+    } as RxRequestInit
 
     it('send key:value object data', (resolve) => {
       const pdata = {
@@ -113,3 +115,4 @@ describe(filename, function() {
   })
 
 })
+

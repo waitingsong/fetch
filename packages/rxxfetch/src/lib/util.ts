@@ -219,7 +219,7 @@ function parseMethod(options: ArgsRequestInitCombined): ArgsRequestInitCombined 
       }
       /* istanbul ignore else */
       else if (! headers.has('Content-Type')) {
-        headers.set('Content-Type', ContentTypeList.formUrlencoded)
+        headers.set('Content-Type', ContentTypeList.json)
       }
       break
     }
