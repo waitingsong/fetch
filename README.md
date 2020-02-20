@@ -94,8 +94,35 @@ get<string>(url, args).subscribe(
 
 ### POST
 
+#### JSON
 ```ts
 import { post, RxRequestInit } from 'rxxfetch'
+
+const url = 'https://httpbin.org/post'
+const pdata = {
+  cn: '测试',
+  p1: Math.random(),
+  p2: Math.random().toString(),
+  p3: {
+    foo: Math.random() + '',
+  },
+}
+const args: RxRequestInit = {}
+args.data = { ...pdata }
+
+const res = await post<HttpbinPostResponse>(url, args).toPromise()
+assert(res && res.url === url)
+
+const json: typeof pdata = res.json
+assert(json.cn === pdata.cn, `Should got "${pdata.cn}"`)
+assert(json.p1 === pdata.p1, `Should got "${pdata.p1}"`)
+assert(json.p2 === pdata.p2, `Should got "${pdata.p2}"`)
+assert(json.p3.foo === pdata.p3.foo, `Should got "${pdata.p3.foo}"`)
+```
+
+#### FORM
+```ts
+import { post, RxRequestInit, ContentTypeList } from 'rxxfetch'
 
 const url = 'https://httpbin.org/post'
 const pdata = {
@@ -103,6 +130,8 @@ const pdata = {
   p2: Math.random().toString(),
 }
 const args: RxRequestInit = {
+  // default value is ContentTypeList.json
+  contentType: ContentTypeList.formUrlencoded,
   data: pdata
 }
 
