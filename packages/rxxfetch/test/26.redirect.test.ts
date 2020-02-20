@@ -38,7 +38,6 @@ describe(filename, function() {
         },
         (err) => {
           assert(false, err)
-          resolve()
         },
       )
     })

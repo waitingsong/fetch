@@ -1,5 +1,3 @@
-/// <reference types="mocha" />
-
 import * as FormData from 'form-data'
 import { Response, ResponseInit } from 'node-fetch'
 import * as assert from 'power-assert'
@@ -16,7 +14,7 @@ import {
 } from '../src/lib/response'
 
 
-const filename = '30_response.test.ts'
+const filename = '31_response.test.ts'
 
 describe(filename, () => {
 
@@ -118,8 +116,10 @@ describe(filename, () => {
         (err: Error) => {
           assert(!! err && err.message.length)
           const msg = err.message
+          const reg = /Response: TypeError.+text/
           assert(msg.includes(`${httpErrorMsgPrefix}${status}`))
           assert(msg.includes('TypeError: resp.text is not a function'))
+          assert(msg.includes('statusText: undefined'))
           resolve()
         },
       )
@@ -182,7 +182,7 @@ describe(filename, () => {
      */
     it.skip('with formData (not supported by node-fetch yet)', (resolve) => {
       const form = new FormData()
-      const p1 = Math.random()
+      const p1 = Math.random().toString()
       const p2 = Math.random().toString()
       form.append('p1', p1)
       form.append('p2', p2)
@@ -227,7 +227,6 @@ describe(filename, () => {
         },
         (err) => {
           assert(false, err)
-          resolve()
         },
       )
     })

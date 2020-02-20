@@ -30,7 +30,7 @@ describe(filename, function() {
           assert(res && res.url === url)
 
           try {
-            const form = res.form
+            const { form } = res
             assert(form && form.p1 === pdata.p1.toString(), `Should got "${pdata.p1}"`)
             assert(form && form.p2 === pdata.p2, `Should got "${pdata.p2}"`)
           }
@@ -62,7 +62,7 @@ describe(filename, function() {
           assert(res && res.url === url)
 
           try {
-            const form = res.form
+            const { form } = res
             assert(form && form.p1 === pdata.p1.toString(), `Should got "${pdata.p1}"`)
             assert(form && form.p2 === pdata.p2, `Should got "${pdata.p2}"`)
             assert(form && form['p3[foo]'] === pdata.p3.foo, `Should got "${pdata.p3.foo}"`)
@@ -95,7 +95,7 @@ describe(filename, function() {
           assert(res && res.url === url)
 
           try {
-            const form = res.form
+            const { form } = res
             assert(form && form.p1 === p1.toString(), `Should got "${p1}"`)
             assert(form && form.p2 === p2, `Should got "${p2}"`)
           }

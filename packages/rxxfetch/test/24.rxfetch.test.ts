@@ -74,7 +74,6 @@ describe(filename, () => {
       fetch(url, args).subscribe(
         () => {
           assert(false, 'Should throw error but NOT')
-          resolve()
         },
         () => {
           assert(true)

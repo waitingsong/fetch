@@ -1,5 +1,3 @@
-/// <reference types="mocha" />
-
 import * as assert from 'power-assert'
 
 import {
@@ -11,7 +9,6 @@ import {
   RxRequestInit,
 } from '../src/index'
 import { httpErrorMsgPrefix, initialRxRequestInit } from '../src/lib/config'
-
 import { HttpbinRetCookie } from '../test/model'
 
 
@@ -34,13 +31,13 @@ describe(filename, () => {
     it('values of result equal to initialRxRequestInit', () => {
       // @ts-ignore
       for (const [key, value] of Object.entries(initData)) {
-        if (! (key in initialRxRequestInit)) {
-          assert(false, `${key} not exists in initialRxRequestInit`)
-          break
+        if (key in initialRxRequestInit) {
+          const dd = Object.getOwnPropertyDescriptor(initialRxRequestInit, key)
+          assert(dd && value === dd.value, `key: "${key}": not equal`)
         }
         else {
-          const d = Object.getOwnPropertyDescriptor(initialRxRequestInit, key)
-          assert(d && value === d.value, `key: "${key}": not equal`)
+          assert(false, `${key} not exists in initialRxRequestInit`)
+          break
         }
       }
     })
@@ -82,26 +79,26 @@ describe(filename, function() {
   this.retries(3)
 
   describe('Should handleResponseError works', () => {
-    it('got status 404', resolve => {
+    it('got status 404', (resolve) => {
       const url = 'https://httpbin.org/method-not-exists'
 
       get(url).subscribe(
         () => {
-          assert(false, 'Should go into error() but not next()')
+          assert(false, 'Should go into error() not next()')
           resolve()
         },
         (err: Error) => {
           assert(
-            err && err.message.indexOf(`${httpErrorMsgPrefix}404`) === 0,
-            'Should got 404 error ',
+            err && err.message.startsWith(`${httpErrorMsgPrefix}404`),
+            'Should got 404 error, but got: ' + err.message,
           )
           resolve()
         },
       )
     })
 
-    it('got status 405', resolve => {
-      const url = 'https://httpbin.org/post'  // url for POST
+    it('got status 405', (resolve) => {
+      const url = 'https://httpbin.org/post' // url for POST
 
       get(url).subscribe(
         () => {
@@ -110,8 +107,8 @@ describe(filename, function() {
         },
         (err: Error) => {
           assert(
-            err && err.message.indexOf(`${httpErrorMsgPrefix}405`) === 0,
-            `Should get 405 error but got ${err.message}`,
+            err && err.message.startsWith(`${httpErrorMsgPrefix}405`),
+            `Should get 405 error but get ${err.message}`,
           )
           resolve()
         },
@@ -170,12 +167,41 @@ describe.skip(filename, function() {
 
   // const url = 'https://httpbin.org/cookies/set/foo/' + value
   const url = 'https://httpbin.org/cookies'
-  const initArgs = <RxRequestInit> {
+  const initArgs = {
     credentials: 'include',
-  }
+  } as RxRequestInit
 
   describe('Should works with cookies', () => {
-    it('send custom cookies', resolve => {
+    it('cookies pass by args.cookies', (resolve) => {
+      const args = { ...initArgs }
+      const foo = Math.random()
+      const bar = Math.random()
+      const baz = 'a<b>c&d"e\'f'
+
+      args.cookies = { foo, bar, baz }
+
+      get<HttpbinRetCookie>(url, args).subscribe(
+        (next) => {
+          try {
+            assert(next && next.cookies)
+            assert(next.cookies.foo === foo.toString())
+            assert(next.cookies.bar === bar.toString())
+            assert(next.cookies.baz === baz)
+          }
+          catch (ex) {
+            assert(false, ex)
+          }
+
+          resolve()
+        },
+        (err) => {
+          assert(false, err)
+          resolve()
+        },
+      )
+    })
+
+    it('custom cookies pass by args.headers', (resolve) => {
       const args = { ...initArgs }
       const foo = Math.random()
       const bar = Math.random()
@@ -185,7 +211,7 @@ describe.skip(filename, function() {
       }
 
       get<HttpbinRetCookie>(url, args).subscribe(
-        next => {
+        (next) => {
           assert(next && next.cookies)
           assert(next.cookies.foo === foo.toString())
           assert(next.cookies.bar === bar.toString())
@@ -193,14 +219,14 @@ describe.skip(filename, function() {
 
           resolve()
         },
-        err => {
+        (err) => {
           assert(false, err)
           resolve()
         },
       )
     })
 
-    it('send custom cookies', resolve => {
+    it('send custom cookies', (resolve) => {
       const args = { ...initArgs }
       const foo = Math.random()
       const bar = Math.random()
@@ -210,7 +236,7 @@ describe.skip(filename, function() {
       }
 
       get<HttpbinRetCookie>(url, args).subscribe(
-        next => {
+        (next) => {
           assert(next && next.cookies)
           assert(next.cookies.foo === foo.toString())
           assert(next.cookies.bar === bar.toString())
@@ -218,7 +244,7 @@ describe.skip(filename, function() {
 
           resolve()
         },
-        err => {
+        (err) => {
           assert(false, err)
           resolve()
         },
@@ -234,17 +260,17 @@ describe.skip(filename, function() {
   this.retries(3)
 
   const url = 'https://httpbin.org/get'
-  const initArgs = <RxRequestInit> {
+  const initArgs = {
     dataType: 'raw',
     method: 'OPTIONS',
-  }
+  } as RxRequestInit
 
   describe('Should options works', () => {
-    it('retrieve allowed options from response header', resolve => {
+    it('retrieve allowed options from response header', (resolve) => {
       const args = { ...initArgs }
 
       fetch<Response>(url, args).subscribe(
-        res => {
+        (res) => {
           assert(res && res.headers, 'response and response.headers should not empty')
           const options = 'GET, POST, PUT, DELETE, PATCH, OPTIONS'
           const value = res.headers.get('Access-Control-Allow-Methods')
@@ -252,7 +278,7 @@ describe.skip(filename, function() {
 
           resolve()
         },
-        err => {
+        (err) => {
           assert(false, err)
           resolve()
         },
@@ -261,3 +287,4 @@ describe.skip(filename, function() {
   })
 
 })
+

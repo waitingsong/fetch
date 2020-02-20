@@ -1,5 +1,4 @@
-/// <reference types="mocha" />
-
+/* eslint-disable max-lines-per-function */
 import * as assert from 'power-assert'
 
 import {
@@ -14,7 +13,7 @@ import {
 } from '../src/lib/response'
 
 
-const filename = '30_response.test.ts'
+const filename = '31_response.test.ts'
 
 describe(filename, () => {
 
@@ -58,7 +57,7 @@ describe(filename, () => {
 
 
   describe('handleResponseError() works', () => {
-    it('pass ok', resolve => {
+    it('pass ok', (resolve) => {
       const statusText = 'test resp'
       const status = 200
       const init = { status, statusText }
@@ -66,7 +65,9 @@ describe(filename, () => {
 
       // @ts-ignore
       handleResponseError(resp).subscribe(
-        res => {
+        (res) => {
+          // @ts-ignore
+          // assert(res.size === 0)
           assert(res.status === 200)
           assert(res.statusText === statusText)
 
@@ -79,7 +80,7 @@ describe(filename, () => {
       )
     })
 
-    it('catch error', resolve => {
+    it('catch error', (resolve) => {
       const statusText = 'test resp error'
       const status = 500
       const init = { status, statusText }
@@ -92,7 +93,7 @@ describe(filename, () => {
           resolve()
         },
         (err: Error) => {
-          assert(!!err && err.message.length)
+          assert(!! err && err.message.length)
           const msg = err.message
           assert(msg.includes(`${httpErrorMsgPrefix}${status}`))
           assert(msg.includes(`statusText: ${statusText}`))
@@ -102,7 +103,7 @@ describe(filename, () => {
       )
     })
 
-    it('catch error with invalid Response', resolve => {
+    it('catch error with invalid Response', (resolve) => {
       const status = 500
       const resp = { ok: false, status }
 
@@ -110,22 +111,21 @@ describe(filename, () => {
       handleResponseError(resp).subscribe(
         () => {
           assert(false, 'Should not go into here')
-
           resolve()
         },
         (err: Error) => {
-          assert(!!err && err.message.length)
+          assert(!! err && err.message.length)
           const msg = err.message
           const reg = /Response: TypeError.+text/
           assert(msg.includes(`${httpErrorMsgPrefix}${status}`))
+          assert(msg.includes('TypeError: resp.text is not a function'))
           assert(msg.includes('statusText: undefined'))
-
           resolve()
         },
       )
     })
 
-    it('no error with bare:true', resolve => {
+    it('no error with bare:true', (resolve) => {
       const statusText = 'test resp error'
       const status = 500
       const init = { status, statusText }
@@ -133,7 +133,7 @@ describe(filename, () => {
 
       // @ts-ignore
       handleResponseError(resp, true).subscribe(
-        res => {
+        (res) => {
           assert(res
             && res.ok === false
             && res.status === status
@@ -155,7 +155,7 @@ describe(filename, () => {
     const status = 200
     const init = { status, statusText }
 
-    it('with arrayBuffer', resolve => {
+    it('with arrayBuffer', (resolve) => {
       // @ts-ignore
       if (! ArrayBuffer || typeof ArrayBuffer.isView !== 'function') {
         return resolve()
@@ -171,7 +171,7 @@ describe(filename, () => {
 
           resolve()
         },
-        err => {
+        (err) => {
           assert(false, err)
           resolve()
         },
@@ -184,7 +184,7 @@ describe(filename, () => {
      * formData() not supported by node-fetch yet.
      * https://github.com/bitinn/node-fetch#iface-body
      */
-    it.skip('with formData (IE will fail)', resolve => {
+    it.skip('with formData (IE will fail)', (resolve) => {
       const form = new FormData()
       const p1 = Math.random().toString()
       const p2 = Math.random().toString()
@@ -194,7 +194,7 @@ describe(filename, () => {
 
       // @ts-ignore
       parseResponseType<'formData'>(resp, 'formData').subscribe(
-        ret => {
+        (ret) => {
           assert(ret && ret.get('p1') === p1)
           assert(ret && ret.get('p2') === p2)
 
@@ -207,53 +207,52 @@ describe(filename, () => {
       )
     })
 
-    it('with raw', resolve => {
+    it('with raw', (resolve) => {
       const foo = 'fooValue:' + Math.random().toString()
       const resp = new Response(foo, init)
 
       // @ts-ignore
       parseResponseType<'raw'>(resp, 'raw').subscribe(
-        res => {
+        (res) => {
           assert(res && res.status === status)
           assert(res && res.statusText === statusText)
 
           res.text()
-            .then(txt => {
+            .then((txt) => {
               assert(txt && txt === foo)
               resolve()
             })
-            .catch(err => {
+            .catch((err) => {
               assert(false, err)
               resolve()
             })
 
         },
-        err => {
+        (err) => {
           assert(false, err)
-          resolve()
         },
       )
     })
 
-    it('with text', resolve => {
-      const foo = 'fooValue:' + Math.random().toString()
+    it('with text', (resolve) => {
+      const foo = Math.random().toString()
       const resp = new Response(foo, init)
 
       // @ts-ignore
       parseResponseType<'text'>(resp, 'text').subscribe(
-        txt => {
+        (txt) => {
           assert(txt && txt === foo)
 
           resolve()
         },
-        err => {
+        (err) => {
           assert(false, err)
           resolve()
         },
       )
     })
 
-    it('with never value', resolve => {
+    it('with never value', (resolve) => {
       const foo = 'neverValue:' + Math.random().toString()
       const resp = new Response(foo, init)
 

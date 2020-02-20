@@ -1,5 +1,4 @@
-/// <reference types="mocha" />
-
+/* eslint-disable max-lines-per-function */
 import * as assert from 'power-assert'
 import * as QueryString from 'qs'
 
@@ -15,24 +14,23 @@ describe(filename, function() {
 
   describe('Should remove() works with httpbin.org', () => {
     const url = 'https://httpbin.org/delete'
-    const initArgs = <RxRequestInit> {
+    const initArgs = {
       timeout: 60 * 1000,
-    }
+    } as RxRequestInit
 
-    it('without parameter init', resolve => {
+    it('without parameter init', (done) => {
       remove<HttpbinPostResponse>(url).subscribe(
-        res => {
+        (res) => {
           assert(res && res.url === url)
-          resolve()
+          done()
         },
-        err => {
+        (err) => {
           assert(false, err)
-          resolve()
         },
       )
     })
 
-    it('send key:value object data', resolve => {
+    it('send key:value object data', (resolve) => {
       const pdata: PDATA = {
         p1: Math.random(),
         p2: Math.random().toString(),
@@ -41,7 +39,7 @@ describe(filename, function() {
       args.data = { ...pdata }
 
       remove<HttpbinPostResponse>(url, args).subscribe(
-        res => {
+        (res) => {
           try {
             assert(res && res.args, 'Should response.args not empty')
             assert(res.url === url + '?' + QueryString.stringify(pdata))
@@ -56,26 +54,25 @@ describe(filename, function() {
           }
           resolve()
         },
-        err => {
+        (err) => {
           assert(false, err)
           resolve()
         },
       )
     })
 
-    it('send nested key:value object data', resolve => {
+    it('send nested key:value object data', (resolve) => {
+      const foo = Math.random() + ''
       const pdata: PDATA = {
         p1: Math.random(),
         p2: Math.random().toString(),
-        p3: {
-          foo: Math.random() + '',
-        },
+        p3: { foo },
       }
       const args = { ...initArgs }
       args.data = { ...pdata }
 
       remove<HttpbinPostResponse>(url, args).subscribe(
-        res => {
+        (res) => {
           const sendUrl = decodeURI(url + '?' + QueryString.stringify(pdata))
 
           try {
@@ -87,8 +84,8 @@ describe(filename, function() {
             )
             assert(res.args.p2 === pdata.p2, `Should p2 get ${pdata.p2}, bug got ${res.args && res.args.p2}`)
             assert(
-              pdata.p3 && res.args['p3[foo]'] === pdata.p3.foo,
-              `Should get ${pdata!.p3!.foo}, but got "${res.args && res.args['p3[foo]'].toString()}"`,
+              pdata.p3 && res.args['p3[foo]'] === foo,
+              `Should get ${foo}, but got "${res.args && res.args['p3[foo]'].toString()}"`,
             )
           }
           catch (ex) {
@@ -96,28 +93,30 @@ describe(filename, function() {
           }
           resolve()
         },
-        err => {
+        (err) => {
           assert(false, err)
           resolve()
         },
       )
     })
 
-    it.skip('send form', resolve => {
+    it.skip('send form', (resolve) => {
       const pdata = new FormData()
       const p1 = Math.random().toString()
       const p2 = Math.random().toString()
       pdata.append('p1', p1)
       pdata.append('p2', p2)
 
-      const args: RxRequestInit = { ...initArgs, data: pdata, processData: false, contentType: false }
+      const args: RxRequestInit = {
+        ...initArgs, data: pdata, processData: false, contentType: false,
+      }
 
       remove<HttpbinPostResponse>(url, args).subscribe(
-        res => {
+        (res) => {
           assert(res && res.url === url)
 
           try {
-            const form = res.form
+            const { form } = res
             assert(form && form.p1 === p1, `Should p1 get "${p1}", but got "${form && form.p1}"`)
             assert(form && form.p2 === p2, `Should p2 get "${p2}", but got "${form && form.p2}"`)
           }
@@ -126,7 +125,7 @@ describe(filename, function() {
           }
           resolve()
         },
-        err => {
+        (err) => {
           assert(false, err)
           resolve()
         },

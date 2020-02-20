@@ -104,7 +104,7 @@ describe(filename, function() {
           assert(res && res.url === url)
 
           try {
-            const form = res.form
+            const { form } = res
             assert(form && form.p1 === p1, `Should p1 get "${p1}", but got "${form && form.p1}"`)
             assert(form && form.p2 === p2, `Should p2 get "${p2}", but got "${form && form.p2}"`)
           }

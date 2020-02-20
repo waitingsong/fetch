@@ -32,13 +32,13 @@ describe(filename, () => {
 
     it('values of result equal to initialRxRequestInit', () => {
       for (const [key, value] of Object.entries(initData)) {
-        if (! (key in initialRxRequestInit)) {
-          assert(false, `${key} not exists in initialRxRequestInit`)
-          break
+        if (key in initialRxRequestInit) {
+          const dd = Object.getOwnPropertyDescriptor(initialRxRequestInit, key)
+          assert(dd && value === dd.value, `key: "${key}": not equal`)
         }
         else {
-          const d = Object.getOwnPropertyDescriptor(initialRxRequestInit, key)
-          assert(d && value === d.value, `key: "${key}": not equal`)
+          assert(false, `${key} not exists in initialRxRequestInit`)
+          break
         }
       }
     })
@@ -96,7 +96,7 @@ describe(filename, function() {
         },
         (err: Error) => {
           assert(
-            err && err.message.indexOf(`${httpErrorMsgPrefix}404`) === 0,
+            err && err.message.startsWith(`${httpErrorMsgPrefix}404`),
             'Should got 404 error, but got: ' + err.message,
           )
           resolve()
@@ -115,7 +115,7 @@ describe(filename, function() {
         },
         (err: Error) => {
           assert(
-            err && err.message.indexOf(`${httpErrorMsgPrefix}405`) === 0,
+            err && err.message.startsWith(`${httpErrorMsgPrefix}405`),
             `Should get 405 error but get ${err.message}`,
           )
           resolve()
@@ -223,7 +223,7 @@ describe(filename, function() {
           assert(next && next.cookies)
           assert(next.cookies.foo === foo.toString())
           assert(next.cookies.bar === bar.toString())
-          assert(next.cookies.baz === baz.toString())
+          assert(next.cookies.baz === baz)
 
           resolve()
         },
