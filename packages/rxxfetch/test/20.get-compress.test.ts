@@ -17,7 +17,6 @@ describe(filename, function() {
   describe('Should get() for compressed response works with httpbin.org', () => {
     const initArgs = {
       timeout: 20 * 1000,
-      dataType: 'json',
     } as RxRequestInit
 
     it('brotli', async () => {
