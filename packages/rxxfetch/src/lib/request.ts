@@ -62,23 +62,6 @@ export function createObbRequest(
     }
 
     return defer(() => fetchModule(inputNew, requestInit))
-
-    /* istanbul ignore else */
-    // if (typeof args.data !== 'undefined') { // override the value of body
-    //   if (args.processData) {
-    //     if (['GET', 'DELETE'].includes(requestInit.method as string)) {
-    //       inputNew = buildQueryString(input, args.data)
-    //     }
-    //     else {
-    //       requestInit.body = QueryString.stringify(args.data)
-    //     }
-    //   }
-    //   else {
-    //     requestInit.body = args.data as RequestInit['body']
-    //   }
-    // }
-
-    // return defer(() => fetchModule(inputNew, requestInit))
   }
   else {
     return defer(() => fetchModule(input))
