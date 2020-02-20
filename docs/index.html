@@ -153,7 +153,35 @@
 				<a href="#post" id="post" style="color: inherit; text-decoration: none;">
 					<h3>POST</h3>
 				</a>
+				<a href="#json" id="json" style="color: inherit; text-decoration: none;">
+					<h4>JSON</h4>
+				</a>
 				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { post, RxRequestInit } <span class="hljs-keyword">from</span> <span class="hljs-string">'rxxfetch'</span>
+
+<span class="hljs-keyword">const</span> url = <span class="hljs-string">'https://httpbin.org/post'</span>
+<span class="hljs-keyword">const</span> pdata = {
+  cn: <span class="hljs-string">'测试'</span>,
+  p1: <span class="hljs-built_in">Math</span>.random(),
+  p2: <span class="hljs-built_in">Math</span>.random().toString(),
+  p3: {
+    foo: <span class="hljs-built_in">Math</span>.random() + <span class="hljs-string">''</span>,
+  },
+}
+<span class="hljs-keyword">const</span> args: RxRequestInit = {}
+args.data = { ...pdata }
+
+<span class="hljs-keyword">const</span> res = <span class="hljs-keyword">await</span> post&lt;HttpbinPostResponse&gt;(url, args).toPromise()
+assert(res &amp;&amp; res.url === url)
+
+<span class="hljs-keyword">const</span> json: <span class="hljs-keyword">typeof</span> pdata = res.json
+assert(json.cn === pdata.cn, <span class="hljs-string">`Should got "<span class="hljs-subst">${pdata.cn}</span>"`</span>)
+assert(json.p1 === pdata.p1, <span class="hljs-string">`Should got "<span class="hljs-subst">${pdata.p1}</span>"`</span>)
+assert(json.p2 === pdata.p2, <span class="hljs-string">`Should got "<span class="hljs-subst">${pdata.p2}</span>"`</span>)
+assert(json.p3.foo === pdata.p3.foo, <span class="hljs-string">`Should got "<span class="hljs-subst">${pdata.p3.foo}</span>"`</span>)</code></pre>
+				<a href="#form" id="form" style="color: inherit; text-decoration: none;">
+					<h4>FORM</h4>
+				</a>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { post, RxRequestInit, ContentTypeList } <span class="hljs-keyword">from</span> <span class="hljs-string">'rxxfetch'</span>
 
 <span class="hljs-keyword">const</span> url = <span class="hljs-string">'https://httpbin.org/post'</span>
 <span class="hljs-keyword">const</span> pdata = {
@@ -161,6 +189,8 @@
   p2: <span class="hljs-built_in">Math</span>.random().toString(),
 }
 <span class="hljs-keyword">const</span> args: RxRequestInit = {
+  <span class="hljs-comment">// default value is ContentTypeList.json</span>
+  contentType: ContentTypeList.formUrlencoded,
   data: pdata
 }
 
