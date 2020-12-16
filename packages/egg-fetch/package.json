@@ -46,16 +46,12 @@
     "node": ">=10.16.0"
   },
   "files": [
-    "config",
-    "lib",
     "agent.js",
-    "agent.d.ts",
     "app.js",
-    "app.d.ts",
-    "index.js",
-    "index.cjs.js",
-    "index.cjs.js.map",
-    "index.d.ts"
+    "app",
+    "config",
+    "dist",
+    "*.d.ts"
   ],
   "scripts": {
     "build": "npm run tsc && npm run rp",

@@ -10,7 +10,7 @@
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "outDir": "./",
+    "outDir": "dist",
     "pretty": true,
     "skipLibCheck": true,
     "strict": true,
