@@ -20,9 +20,9 @@
   "bin": {},
   "browser": "",
   "es2015": "",
-  "main": "./index.cjs.js",
-  "module": "./index.js",
-  "types": "./index.d.ts",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "bugs": {
     "url": "https://github.com/waitingsong/rxxfetch/issues"
   },
