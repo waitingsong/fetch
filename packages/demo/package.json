@@ -25,15 +25,15 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@waiting/shared-types": "3",
+    "@waiting/shared-types": "5",
     "rxjs": "^6.5.2"
   },
   "devDependencies": {
-    "@waiting/shared-core": "3",
+    "@waiting/shared-core": "5",
     "cross-env": "7"
   },
   "engines": {
-    "node": ">=10.16.0"
+    "node": ">=14.14.0"
   },
   "files": [
     "bin/*.js",

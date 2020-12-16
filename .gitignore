@@ -6,6 +6,7 @@ package.json.lerna_backup
 .coveralls.yml
 .factorypath
 .githooks
+.history
 .mvn
 .tsbuildinfo
 .tsbuildinfo.*
@@ -18,7 +19,9 @@ run/
 target/
 Thumbs.db
 
+.kmore.ts
 *.__built-tables.ts
+*.__built-dict.ts
 *.bak
 *.d.ts
 *.map
@@ -84,7 +87,9 @@ log.txt
 .tmp/
 .versions/
 www/
+bazel-out/
 dist/
+out-tsc/
 tmp/
 temp/
 hooks/

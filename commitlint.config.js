@@ -1,13 +1,13 @@
-module.exports = {
-  extends: ['@commitlint/config-conventional'],
+const config = {
+  // extends: ['@commitlint/config-conventional'],
   rules: {
     'body-leading-blank': [2, 'always'],
     'footer-leading-blank': [2, 'always'],
-    'header-max-length': [2, 'always', 72],
+    'header-max-length': [2, 'always', 100],
     'subject-case': [
       2,
       'never',
-      ['start-case', 'pascal-case', 'upper-case'],
+      ['start-case', 'pascal-case'],
     ],
     'type-enum': [
       2,
@@ -19,7 +19,6 @@ module.exports = {
         'docs',
         'feat',
         'fix',
-        'improvement',
         'perf',
         'refactor',
         'revert',
@@ -29,4 +28,6 @@ module.exports = {
     ],
   },
 }
+
+module.exports = config
 
