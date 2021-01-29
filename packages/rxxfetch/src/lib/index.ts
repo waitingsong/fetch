@@ -84,6 +84,7 @@ export function setGloalRequestInit(config: Partial<RxRequestInit>): void {
       configurable: true,
       enumerable: true,
       writable: true,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       value,
     })
   }

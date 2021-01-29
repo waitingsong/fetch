@@ -1,14 +1,18 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { createReadStream } from 'fs'
 
-import { basename, readFileAsync } from '@waiting/shared-core'
-import * as FormData from 'form-data'
-import * as assert from 'power-assert'
+import { basename, join, readFileAsync } from '@waiting/shared-core'
+import FormData from 'form-data'
 import { defer } from 'rxjs'
 import { retry, switchMap, tap } from 'rxjs/operators'
 
 import { post, RxRequestInit, ContentTypeList } from '../src/index'
 
 import { HttpbinPostResponse } from './model'
+
+// eslint-disable-next-line import/order
+import assert = require('power-assert')
 
 
 const filename = basename(__filename)
@@ -57,7 +61,7 @@ describe(filename, function() {
         p1: Math.random(),
         p2: Math.random().toString(),
         p3: {
-          foo: Math.random() + '',
+          foo: Math.random().toString(),
         },
       }
       const args = { ...initArgs }
@@ -119,7 +123,7 @@ describe(filename, function() {
     })
 
     it('send a txt file and key:value data via FormData', (resolve) => {
-      const read$ = defer(() => readFileAsync(`${__dirname}/p2.txt`))
+      const read$ = defer(() => readFileAsync(join(__dirname, 'p2.txt')))
 
       read$.pipe(
         switchMap((buf: Buffer) => {
@@ -156,7 +160,7 @@ describe(filename, function() {
     })
 
     it('send an image file via Buffer', (resolve) => {
-      const path = `${__dirname}/images/loading-1.gif`
+      const path = join(__dirname, 'images/loading-1.gif')
       const readerStream = createReadStream(path)
       const readerStream2 = createReadStream(path)
       const args: RxRequestInit = {

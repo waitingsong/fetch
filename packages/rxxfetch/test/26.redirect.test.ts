@@ -1,8 +1,5 @@
-/// <reference types="mocha" />
-
 import { basename } from '@waiting/shared-core'
 import nodefetch, { Headers } from 'node-fetch'
-import * as assert from 'power-assert'
 
 import {
   get,
@@ -11,6 +8,9 @@ import {
 } from '../src/index'
 
 import { HttpbinGetResponse } from './model'
+
+// eslint-disable-next-line import/order
+import assert = require('power-assert')
 
 
 const filename = basename(__filename)
@@ -47,7 +47,7 @@ describe(filename, function() {
     const times = 2
 
     it(`times: ${times} with keepRedirectCookies:true`, (resolve) => {
-      const url = 'https://httpbin.org/redirect/' + times
+      const url = 'https://httpbin.org/redirect/' + times.toString()
       const args = { ...initArgs }
 
       get<HttpbinGetResponse>(url, args).subscribe(
@@ -64,7 +64,7 @@ describe(filename, function() {
     })
 
     it(`times: ${times} with keepRedirectCookies:false`, (resolve) => {
-      const url = 'https://httpbin.org/redirect/' + times
+      const url = 'https://httpbin.org/redirect/' + times.toString()
       const args = { ...initArgs }
       args.keepRedirectCookies = false
 

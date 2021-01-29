@@ -1,7 +1,10 @@
 import { basename } from '@waiting/shared-core'
-import * as assert from 'power-assert'
 
 import { fetch, RxRequestInit } from '../src/index'
+
+// eslint-disable-next-line import/order
+import assert = require('power-assert')
+
 
 
 const filename = basename(__filename)

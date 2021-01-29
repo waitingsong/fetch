@@ -1,11 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { basename } from '@waiting/shared-core'
-import * as FormData from 'form-data'
-import * as assert from 'power-assert'
-import * as QueryString from 'qs'
+import FormData from 'form-data'
+import QueryString from 'qs'
 
 import { remove, RxRequestInit } from '../src/index'
 
 import { HttpbinPostResponse, PDATA } from './model'
+
+// eslint-disable-next-line import/order
+import assert = require('power-assert')
 
 
 const filename = basename(__filename)
@@ -50,7 +55,7 @@ describe(filename, function() {
     })
 
     it('send nested key:value object data', (resolve) => {
-      const foo = Math.random() + ''
+      const foo = Math.random().toString()
       const pdata: PDATA = {
         p1: Math.random(),
         p2: Math.random().toString(),

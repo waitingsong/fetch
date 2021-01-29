@@ -1,10 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { basename } from '@waiting/shared-core'
-import * as FormData from 'form-data'
-import * as assert from 'power-assert'
+import FormData from 'form-data'
 
 import { put, RxRequestInit, ContentTypeList } from '../src/index'
 
 import { HttpbinPostResponse } from './model'
+
+// eslint-disable-next-line import/order
+import assert = require('power-assert')
 
 
 const filename = basename(__filename)
@@ -53,7 +57,7 @@ describe(filename, function() {
         p1: Math.random(),
         p2: Math.random().toString(),
         p3: {
-          foo: Math.random() + '',
+          foo: Math.random().toString(),
         },
       }
       const args = { ...initArgs }

@@ -1,13 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import {
   ab2str,
   basename,
 } from '@waiting/shared-core'
-import * as assert from 'power-assert'
-import * as QueryString from 'qs'
+import QueryString from 'qs'
 
 import { get, RxRequestInit } from '../src/index'
 
 import { HttpbinGetResponse, PDATA } from './model'
+
+// eslint-disable-next-line import/order
+import assert = require('power-assert')
 
 
 const filename = basename(__filename)
@@ -190,7 +193,7 @@ describe(filename, function() {
 
     it('send nested key:value object data', (resolve) => {
       const pdata: PDATA = { ...initData }
-      const foo = Math.random() + ''
+      const foo = Math.random().toString()
       pdata.p3 = {
         foo,
       }
@@ -403,7 +406,7 @@ describe(filename, function() {
 
     it('send nested key:value object data', (resolve) => {
       const pdata: PDATA = { ...initData }
-      const foo = Math.random() + ''
+      const foo = Math.random().toString()
       pdata.p3 = {
         foo,
       }

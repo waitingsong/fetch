@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { defer, of, throwError, Observable } from 'rxjs'
 import { catchError, concatMap, timeout } from 'rxjs/operators'
 
@@ -58,6 +59,7 @@ export function createObbRequest(
       }
     }
     else {
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       throw new TypeError(`Invalid method value: "${requestInit.method}"`)
     }
 

@@ -2,11 +2,13 @@ import {
   ab2str,
   basename,
 } from '@waiting/shared-core'
-import * as assert from 'power-assert'
 
 import { get, RxRequestInit } from '../src/index'
 
 import { HttpbinGetResponse } from './model'
+
+// eslint-disable-next-line import/order
+import assert = require('power-assert')
 
 
 const filename = basename(__filename)

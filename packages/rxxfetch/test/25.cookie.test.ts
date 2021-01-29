@@ -1,8 +1,5 @@
-/// <reference types="mocha" />
-
 import { basename } from '@waiting/shared-core'
 import nodefetch, { Headers } from 'node-fetch'
-import * as assert from 'power-assert'
 
 import {
   get,
@@ -10,6 +7,9 @@ import {
 } from '../src/index'
 
 import { HttpbinRetCookie } from './model'
+
+// eslint-disable-next-line import/order
+import assert = require('power-assert')
 
 
 const filename = basename(__filename)

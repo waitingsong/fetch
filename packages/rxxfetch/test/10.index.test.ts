@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { basename } from '@waiting/shared-core'
-import * as assert from 'power-assert'
 
 import {
   buildQueryString,
@@ -12,6 +12,9 @@ import {
 import { httpErrorMsgPrefix, initialRxRequestInit } from '../src/lib/config'
 
 import { HttpbinRetCookie } from './model'
+
+// eslint-disable-next-line import/order
+import assert = require('power-assert')
 
 
 const filename = basename(__filename)

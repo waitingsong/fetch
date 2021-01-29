@@ -1,15 +1,20 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { basename } from '@waiting/shared-core'
-// tslint:disable-next-line
 import { abortableFetch, AbortController } from 'abortcontroller-polyfill/dist/cjs-ponyfill.js'
 import nodefetch, { Headers as nodeHeaders } from 'node-fetch'
-import * as assert from 'power-assert'
 
 import { Args, ArgsRequestInitCombined, RxRequestInit, ContentTypeList } from '../src/index'
 import { initialRxRequestInit } from '../src/lib/config'
 import { selectFecthModule } from '../src/lib/util'
 
 
+// eslint-disable-next-line import/order
 import rewire = require('rewire')
+// eslint-disable-next-line import/order
+import assert = require('power-assert')
+
 
 
 const filename = basename(__filename)
@@ -18,7 +23,7 @@ const mods = rewire('../src/lib/util')
 describe(filename, () => {
 
   const fnName = 'parseTimeout'
-  const fn = mods.__get__(fnName) as (p: any) => number | null
+  const fn = mods.__get__(fnName)
 
   describe(`Should ${fnName}() works`, () => {
     it('with param zero', () => {
@@ -68,7 +73,7 @@ describe(filename, () => {
 
 describe(filename, () => {
   const fnName = 'parseDataType'
-  const fn = mods.__get__(fnName) as (value: any) => NonNullable<Args['dataType']>
+  const fn = mods.__get__(fnName)
 
   describe(`Should ${fnName}() works`, () => {
     it('with blank', () => {
@@ -98,13 +103,13 @@ describe(filename, () => {
 
 describe(filename, () => {
   const fnName = 'parseHeaders'
-  const fn = mods.__get__(fnName) as (options: ArgsRequestInitCombined) => ArgsRequestInitCombined
+  const fn = mods.__get__(fnName)
   const initArgs = { ...initialRxRequestInit }
 
   describe(`Should ${fnName}() works`, () => {
     it('pass headers instance', () => {
       const args = { ...initArgs }
-      const value = 'foo=' + Math.random()
+      const value = 'foo=' + Math.random().toString()
       const headers = new nodeHeaders()
       headers.set('Cookie', value)
 
@@ -122,7 +127,7 @@ describe(filename, () => {
 
     it('pass headers key:value object', () => {
       const args = { ...initArgs }
-      const value = 'foo=' + Math.random()
+      const value = 'foo=' + Math.random().toString()
       const headers = {
         Cookie: value,
       }
@@ -141,7 +146,7 @@ describe(filename, () => {
 
     it('throw TypeError without passing HeadersClass', () => {
       const args = { ...initArgs }
-      const value = 'foo=' + Math.random()
+      const value = 'foo=' + Math.random().toString()
       const headers = new nodeHeaders()
       headers.set('Cookie', value)
 
@@ -169,13 +174,13 @@ describe(filename, () => {
 
 describe(filename, () => {
   const fnName = 'parseCookies'
-  const fn = mods.__get__(fnName) as (options: ArgsRequestInitCombined) => ArgsRequestInitCombined
+  const fn = mods.__get__(fnName)
   const initArgs = { ...initialRxRequestInit }
 
   describe(`Should ${fnName}() works`, () => {
     it('with valid data', () => {
       const args = { ...initArgs }
-      const value = 'foo=' + Math.random()
+      const value = 'foo=' + Math.random().toString()
       const headers = new nodeHeaders()
       const p1 = Math.random()
       const p2 = Math.random().toString()
@@ -196,7 +201,7 @@ describe(filename, () => {
 
     it('with partial valid data', () => {
       const args = { ...initArgs }
-      const value = 'foo=' + Math.random()
+      const value = 'foo=' + Math.random().toString()
       const headers = new nodeHeaders()
       const p1 = Math.random()
       const p2 = Math.random().toString()
@@ -222,7 +227,7 @@ describe(filename, () => {
 
     it('with enumerable Symbol key', () => {
       const args = { ...initArgs }
-      const value = 'foo=' + Math.random()
+      const value = 'foo=' + Math.random().toString()
       const headers = new nodeHeaders()
       const p1 = Math.random()
       const p2 = Math.random().toString()
@@ -260,7 +265,7 @@ describe(filename, () => {
 
 describe(filename, () => {
   const fnName = 'parseAbortController'
-  const fn = mods.__get__(fnName) as (options: ArgsRequestInitCombined) => ArgsRequestInitCombined
+  const fn = mods.__get__(fnName)
   const initArgs = { ...initialRxRequestInit }
 
   describe(`Should ${fnName}() works`, () => {
@@ -308,7 +313,7 @@ describe(filename, () => {
 
 describe(filename, () => {
   const fnName = 'parseMethod'
-  const fn = mods.__get__(fnName) as (options: ArgsRequestInitCombined) => ArgsRequestInitCombined
+  const fn = mods.__get__(fnName)
   const initArgs = {} as RxRequestInit
 
   describe(`Should ${fnName}() works without method`, () => {
@@ -429,10 +434,7 @@ describe(filename, () => {
 
 describe(filename, () => {
   const fnName = 'parseRedirect'
-  const fn = mods.__get__(fnName) as (
-    keepRedirectCookies: boolean,
-    curValue: RequestInit['redirect'] | undefined,
-  ) => RequestInit['redirect']
+  const fn = mods.__get__(fnName)
 
   describe(`Should ${fnName}() works with keepRedirectCookies:true`, () => {
     it('expect "follow" to "manual"', () => {

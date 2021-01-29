@@ -14,7 +14,7 @@ export function handleResponseError(resp: Response, bare = false): Observable<Re
   const { status, statusText } = resp
 
   return defer(() => resp.text()).pipe(
-    catchError((err: Error) => of(err.toString())),
+    catchError((err: Error) => of(JSON.stringify(err))),
     map((txt: string) => {
       const str = `${httpErrorMsgPrefix}${status}\nstatusText: ${statusText}\nResponse: ${txt}`
       throw new Error(str)
@@ -48,6 +48,7 @@ export function parseResponseType<T extends RespDataTypeName>(
       break
 
     case 'json':
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       ret = defer(() => response.json())
       break
 
@@ -94,6 +95,7 @@ export function parseRespCookie(cookie: string | null): Args['cookies'] {
   }
 
   /* istanbul ignore else  */
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (ret && Object.keys(ret).length) {
     return ret
   }

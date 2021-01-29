@@ -1,7 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+// eslint-disable-next-line @typescript-eslint/prefer-ts-expect-error
 // @ts-ignore
-// eslint-disable-next-line
-import { abortableFetch } from 'abortcontroller-polyfill/dist/cjs-ponyfill.js' // tslint:disable-line
+import { abortableFetch } from 'abortcontroller-polyfill/dist/cjs-ponyfill.js'
 import _fetch, { Headers as _Headers } from 'node-fetch'
+
 
 import { RxRequestInit } from './model'
 
@@ -33,3 +37,4 @@ if (typeof window === 'undefined') {
 
 
 export const httpErrorMsgPrefix = 'Fetch error status:'
+

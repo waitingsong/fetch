@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-// @ts-expect-error
+// eslint-disable-next-line @typescript-eslint/prefer-ts-expect-error
+// @ts-ignore
 import { AbortController as _AbortController } from 'abortcontroller-polyfill/dist/cjs-ponyfill.js'
 import NodeFormData from 'form-data'
 import QueryString from 'qs'
