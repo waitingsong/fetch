@@ -3,7 +3,7 @@ import { Application } from 'egg'
 
 import { bindFetchOnAppOrAgent } from './lib/bind'
 import { pluginName } from './lib/config'
-import { FetchConfig } from './lib/model'
+import { FetchConfig } from './lib/types'
 
 
 /* istanbul ignore next */

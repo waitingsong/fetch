@@ -5,7 +5,7 @@ import { Agent, Application } from 'egg'
 
 import { pluginName } from './config'
 import { Fetch } from './fetch'
-import { FetchConfig } from './model'
+import { FetchConfig } from './types'
 
 
 export function bindFetchOnAppOrAgent(app: Application | Agent): void {

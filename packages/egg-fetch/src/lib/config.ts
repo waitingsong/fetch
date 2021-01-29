@@ -1,4 +1,4 @@
-import { FetchConfig } from './model'
+import { FetchConfig } from './types'
 
 
 export const pluginName = 'fetch'

@@ -1,7 +1,7 @@
 import assert from 'assert'
 
 import { initialConfig } from './config'
-import { FetchConfig } from './model'
+import { FetchConfig } from './types'
 
 
 /** Generate jwtConfig with input and default value */

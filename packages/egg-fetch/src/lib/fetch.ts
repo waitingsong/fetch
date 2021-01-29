@@ -1,4 +1,6 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { assertNeverRx } from '@waiting/shared-core'
 import { Observable } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
 import {
@@ -10,10 +12,9 @@ import {
   remove as rxremove,
   ObbRetType,
 } from 'rxxfetch'
-import { assertNeverRx } from '@waiting/shared-core'
 
-import { FetchConfig } from './model'
 import { parseRespState, parseRespErr } from './handle-cus-response'
+import { FetchConfig } from './types'
 
 
 export class Fetch {
