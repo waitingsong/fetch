@@ -1,11 +1,11 @@
-import * as assert from 'assert'
+import assert from 'assert'
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Agent, Application } from 'egg'
 
 import { pluginName } from './config'
-import { FetchConfig } from './model'
 import { Fetch } from './fetch'
+import { FetchConfig } from './model'
 
 
 export function bindFetchOnAppOrAgent(app: Application | Agent): void {
@@ -19,7 +19,7 @@ export function bindFetchOnAppOrAgent(app: Application | Agent): void {
 
 function createOneClient(options: FetchConfig['client'], app: Application | Agent): Fetch {
   const opts: FetchConfig['client'] = { ...options }
-  assert(opts && Object.keys(opts).length, `[egg-${pluginName}] config empty`)
+  assert(Object.keys(opts).length, `[egg-${pluginName}] config empty`)
 
   const fetch = new Fetch(options)
   app.coreLogger.info(`[egg-${pluginName}] instance status OK`)

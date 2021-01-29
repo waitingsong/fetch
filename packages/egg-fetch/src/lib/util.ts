@@ -1,12 +1,13 @@
-import * as assert from 'assert'
+import assert from 'assert'
 
-import { FetchConfig } from './model'
 import { initialConfig } from './config'
+import { FetchConfig } from './model'
 
 
 /** Generate jwtConfig with input and default value */
 export function parseConfig(input: FetchConfig): FetchConfig {
-  assert(input && input.client && Object.keys(input.client).length > 0)
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  assert(input.client && Object.keys(input.client).length > 0)
 
   const config: FetchConfig = {
     agent: initialConfig.agent,
