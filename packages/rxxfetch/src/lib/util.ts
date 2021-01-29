@@ -1,8 +1,10 @@
-// @ts-ignore
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+// @ts-expect-error
 import { AbortController as _AbortController } from 'abortcontroller-polyfill/dist/cjs-ponyfill.js'
-import * as QueryString from 'qs'
+import NodeFormData from 'form-data'
+import QueryString from 'qs'
 import { throwError } from 'rxjs'
-import * as NodeFormData from 'form-data'
 
 import { Args, ArgsRequestInitCombined, RxRequestInit, ContentTypeList } from './model'
 
@@ -140,6 +142,7 @@ function parseAbortController(options: ArgsRequestInitCombined): ArgsRequestInit
 
   /* istanbul ignore else */
   // eslint-disable-next-line @typescript-eslint/unbound-method
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (! args.abortController || ! args.abortController.signal || typeof args.abortController.abort !== 'function') {
     args.abortController = typeof AbortController === 'function'
       ? new AbortController()
@@ -205,25 +208,22 @@ function parseCookies(options: ArgsRequestInitCombined): ArgsRequestInitCombined
 function parseMethod(options: ArgsRequestInitCombined): ArgsRequestInitCombined {
   const { args, requestInit } = options
 
-  switch (requestInit.method) {
-    case 'DELETE':
-    case 'POST':
-    case 'PUT': {
-      const headers = requestInit.headers as Headers
+  if (requestInit.method && ['DELETE', 'POST', 'PUT'].includes(requestInit.method)) {
 
-      if (args.contentType === false) {
-        break
-      }
-      else if (args.contentType) {
-        headers.set('Content-Type', args.contentType)
-      }
-      /* istanbul ignore else */
-      else if (! headers.has('Content-Type')) {
-        headers.set('Content-Type', ContentTypeList.json)
-      }
-      break
+    const headers = requestInit.headers as Headers
+
+    if (args.contentType === false) {
+      void 0
+    }
+    else if (args.contentType) {
+      headers.set('Content-Type', args.contentType)
+    }
+    /* istanbul ignore else */
+    else if (! headers.has('Content-Type')) {
+      headers.set('Content-Type', ContentTypeList.json)
     }
   }
+
   return { args, requestInit }
 }
 
@@ -327,7 +327,7 @@ export function parseRequestPostLikeData(args: Args): NonNullable<RequestInit['b
     body = data
   }
   else if (typeof NodeFormData !== 'undefined' && data instanceof NodeFormData) {
-    // @ts-ignore
+    // @ts-expect-error
     body = data
   }
   else if (typeof Blob !== 'undefined' && data instanceof Blob) {
