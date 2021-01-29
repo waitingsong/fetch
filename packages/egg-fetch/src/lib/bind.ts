@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import assert from 'assert'
 
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -5,20 +6,15 @@ import { Agent, Application } from 'egg'
 
 import { pluginName } from './config'
 import { Fetch } from './fetch'
-import { FetchConfig } from './types'
+import { FetchEggConfig } from './types'
 
 
-export function bindFetchOnAppOrAgent(app: Application | Agent): void {
-  assert(
-    typeof app[pluginName] === 'undefined',
-    `[egg-${pluginName}] Duplication of plugin name found: ${pluginName}. Check loaded plugins.`,
-  )
+export function bindOnAppOrAgent(app: Application | Agent): void {
   app.addSingleton(pluginName, createOneClient)
-
 }
 
-function createOneClient(options: FetchConfig['client'], app: Application | Agent): Fetch {
-  const opts: FetchConfig['client'] = { ...options }
+function createOneClient(options: FetchEggConfig['client'], app: Application | Agent): Fetch {
+  const opts: FetchEggConfig['client'] = { ...options }
   assert(Object.keys(opts).length, `[egg-${pluginName}] config empty`)
 
   const fetch = new Fetch(options)

@@ -1,14 +1,18 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Application } from 'egg'
 
-import { bindFetchOnAppOrAgent } from './lib/bind'
+import { bindOnAppOrAgent } from './lib/bind'
 import { pluginName } from './lib/config'
-import { FetchConfig } from './lib/types'
+import { parseConfig } from './lib/util'
 
 
 /* istanbul ignore next */
-export default (app: Application) => {
-  const config: FetchConfig = app.config[pluginName]
+export default (app: Application): void => {
+  const config = parseConfig(app.config[pluginName])
 
-  config.app && bindFetchOnAppOrAgent(app)
+  app.config[pluginName].appWork = config.appWork
+
+  if (config.appWork) {
+    bindOnAppOrAgent(app)
+  }
 }

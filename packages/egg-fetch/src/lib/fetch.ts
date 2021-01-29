@@ -14,14 +14,14 @@ import {
 } from 'rxxfetch'
 
 import { parseRespState, parseRespErr } from './handle-cus-response'
-import { FetchConfig } from './types'
+import { FetchEggConfig } from './types'
 
 
 export class Fetch {
 
-  private readonly config: FetchConfig['client']
+  private readonly config: FetchEggConfig['client']
 
-  constructor(config: FetchConfig['client']) {
+  constructor(config: FetchEggConfig['client']) {
     this.config = { ...config }
   }
 

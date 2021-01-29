@@ -1,5 +1,3 @@
 
-export * from './lib/config'
-export * from './lib/fetch'
-export * from './lib/types'
+export * from './lib/index'
 

@@ -1,5 +1,5 @@
 import { initialConfig } from '../lib/config'
-import { FetchConfig } from '../lib/types'
+import { FetchEggConfig } from '../lib/types'
 
 
 /* istanbul ignore next */
@@ -7,6 +7,6 @@ import { FetchConfig } from '../lib/types'
  * egg-fetch default config
  * @member Config#fetch
  */
-export const fetch: FetchConfig = {
+export const fetch: FetchEggConfig = {
   ...initialConfig,
 }

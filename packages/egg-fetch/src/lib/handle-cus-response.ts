@@ -3,6 +3,7 @@ import { JsonResp } from 'rxxfetch'
 
 /** 处理返回数据 err 值 */
 export function parseRespState<T>(data: JsonResp<T>): JsonResp<T> {
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (! data) {
     throw new TypeError('返回数据结构非法空')
   }

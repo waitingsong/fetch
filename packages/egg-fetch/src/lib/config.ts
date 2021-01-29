@@ -1,10 +1,19 @@
-import { FetchConfig } from './types'
+import { ClientOptions, EggPluginConfig } from './types'
 
 
 export const pluginName = 'fetch'
+export const middlewareName = 'fetch'
 
-export const initialConfig: Readonly<FetchConfig> = {
-  agent: true,
-  app: true,
-  client: { timeout: 3 * 60 * 1000 },
+export const initialClientOptions: Readonly<ClientOptions> = {
+  timeout: 3 * 60 * 1000,
 }
+
+export const initialConfig: Readonly<EggPluginConfig> = {
+  appWork: true,
+  agent: true,
+  enable: false,
+  client: {
+    ...initialClientOptions,
+  },
+}
+
