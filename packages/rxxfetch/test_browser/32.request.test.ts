@@ -1,8 +1,5 @@
-/// <reference types="mocha" />
-
-// tslint:disable-next-line
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import 'abortcontroller-polyfill/dist/polyfill-patch-fetch'
-import * as assert from 'power-assert'
 import { TimeoutError } from 'rxjs'
 
 import {
@@ -10,6 +7,9 @@ import {
   Args,
   RxRequestInit,
 } from '../src/index'
+
+// eslint-disable-next-line import/order
+import assert = require('power-assert')
 
 
 const filename = '30_request.test.ts'
@@ -22,7 +22,7 @@ describe(filename, () => {
       dataType: 'text',
     }
 
-    it('with timeout', resolve => {
+    it('with timeout', (resolve) => {
       const args = { ...initArgs }
       args.abortController = new AbortController()
       args.timeout = Math.random() * 10
@@ -32,7 +32,7 @@ describe(filename, () => {
           assert(false, 'Should throw timeoutError but NOT')
           resolve()
         },
-        err => {
+        (err) => {
           assert(err && err instanceof TimeoutError, err)
           assert(
             (<NonNullable<Args['abortController']>> args.abortController).signal.aborted,
@@ -43,18 +43,18 @@ describe(filename, () => {
       )
     })
 
-    it.skip('by calling abortController.abort()', resolve => {
+    it.skip('by calling abortController.abort()', (resolve) => {
       const args = { ...initArgs }
       const abortController = new AbortController()
       args.abortController = abortController
       args.timeout = 60000
 
       get(url, args).subscribe(
-        next => {
+        (next) => {
           assert(false, 'Should got abortError in error() but go into next()')
           resolve()
         },
-        err => {
+        (err) => {
           assert(err && err.name === 'AbortError', err)
           assert(
             (<NonNullable<Args['abortController']>> args.abortController).signal.aborted,

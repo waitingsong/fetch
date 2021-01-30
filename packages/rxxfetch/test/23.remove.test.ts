@@ -7,6 +7,7 @@ import QueryString from 'qs'
 
 import { remove, RxRequestInit } from '../src/index'
 
+import { DELAY, HOST_DELETE } from './config'
 import { HttpbinPostResponse, PDATA } from './model'
 
 // eslint-disable-next-line import/order
@@ -17,10 +18,10 @@ const filename = basename(__filename)
 
 describe(filename, function() {
   this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 1000))
+  beforeEach(resolve => setTimeout(resolve, DELAY))
 
   describe('Should remove() works with httpbin.org', () => {
-    const url = 'https://httpbin.org/delete'
+    const url = HOST_DELETE
     const initArgs = {} as RxRequestInit
 
     it('send key:value object data', (resolve) => {

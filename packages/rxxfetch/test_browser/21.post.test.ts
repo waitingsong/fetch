@@ -1,19 +1,23 @@
 /* eslint-disable max-lines-per-function */
-import * as assert from 'power-assert'
 import { retry } from 'rxjs/operators'
 
 import { post, RxRequestInit, ContentTypeList } from '../src/index'
 import { HttpbinPostResponse } from '../test/model'
+
+import { DELAY, HOST_POST } from './config'
+
+// eslint-disable-next-line import/order
+import assert = require('power-assert')
 
 
 const filename = '21_post.test.ts'
 
 describe(filename, function() {
   this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 2000))
+  beforeEach(resolve => setTimeout(resolve, DELAY))
 
   describe('Should post() works with httpbin.org', () => {
-    const url = 'https://httpbin.org/post'
+    const url = HOST_POST
     const initArgs = {
       contentType: ContentTypeList.formUrlencoded,
       timeout: 60 * 1000,
@@ -66,7 +70,7 @@ describe(filename, function() {
         p1: Math.random(),
         p2: Math.random().toString(),
         p3: {
-          foo: Math.random() + '',
+          foo: Math.random().toString(),
         },
       }
       const args = { ...initArgs }

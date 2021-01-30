@@ -1,17 +1,21 @@
-import * as assert from 'power-assert'
-
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { post, RxRequestInit, ContentTypeList } from '../src/index'
 import { HttpbinPostResponse } from '../test/model'
+
+import { DELAY, HOST_POST } from './config'
+
+// eslint-disable-next-line import/order
+import assert = require('power-assert')
 
 
 const filename = '21_post-json.test.ts'
 
 describe(filename, function() {
   this.retries(3)
-  beforeEach(done => setTimeout(done, 2000))
+  beforeEach(done => setTimeout(done, DELAY))
 
   describe('Should post() works with httpbin.org', () => {
-    const url = 'https://httpbin.org/post'
+    const url = HOST_POST
     const initArgs: RxRequestInit = {
       contentType: ContentTypeList.json,
     }
@@ -22,7 +26,7 @@ describe(filename, function() {
         p1: Math.random(),
         p2: Math.random().toString(),
         p3: {
-          foo: Math.random() + '',
+          foo: Math.random().toString(),
         },
       }
       const args = { ...initArgs }

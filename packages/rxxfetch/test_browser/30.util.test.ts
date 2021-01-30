@@ -1,7 +1,10 @@
-import * as assert from 'power-assert'
 
 import { Args, ArgsRequestInitCombined, RxRequestInit } from '../src/index'
 import { selectFecthModule } from '../src/lib/util'
+
+
+// eslint-disable-next-line import/order
+import assert = require('power-assert')
 
 
 const filename = '30_util.test.ts'

@@ -16,7 +16,6 @@ import rewire = require('rewire')
 import assert = require('power-assert')
 
 
-
 const filename = basename(__filename)
 const mods = rewire('../src/lib/util')
 

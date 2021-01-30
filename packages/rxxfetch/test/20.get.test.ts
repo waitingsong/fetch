@@ -7,6 +7,7 @@ import QueryString from 'qs'
 
 import { get, RxRequestInit } from '../src/index'
 
+import { DELAY, HOST_GET } from './config'
 import { HttpbinGetResponse, PDATA } from './model'
 
 // eslint-disable-next-line import/order
@@ -19,7 +20,7 @@ describe(filename, function() {
   this.retries(3)
 
   describe('Should get() works with httpbin.org', () => {
-    const url = 'https://httpbin.org/get'
+    const url = HOST_GET
     const initArgs = {} as RxRequestInit
 
     it('with dataType:"arrayBuffer"', (resolve) => {
@@ -143,7 +144,7 @@ describe(filename, function() {
 
 
   describe('Should get() dataType:"json" works with httpbin.org', () => {
-    const url = 'https://httpbin.org/get'
+    const url = HOST_GET
     const initData: PDATA = {
       p1: Math.random(),
       p2: Math.random().toString(),
@@ -229,10 +230,10 @@ describe(filename, function() {
 
 describe(filename, function() {
   this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 1000))
+  beforeEach(resolve => setTimeout(resolve, DELAY))
 
   describe('Should get() works with httpbin.org', () => {
-    const url = 'https://httpbin.org/get'
+    const url = HOST_GET
     const initArgs = {} as RxRequestInit
 
     it('with dataType:"arrayBuffer"', (resolve) => {
@@ -356,7 +357,7 @@ describe(filename, function() {
 
 
   describe('Should get() dataType:"json" works with httpbin.org', () => {
-    const url = 'https://httpbin.org/get'
+    const url = HOST_GET
     const initData: PDATA = {
       p1: Math.random(),
       p2: Math.random().toString(),

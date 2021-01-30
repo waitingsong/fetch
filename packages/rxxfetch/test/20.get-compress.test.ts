@@ -5,6 +5,7 @@ import {
 
 import { get, RxRequestInit } from '../src/index'
 
+import { HOST } from './config'
 import { HttpbinGetResponse } from './model'
 
 // eslint-disable-next-line import/order
@@ -22,7 +23,7 @@ describe(filename, function() {
     } as RxRequestInit
 
     it('brotli', async () => {
-      const url = 'https://httpbin.org/brotli'
+      const url = HOST + '/brotli'
       const args = { ...initArgs }
 
       const ret = await get<HttpbinGetResponse>(url, args).toPromise()
@@ -30,7 +31,7 @@ describe(filename, function() {
     })
 
     it('deflate', async () => {
-      const url = 'https://httpbin.org/deflate'
+      const url = HOST + '/deflate'
       const args = { ...initArgs }
 
       const ret = await get<HttpbinGetResponse>(url, args).toPromise()
@@ -38,7 +39,7 @@ describe(filename, function() {
     })
 
     it('gzip', async () => {
-      const url = 'https://httpbin.org/gzip'
+      const url = HOST + '/gzip'
       const args = { ...initArgs }
 
       const ret = await get<HttpbinGetResponse>(url, args).toPromise()

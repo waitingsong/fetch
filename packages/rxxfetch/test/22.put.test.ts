@@ -5,6 +5,7 @@ import FormData from 'form-data'
 
 import { put, RxRequestInit, ContentTypeList } from '../src/index'
 
+import { DELAY, HOST_PUT } from './config'
 import { HttpbinPostResponse } from './model'
 
 // eslint-disable-next-line import/order
@@ -15,10 +16,10 @@ const filename = basename(__filename)
 
 describe(filename, function() {
   this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 1000))
+  beforeEach(resolve => setTimeout(resolve, DELAY))
 
   describe('Should put() works with httpbin.org', () => {
-    const url = 'https://httpbin.org/put'
+    const url = HOST_PUT
     const initArgs = {
       contentType: ContentTypeList.formUrlencoded,
     } as RxRequestInit

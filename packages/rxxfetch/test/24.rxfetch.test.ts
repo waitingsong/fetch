@@ -2,6 +2,8 @@ import { basename } from '@waiting/shared-core'
 
 import { fetch, RxRequestInit } from '../src/index'
 
+import { HOST, HOST_GET } from './config'
+
 // eslint-disable-next-line import/order
 import assert = require('power-assert')
 
@@ -63,7 +65,7 @@ describe(filename, () => {
 
 
   describe('Should rxfetch() throw error with invalid parameter init', () => {
-    const url = 'https://httpbin.org/get'
+    const url = HOST_GET
     const initArgs = {
       dataType: 'text',
     } as RxRequestInit

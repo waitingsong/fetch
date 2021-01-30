@@ -11,6 +11,7 @@ import {
 } from '../src/index'
 import { httpErrorMsgPrefix, initialRxRequestInit } from '../src/lib/config'
 
+import { DELAY, HOST, HOST_COOKIES, HOST_GET, HOST_POST } from './config'
 import { HttpbinRetCookie } from './model'
 
 // eslint-disable-next-line import/order
@@ -89,7 +90,7 @@ describe(filename, function() {
     } as RxRequestInit
 
     it('got status 404', (resolve) => {
-      const url = 'https://httpbin.org/method-not-exists'
+      const url = HOST + '/method-not-exists'
       const args = { ...initArgs }
 
       get(url, args).subscribe(
@@ -108,7 +109,7 @@ describe(filename, function() {
     })
 
     it('got status 405', (resolve) => {
-      const url = 'https://httpbin.org/post' // url for POST
+      const url = HOST_POST // url for POST
       const args = { ...initArgs }
 
       get(url, args).subscribe(
@@ -135,33 +136,33 @@ describe(filename, () => {
 
   describe(`Should ${fnName}() works`, () => {
     it('without data', () => {
-      const url = 'https://httpbin.org/method-not-exists'
+      const url = HOST + '/method-not-exists'
       const ret = buildQueryString(url, {})
       assert(ret === url, `Should got result "${url}", but got "${ret}" `)
     })
 
     it('without data', () => {
-      const url = 'https://httpbin.org/method-not-exists?foo=3'
+      const url = HOST + '/method-not-exists?foo=3'
       const ret = buildQueryString(url, {})
       assert(ret === url, `Should got result "${url}", but got "${ret}" `)
     })
 
     it('with data', () => {
-      const url = 'https://httpbin.org/method-not-exists'
+      const url = HOST + '/method-not-exists'
       const ret = buildQueryString(url, { foo: 1 })
       const expect = url + '?foo=1'
       assert(ret === expect, `Should got result "${expect}", but got "${ret}" `)
     })
 
     it('with data', () => {
-      const url = 'https://httpbin.org/method-not-exists?bar=2'
+      const url = HOST + '/method-not-exists?bar=2'
       const ret = buildQueryString(url, { foo: 1 })
       const expect = url + '&foo=1'
       assert(ret === expect, `Should got result "${expect}", but got "${ret}" `)
     })
 
     it('with data', () => {
-      const url = 'https://httpbin.org/method-not-exists?bar=2'
+      const url = HOST + '/method-not-exists?bar=2'
       const ret = buildQueryString(url, { foo: 1, baz: [1, 2] })
       const expect = url + '&foo=1&baz%5B0%5D=1&baz%5B1%5D=2'
       assert(ret === expect, `Should got result "${expect}", but got "${ret}" `)
@@ -173,10 +174,10 @@ describe(filename, () => {
 
 describe(filename, function() {
   this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 1000))
+  beforeEach(resolve => setTimeout(resolve, DELAY))
 
-  // const url = 'https://httpbin.org/cookies/set/foo/' + value
-  const url = 'https://httpbin.org/cookies'
+  // const url = HOST + '/cookies/set/foo/' + value
+  const url = HOST_COOKIES
   const initArgs = {
     ...initialRxRequestInit,
     credentials: 'include',
@@ -299,7 +300,7 @@ describe(filename, function() {
 describe(filename, function() {
   this.retries(3)
 
-  const url = 'https://httpbin.org/get'
+  const url = HOST_GET
   const initArgs = {
     ...initialRxRequestInit,
     dataType: 'raw',

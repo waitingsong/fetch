@@ -1,19 +1,26 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable max-lines-per-function */
-import * as assert from 'power-assert'
-import * as QueryString from 'qs'
+import QueryString from 'qs'
 
 import { remove, RxRequestInit } from '../src/index'
 import { HttpbinPostResponse, PDATA } from '../test/model'
+
+import { DELAY, HOST_DELETE } from './config'
+
+// eslint-disable-next-line import/order
+import assert = require('power-assert')
 
 
 const filename = '20_remove.test.ts'
 
 describe(filename, function() {
   this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 1000))
+  beforeEach(resolve => setTimeout(resolve, DELAY))
 
   describe('Should remove() works with httpbin.org', () => {
-    const url = 'https://httpbin.org/delete'
+    const url = HOST_DELETE
     const initArgs = {
       timeout: 60 * 1000,
     } as RxRequestInit
@@ -62,7 +69,7 @@ describe(filename, function() {
     })
 
     it('send nested key:value object data', (resolve) => {
-      const foo = Math.random() + ''
+      const foo = Math.random().toString()
       const pdata: PDATA = {
         p1: Math.random(),
         p2: Math.random().toString(),

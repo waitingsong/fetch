@@ -41,7 +41,6 @@
     "cross-env": "7",
     "egg": "2",
     "egg-bin": "^4.15.0",
-    "egg-ci": "^1.18.0",
     "egg-mock": "^4.0.0"
   },
   "engines": {

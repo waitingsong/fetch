@@ -1,7 +1,10 @@
-import * as assert from 'power-assert'
-
 import { get, RxRequestInit } from '../src/index'
 import { HttpbinGetResponse } from '../test/model'
+
+import { HOST } from './config'
+
+// eslint-disable-next-line import/order
+import assert = require('power-assert')
 
 
 const filename = '20_get-compress.test.ts'
@@ -15,7 +18,7 @@ describe(filename, function() {
     } as RxRequestInit
 
     it('brotli', async () => {
-      const url = 'https://httpbin.org/brotli'
+      const url = HOST + '/brotli'
       const args = { ...initArgs }
 
       const ret = await get<HttpbinGetResponse>(url, args).toPromise()
@@ -23,7 +26,7 @@ describe(filename, function() {
     })
 
     it('deflate', async () => {
-      const url = 'https://httpbin.org/deflate'
+      const url = HOST + '/deflate'
       const args = { ...initArgs }
 
       const ret = await get<HttpbinGetResponse>(url, args).toPromise()
@@ -31,7 +34,7 @@ describe(filename, function() {
     })
 
     it('gzip', async () => {
-      const url = 'https://httpbin.org/gzip'
+      const url = HOST + '/gzip'
       const args = { ...initArgs }
 
       const ret = await get<HttpbinGetResponse>(url, args).toPromise()

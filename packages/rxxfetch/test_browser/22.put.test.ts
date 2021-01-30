@@ -1,18 +1,23 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable max-lines-per-function */
-import * as assert from 'power-assert'
-
 import { put, RxRequestInit, ContentTypeList } from '../src/index'
 import { HttpbinPostResponse } from '../test/model'
+
+import { DELAY, HOST_PUT } from './config'
+
+// eslint-disable-next-line import/order
+import assert = require('power-assert')
 
 
 const filename = '20_put.test.ts'
 
 describe(filename, function() {
   this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 1000))
+  beforeEach(resolve => setTimeout(resolve, DELAY))
 
   describe('Should put() works with httpbin.org', () => {
-    const url = 'https://httpbin.org/put'
+    const url = HOST_PUT
     const initArgs = {
       contentType: ContentTypeList.formUrlencoded,
       timeout: 60 * 1000,
@@ -64,7 +69,7 @@ describe(filename, function() {
         p1: Math.random(),
         p2: Math.random().toString(),
         p3: {
-          foo: Math.random() + '',
+          foo: Math.random().toString(),
         },
       }
       const args = { ...initArgs }

@@ -1,10 +1,14 @@
-import * as assert from 'power-assert'
-import * as QueryString from 'qs'
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import QueryString from 'qs'
 
 import { get, RxRequestInit } from '../src/index'
 import { HttpbinGetResponse, PDATA } from '../test/model'
 
+import { DELAY, HOST_GET } from './config'
 import { ab2str } from './util'
+
+// eslint-disable-next-line import/order
+import assert = require('power-assert')
 
 
 const filename = '20_get.test.ts'
@@ -13,7 +17,7 @@ describe(filename, function() {
   this.retries(3)
 
   describe('Should get() works with httpbin.org', () => {
-    const url = 'https://httpbin.org/get'
+    const url = HOST_GET
     const initArgs = {} as RxRequestInit
 
     it('with dataType:"arrayBuffer"', (resolve) => {
@@ -140,10 +144,10 @@ describe(filename, function() {
 
 describe(filename, function() {
   this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 1000))
+  beforeEach(resolve => setTimeout(resolve, DELAY))
 
   describe('Should get() dataType:"json" works with httpbin.org', () => {
-    const url = 'https://httpbin.org/get'
+    const url = HOST_GET
     const initData: PDATA = {
       p1: Math.random(),
       p2: Math.random().toString(),
@@ -152,14 +156,14 @@ describe(filename, function() {
       timeout: 20 * 1000,
       dataType: 'json',
     } as RxRequestInit
-    
-    it('without args', resolve => {
+
+    it('without args', (resolve) => {
       get<HttpbinGetResponse>(url).subscribe(
-        res => {
+        (res) => {
           assert(!! res, 'Should response not empty')
           assert(res.url === url)
         },
-        err => {
+        (err) => {
           assert(false, err)
           resolve()
         },
@@ -207,9 +211,9 @@ describe(filename, function() {
 
     it('send nested key:value object data', (resolve) => {
       const pdata: PDATA = { ...initData }
-      const foo = Math.random() + ''
+      const foo = Math.random().toString()
       pdata.p3 = {
-        foo: foo
+        foo,
       }
       const args = { ...initArgs }
       args.data = { ...pdata }

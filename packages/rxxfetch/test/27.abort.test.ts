@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { basename } from '@waiting/shared-core'
-// tslint:disable-next-line
 import { AbortController } from 'abortcontroller-polyfill/dist/cjs-ponyfill.js'
 import { TimeoutError } from 'rxjs'
 

@@ -6,6 +6,7 @@ import {
   RxRequestInit,
 } from '../src/index'
 
+import { DELAY, HOST, HOST_COOKIES } from './config'
 import { HttpbinRetCookie } from './model'
 
 // eslint-disable-next-line import/order
@@ -16,7 +17,7 @@ const filename = basename(__filename)
 
 describe(filename, function() {
   this.retries(3)
-  beforeEach(resolve => setTimeout(resolve, 2000))
+  beforeEach(resolve => setTimeout(resolve, DELAY))
 
   const initArgs = {
     credentials: 'include',
@@ -28,7 +29,7 @@ describe(filename, function() {
   describe('Should works with keepRedirectCookies:true', () => {
     it('set by get()', (resolve) => {
       const value = Math.random().toString()
-      const url = 'https://httpbin.org/cookies/set/foo/' + value
+      const url = HOST_COOKIES + '/set/foo/' + value
       const args = { ...initArgs }
 
       get<HttpbinRetCookie>(url, args).subscribe(
@@ -48,7 +49,7 @@ describe(filename, function() {
   describe('Should works with keepRedirectCookies:false', () => {
     it('retrieve cookies with bare:true and redirect:"manual"', (resolve) => {
       const value = Math.random().toString()
-      const url = 'https://httpbin.org/cookies/set/foo/' + value
+      const url = HOST_COOKIES + '/set/foo/' + value
       const args = { ...initArgs }
 
       args.dataType = 'bare'
@@ -71,7 +72,7 @@ describe(filename, function() {
 
     it('retrieve cookies with bare:true', (resolve) => {
       const value = Math.random().toString()
-      const url = 'https://httpbin.org/cookies/set/foo/' + value
+      const url = HOST_COOKIES + '/set/foo/' + value
       const args = { ...initArgs }
 
       args.dataType = 'bare'

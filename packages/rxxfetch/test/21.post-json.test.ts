@@ -3,6 +3,7 @@ import { basename } from '@waiting/shared-core'
 
 import { post, RxRequestInit, ContentTypeList } from '../src/index'
 
+import { DELAY, HOST_POST } from './config'
 import { HttpbinPostResponse } from './model'
 
 // eslint-disable-next-line import/order
@@ -13,10 +14,10 @@ const filename = basename(__filename)
 
 describe(filename, function() {
   this.retries(3)
-  beforeEach(done => setTimeout(done, 2000))
+  beforeEach(done => setTimeout(done, DELAY))
 
   describe('Should post() works with httpbin.org', () => {
-    const url = 'https://httpbin.org/post'
+    const url = HOST_POST
     const initArgs: RxRequestInit = {
       contentType: ContentTypeList.json,
     }
