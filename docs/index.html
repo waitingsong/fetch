@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>rxxfetch</title>
-	<meta name="description" content="">
+	<meta name="description" content="Documentation for rxxfetch">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
 </head>
@@ -13,7 +13,7 @@
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -60,16 +60,15 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<a href="#a-hrefhttpswaitingsonggithubiorxxfetchrxxfetcha" id="a-hrefhttpswaitingsonggithubiorxxfetchrxxfetcha" style="color: inherit; text-decoration: none;">
+				<a href="#rxxfetch" id="rxxfetch" style="color: inherit; text-decoration: none;">
 					<h1><a href="https://waitingsong.github.io/rxxfetch/">RxxFetch</a></h1>
 				</a>
 				<p>Observable HTTP Fetch() wrapped by <a href="https://github.com/reactivex/rxjs">RxJS6</a>, support browser and Node.js</p>
 				<p><a href=""><img src="https://img.shields.io/github/tag/waitingsong/rxxfetch.svg" alt="GitHub tag"></a>
 					<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
-					<img src="https://img.shields.io/badge/lang-TypeScript-blue.svg" alt="">
-					<a href="https://travis-ci.org/waitingsong/rxxfetch"><img src="https://travis-ci.org/waitingsong/rxxfetch.svg?branch=master" alt="Build Status"></a>
-					<a href="https://ci.appveyor.com/project/waitingsong/rxxfetch/branch/master"><img src="https://ci.appveyor.com/api/projects/status/gsxo6hg06av6gw02/branch/master?svg=true" alt="Build status"></a>
-					<a href="https://coveralls.io/github/waitingsong/rxxfetch?branch=master"><img src="https://coveralls.io/repos/github/waitingsong/rxxfetch/badge.svg?branch=master" alt="Coverage Status"></a>
+					<a href=""><img src="https://img.shields.io/badge/lang-TypeScript-blue.svg" alt=""></a>
+					<a href="https://github.com/waitingsong/rxxfetch/actions?query=workflow%3A%22ci%22"><img src="https://github.com/waitingsong/rxxfetch/workflows/ci/badge.svg" alt="ci"></a>
+					<a href="https://codecov.io/gh/waitingsong/rxxfetch"><img src="https://codecov.io/gh/waitingsong/rxxfetch/branch/master/graph/badge.svg?token=v1yioFcT20" alt="codecov"></a>
 					<a href="https://conventionalcommits.org"><img src="https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg" alt="Conventional Commits"></a>
 				<a href="https://lernajs.io/"><img src="https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg" alt="lerna"></a></p>
 				<a href="#features" id="features" style="color: inherit; text-decoration: none;">
@@ -111,11 +110,11 @@
 				<a href="#get-json" id="get-json" style="color: inherit; text-decoration: none;">
 					<h3>GET JSON</h3>
 				</a>
-				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { <span class="hljs-keyword">get</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'rxxfetch'</span>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { get } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;rxxfetch&#x27;</span>
 
-<span class="hljs-keyword">const</span> url = <span class="hljs-string">'https://httpbin.org/get'</span>
+<span class="hljs-keyword">const</span> url = <span class="hljs-string">&#x27;https://httpbin.org/get&#x27;</span>
 
-<span class="hljs-keyword">get</span>&lt;HttpbinGetResponse&gt;(url, args).subscribe(
+get&lt;HttpbinGetResponse&gt;(url, args).subscribe(
   <span class="hljs-function"><span class="hljs-params">json</span> =&gt;</span> {
     <span class="hljs-built_in">console</span>.log(json.url)
   },
@@ -129,7 +128,7 @@
     Accept: <span class="hljs-built_in">string</span>
     Connection: <span class="hljs-built_in">string</span>
     Host: <span class="hljs-built_in">string</span>
-    <span class="hljs-string">'User-Agent'</span>: <span class="hljs-built_in">string</span>,
+    <span class="hljs-string">&#x27;User-Agent&#x27;</span>: <span class="hljs-built_in">string</span>,
   }
   origin: <span class="hljs-built_in">string</span>  <span class="hljs-comment">// ip</span>
   url: <span class="hljs-built_in">string</span>
@@ -137,14 +136,14 @@
 				<a href="#get-html" id="get-html" style="color: inherit; text-decoration: none;">
 					<h3>GET HTML</h3>
 				</a>
-				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { <span class="hljs-keyword">get</span>, RxRequestInit } <span class="hljs-keyword">from</span> <span class="hljs-string">'rxxfetch'</span>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { get, RxRequestInit } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;rxxfetch&#x27;</span>
 
-<span class="hljs-keyword">const</span> url = <span class="hljs-string">'https://httpbin.org/get'</span>
+<span class="hljs-keyword">const</span> url = <span class="hljs-string">&#x27;https://httpbin.org/get&#x27;</span>
 <span class="hljs-keyword">const</span> args: RxRequestInit = {
-  dataType: <span class="hljs-string">'text'</span>
+  dataType: <span class="hljs-string">&#x27;text&#x27;</span>
 }
 
-<span class="hljs-keyword">get</span>&lt;<span class="hljs-built_in">string</span>&gt;(url, args).subscribe(
+get&lt;<span class="hljs-built_in">string</span>&gt;(url, args).subscribe(
   <span class="hljs-function"><span class="hljs-params">txt</span> =&gt;</span> {
     <span class="hljs-built_in">console</span>.log(txt.slice(<span class="hljs-number">0</span>, <span class="hljs-number">10</span>))
   },
@@ -156,15 +155,15 @@
 				<a href="#json" id="json" style="color: inherit; text-decoration: none;">
 					<h4>JSON</h4>
 				</a>
-				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { post, RxRequestInit } <span class="hljs-keyword">from</span> <span class="hljs-string">'rxxfetch'</span>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { post, RxRequestInit } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;rxxfetch&#x27;</span>
 
-<span class="hljs-keyword">const</span> url = <span class="hljs-string">'https://httpbin.org/post'</span>
+<span class="hljs-keyword">const</span> url = <span class="hljs-string">&#x27;https://httpbin.org/post&#x27;</span>
 <span class="hljs-keyword">const</span> pdata = {
-  cn: <span class="hljs-string">'测试'</span>,
+  cn: <span class="hljs-string">&#x27;测试&#x27;</span>,
   p1: <span class="hljs-built_in">Math</span>.random(),
   p2: <span class="hljs-built_in">Math</span>.random().toString(),
   p3: {
-    foo: <span class="hljs-built_in">Math</span>.random() + <span class="hljs-string">''</span>,
+    foo: <span class="hljs-built_in">Math</span>.random() + <span class="hljs-string">&#x27;&#x27;</span>,
   },
 }
 <span class="hljs-keyword">const</span> args: RxRequestInit = {}
@@ -174,16 +173,16 @@ args.data = { ...pdata }
 assert(res &amp;&amp; res.url === url)
 
 <span class="hljs-keyword">const</span> json: <span class="hljs-keyword">typeof</span> pdata = res.json
-assert(json.cn === pdata.cn, <span class="hljs-string">`Should got "<span class="hljs-subst">${pdata.cn}</span>"`</span>)
-assert(json.p1 === pdata.p1, <span class="hljs-string">`Should got "<span class="hljs-subst">${pdata.p1}</span>"`</span>)
-assert(json.p2 === pdata.p2, <span class="hljs-string">`Should got "<span class="hljs-subst">${pdata.p2}</span>"`</span>)
-assert(json.p3.foo === pdata.p3.foo, <span class="hljs-string">`Should got "<span class="hljs-subst">${pdata.p3.foo}</span>"`</span>)</code></pre>
+assert(json.cn === pdata.cn, <span class="hljs-string">`Should got &quot;<span class="hljs-subst">${pdata.cn}</span>&quot;`</span>)
+assert(json.p1 === pdata.p1, <span class="hljs-string">`Should got &quot;<span class="hljs-subst">${pdata.p1}</span>&quot;`</span>)
+assert(json.p2 === pdata.p2, <span class="hljs-string">`Should got &quot;<span class="hljs-subst">${pdata.p2}</span>&quot;`</span>)
+assert(json.p3.foo === pdata.p3.foo, <span class="hljs-string">`Should got &quot;<span class="hljs-subst">${pdata.p3.foo}</span>&quot;`</span>)</code></pre>
 				<a href="#form" id="form" style="color: inherit; text-decoration: none;">
 					<h4>FORM</h4>
 				</a>
-				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { post, RxRequestInit, ContentTypeList } <span class="hljs-keyword">from</span> <span class="hljs-string">'rxxfetch'</span>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { post, RxRequestInit, ContentTypeList } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;rxxfetch&#x27;</span>
 
-<span class="hljs-keyword">const</span> url = <span class="hljs-string">'https://httpbin.org/post'</span>
+<span class="hljs-keyword">const</span> url = <span class="hljs-string">&#x27;https://httpbin.org/post&#x27;</span>
 <span class="hljs-keyword">const</span> pdata = {
   p1: <span class="hljs-built_in">Math</span>.random(),
   p2: <span class="hljs-built_in">Math</span>.random().toString(),
@@ -197,8 +196,8 @@ assert(json.p3.foo === pdata.p3.foo, <span class="hljs-string">`Should got "<spa
 post&lt;HttpbinPostResponse&gt;(url, args).subscribe(
   <span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> {
     <span class="hljs-keyword">const</span> form = res.form
-    assert(form &amp;&amp; form.p1 === pdata.p1.toString(), <span class="hljs-string">`Should got "<span class="hljs-subst">${pdata.p1}</span>"`</span>)
-    assert(form &amp;&amp; form.p2 === pdata.p2, <span class="hljs-string">`Should got "<span class="hljs-subst">${pdata.p2}</span>"`</span>)
+    assert(form &amp;&amp; form.p1 === pdata.p1.toString(), <span class="hljs-string">`Should got &quot;<span class="hljs-subst">${pdata.p1}</span>&quot;`</span>)
+    assert(form &amp;&amp; form.p2 === pdata.p2, <span class="hljs-string">`Should got &quot;<span class="hljs-subst">${pdata.p2}</span>&quot;`</span>)
   },
 )
 
@@ -209,7 +208,7 @@ post&lt;HttpbinPostResponse&gt;(url, args).subscribe(
   form: <span class="hljs-built_in">any</span>
   json: <span class="hljs-built_in">any</span>
 }</code></pre>
-				<a href="#codeputcode-coderemovecode-goto-a-hrefhttpsgithubcomwaitingsongrxxfetchtreemastertest_browsertesta" id="codeputcode-coderemovecode-goto-a-hrefhttpsgithubcomwaitingsongrxxfetchtreemastertest_browsertesta" style="color: inherit; text-decoration: none;">
+				<a href="#put-remove-goto-test" id="put-remove-goto-test" style="color: inherit; text-decoration: none;">
 					<h3><code>PUT</code> <code>REMOVE</code> goto <a href="https://github.com/waitingsong/rxxfetch/tree/master/test_browser">TEST</a></h3>
 				</a>
 				<a href="#on-nodejs" id="on-nodejs" style="color: inherit; text-decoration: none;">
@@ -281,13 +280,13 @@ post&lt;HttpbinPostResponse&gt;(url, args).subscribe(
 					<li class="globals  ">
 						<a href="globals.html"><em>Globals</em></a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_egg_fetch_src_lib_model_.html">&quot;egg-<wbr>fetch/src/lib/model&quot;</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/_egg_fetch_src_lib_index_.html">&quot;egg-<wbr>fetch/src/lib/index&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-module">
 						<a href="modules/_rxxfetch_src_lib_index_.html">&quot;rxxfetch/src/lib/index&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-module">
 						<a href="modules/_rxxfetch_src_lib_model_.html">&quot;rxxfetch/src/lib/model&quot;</a>
 					</li>
 				</ul>
@@ -304,57 +303,16 @@ post&lt;HttpbinPostResponse&gt;(url, args).subscribe(
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
-				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
 				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
-				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
-				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
 				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
-				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
 			</ul>
 		</div>
 	</div>
@@ -364,6 +322,5 @@ post&lt;HttpbinPostResponse&gt;(url, args).subscribe(
 </div>
 <div class="overlay"></div>
 <script src="assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>
