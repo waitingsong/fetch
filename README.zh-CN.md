@@ -4,13 +4,11 @@ HTTP Fetch() 响应式接口，基于 [RxJS6](https://github.com/reactivex/rxjs)
 
 [![GitHub tag](https://img.shields.io/github/tag/waitingsong/rxxfetch.svg)]()
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-![](https://img.shields.io/badge/lang-TypeScript-blue.svg)
-[![Build Status](https://travis-ci.org/waitingsong/rxxfetch.svg?branch=master)](https://travis-ci.org/waitingsong/rxxfetch)
-[![Build status](https://ci.appveyor.com/api/projects/status/gsxo6hg06av6gw02/branch/master?svg=true)](https://ci.appveyor.com/project/waitingsong/rxxfetch/branch/master)
-[![Coverage Status](https://coveralls.io/repos/github/waitingsong/rxxfetch/badge.svg?branch=master)](https://coveralls.io/github/waitingsong/rxxfetch?branch=master)
+[![](https://img.shields.io/badge/lang-TypeScript-blue.svg)]()
+[![ci](https://github.com/waitingsong/rxxfetch/workflows/ci/badge.svg)](https://github.com/waitingsong/rxxfetch/actions?query=workflow%3A%22ci%22)
+[![codecov](https://codecov.io/gh/waitingsong/rxxfetch/branch/master/graph/badge.svg?token=v1yioFcT20)](https://codecov.io/gh/waitingsong/rxxfetch)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
-
 
 ## 特点
 
