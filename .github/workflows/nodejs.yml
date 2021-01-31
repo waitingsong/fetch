@@ -15,10 +15,11 @@ on:
 jobs:
   build:
     runs-on: ${{ matrix.os }}
+    container: node:14-buster
 
     strategy:
       matrix:
-        node: [12, 14, 15]
+        node: [12, 14]
         os: [ubuntu-latest]
 
     steps:
@@ -37,6 +38,17 @@ jobs:
             node_modules
             */*/node_modules
           key: ${{ runner.OS }}-build-${{ env.cache-name }}-${{ github.ref }}-${{ hashFiles('**/lockfiles') }}
+      - name: Verify
+        run: |
+          uname -a
+          export DEBIAN_FRONTEND=noninteractive
+          apt-get -qq -y update > /dev/null
+          apt-get -qq -y install dnsutils jq net-tools > /dev/null
+          netstat -tunpl
+          dig httpbin
+          curl http://httpbin/get
+        env:
+          CI: true
 
       - name: npm build
         run: |
@@ -54,4 +66,11 @@ jobs:
           CI: true
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
+
+
+    services:
+      httpbin:
+        image: kennethreitz/httpbin
+        ports:
+          - 80:80 # no 443
 
