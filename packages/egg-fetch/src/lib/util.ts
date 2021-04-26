@@ -18,11 +18,11 @@ export function parseConfig(input: FetchEggConfig): FetchEggConfig {
 
   config.appWork = typeof input.appWork === 'boolean'
     ? input.appWork
-    : initialEggConfig ? !! initialEggConfig.appWork : true
+    : !! initialEggConfig.appWork
 
   config.agent = typeof input.agent === 'boolean'
     ? input.agent
-    : initialEggConfig ? !! initialEggConfig.agent : false
+    : !! initialEggConfig.agent
 
   config.enable = typeof input.enable === 'boolean'
     ? input.enable
