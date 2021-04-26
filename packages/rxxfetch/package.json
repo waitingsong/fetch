@@ -35,7 +35,7 @@
   "dependencies": {
     "@types/node-fetch": "^2.1.1",
     "@types/qs": "^6.5.1",
-    "@waiting/shared-types": "5",
+    "@waiting/shared-types": "8",
     "abortcontroller-polyfill": "^1.3.0",
     "form-data": "^3.0.0",
     "node-fetch": "^2.6.0",
@@ -43,15 +43,22 @@
     "rxjs": "6"
   },
   "devDependencies": {
-    "@waiting/shared-core": "5",
+    "@waiting/shared-core": "8",
     "cross-env": "7"
   },
   "engines": {
     "node": ">=12.13.0"
   },
   "files": [
+    "tsconfig.json",
+    "rollup.config.js",
+    "src/**/*.ts",
+    "bin/*.js",
     "dist"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "npm run tsc && npm run rp",
     "clean": "rm -rf dist/* -rf && npm run clean:lock && npm run clean:cache",
