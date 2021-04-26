@@ -8,7 +8,7 @@ export const initialClientOptions: Readonly<ClientOptions> = {
   timeout: 3 * 60 * 1000,
 }
 
-export const initialConfig: Readonly<EggPluginConfig> = {
+export const initialEggConfig: Readonly<EggPluginConfig> = {
   appWork: true,
   agent: true,
   enable: false,

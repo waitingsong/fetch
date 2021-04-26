@@ -1,4 +1,4 @@
-import { initialConfig } from '../lib/config'
+import { initialEggConfig } from '../lib/config'
 import { FetchEggConfig } from '../lib/types'
 
 
@@ -8,5 +8,5 @@ import { FetchEggConfig } from '../lib/types'
  * @member Config#fetch
  */
 export const fetch: FetchEggConfig = {
-  ...initialConfig,
+  ...initialEggConfig,
 }

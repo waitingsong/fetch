@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { initialClientOptions, initialConfig } from './config'
+import { initialClientOptions, initialEggConfig } from './config'
 import { ClientOptions, EggPluginConfig } from './types'
 
 
@@ -12,27 +12,27 @@ export function parseConfig(input: any): EggPluginConfig {
 
     appWork: typeof input.appWork === 'boolean'
       ? input.appWork
-      : initialConfig.appWork,
+      : initialEggConfig.appWork,
 
     agent: typeof input.agent === 'boolean'
       ? input.agent
-      : initialConfig.agent,
+      : initialEggConfig.agent,
 
     enable: typeof input.enable === 'boolean'
       ? input.enable
-      : initialConfig.enable,
+      : initialEggConfig.enable,
 
     ignore: typeof input.ignore === 'undefined'
-      ? initialConfig.ignore
+      ? initialEggConfig.ignore
       : input.ignore,
 
     match: typeof input.match === 'undefined'
-      ? initialConfig.match
+      ? initialEggConfig.match
       : input.match,
 
     appMiddlewareIndex: typeof input.appMiddlewareIndex === 'number'
       ? input.appMiddlewareIndex
-      : initialConfig.appMiddlewareIndex,
+      : initialEggConfig.appMiddlewareIndex,
   }
 
   return config

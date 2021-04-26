@@ -5,7 +5,7 @@ import { basename } from '@waiting/shared-core'
 import * as mm from 'egg-mock'
 import * as request from 'supertest'
 
-import { initialConfig, pluginName, FetchEggConfig as PluginConfig } from '../../src/index'
+import { initialEggConfig, pluginName, FetchEggConfig as PluginConfig } from '../../src/index'
 import { fetch as testConfig } from '../fixtures/test-1/config/config.default'
 
 
@@ -39,14 +39,14 @@ describe(filename, () => {
 
     const config: PluginConfig = app.config[pluginName]
     if (typeof testConfig.appWork === 'undefined') {
-      assert(config.appWork === initialConfig.appWork)
+      assert(config.appWork === initialEggConfig.appWork)
     }
     else {
       assert(config.appWork === testConfig.appWork)
     }
 
     if (typeof testConfig.agent === 'undefined') {
-      assert(config.agent === initialConfig.agent)
+      assert(config.agent === initialEggConfig.agent)
     }
     else {
       assert(config.agent === testConfig.agent)
