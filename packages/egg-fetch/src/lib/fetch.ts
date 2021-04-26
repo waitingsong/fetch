@@ -167,7 +167,7 @@ function fetchJsonResp<TDat>(
   }
 
   const ret$ = req$.pipe(
-    map(parseRespState),
+    map((value: JsonResp<TDat>) => parseRespState(value)),
     tap(res => parseRespErr(res)),
   )
 

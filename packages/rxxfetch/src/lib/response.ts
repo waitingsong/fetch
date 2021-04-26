@@ -91,7 +91,10 @@ export function parseRespCookie(cookie: string | null): Args['cookies'] {
       continue
     }
     const [key, value] = row.split('=')
-    ret[key] = value
+    /* istanbul ignore else  */
+    if (key && value) {
+      ret[key] = value
+    }
   }
 
   /* istanbul ignore else  */
@@ -100,3 +103,4 @@ export function parseRespCookie(cookie: string | null): Args['cookies'] {
     return ret
   }
 }
+
