@@ -1,39 +1,44 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { initialClientOptions, initialEggConfig } from './config'
-import { ClientOptions, EggPluginConfig } from './types'
+import assert from 'assert'
+
+import {
+  initialClientOptions,
+  initialEggConfig,
+} from './config'
+import {
+  ClientOptions,
+  FetchEggConfig,
+} from './types'
 
 
-export function parseConfig(input: any): EggPluginConfig {
+/** Generate Config with input and default value */
+export function parseConfig(input: FetchEggConfig): FetchEggConfig {
   const config = {
     client: parseOptions(input.client),
+  } as FetchEggConfig
 
-    appWork: typeof input.appWork === 'boolean'
-      ? input.appWork
-      : initialEggConfig.appWork,
+  config.appWork = typeof input.appWork === 'boolean'
+    ? input.appWork
+    : initialEggConfig ? !! initialEggConfig.appWork : true
 
-    agent: typeof input.agent === 'boolean'
-      ? input.agent
-      : initialEggConfig.agent,
+  config.agent = typeof input.agent === 'boolean'
+    ? input.agent
+    : initialEggConfig ? !! initialEggConfig.agent : false
 
-    enable: typeof input.enable === 'boolean'
-      ? input.enable
-      : initialEggConfig.enable,
+  config.enable = typeof input.enable === 'boolean'
+    ? input.enable
+    : initialEggConfig.enable
 
-    ignore: typeof input.ignore === 'undefined'
-      ? initialEggConfig.ignore
-      : input.ignore,
+  config.ignore = typeof input.ignore === 'undefined'
+    ? initialEggConfig.ignore
+    : input.ignore
 
-    match: typeof input.match === 'undefined'
-      ? initialEggConfig.match
-      : input.match,
+  config.match = typeof input.match === 'undefined'
+    ? initialEggConfig.match
+    : input.match
 
-    appMiddlewareIndex: typeof input.appMiddlewareIndex === 'number'
-      ? input.appMiddlewareIndex
-      : initialEggConfig.appMiddlewareIndex,
-  }
+  config.appMiddlewareIndex = typeof input.appMiddlewareIndex === 'number'
+    ? input.appMiddlewareIndex
+    : initialEggConfig.appMiddlewareIndex
 
   return config
 }
@@ -43,8 +48,9 @@ export function parseOptions(client?: ClientOptions): ClientOptions {
   const opts = {
     ...initialClientOptions,
     ...client,
-  } as ClientOptions
+  }
 
+  assert(opts)
   return opts
 }
 

@@ -8,14 +8,19 @@ import { Agent, Application } from 'egg'
 import { pluginName } from './config'
 import { Fetch } from './fetch'
 import { ClientOptions } from './types'
+import { parseOptions } from './util'
 
 
 export function bindOnAppOrAgent(app: Application | Agent): void {
   app.addSingleton(pluginName, createOneClient)
 }
 
-function createOneClient(options: ClientOptions, app: Application | Agent): Fetch {
-  const opts: ClientOptions = { ...options }
+function createOneClient(
+  options: ClientOptions,
+  app: Application | Agent,
+): Fetch {
+
+  const opts: ClientOptions = parseOptions(options)
   assert(Object.keys(opts).length, `[egg-${pluginName}] config empty`)
 
   const client = new Fetch(options)
@@ -33,3 +38,4 @@ declare module 'egg' {
     fetch: Fetch
   }
 }
+

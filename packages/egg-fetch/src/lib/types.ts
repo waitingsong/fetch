@@ -15,10 +15,10 @@ export {
 
 
 export type ClientOptions = RxRequestInit
-export type FetchEggConfig = Pick<EggPluginConfig, 'appWork' | 'agent' | 'client'>
+// export type FetchEggConfig = Pick<FetchEggConfig, 'appWork' | 'agent' | 'client'>
 
 
-export interface EggPluginConfig {
+export interface FetchEggConfig {
   /**
  * The position of config.appMiddleware[] to add.
  * Default: -1 (last)
