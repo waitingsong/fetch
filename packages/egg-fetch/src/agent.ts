@@ -1,3 +1,4 @@
+/* eslint-disable node/no-unpublished-import */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Agent } from 'egg'
 

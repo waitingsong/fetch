@@ -31,8 +31,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@waiting/shared-core": "5",
-    "@waiting/shared-types": "5",
+    "@waiting/shared-core": "8",
+    "@waiting/shared-types": "8",
     "rxxfetch": "^3.0.0"
   },
   "devDependencies": {
@@ -47,15 +47,19 @@
     "node": ">=12.13.0"
   },
   "files": [
+    "tsconfig.json",
+    "rollup.config.js",
+    "src/**/*.ts",
+    "bin/*.js",
+    "dist",
     "agent.js",
     "app.js",
     "app",
     "config",
-    "dist",
     "*.d.ts"
   ],
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "access": "public"
   },
   "scripts": {
     "build": "npm run tsc && npm run rp",
