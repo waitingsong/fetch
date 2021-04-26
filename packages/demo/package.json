@@ -14,7 +14,7 @@
   "es2015": "",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "types": "./src/index.ts",
   "bugs": {
     "url": "https://github.com/waitingsong/npm-mono-base/issues"
   },
@@ -25,19 +25,25 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@waiting/shared-types": "5"
+    "@waiting/shared-types": "8"
   },
   "devDependencies": {
-    "@waiting/shared-core": "5",
+    "@waiting/shared-core": "8",
     "cross-env": "7"
   },
   "engines": {
     "node": ">=14.14.0"
   },
   "files": [
+    "tsconfig.json",
+    "rollup.config.js",
+    "src/**/*.ts",
     "bin/*.js",
     "dist"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "npm run tsc && npm run rp",
     "clean": "rm -rf dist/* -rf && npm run clean:lock && npm run clean:cache",

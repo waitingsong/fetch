@@ -41,6 +41,7 @@ Observable HTTP Fetch() wrapped by [RxJS6](https://github.com/reactivex/rxjs), s
 
 ```bash
 npm install rxxfetch
+lerna list
 ```
 
 ## Usage
@@ -181,6 +182,57 @@ export interface HttpbinPostResponse extends HttpbinGetResponse {
 | [`rxxfetch`]  | [![rxxfetch-svg]][rxxfetch-ch] | [![rxxfetch-d-svg]][rxxfetch-d-link] | [![rxxfetch-dd-svg]][rxxfetch-dd-link] |
 | [`egg-fetch`] | [![egg-svg]][egg-ch]           | [![egg-d-svg]][egg-d-link]           | [![egg-dd-svg]][egg-dd-link]           |
 
+## Initialize and install dependencies
+
+run it at first time and any time
+```sh
+npm run repo:init
+```
+
+
+## Compile
+
+Run under root folder
+```sh
+npm run build
+# specify scope
+npm run build @scope/demo-docs
+# specify scopes
+npm run build @scope/demo-docs @scope/demo-serivce
+```
+
+
+## Update package
+
+```sh
+npm run bootstrap
+```
+
+## Add package
+
+```sh
+npm run add:pkg new_module
+```
+
+## Test
+
+- Use `npm run lint` to check code style.
+- Use `npm run test` to run unit test.
+
+## Clan or Purge
+
+```sh
+# clean build dist, cache and build
+npm run reset
+# clean and remove all node_modules
+npm run purge && npm run bootstrap && npm run build
+```
+
+## Note
+
+- Run `npm run clean` before `npm run build`, if any file under typescript outDir folder was deleted manually.
+- Default publish registry is `NPM`, configurated in file `lerna.json`
+- Any commands above (such as `npm run build`) running in `Git-Bash` under Windows OS
 
 ## License
 
@@ -191,6 +243,7 @@ export interface HttpbinPostResponse extends HttpbinGetResponse {
 - [English](README.md)
 - [中文](README.zh-CN.md)
 
+<br>
 
 [`rxxfetch`]: https://github.com/waitingsong/rxxfetch/tree/master/packages/rxxfetch
 [rxxfetch-svg]: https://img.shields.io/npm/v/rxxfetch.svg?maxAge=86400
