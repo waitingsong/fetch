@@ -9,6 +9,7 @@ export {
   FetchEggConfig,
 } from './types'
 
+export { Fetch } from './fetch'
 
 declare module 'egg' {
   interface Application {
