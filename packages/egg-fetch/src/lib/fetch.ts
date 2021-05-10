@@ -1,7 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { assertNeverRx } from '@waiting/shared-core'
-import { Observable } from 'rxjs'
+import { Observable, NEVER } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
 import {
   JsonResp,
@@ -163,7 +162,7 @@ function fetchJsonResp<TDat>(
       req$ = rxremove(url, init)
       break
     default:
-      return assertNeverRx(type)
+      return NEVER
   }
 
   const ret$ = req$.pipe(
