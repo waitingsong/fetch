@@ -27,7 +27,7 @@ describe(filename, function() {
       const args = { ...initArgs }
 
       const ret = await get<HttpbinGetResponse>(url, args).toPromise()
-      assert(ret.brotli === true)
+      assert(ret && ret.brotli === true)
     })
 
     it('deflate', async () => {
@@ -35,7 +35,7 @@ describe(filename, function() {
       const args = { ...initArgs }
 
       const ret = await get<HttpbinGetResponse>(url, args).toPromise()
-      assert(ret.deflated === true)
+      assert(ret && ret.deflated === true)
     })
 
     it('gzip', async () => {
@@ -43,7 +43,7 @@ describe(filename, function() {
       const args = { ...initArgs }
 
       const ret = await get<HttpbinGetResponse>(url, args).toPromise()
-      assert(ret.gzipped === true)
+      assert(ret && ret.gzipped === true)
     })
   })
 

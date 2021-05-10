@@ -37,11 +37,13 @@ describe(filename, function() {
       const res = await post<HttpbinPostResponse>(url, args).toPromise()
       assert(res && res.url === url)
 
-      const json: typeof pdata = res.json
-      assert(json.cn === pdata.cn, `Should got "${pdata.cn}"`)
-      assert(json.p1 === pdata.p1, `Should got "${pdata.p1}"`)
-      assert(json.p2 === pdata.p2, `Should got "${pdata.p2}"`)
-      assert(json.p3.foo === pdata.p3.foo, `Should got "${pdata.p3.foo}"`)
+      if (res) {
+        const json: typeof pdata = res.json
+        assert(json.cn === pdata.cn, `Should got "${pdata.cn}"`)
+        assert(json.p1 === pdata.p1, `Should got "${pdata.p1}"`)
+        assert(json.p2 === pdata.p2, `Should got "${pdata.p2}"`)
+        assert(json.p3.foo === pdata.p3.foo, `Should got "${pdata.p3.foo}"`)
+      }
     })
   })
 
