@@ -64,7 +64,7 @@
   "scripts": {
     "build": "npm run tsc && npm run rp",
     "build:fixtures": "tsc -p test/fixtures/tsconfig.json",
-    "clean": "rm -rf dist/* && npm run clean:lock && npm run clean:cache",
+    "clean": "npm run clean:lock & npm run clean:cache & rm -rf dist/* -rf",
     "clean:cache": "rm .eslintcache .vscode/.tsbuildinfo .vscode/.tsbuildinfo.* -f",
     "clean:lock": "rm package-lock.json -f",
     "cov": "npm run build:fixtures && cross-env TS_NODE_PROJECT=test/tsconfig.json egg-bin cov test/**/*.test.ts",
