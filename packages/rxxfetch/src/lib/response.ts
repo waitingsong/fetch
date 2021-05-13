@@ -2,11 +2,17 @@ import { defer, of, Observable } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 
 import { httpErrorMsgPrefix } from './config'
-import { Args, ObbRetType, RespDataType, RespDataTypeName } from './model'
+import {
+  Args,
+  FetchResult,
+  ObbRetType,
+  RespDataType,
+  RespDataTypeName,
+} from './model'
 import { assertNeverRx } from './shared'
 
 
-export function handleResponseError(resp: Response, bare = false): Observable<Response> {
+export function handleResponseError(resp: Response, bare = false): FetchResult<Response> {
   /* istanbul ignore else */
   if (resp.ok || bare) {
     return of(resp)
@@ -26,7 +32,7 @@ export function handleResponseError(resp: Response, bare = false): Observable<Re
 export function parseResponseType<T extends RespDataTypeName>(
   response: Response,
   dataType: T,
-): Observable<RespDataType[T]> {
+): FetchResult<RespDataType[T]> {
 
   let ret: Observable<ObbRetType>
 
@@ -64,7 +70,7 @@ export function parseResponseType<T extends RespDataTypeName>(
       return assertNeverRx(dataType as never)
   }
 
-  return ret as Observable<RespDataType[T]>
+  return ret as FetchResult<RespDataType[T]>
 }
 
 

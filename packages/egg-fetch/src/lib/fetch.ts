@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Observable, NEVER } from 'rxjs'
+import { NEVER } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
 import {
   JsonResp,
@@ -10,6 +10,7 @@ import {
   put as rxput,
   remove as rxremove,
   ObbRetType,
+  FetchResult,
 } from 'rxxfetch'
 
 import { parseRespState, parseRespErr } from './handle-cus-response'
@@ -31,7 +32,7 @@ export class Fetch {
   public get<T extends ObbRetType = any>(
     url: string,
     init?: RxRequestInit,
-  ): Observable<T> {
+  ): FetchResult<T> {
 
     const args = init ? { ...this.config, ...init } : { ...this.config }
     return rxget<T>(url, args)
@@ -45,7 +46,7 @@ export class Fetch {
   public post<T extends ObbRetType = any>(
     url: string,
     init?: RxRequestInit,
-  ): Observable<T> {
+  ): FetchResult<T> {
 
     const args = init ? { ...this.config, ...init } : { ...this.config }
     return rxpost<T>(url, args)
@@ -59,7 +60,7 @@ export class Fetch {
   public put<T extends ObbRetType = any>(
     url: string,
     init?: RxRequestInit,
-  ): Observable<T> {
+  ): FetchResult<T> {
 
     const args = init ? { ...this.config, ...init } : { ...this.config }
     return rxput<T>(url, args)
@@ -73,7 +74,7 @@ export class Fetch {
   public remove<T extends ObbRetType = any>(
     url: string,
     init?: RxRequestInit,
-  ): Observable<T> {
+  ): FetchResult<T> {
 
     const args = init ? { ...this.config, ...init } : { ...this.config }
     return rxremove<T>(url, args)
@@ -84,12 +85,12 @@ export class Fetch {
 
   /**
    * Fetch GET 返回数据类型固定为 json
-   * @returns Observable<JsonResp<T>> 泛型T为 Resp.dat 的类型，默认 any
+   * @returns Observable<JsonResp<T>> 泛型T为 Resp.dat 的类型，默认 unknown
    */
-  public xget<TDat = any>(
+  public xget<TDat = unknown>(
     url: string,
     init?: RxRequestInit,
-  ): Observable<JsonResp<TDat>> {
+  ): FetchResult<JsonResp<TDat>> {
 
     const args = init ? { ...this.config, ...init } : { ...this.config }
     return fetchJsonResp<TDat>(url, args, 'get')
@@ -100,10 +101,10 @@ export class Fetch {
    * Fetch POST 返回数据类型固定为 json
    * @returns Observable<JsonResp<T>> 泛型T为 Resp.dat 的类型，默认 any
    */
-  public xpost<TDat = any>(
+  public xpost<TDat = unknown>(
     url: string,
     init?: RxRequestInit,
-  ): Observable<JsonResp<TDat>> {
+  ): FetchResult<JsonResp<TDat>> {
 
     const args = init ? { ...this.config, ...init } : { ...this.config }
     return fetchJsonResp<TDat>(url, args, 'post')
@@ -114,10 +115,10 @@ export class Fetch {
    * Fetch PUT 返回数据类型固定为 json
    * @returns Observable<JsonResp<T>> 泛型T为 Resp.dat 的类型，默认 any
    */
-  public xput<TDat = any>(
+  public xput<TDat = unknown>(
     url: string,
     init?: RxRequestInit,
-  ): Observable<JsonResp<TDat>> {
+  ): FetchResult<JsonResp<TDat>> {
 
     const args = init ? { ...this.config, ...init } : { ...this.config }
     return fetchJsonResp<TDat>(url, args, 'put')
@@ -128,10 +129,10 @@ export class Fetch {
    * Fetch REMOVE 返回数据类型固定为 json
    * @returns Observable<JsonResp<T>> 泛型T为 Resp.dat 的类型，默认 any
    */
-  public xremove<TDat = any>(
+  public xremove<TDat = unknown>(
     url: string,
     init?: RxRequestInit,
-  ): Observable<JsonResp<TDat>> {
+  ): FetchResult<JsonResp<TDat>> {
 
     const args = init ? { ...this.config, ...init } : { ...this.config }
     return fetchJsonResp<TDat>(url, args, 'remove')
@@ -144,9 +145,9 @@ function fetchJsonResp<TDat>(
   url: string,
   init: RxRequestInit,
   type: 'get' | 'post' | 'put' | 'remove',
-): Observable<JsonResp<TDat>> {
+): FetchResult<JsonResp<TDat>> {
 
-  let req$: Observable<JsonResp<TDat>>
+  let req$: FetchResult<JsonResp<TDat>>
 
   switch (type) {
     case 'get':
@@ -166,10 +167,11 @@ function fetchJsonResp<TDat>(
   }
 
   const ret$ = req$.pipe(
+    // @ts-expect-error
     map((value: JsonResp<TDat>) => parseRespState(value)),
     tap(res => parseRespErr(res)),
   )
 
-  return ret$
+  return ret$ as FetchResult<JsonResp<TDat>>
 }
 

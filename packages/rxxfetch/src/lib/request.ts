@@ -2,7 +2,7 @@
 import { defer, of, throwError, Observable } from 'rxjs'
 import { catchError, concatMap, timeout } from 'rxjs/operators'
 
-import { Args } from './model'
+import { Args, FetchResult } from './model'
 import { parseRespCookie } from './response'
 import {
   parseInitOpts,
@@ -21,7 +21,7 @@ export function _fetch(
   input: Request | string,
   args: Args,
   requestInit: RequestInit,
-): Observable<Response> {
+): FetchResult<Response> {
 
   /* istanbul ignore else */
   if (! input) {
@@ -42,7 +42,7 @@ export function createObbRequest(
   input: Request | string,
   args: Args,
   requestInit: RequestInit,
-): Observable<Response> {
+): FetchResult<Response> {
 
   let inputNew = input
   const fetchModule = selectFecthModule(args.fetchModule)
@@ -73,7 +73,7 @@ export function createObbRequest(
 export function parseRequestStream(
   request$: Observable<Response>,
   args: Args,
-): Observable<Response> {
+): FetchResult<Response> {
 
   const req$ = parseTimeout(request$, args.timeout, args.abortController)
   return req$
@@ -84,7 +84,7 @@ function parseTimeout(
   request$: Observable<Response>,
   timeoutValue: Args['timeout'],
   abortController: Args['abortController'],
-): Observable<Response> {
+): FetchResult<Response> {
 
   let ret$ = request$
 
@@ -113,7 +113,12 @@ function parseTimeout(
  *
  * docs: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
  */
-export function handleRedirect(resp: Response, args: Args, init: RequestInit): Observable<Response> {
+export function handleRedirect(
+  resp: Response,
+  args: Args,
+  init: RequestInit,
+): FetchResult<Response> {
+
   // test by test/30_cookie.test.ts
   /* istanbul ignore next */
   if (args.keepRedirectCookies === true && resp.status >= 301 && resp.status <= 308) {
@@ -141,7 +146,7 @@ export function handleRedirect(resp: Response, args: Args, init: RequestInit): O
     }
   }
   else {
-    throwError('Redirect location is empty')
+    throwError(() => 'Redirect location is empty')
   }
 
   return of(resp)

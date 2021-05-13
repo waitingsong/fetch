@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { throwError, Observable } from 'rxjs'
+import { throwError } from 'rxjs'
 import { concatMap } from 'rxjs/operators'
 
 import { initialRxRequestInit } from './config'
-import { ObbRetType, RxRequestInit } from './model'
+import { FetchResult, ObbRetType, RxRequestInit } from './model'
 import { _fetch } from './request'
 import { handleResponseError, parseResponseType } from './response'
 import { parseInitOpts, splitInitArgs } from './util'
+
 
 
 /**
@@ -17,7 +18,7 @@ import { parseInitOpts, splitInitArgs } from './util'
 export function rxfetch<T extends ObbRetType = any>(
   input: Request | string,
   init?: RxRequestInit,
-): Observable<T> {
+): FetchResult<T> {
 
   /* istanbul ignore else */
   if (! input) {
@@ -30,7 +31,7 @@ export function rxfetch<T extends ObbRetType = any>(
   const req$ = _fetch(input, args, requestInit)
   const ret$ = req$.pipe(
     concatMap(res => handleResponseError(res, dataType === 'bare')),
-    concatMap(res => parseResponseType(res, dataType) as Observable<T>),
+    concatMap(res => parseResponseType(res, dataType) as FetchResult<T>),
   )
 
   return ret$
@@ -38,7 +39,11 @@ export function rxfetch<T extends ObbRetType = any>(
 
 
 /** Observable GET method of fetch() */
-export function get<T extends ObbRetType = any>(input: string, init?: RxRequestInit): Observable<T> {
+export function get<T extends ObbRetType = any>(
+  input: string,
+  init?: RxRequestInit,
+): FetchResult<T> {
+
   const ps: RxRequestInit = init
     ? { ...init, method: 'GET' }
     : { method: 'GET' }
@@ -48,7 +53,11 @@ export function get<T extends ObbRetType = any>(input: string, init?: RxRequestI
 
 
 /** Observable POST method of fetch() */
-export function post<T extends ObbRetType = any>(input: string, init?: RxRequestInit): Observable<T> {
+export function post<T extends ObbRetType = any>(
+  input: string,
+  init?: RxRequestInit,
+): FetchResult<T> {
+
   const ps: RxRequestInit = init
     ? { ...init, method: 'POST' }
     : { method: 'POST' }
@@ -58,7 +67,11 @@ export function post<T extends ObbRetType = any>(input: string, init?: RxRequest
 
 
 /** Observable PUT method of fetch() */
-export function put<T extends ObbRetType = any>(input: string, init?: RxRequestInit): Observable<T> {
+export function put<T extends ObbRetType = any>(
+  input: string,
+  init?: RxRequestInit,
+): FetchResult<T> {
+
   const ps: RxRequestInit = init
     ? { ...init, method: 'PUT' }
     : { method: 'PUT' }
@@ -68,7 +81,11 @@ export function put<T extends ObbRetType = any>(input: string, init?: RxRequestI
 
 
 /** Observable DELETE method of fetch() */
-export function remove<T extends ObbRetType = any>(input: string, init?: RxRequestInit): Observable<T> {
+export function remove<T extends ObbRetType = any>(
+  input: string,
+  init?: RxRequestInit,
+): FetchResult<T> {
+
   const ps: RxRequestInit = init
     ? { ...init, method: 'DELETE' }
     : { method: 'DELETE' }

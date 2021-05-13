@@ -3,8 +3,10 @@
 import {
   JsonResp,
   JsonType,
+  OverwriteAnyToUnknown,
   PlainJsonValue,
 } from '@waiting/shared-types'
+import { Observable } from 'rxjs'
 
 
 export {
@@ -15,6 +17,7 @@ export {
 
 /** Typeof original Response data */
 export type ObbRetType = ArrayBuffer | Blob | FormData | Response | string | JsonType | void | never | object
+export type FetchResult<T> = Observable<OverwriteAnyToUnknown<T>>
 
 
 /** Same as jQuery v3 `JQuery.PlainObject` */
