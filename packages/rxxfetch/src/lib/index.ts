@@ -21,7 +21,7 @@ export function rxfetch<T extends ObbRetType = any>(
 
   /* istanbul ignore else */
   if (! input) {
-    throwError(new TypeError('value of input invalid'))
+    throwError(() => new TypeError('value of input invalid'))
   }
   const initOpts: RxRequestInit = init ? { ...initialRxRequestInit, ...init } : { ...initialRxRequestInit }
   const options = splitInitArgs(initOpts)
