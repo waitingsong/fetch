@@ -3,9 +3,9 @@ import { throwError } from 'rxjs'
 import { concatMap } from 'rxjs/operators'
 
 import { initialRxRequestInit } from './config'
-import { FetchResult, ObbRetType, RxRequestInit } from './model'
 import { _fetch } from './request'
 import { handleResponseError, parseResponseType } from './response'
+import { FetchResult, ObbRetType, RxRequestInit } from './types'
 import { parseInitOpts, splitInitArgs } from './util'
 
 

@@ -7,7 +7,7 @@ import NodeFormData from 'form-data'
 import QueryString from 'qs'
 import { throwError } from 'rxjs'
 
-import { Args, ArgsRequestInitCombined, RxRequestInit, ContentTypeList } from './model'
+import { Args, ArgsRequestInitCombined, RxRequestInit, ContentTypeList } from './types'
 
 
 export function buildQueryString(url: string, data: RxRequestInit['data']): string {

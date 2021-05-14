@@ -2,14 +2,14 @@ import { defer, of, Observable } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 
 import { httpErrorMsgPrefix } from './config'
+import { assertNeverRx } from './shared'
 import {
   Args,
   FetchResult,
   ObbRetType,
   RespDataType,
   RespDataTypeName,
-} from './model'
-import { assertNeverRx } from './shared'
+} from './types'
 
 
 export function handleResponseError(resp: Response, bare = false): FetchResult<Response> {

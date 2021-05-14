@@ -7,7 +7,7 @@ import { abortableFetch } from 'abortcontroller-polyfill/dist/cjs-ponyfill.js'
 import _fetch, { Headers as _Headers } from 'node-fetch'
 
 
-import { RxRequestInit } from './model'
+import { RxRequestInit } from './types'
 
 
 export const initialRxRequestInit: RxRequestInit = {

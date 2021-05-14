@@ -2,8 +2,8 @@
 import { defer, of, throwError, Observable } from 'rxjs'
 import { catchError, concatMap, timeout } from 'rxjs/operators'
 
-import { Args, FetchResult } from './model'
 import { parseRespCookie } from './response'
+import { Args, FetchResult } from './types'
 import {
   parseInitOpts,
   selectFecthModule,
