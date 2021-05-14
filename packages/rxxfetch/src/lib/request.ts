@@ -25,7 +25,7 @@ export function _fetch(
 
   /* istanbul ignore else */
   if (! input) {
-    throwError(new TypeError('value of input invalid'))
+    throwError(() => new TypeError('value of input invalid'))
   }
 
   let req$ = createObbRequest(input, args, requestInit)

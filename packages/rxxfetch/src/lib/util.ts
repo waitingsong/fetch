@@ -276,7 +276,7 @@ export function selectFecthModule(mod: Args['fetchModule'] | null): NonNullable<
   if (mod) {
     /* istanbul ignore else */
     if (typeof mod !== 'function') {
-      throwError(new TypeError('fetchModule is not Function'))
+      throwError(() => new TypeError('fetchModule is not Function'))
     }
     fetchModule = mod
   }
@@ -285,7 +285,7 @@ export function selectFecthModule(mod: Args['fetchModule'] | null): NonNullable<
     fetchModule = fetch
   }
   else {
-    throwError(new TypeError('fetchModule/fetch not Function'))
+    throwError(() => new TypeError('fetchModule/fetch not Function'))
   }
 
   return fetchModule as NonNullable<Args['fetchModule']>
