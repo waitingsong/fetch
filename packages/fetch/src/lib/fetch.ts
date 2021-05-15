@@ -1,0 +1,127 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { OverwriteAnyToUnknown } from '@waiting/shared-types'
+
+import { _fetch } from './request'
+import { handleResponseError, processResponseType } from './response'
+import { FetchResponse, Options } from './types'
+import { processParams } from './util'
+
+
+/**
+ * Fetch with strict types
+ *
+ * @description generics any will be overwriten to unknown
+ */
+export async function fetch<T extends FetchResponse = any>(
+  options: Options,
+): Promise<OverwriteAnyToUnknown<T>> {
+
+  const { args, requestInit } = processParams(options)
+  const { timeout } = args
+  const timeout$ = typeof timeout === 'undefined' || timeout === Infinity || timeout < 0
+    ? null
+    : new Promise<undefined>(done => setTimeout(done, args.timeout))
+
+  const req$ = _fetch(options.url, args, requestInit)
+
+  const pm: (Promise<Response | undefined>)[] = [req$]
+  if (timeout$) {
+    pm.push(timeout$)
+  }
+
+  const data = await Promise.race(pm)
+
+  if (typeof data === 'undefined') { // timeout
+    abortReq(args.abortController)
+    throw new Error(`fetch timeout in "${timeout as number}ms"`)
+  }
+  const dataType = args.dataType as NonNullable<Options['dataType']>
+  const resp = await handleResponseError(data, dataType === 'bare')
+  const ret = await processResponseType(resp, dataType)
+  return ret as OverwriteAnyToUnknown<T>
+}
+
+
+/**
+ * Fetch Get with strict types, default response is JSON
+ *
+ * @description generics any will be overwriten to unknown
+ */
+export function get<T extends FetchResponse = any>(
+  url: string,
+  options?: Omit<Options, 'url' | 'method'>,
+): Promise<OverwriteAnyToUnknown<T>> {
+
+  const opts: Options = {
+    ...options,
+    url,
+    method: 'GET',
+  }
+  return fetch<T>(opts)
+}
+
+
+/**
+ * Fetch Post with strict types
+ *
+ * @description generics any will be overwriten to unknown
+ */
+export function post<T extends FetchResponse = any>(
+  url: Options['url'],
+  options?: Omit<Options, 'url' | 'method'>,
+): Promise<OverwriteAnyToUnknown<T>> {
+
+  const opts: Options = {
+    ...options,
+    url,
+    method: 'POST',
+  }
+  return fetch<T>(opts)
+}
+
+
+/**
+ * Fetch Put with strict types
+ *
+ * @description generics any will be overwriten to unknown
+ */
+export function put<T extends FetchResponse = any>(
+  url: Options['url'],
+  options?: Omit<Options, 'url' | 'method'>,
+): Promise<OverwriteAnyToUnknown<T>> {
+
+  const opts: Options = {
+    ...options,
+    url,
+    method: 'PUT',
+  }
+  return fetch<T>(opts)
+}
+
+
+/**
+ * Fetch delete with strict types
+ *
+ * @description generics any will be overwriten to unknown
+ */
+export function remove<T extends FetchResponse = any>(
+  url: Options['url'],
+  options?: Omit<Options, 'url' | 'method'>,
+): Promise<OverwriteAnyToUnknown<T>> {
+
+  const opts: Options = {
+    ...options,
+    url,
+    method: 'DELETE',
+  }
+
+  return fetch<T>(opts)
+}
+
+
+function abortReq(abc: AbortController | undefined): void {
+  if (abc && ! abc.signal.aborted) {
+    abc.abort()
+  }
+}
+

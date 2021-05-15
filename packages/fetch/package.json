@@ -1,0 +1,104 @@
+{
+  "name": "@waiting/fetch",
+  "author": "waiting",
+  "version": "5.1.0",
+  "description": "HTTP fetch API for browser and Node.js. Handle 302/303 redirect correctly on Node.js",
+  "keywords": [
+    "http",
+    "fetch",
+    "nodejs",
+    "Node.js",
+    "typescript",
+    "AbortController",
+    "303"
+  ],
+  "bin": {},
+  "browser": "./dist/fetch.esm.js",
+  "es2015": "./dist/fetch.esm.js",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bugs": {
+    "url": "https://github.com/waitingsong/rxxfetch/issues"
+  },
+  "homepage": "https://waitingsong.github.io/rxxfetch/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/waitingsong/rxxfetch.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@types/node-fetch": "^2.1.1",
+    "@types/qs": "^6.5.1",
+    "@waiting/shared-types": "10",
+    "abortcontroller-polyfill": "^1.3.0",
+    "form-data": "^4.0.0",
+    "node-fetch": "^2.6.0",
+    "qs": "^6.7.0"
+  },
+  "devDependencies": {
+    "@waiting/shared-core": "10",
+    "cross-env": "7"
+  },
+  "peerDependencies": {
+    "typescript": ">=4.2.0"
+  },
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "files": [
+    "tsconfig.json",
+    "rollup.config.js",
+    "src/**/*.ts",
+    "bin/*.js",
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "npm run tsc && npm run rp",
+    "clean": "npm run clean:lock & npm run clean:cache & rm -rf dist/* -rf",
+    "clean:cache": "rm -rf .eslintcache .vscode/.tsbuildinfo .vscode/.tsbuildinfo.*",
+    "clean:lock": "rm package-lock.json -f",
+    "cov": "cross-env TS_NODE_PROJECT=test/tsconfig.json nyc mocha --parallel=false",
+    "lint": "eslint --fix --cache {src,test}/**/*.ts",
+    "lint:nofix": "eslint --cache {src,test}/**/*.ts",
+    "purge": "npm run clean && rm node_modules -rf",
+    "rp": "rollup -c rollup.config.js",
+    "rp:w": "npm run tsc:w | rollup -wc rollup.config.js",
+    "test": "cross-env TS_NODE_PROJECT=test/tsconfig.json mocha",
+    "test:browser": "cd .config && npm run browser && cd ..",
+    "test:local": "cross-env TS_NODE_PROJECT=test/tsconfig.json ../../node_modules/.bin/mocha --parallel=false",
+    "browser:debug": "cd .config && npm run debug && cd ..",
+    "tsc": "tsc -p tsconfig.json",
+    "tsc:w": "tsc -p tsconfig.json -w"
+  },
+  "nyc": {
+    "include": [
+      "src/**/*.ts"
+    ],
+    "exclude": [
+      ".githooks",
+      "dist",
+      "node_modules*",
+      "src/bin",
+      "src/domain.ts",
+      "src/interface.ts",
+      "test*",
+      "**/node_modules*",
+      "**/*.d.ts",
+      "**/*.js"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "reporter": [
+      "html",
+      "json",
+      "text",
+      "text-summary"
+    ],
+    "all": true
+  }
+}
