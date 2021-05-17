@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 7.2.0 (2021-05-17)
+
+
+### Features
+
+* **midway-component-fetch:** add event callback in FetchComponentConfig ([5de6383](https://github.com/waitingsong/npm-mono-base/commit/5de63835991f7e29c371bfa5a6b723dfc1ad5044))
+
+
+
+
+
 # 7.1.0 (2021-05-17)
 
 
