@@ -31,9 +31,7 @@ export class FetchService {
 
     const opts: Options = { ...options }
     opts.headers = this.genReqHeadersFromOptionsAndConfigCallback(opts.headers)
-
-    const ret$ = fetch<T>(opts)
-    return ret$
+    return fetch<T>(opts)
   }
 
 
@@ -48,9 +46,7 @@ export class FetchService {
       method: 'GET',
     }
     opts.headers = this.genReqHeadersFromOptionsAndConfigCallback(opts.headers)
-
-    const ret$ = fetch<T>(opts)
-    return ret$
+    return fetch<T>(opts)
   }
 
 
@@ -65,9 +61,7 @@ export class FetchService {
       method: 'POST',
     }
     opts.headers = this.genReqHeadersFromOptionsAndConfigCallback(opts.headers)
-
-    const ret$ = fetch<T>(opts)
-    return ret$
+    return fetch<T>(opts)
   }
 
 
