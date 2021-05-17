@@ -76,7 +76,7 @@ export class FetchService {
   ): Headers {
 
     const headers = new Node_Headers(initHeaders)
-    const newHeaders = this.fetchConfig.genReqHeadersInit(this.ctx, this.headers)
+    const newHeaders = this.fetchConfig.genRequestHeaders(this.ctx, this.headers)
     newHeaders.forEach((value, key) => {
       headers.append(key, value)
     })

@@ -8,7 +8,7 @@ export interface FetchConfig {
    *
    * @default customGenReqHeadersInit()
    */
-  genReqHeadersInit: (
+  genRequestHeaders: (
     ctx: Context,
     headersInit?: Record<string, string>,
   ) => Headers
