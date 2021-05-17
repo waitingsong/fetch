@@ -21,8 +21,7 @@ describe(filename, function() {
     method: 'GET',
     credentials: 'include',
     fetchModule: patchedFetch,
-    // @ts-expect-error
-    headersInitClass: Node_Headers as Args['headersInitClass'],
+    headersInitClass: Node_Headers,
     keepRedirectCookies: true, // intercept redirect
   }
 

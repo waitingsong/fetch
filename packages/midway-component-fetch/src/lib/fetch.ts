@@ -6,9 +6,11 @@ import {
   FetchResponse,
   Options,
   fetch,
+  Node_Headers,
 } from '@waiting/fetch'
 import { OverwriteAnyToUnknown } from '@waiting/shared-types'
 import type { Context } from 'egg'
+
 
 import { FetchConfig } from './types'
 
@@ -73,7 +75,7 @@ export class FetchService {
     initHeaders: Options['headers'],
   ): Headers {
 
-    const headers = new Headers(initHeaders)
+    const headers = new Node_Headers(initHeaders)
     const newHeaders = this.fetchConfig.genReqHeadersInit(this.ctx, this.headers)
     newHeaders.forEach((value, key) => {
       headers.append(key, value)
