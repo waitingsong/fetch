@@ -6,5 +6,7 @@ export {
   Options,
   Node_Headers,
   initialOptions,
+  JsonResp,
+  JsonType,
 } from '@waiting/fetch'
 
