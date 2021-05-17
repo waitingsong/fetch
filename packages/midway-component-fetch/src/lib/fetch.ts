@@ -12,7 +12,7 @@ import { OverwriteAnyToUnknown } from '@waiting/shared-types'
 import type { Context } from 'egg'
 
 
-import { FetchConfig } from './types'
+import { FetchComponentConfig } from './types'
 
 
 @Provide()
@@ -20,7 +20,7 @@ export class FetchService {
 
   @Inject() readonly ctx: Context
 
-  @Config() readonly fetchConfig: FetchConfig
+  @Config('fetch') readonly fetchConfig: FetchComponentConfig
 
   headers: Record<string, string> = {}
 

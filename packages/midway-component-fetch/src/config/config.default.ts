@@ -1,9 +1,9 @@
 import { Node_Headers } from '@waiting/fetch'
 
-import { FetchConfig } from '../lib/types'
+import { FetchComponentConfig } from '../lib/types'
 
 
-export const fetchConfig: FetchConfig = {
+export const fetch: FetchComponentConfig = {
   genRequestHeaders: () => new Node_Headers(),
 }
 

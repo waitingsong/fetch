@@ -1,4 +1,4 @@
 
 export { FetchService } from './fetch'
-export { FetchConfig } from './types'
+export { FetchComponentConfig } from './types'
 

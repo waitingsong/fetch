@@ -2,7 +2,7 @@
 import type { Context } from 'egg'
 
 
-export interface FetchConfig {
+export interface FetchComponentConfig {
   /**
    * Generate headersInit from request context for Fetch request
    *
