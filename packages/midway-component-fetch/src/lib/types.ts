@@ -1,4 +1,5 @@
 /* eslint-disable node/no-unpublished-import */
+import { Options } from '@waiting/fetch'
 import type { Context } from 'egg'
 
 
@@ -12,5 +13,7 @@ export interface FetchComponentConfig {
     ctx: Context,
     headersInit?: Record<string, string>,
   ) => Headers
+  beforeRequest?: (ctx: Context, options: Options) => Promise<void>
+  afterResponse?: (ctx: Context, options: Options) => Promise<void>
 }
 

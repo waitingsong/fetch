@@ -25,17 +25,28 @@ export class FetchService {
   headers: Record<string, string> = {}
 
 
-  fetch<T extends FetchResponse = any>(
+  async fetch<T extends FetchResponse = any>(
     options: Options,
   ): Promise<OverwriteAnyToUnknown<T>> {
 
     const opts: Options = { ...options }
     opts.headers = this.genReqHeadersFromOptionsAndConfigCallback(opts.headers)
-    return fetch<T>(opts)
+
+    if (this.fetchConfig.beforeRequest) {
+      await this.fetchConfig.beforeRequest(this.ctx, opts)
+    }
+
+    const ret = await fetch<T>(opts)
+
+    if (this.fetchConfig.afterResponse) {
+      await this.fetchConfig.afterResponse(this.ctx, opts)
+    }
+
+    return ret
   }
 
 
-  get<T extends FetchResponse = any>(
+  async get<T extends FetchResponse = any>(
     input: string,
     options?: Omit<Options, 'url' | 'method'>,
   ): Promise<OverwriteAnyToUnknown<T>> {
@@ -46,11 +57,22 @@ export class FetchService {
       method: 'GET',
     }
     opts.headers = this.genReqHeadersFromOptionsAndConfigCallback(opts.headers)
-    return fetch<T>(opts)
+
+    if (this.fetchConfig.beforeRequest) {
+      await this.fetchConfig.beforeRequest(this.ctx, opts)
+    }
+
+    const ret = await fetch<T>(opts)
+
+    if (this.fetchConfig.afterResponse) {
+      await this.fetchConfig.afterResponse(this.ctx, opts)
+    }
+
+    return ret
   }
 
 
-  post<T extends FetchResponse = any>(
+  async post<T extends FetchResponse = any>(
     input: string,
     options?: Omit<Options, 'url' | 'method'>,
   ): Promise<OverwriteAnyToUnknown<T>> {
@@ -61,7 +83,18 @@ export class FetchService {
       method: 'POST',
     }
     opts.headers = this.genReqHeadersFromOptionsAndConfigCallback(opts.headers)
-    return fetch<T>(opts)
+
+    if (this.fetchConfig.beforeRequest) {
+      await this.fetchConfig.beforeRequest(this.ctx, opts)
+    }
+
+    const ret = await fetch<T>(opts)
+
+    if (this.fetchConfig.afterResponse) {
+      await this.fetchConfig.afterResponse(this.ctx, opts)
+    }
+
+    return ret
   }
 
 
