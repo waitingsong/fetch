@@ -1,9 +1,9 @@
 
-export const HOST = process.env.HTTP_HOST
-  ? 'http://' + process.env.HTTP_HOST
+export const HOST = process.env.HTTPBIN_HOST
+  ? 'http://' + process.env.HTTPBIN_HOST
   : 'https://httpbin.org'
 
-export const DELAY = process.env.HTTP_HOST ? 100 : 2000
+export const DELAY = process.env.HTTPBIN_HOST ? 100 : 2000
 
 console.log({ HOST })
 
