@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 7.1.0 (2021-05-17)
+
+
+### Features
+
+* **midway-component-fetch:** export type JsonResp, JsonType ([486b947](https://github.com/waitingsong/npm-mono-base/commit/486b94729441fee911b9669fc9a36fdca7c4b56d))
+
+
+
+
+
 # 7.0.0 (2021-05-17)
 
 **Note:** Version bump only for package demo
