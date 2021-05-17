@@ -13,4 +13,5 @@ export {
   getGloalRequestOptions,
   setGloalRequestOptions,
 } from './util'
+export { Node_Headers } from './patch'
 

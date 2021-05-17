@@ -1,5 +1,5 @@
 import { patchedFetch, Node_Headers } from './patch'
-import { Args, Options } from './types'
+import { Options } from './types'
 
 
 export const initialOptions: Options = {
@@ -23,8 +23,7 @@ if (typeof window === 'undefined') {
     initialOptions.fetchModule = patchedFetch
   }
   if (typeof Headers !== 'function') {
-    // @ts-expect-error
-    initialOptions.headersInitClass = Node_Headers as Args['headersInitClass']
+    initialOptions.headersInitClass = Node_Headers
   }
 }
 
