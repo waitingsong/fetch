@@ -13,7 +13,24 @@ export interface FetchComponentConfig {
     ctx: Context,
     headersInit?: Record<string, string>,
   ) => Headers
-  beforeRequest?: (ctx: Context, options: Options) => Promise<void>
-  afterResponse?: (ctx: Context, options: Options) => Promise<void>
+  /**
+   * Callback before request
+   */
+  beforeRequest?: (options: ReqCallbackOptions) => Promise<void>
+  /**
+   * Callback after response
+   */
+  afterResponse?: <T = unknown>(options: RespCallbackOptions<T>) => Promise<void>
+}
+
+export interface ReqCallbackOptions {
+  ctx: Context
+  opts: Options
+}
+
+export interface RespCallbackOptions <T = unknown> {
+  ctx: Context
+  opts: Options
+  resultData: T
 }
 

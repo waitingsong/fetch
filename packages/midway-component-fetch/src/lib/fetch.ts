@@ -33,13 +33,20 @@ export class FetchService {
     opts.headers = this.genReqHeadersFromOptionsAndConfigCallback(opts.headers)
 
     if (this.fetchConfig.beforeRequest) {
-      await this.fetchConfig.beforeRequest(this.ctx, opts)
+      await this.fetchConfig.beforeRequest({
+        ctx: this.ctx,
+        opts,
+      })
     }
 
     const ret = await fetch<T>(opts)
 
     if (this.fetchConfig.afterResponse) {
-      await this.fetchConfig.afterResponse(this.ctx, opts)
+      await this.fetchConfig.afterResponse({
+        ctx: this.ctx,
+        opts,
+        resultData: ret,
+      })
     }
 
     return ret
@@ -59,13 +66,20 @@ export class FetchService {
     opts.headers = this.genReqHeadersFromOptionsAndConfigCallback(opts.headers)
 
     if (this.fetchConfig.beforeRequest) {
-      await this.fetchConfig.beforeRequest(this.ctx, opts)
+      await this.fetchConfig.beforeRequest({
+        ctx: this.ctx,
+        opts,
+      })
     }
 
     const ret = await fetch<T>(opts)
 
     if (this.fetchConfig.afterResponse) {
-      await this.fetchConfig.afterResponse(this.ctx, opts)
+      await this.fetchConfig.afterResponse({
+        ctx: this.ctx,
+        opts,
+        resultData: ret,
+      })
     }
 
     return ret
@@ -85,13 +99,20 @@ export class FetchService {
     opts.headers = this.genReqHeadersFromOptionsAndConfigCallback(opts.headers)
 
     if (this.fetchConfig.beforeRequest) {
-      await this.fetchConfig.beforeRequest(this.ctx, opts)
+      await this.fetchConfig.beforeRequest({
+        ctx: this.ctx,
+        opts,
+      })
     }
 
     const ret = await fetch<T>(opts)
 
     if (this.fetchConfig.afterResponse) {
-      await this.fetchConfig.afterResponse(this.ctx, opts)
+      await this.fetchConfig.afterResponse({
+        ctx: this.ctx,
+        opts,
+        resultData: ret,
+      })
     }
 
     return ret
