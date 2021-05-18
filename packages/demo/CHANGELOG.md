@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 8.0.0 (2021-05-18)
+
+
+### Features
+
+* **midway-component-fetch:** breaking change callback parameters ([47b852c](https://github.com/waitingsong/npm-mono-base/commit/47b852ca248529cc87932d8f0eb32119ba68fc13))
+
+
+
+
+
 # 7.2.0 (2021-05-17)
 
 
