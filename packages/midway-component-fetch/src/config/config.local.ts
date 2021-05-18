@@ -5,7 +5,7 @@ import { FetchComponentConfig } from '../lib/types'
 
 export const fetch: FetchComponentConfig = {
   genRequestHeaders: () => new Node_Headers(),
-  isTraceLoggingReqBody: false,
-  isTraceLoggingRespData: false,
+  isTraceLoggingReqBody: true,
+  isTraceLoggingRespData: true,
 }
 

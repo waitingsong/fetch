@@ -21,15 +21,19 @@ export interface FetchComponentConfig {
    * Callback after response
    */
   afterResponse?: <T = unknown>(options: RespCallbackOptions<T>) => Promise<void>
+  isTraceLoggingReqBody?: boolean
+  isTraceLoggingRespData?: boolean
 }
 
 export interface ReqCallbackOptions {
   ctx: Context
+  isTraceLoggingReqBody: boolean
   opts: Options
 }
 
 export interface RespCallbackOptions <T = unknown> {
   ctx: Context
+  isTraceLoggingRespData: boolean
   opts: Options
   resultData: T
 }

@@ -32,9 +32,13 @@ export class FetchService {
     const opts: Options = { ...options }
     opts.headers = this.genReqHeadersFromOptionsAndConfigCallback(opts.headers)
 
+    const isTraceLoggingReqBody = !! this.fetchConfig.isTraceLoggingReqBody
+    const isTraceLoggingRespData = !! this.fetchConfig.isTraceLoggingRespData
+
     if (this.fetchConfig.beforeRequest) {
       await this.fetchConfig.beforeRequest({
         ctx: this.ctx,
+        isTraceLoggingReqBody,
         opts,
       })
     }
@@ -44,6 +48,7 @@ export class FetchService {
     if (this.fetchConfig.afterResponse) {
       await this.fetchConfig.afterResponse({
         ctx: this.ctx,
+        isTraceLoggingRespData,
         opts,
         resultData: ret,
       })
@@ -65,9 +70,13 @@ export class FetchService {
     }
     opts.headers = this.genReqHeadersFromOptionsAndConfigCallback(opts.headers)
 
+    const isTraceLoggingReqBody = !! this.fetchConfig.isTraceLoggingReqBody
+    const isTraceLoggingRespData = !! this.fetchConfig.isTraceLoggingRespData
+
     if (this.fetchConfig.beforeRequest) {
       await this.fetchConfig.beforeRequest({
         ctx: this.ctx,
+        isTraceLoggingReqBody,
         opts,
       })
     }
@@ -77,6 +86,7 @@ export class FetchService {
     if (this.fetchConfig.afterResponse) {
       await this.fetchConfig.afterResponse({
         ctx: this.ctx,
+        isTraceLoggingRespData,
         opts,
         resultData: ret,
       })
@@ -98,9 +108,13 @@ export class FetchService {
     }
     opts.headers = this.genReqHeadersFromOptionsAndConfigCallback(opts.headers)
 
+    const isTraceLoggingReqBody = !! this.fetchConfig.isTraceLoggingReqBody
+    const isTraceLoggingRespData = !! this.fetchConfig.isTraceLoggingRespData
+
     if (this.fetchConfig.beforeRequest) {
       await this.fetchConfig.beforeRequest({
         ctx: this.ctx,
+        isTraceLoggingReqBody,
         opts,
       })
     }
@@ -110,6 +124,7 @@ export class FetchService {
     if (this.fetchConfig.afterResponse) {
       await this.fetchConfig.afterResponse({
         ctx: this.ctx,
+        isTraceLoggingRespData,
         opts,
         resultData: ret,
       })
