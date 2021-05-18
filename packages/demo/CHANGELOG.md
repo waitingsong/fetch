@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 8.1.0 (2021-05-18)
+
+
+### Features
+
+* **midway-component-fetch:** add properties of types ([b1aa480](https://github.com/waitingsong/npm-mono-base/commit/b1aa48095d84073096bdca94b4152759b2f13110))
+
+
+
+
+
 # 8.0.0 (2021-05-18)
 
 
