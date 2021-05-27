@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 8.1.1 (2021-05-27)
+
+**Note:** Version bump only for package rxxfetch
+
+
+
+
+
 # 8.1.0 (2021-05-18)
 
 
