@@ -1,6 +1,6 @@
 /* eslint-disable node/no-unpublished-import */
 /* eslint-disable import/no-extraneous-dependencies */
-import { Context } from 'egg'
+import type { Context } from 'egg'
 
 import { FetchComponentConfig } from './types'
 
