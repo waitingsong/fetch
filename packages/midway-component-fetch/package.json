@@ -5,11 +5,13 @@
   "description": "",
   "private": false,
   "keywords": [
-    "midway.js",
+    "midway",
+    "IoC",
+    "plugin",
     "ts"
   ],
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "bugs": {
     "url": "https://github.com/waitingsong/npm-mono-base/issues"
   },
@@ -27,10 +29,11 @@
     "@midwayjs/cli": "1",
     "@midwayjs/core": "2",
     "@midwayjs/decorator": "2",
+    "@midwayjs/web": "2",
     "@types/node": "15",
     "@waiting/shared-core": "10",
     "cross-env": "7",
-    "egg": "2",
+    "egg": "^2.29.0",
     "opentracing": "*",
     "typescript": "4"
   },

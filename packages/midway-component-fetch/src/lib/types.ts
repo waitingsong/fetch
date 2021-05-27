@@ -1,6 +1,6 @@
 /* eslint-disable node/no-unpublished-import */
+import type { IMidwayWebContext as Context } from '@midwayjs/web'
 import { Options } from '@waiting/fetch'
-import type { Context } from 'egg'
 
 
 export interface FetchComponentConfig {

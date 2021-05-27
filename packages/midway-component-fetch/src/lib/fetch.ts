@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable import/no-extraneous-dependencies */
 import { Config, Inject, Provide } from '@midwayjs/decorator'
+import type { Context } from '@midwayjs/web'
 import {
   FetchResponse,
   Options,
@@ -9,7 +10,6 @@ import {
   Node_Headers,
 } from '@waiting/fetch'
 import { OverwriteAnyToUnknown } from '@waiting/shared-types'
-import type { Context } from 'egg'
 
 
 import { FetchComponentConfig } from './types'
