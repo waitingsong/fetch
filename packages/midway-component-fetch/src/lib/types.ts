@@ -18,6 +18,10 @@ export interface FetchComponentConfig {
    */
   beforeRequest?: (options: ReqCallbackOptions) => Promise<void>
   /**
+   * fetch result processed
+   */
+  processResult?: <T = unknown>(options: RespCallbackOptions<T>) => T
+  /**
    * Callback after response
    */
   afterResponse?: <T = unknown>(options: RespCallbackOptions<T>) => Promise<void>

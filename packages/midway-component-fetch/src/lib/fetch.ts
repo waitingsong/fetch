@@ -43,7 +43,16 @@ export class FetchService {
       })
     }
 
-    const ret = await fetch<T>(opts)
+    let ret = await fetch<T>(opts)
+
+    if (this.fetchConfig.processResult) {
+      ret = this.fetchConfig.processResult({
+        ctx: this.ctx,
+        isTraceLoggingRespData,
+        opts,
+        resultData: ret,
+      })
+    }
 
     if (this.fetchConfig.afterResponse) {
       await this.fetchConfig.afterResponse({
@@ -81,7 +90,16 @@ export class FetchService {
       })
     }
 
-    const ret = await fetch<T>(opts)
+    let ret = await fetch<T>(opts)
+
+    if (this.fetchConfig.processResult) {
+      ret = this.fetchConfig.processResult({
+        ctx: this.ctx,
+        isTraceLoggingRespData,
+        opts,
+        resultData: ret,
+      })
+    }
 
     if (this.fetchConfig.afterResponse) {
       await this.fetchConfig.afterResponse({
@@ -119,7 +137,16 @@ export class FetchService {
       })
     }
 
-    const ret = await fetch<T>(opts)
+    let ret = await fetch<T>(opts)
+
+    if (this.fetchConfig.processResult) {
+      ret = this.fetchConfig.processResult({
+        ctx: this.ctx,
+        isTraceLoggingRespData,
+        opts,
+        resultData: ret,
+      })
+    }
 
     if (this.fetchConfig.afterResponse) {
       await this.fetchConfig.afterResponse({
