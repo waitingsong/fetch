@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 8.2.0 (2021-05-28)
+
+
+### Features
+
+* **midway-component-fetch:** add optional result process callback ([52455b0](https://github.com/waitingsong/rxxfetch/commit/52455b01e34908cf97cf0f20e708cb4af05329f0))
+
+
+
+
+
 ## 8.1.2 (2021-05-27)
 
 **Note:** Version bump only for package @waiting/egg-fetch
