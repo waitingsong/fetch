@@ -8,14 +8,16 @@
     "midway",
     "IoC",
     "plugin",
+    "fetch",
+    "http",
     "ts"
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bugs": {
-    "url": "https://github.com/waitingsong/npm-mono-base/issues"
+    "url": "https://github.com/waitingsong/rxxfetch/issues"
   },
-  "homepage": "https://github.com/waitingsong/npm-mono-base#readme",
+  "homepage": "https://github.com/waitingsong/rxxfetch#readme",
   "repository": {
     "type": "git",
     "url": "git@github.com:waitingsong/rxxfetch"
@@ -46,8 +48,6 @@
     "node": ">=12.13.0"
   },
   "files": [
-    "tsconfig.json",
-    "src/**/*.ts",
     "dist"
   ],
   "publishConfig": {
