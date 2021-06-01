@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 8.2.1 (2021-06-01)
+
+**Note:** Version bump only for package @waiting/fetch
+
+
+
+
+
 # 8.2.0 (2021-05-28)
 
 
