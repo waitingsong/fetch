@@ -40,9 +40,7 @@
     "typescript": "4"
   },
   "peerDependencies": {
-    "@midwayjs/core": "^2.3.0",
-    "@midwayjs/decorator": "^2.10.12",
-    "opentracing": "^0.14.5"
+    "opentracing": ">=0.14.5"
   },
   "engines": {
     "node": ">=12.13.0"
