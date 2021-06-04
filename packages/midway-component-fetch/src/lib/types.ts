@@ -30,12 +30,14 @@ export interface FetchComponentConfig {
 }
 
 export interface ReqCallbackOptions {
+  id: symbol
   ctx: Context
   isTraceLoggingReqBody: boolean
   opts: Options
 }
 
 export interface RespCallbackOptions <T = unknown> {
+  id: symbol
   ctx: Context
   isTraceLoggingRespData: boolean
   opts: Options

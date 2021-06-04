@@ -34,9 +34,11 @@ export class FetchService {
 
     const isTraceLoggingReqBody = !! this.fetchConfig.isTraceLoggingReqBody
     const isTraceLoggingRespData = !! this.fetchConfig.isTraceLoggingRespData
+    const id = Symbol(opts.url)
 
     if (this.fetchConfig.beforeRequest) {
       await this.fetchConfig.beforeRequest({
+        id,
         ctx: this.ctx,
         isTraceLoggingReqBody,
         opts,
@@ -47,6 +49,7 @@ export class FetchService {
 
     if (this.fetchConfig.processResult) {
       ret = this.fetchConfig.processResult({
+        id,
         ctx: this.ctx,
         isTraceLoggingRespData,
         opts,
@@ -56,6 +59,7 @@ export class FetchService {
 
     if (this.fetchConfig.afterResponse) {
       await this.fetchConfig.afterResponse({
+        id,
         ctx: this.ctx,
         isTraceLoggingRespData,
         opts,
@@ -81,9 +85,11 @@ export class FetchService {
 
     const isTraceLoggingReqBody = !! this.fetchConfig.isTraceLoggingReqBody
     const isTraceLoggingRespData = !! this.fetchConfig.isTraceLoggingRespData
+    const id = Symbol(opts.url)
 
     if (this.fetchConfig.beforeRequest) {
       await this.fetchConfig.beforeRequest({
+        id,
         ctx: this.ctx,
         isTraceLoggingReqBody,
         opts,
@@ -94,6 +100,7 @@ export class FetchService {
 
     if (this.fetchConfig.processResult) {
       ret = this.fetchConfig.processResult({
+        id,
         ctx: this.ctx,
         isTraceLoggingRespData,
         opts,
@@ -103,6 +110,7 @@ export class FetchService {
 
     if (this.fetchConfig.afterResponse) {
       await this.fetchConfig.afterResponse({
+        id,
         ctx: this.ctx,
         isTraceLoggingRespData,
         opts,
@@ -128,9 +136,11 @@ export class FetchService {
 
     const isTraceLoggingReqBody = !! this.fetchConfig.isTraceLoggingReqBody
     const isTraceLoggingRespData = !! this.fetchConfig.isTraceLoggingRespData
+    const id = Symbol(opts.url)
 
     if (this.fetchConfig.beforeRequest) {
       await this.fetchConfig.beforeRequest({
+        id,
         ctx: this.ctx,
         isTraceLoggingReqBody,
         opts,
@@ -141,6 +151,7 @@ export class FetchService {
 
     if (this.fetchConfig.processResult) {
       ret = this.fetchConfig.processResult({
+        id,
         ctx: this.ctx,
         isTraceLoggingRespData,
         opts,
@@ -150,6 +161,7 @@ export class FetchService {
 
     if (this.fetchConfig.afterResponse) {
       await this.fetchConfig.afterResponse({
+        id,
         ctx: this.ctx,
         isTraceLoggingRespData,
         opts,
