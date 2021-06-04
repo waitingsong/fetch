@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 8.5.1 (2021-06-04)
+
+
+### Bug Fixes
+
+* **midway-component-fetch:** initialize fetchRequestSpanMap ([011c92e](https://github.com/waitingsong/rxxfetch/commit/011c92e7f73f10507daa7e358e29fab63c7e847d))
+
+
+
+
+
 # 8.5.0 (2021-06-04)
 
 
