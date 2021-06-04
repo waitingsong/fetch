@@ -1,7 +1,7 @@
 /* eslint-disable node/no-unpublished-import */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable import/no-extraneous-dependencies */
-import { Config, Inject, Provide } from '@midwayjs/decorator'
+import { Config, Init, Inject, Provide } from '@midwayjs/decorator'
 import type { Context } from '@midwayjs/web'
 import {
   FetchResponse,
@@ -18,12 +18,21 @@ import { FetchComponentConfig } from './types'
 @Provide()
 export class FetchService {
 
+
   @Inject() readonly ctx: Context
 
   @Config('fetch') readonly fetchConfig: FetchComponentConfig
 
   headers: Record<string, string> = {}
 
+
+  @Init()
+  async init(): Promise<void> {
+    if (this.ctx.fetchRequestSpanMap) {
+      return
+    }
+    this.ctx.fetchRequestSpanMap = new Map()
+  }
 
   async fetch<T extends FetchResponse = any>(
     options: Options,

@@ -19,7 +19,7 @@ export {
 
 declare module '@midwayjs/core' {
   interface Context {
-    fetchRequestSpanMap: Map<string | symbol, Span>
+    fetchRequestSpanMap: Map<symbol, Span>
   }
 }
 
