@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 8.4.0 (2021-06-04)
+
+
+### Features
+
+* **midway-component-fetch:** export type FetchResponse ([05b099a](https://github.com/waitingsong/rxxfetch/commit/05b099a6854594c4cbf73d55138b8dc9f56d5da8))
+
+
+
+
+
 # 8.3.0 (2021-06-04)
 
 **Note:** Version bump only for package @waiting/fetch
