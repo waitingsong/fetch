@@ -1,7 +1,7 @@
 {
   "name": "midway-component-fetch",
   "author": "waiting",
-  "version": "8.2.1",
+  "version": "8.3.0",
   "description": "",
   "private": false,
   "keywords": [
@@ -24,7 +24,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@waiting/fetch": "^8.2.1",
+    "@waiting/fetch": "^8.3.0",
     "@waiting/shared-types": "11"
   },
   "devDependencies": {
