@@ -18,16 +18,15 @@ import { FetchComponentConfig } from './types'
 @Provide()
 export class FetchService {
 
-
   @Inject() readonly ctx: Context
 
   @Config('fetch') readonly fetchConfig: FetchComponentConfig
 
   headers: Record<string, string> = {}
 
-
   @Init()
   async init(): Promise<void> {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (this.ctx.fetchRequestSpanMap) {
       return
     }
