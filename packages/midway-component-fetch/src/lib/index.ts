@@ -6,6 +6,9 @@ import { FetchComponentConfig } from './types'
 
 
 export { FetchService } from './fetch'
+export {
+  defaultfetchConfigCallbacks, genRequestHeaders,
+} from './helper'
 export { FetchComponentConfig }
 
 declare module 'egg' {

@@ -25,6 +25,11 @@ export interface FetchComponentConfig {
    * Callback after response
    */
   afterResponse?: <T = unknown>(options: RespCallbackOptions<T>) => Promise<void>
+  /**
+   * Enable default tracing callbacks
+   * @default false
+   */
+  enableDefaultCallbacks: boolean
   isTraceLoggingReqBody?: boolean
   isTraceLoggingRespData?: boolean
 }

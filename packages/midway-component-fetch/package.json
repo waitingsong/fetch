@@ -25,7 +25,8 @@
   "license": "MIT",
   "dependencies": {
     "@waiting/fetch": "^8.6.0",
-    "@waiting/shared-types": "11"
+    "@waiting/shared-core": "^11.1.0",
+    "@waiting/shared-types": "^11.1.0"
   },
   "devDependencies": {
     "@midwayjs/cli": "1",
@@ -36,6 +37,7 @@
     "@waiting/shared-core": "11",
     "cross-env": "7",
     "egg": "^2.29.0",
+    "midway-component-jaeger": "^3.3.0",
     "opentracing": "*",
     "typescript": "4"
   },
