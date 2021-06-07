@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 9.0.0 (2021-06-07)
+
+
+### Bug Fixes
+
+* **jaeger:** inject tracing header ([1a9a655](https://github.com/waitingsong/npm-mono-base/commit/1a9a655010446f16c9f450a22a24e6ff71fbd144))
+
+
+
+
+
 # 8.7.0 (2021-06-07)
 
 **Note:** Version bump only for package demo
