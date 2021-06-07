@@ -11,7 +11,7 @@ import {
 } from '@waiting/fetch'
 import { OverwriteAnyToUnknown } from '@waiting/shared-types'
 
-
+import { defaultfetchConfigCallbacks } from './helper'
 import { FetchComponentConfig } from './types'
 
 
@@ -44,6 +44,15 @@ export class FetchService {
     const isTraceLoggingRespData = !! this.fetchConfig.isTraceLoggingRespData
     const id = Symbol(opts.url)
 
+    if (this.fetchConfig.enableDefaultCallbacks) {
+      await defaultfetchConfigCallbacks.beforeRequest({
+        id,
+        ctx: this.ctx,
+        isTraceLoggingReqBody,
+        opts,
+      })
+    }
+
     if (this.fetchConfig.beforeRequest) {
       await this.fetchConfig.beforeRequest({
         id,
@@ -67,6 +76,16 @@ export class FetchService {
 
     if (this.fetchConfig.afterResponse) {
       await this.fetchConfig.afterResponse({
+        id,
+        ctx: this.ctx,
+        isTraceLoggingRespData,
+        opts,
+        resultData: ret,
+      })
+    }
+
+    if (this.fetchConfig.enableDefaultCallbacks) {
+      await defaultfetchConfigCallbacks.afterResponse({
         id,
         ctx: this.ctx,
         isTraceLoggingRespData,
