@@ -98,7 +98,7 @@ export class FetchService {
   }
 
 
-  async get<T extends FetchResponse = any>(
+  get<T extends FetchResponse = any>(
     input: string,
     options?: Omit<Options, 'url' | 'method'>,
   ): Promise<OverwriteAnyToUnknown<T>> {
@@ -108,48 +108,11 @@ export class FetchService {
       url: input,
       method: 'GET',
     }
-    opts.headers = this.genReqHeadersFromOptionsAndConfigCallback(opts.headers)
-
-    const isTraceLoggingReqBody = !! this.fetchConfig.isTraceLoggingReqBody
-    const isTraceLoggingRespData = !! this.fetchConfig.isTraceLoggingRespData
-    const id = Symbol(opts.url)
-
-    if (this.fetchConfig.beforeRequest) {
-      await this.fetchConfig.beforeRequest({
-        id,
-        ctx: this.ctx,
-        isTraceLoggingReqBody,
-        opts,
-      })
-    }
-
-    let ret = await fetch<T>(opts)
-
-    if (this.fetchConfig.processResult) {
-      ret = this.fetchConfig.processResult({
-        id,
-        ctx: this.ctx,
-        isTraceLoggingRespData,
-        opts,
-        resultData: ret,
-      })
-    }
-
-    if (this.fetchConfig.afterResponse) {
-      await this.fetchConfig.afterResponse({
-        id,
-        ctx: this.ctx,
-        isTraceLoggingRespData,
-        opts,
-        resultData: ret,
-      })
-    }
-
-    return ret
+    return this.fetch(opts)
   }
 
 
-  async post<T extends FetchResponse = any>(
+  post<T extends FetchResponse = any>(
     input: string,
     options?: Omit<Options, 'url' | 'method'>,
   ): Promise<OverwriteAnyToUnknown<T>> {
@@ -159,44 +122,7 @@ export class FetchService {
       url: input,
       method: 'POST',
     }
-    opts.headers = this.genReqHeadersFromOptionsAndConfigCallback(opts.headers)
-
-    const isTraceLoggingReqBody = !! this.fetchConfig.isTraceLoggingReqBody
-    const isTraceLoggingRespData = !! this.fetchConfig.isTraceLoggingRespData
-    const id = Symbol(opts.url)
-
-    if (this.fetchConfig.beforeRequest) {
-      await this.fetchConfig.beforeRequest({
-        id,
-        ctx: this.ctx,
-        isTraceLoggingReqBody,
-        opts,
-      })
-    }
-
-    let ret = await fetch<T>(opts)
-
-    if (this.fetchConfig.processResult) {
-      ret = this.fetchConfig.processResult({
-        id,
-        ctx: this.ctx,
-        isTraceLoggingRespData,
-        opts,
-        resultData: ret,
-      })
-    }
-
-    if (this.fetchConfig.afterResponse) {
-      await this.fetchConfig.afterResponse({
-        id,
-        ctx: this.ctx,
-        isTraceLoggingRespData,
-        opts,
-        resultData: ret,
-      })
-    }
-
-    return ret
+    return this.fetch(opts)
   }
 
 
