@@ -1,7 +1,7 @@
 {
   "name": "@waiting/egg-fetch",
   "author": "waiting",
-  "version": "8.5.1",
+  "version": "8.6.0",
   "description": "fetch for egg, midway",
   "eggPlugin": {
     "name": "fetch"
@@ -33,7 +33,7 @@
   "dependencies": {
     "@waiting/shared-core": "11",
     "@waiting/shared-types": "11",
-    "rxxfetch": "^8.5.1"
+    "rxxfetch": "^8.6.0"
   },
   "devDependencies": {
     "autod": "^3.0.0",
