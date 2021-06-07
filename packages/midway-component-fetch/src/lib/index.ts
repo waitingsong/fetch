@@ -5,7 +5,7 @@ import type { Context } from 'egg'
 import { FetchComponentConfig } from './types'
 
 
-export { FetchService } from './fetch'
+export { FetchComponent } from './fetch'
 export {
   defaultfetchConfigCallbacks, genRequestHeaders,
 } from './helper'

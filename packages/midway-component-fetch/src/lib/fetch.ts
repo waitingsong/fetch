@@ -16,7 +16,7 @@ import { FetchComponentConfig } from './types'
 
 
 @Provide()
-export class FetchService {
+export class FetchComponent {
 
   @Inject() readonly ctx: Context
 
