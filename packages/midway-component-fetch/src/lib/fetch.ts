@@ -10,6 +10,7 @@ import {
   Node_Headers,
 } from '@waiting/fetch'
 import { OverwriteAnyToUnknown } from '@waiting/shared-types'
+import type { Span } from 'opentracing'
 
 import { defaultfetchConfigCallbacks } from './helper'
 import { FetchComponentConfig } from './types'
@@ -51,6 +52,11 @@ export class FetchComponent {
         isTraceLoggingReqBody,
         opts,
       })
+
+      const currSpan = this.ctx.fetchRequestSpanMap.get(id)
+      if (currSpan) {
+        opts.headers = this.genReqHeadersFromOptionsAndConfigCallback(opts.headers, currSpan)
+      }
     }
 
     if (this.fetchConfig.beforeRequest) {
@@ -128,12 +134,14 @@ export class FetchComponent {
 
   genReqHeadersFromOptionsAndConfigCallback(
     initHeaders: Options['headers'],
+    span?: Span,
   ): Headers {
 
     const headers = new Node_Headers(initHeaders)
-    const newHeaders = this.fetchConfig.genRequestHeaders(this.ctx, this.headers)
+    const newHeaders = this.fetchConfig.genRequestHeaders(this.ctx, this.headers, span)
     newHeaders.forEach((value, key) => {
-      headers.append(key, value)
+      headers.set(key, value)
+      // headers.append(key, value)
     })
     return headers
   }

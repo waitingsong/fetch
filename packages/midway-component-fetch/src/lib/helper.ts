@@ -7,8 +7,8 @@ import { Tags } from 'opentracing'
 import { FetchComponentConfig } from './types'
 
 
-export const genRequestHeaders: FetchComponentConfig['genRequestHeaders'] = (ctx, headersInit) => {
-  const spanHeader = ctx.tracerManager.headerOfCurrentSpan()
+export const genRequestHeaders: FetchComponentConfig['genRequestHeaders'] = (ctx, headersInit, span) => {
+  const spanHeader = ctx.tracerManager.headerOfCurrentSpan(span)
   const newHeadersInit = {
     ...headersInit,
     ...spanHeader,
