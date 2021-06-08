@@ -132,16 +132,20 @@ export class FetchComponent {
   }
 
 
+  /**
+   * Duplicate key will be overwritten,
+   * by headers.set() instead of headers.append()
+   */
   genReqHeadersFromOptionsAndConfigCallback(
     initHeaders: Options['headers'],
     span?: Span,
   ): Headers {
 
     const headers = new Node_Headers(initHeaders)
-    const newHeaders = this.fetchConfig.genRequestHeaders(this.ctx, this.headers, span)
-    newHeaders.forEach((value, key) => {
-      headers.set(key, value)
+    const tmpHeader = this.fetchConfig.genRequestHeaders(this.ctx, this.headers, span)
+    tmpHeader.forEach((value, key) => {
       // headers.append(key, value)
+      headers.set(key, value)
     })
     return headers
   }
