@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 9.2.0 (2021-06-08)
+
+
+### Features
+
+* **midway-component-fetch:** rename span name to FetchComponent ([c0f62d6](https://github.com/waitingsong/rxxfetch/commit/c0f62d65807ba668066cb164b11ae1f425758faa))
+
+
+
+
+
 ## 9.1.1 (2021-06-08)
 
 **Note:** Version bump only for package rxxfetch

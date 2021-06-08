@@ -1,7 +1,7 @@
 {
   "name": "rxxfetch",
   "author": "waiting",
-  "version": "9.1.1",
+  "version": "9.2.0",
   "description": "Observable HTTP fetch API for browser and Node.js. Handle 302/303 redirect correctly on Node.js",
   "keywords": [
     "rx",
