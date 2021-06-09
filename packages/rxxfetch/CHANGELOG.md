@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 11.2.0 (2021-06-09)
+
+
+### Features
+
+* **midway-component-fetch:** tracing request headers ([88674ba](https://github.com/waitingsong/rxxfetch/commit/88674ba22216a95b5baa64e4c1db0d0f95dc0688))
+
+
+
+
+
 # 11.1.0 (2021-06-09)
 
 
