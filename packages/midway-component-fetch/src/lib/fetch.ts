@@ -41,15 +41,15 @@ export class FetchComponent {
     const opts: Options = { ...options }
     opts.headers = this.genReqHeadersFromOptionsAndConfigCallback(opts.headers)
 
-    const isTraceLoggingReqBody = !! this.fetchConfig.isTraceLoggingReqBody
-    const isTraceLoggingRespData = !! this.fetchConfig.isTraceLoggingRespData
+    const isTraceLoggingReqBody = !! this.fetchConfig.enableTraceLoggingReqBody
+    const isTraceLoggingRespData = !! this.fetchConfig.enableTraceLoggingRespData
     const id = Symbol(opts.url)
 
     if (this.fetchConfig.enableDefaultCallbacks) {
       await defaultfetchConfigCallbacks.beforeRequest({
         id,
         ctx: this.ctx,
-        isTraceLoggingReqBody,
+        enableTraceLoggingReqBody: isTraceLoggingReqBody,
         opts,
       })
 
@@ -63,7 +63,7 @@ export class FetchComponent {
       await this.fetchConfig.beforeRequest({
         id,
         ctx: this.ctx,
-        isTraceLoggingReqBody,
+        enableTraceLoggingReqBody: isTraceLoggingReqBody,
         opts,
       })
     }
@@ -74,7 +74,7 @@ export class FetchComponent {
       ret = this.fetchConfig.processResult({
         id,
         ctx: this.ctx,
-        isTraceLoggingRespData,
+        enableTraceLoggingRespData: isTraceLoggingRespData,
         opts,
         resultData: ret,
       })
@@ -84,7 +84,7 @@ export class FetchComponent {
       await this.fetchConfig.afterResponse({
         id,
         ctx: this.ctx,
-        isTraceLoggingRespData,
+        enableTraceLoggingRespData: isTraceLoggingRespData,
         opts,
         resultData: ret,
       })
@@ -94,7 +94,7 @@ export class FetchComponent {
       await defaultfetchConfigCallbacks.afterResponse({
         id,
         ctx: this.ctx,
-        isTraceLoggingRespData,
+        enableTraceLoggingRespData: isTraceLoggingRespData,
         opts,
         resultData: ret,
       })

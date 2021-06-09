@@ -32,21 +32,21 @@ export interface FetchComponentConfig {
    * @default false
    */
   enableDefaultCallbacks: boolean
-  isTraceLoggingReqBody?: boolean
-  isTraceLoggingRespData?: boolean
+  enableTraceLoggingReqBody?: boolean
+  enableTraceLoggingRespData?: boolean
 }
 
 export interface ReqCallbackOptions {
   id: symbol
   ctx: Context
-  isTraceLoggingReqBody: boolean
+  enableTraceLoggingReqBody: boolean
   opts: Options
 }
 
 export interface RespCallbackOptions <T = unknown> {
   id: symbol
   ctx: Context
-  isTraceLoggingRespData: boolean
+  enableTraceLoggingRespData: boolean
   opts: Options
   resultData: T
 }

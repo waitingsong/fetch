@@ -20,7 +20,7 @@ export const genRequestHeaders: FetchComponentConfig['genRequestHeaders'] = (ctx
 }
 
 const beforeRequest: FetchComponentConfig['beforeRequest'] = async (options) => {
-  const { id, ctx, isTraceLoggingReqBody, opts } = options
+  const { id, ctx, enableTraceLoggingReqBody: isTraceLoggingReqBody, opts } = options
   const input: SpanLogInput = {
     event: TracerLog.fetchStart,
     url: opts.url,
@@ -51,7 +51,7 @@ const beforeRequest: FetchComponentConfig['beforeRequest'] = async (options) => 
 }
 
 const afterResponse: FetchComponentConfig['afterResponse'] = async (options) => {
-  const { id, ctx, isTraceLoggingRespData, opts, resultData } = options
+  const { id, ctx, enableTraceLoggingRespData: isTraceLoggingRespData, opts, resultData } = options
   const input: SpanLogInput = {
     event: TracerLog.fetchFinish,
     url: opts.url,
