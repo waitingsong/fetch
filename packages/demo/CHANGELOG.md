@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 11.1.0 (2021-06-09)
+
+
+### Features
+
+* **midway-component-fetch:** remove type declaration of egg.EggAppConfig ([9f4efe3](https://github.com/waitingsong/npm-mono-base/commit/9f4efe3253640c5799cb36b415a37bfbcfb34f82))
+
+
+
+
+
 # 11.0.0 (2021-06-09)
 
 
