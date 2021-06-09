@@ -20,7 +20,7 @@ export const genRequestHeaders: FetchComponentConfig['genRequestHeaders'] = (ctx
 }
 
 const beforeRequest: FetchComponentConfig['beforeRequest'] = async (options) => {
-  const { id, ctx, enableTraceLoggingReqBody: isTraceLoggingReqBody, opts } = options
+  const { id, ctx, enableTraceLoggingReqBody, opts } = options
   const input: SpanLogInput = {
     event: TracerLog.fetchStart,
     url: opts.url,
@@ -36,7 +36,7 @@ const beforeRequest: FetchComponentConfig['beforeRequest'] = async (options) => 
     [Tags.HTTP_URL]: opts.url,
     [Tags.HTTP_METHOD]: opts.method,
   }
-  if (isTraceLoggingReqBody) {
+  if (enableTraceLoggingReqBody) {
     if (typeof opts.data !== 'undefined') {
       tags[TracerTag.reqQuery] = opts.data
     }
@@ -51,7 +51,7 @@ const beforeRequest: FetchComponentConfig['beforeRequest'] = async (options) => 
 }
 
 const afterResponse: FetchComponentConfig['afterResponse'] = async (options) => {
-  const { id, ctx, enableTraceLoggingRespData: isTraceLoggingRespData, opts, resultData } = options
+  const { id, ctx, enableTraceLoggingRespData, opts, resultData } = options
   const input: SpanLogInput = {
     event: TracerLog.fetchFinish,
     url: opts.url,
@@ -67,7 +67,7 @@ const afterResponse: FetchComponentConfig['afterResponse'] = async (options) => 
     return
   }
   const tags: SpanLogInput = {}
-  if (isTraceLoggingRespData) {
+  if (enableTraceLoggingRespData) {
     if (typeof resultData !== 'undefined') {
       tags[TracerTag.respBody] = resultData
     }
