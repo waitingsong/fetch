@@ -8,5 +8,6 @@ export const fetch: FetchComponentConfig = {
   enableDefaultCallbacks: false,
   enableTraceLoggingReqBody: false,
   enableTraceLoggingRespData: false,
+  traceLoggingReqHeaders: [],
 }
 

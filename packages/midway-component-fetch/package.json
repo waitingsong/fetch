@@ -27,7 +27,7 @@
     "@waiting/fetch": "^11.1.0",
     "@waiting/shared-core": "^12.0.0",
     "@waiting/shared-types": "^12.0.0",
-    "midway-component-jaeger": "^3.4.0"
+    "midway-component-jaeger": "^3.6.0"
   },
   "devDependencies": {
     "@midwayjs/cli": "1",

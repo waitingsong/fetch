@@ -34,12 +34,17 @@ export interface FetchComponentConfig {
   enableDefaultCallbacks: boolean
   enableTraceLoggingReqBody?: boolean
   enableTraceLoggingRespData?: boolean
+  /**
+   * @example ['authorization', 'user-agent']
+   */
+  traceLoggingReqHeaders?: string[]
 }
 
 export interface ReqCallbackOptions {
   id: symbol
   ctx: Context
   enableTraceLoggingReqBody: boolean
+  traceLoggingReqHeaders: string[]
   opts: Options
 }
 

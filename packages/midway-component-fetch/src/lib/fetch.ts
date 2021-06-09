@@ -41,8 +41,13 @@ export class FetchComponent {
     const opts: Options = { ...options }
     opts.headers = this.genReqHeadersFromOptionsAndConfigCallback(opts.headers)
 
-    const enableTraceLoggingReqBody = !! this.fetchConfig.enableTraceLoggingReqBody
-    const enableTraceLoggingRespData = !! this.fetchConfig.enableTraceLoggingRespData
+    const config = this.fetchConfig
+
+    const enableTraceLoggingReqBody = !! config.enableTraceLoggingReqBody
+    const enableTraceLoggingRespData = !! config.enableTraceLoggingRespData
+    const traceLoggingReqHeaders = Array.isArray(config.traceLoggingReqHeaders)
+      ? config.traceLoggingReqHeaders
+      : []
     const id = Symbol(opts.url)
 
     if (this.fetchConfig.enableDefaultCallbacks) {
@@ -50,6 +55,7 @@ export class FetchComponent {
         id,
         ctx: this.ctx,
         enableTraceLoggingReqBody,
+        traceLoggingReqHeaders,
         opts,
       })
 
@@ -59,19 +65,20 @@ export class FetchComponent {
       }
     }
 
-    if (this.fetchConfig.beforeRequest) {
-      await this.fetchConfig.beforeRequest({
+    if (config.beforeRequest) {
+      await config.beforeRequest({
         id,
         ctx: this.ctx,
         enableTraceLoggingReqBody,
+        traceLoggingReqHeaders,
         opts,
       })
     }
 
     let ret = await fetch<T>(opts)
 
-    if (this.fetchConfig.processResult) {
-      ret = this.fetchConfig.processResult({
+    if (config.processResult) {
+      ret = config.processResult({
         id,
         ctx: this.ctx,
         enableTraceLoggingRespData,
@@ -80,8 +87,8 @@ export class FetchComponent {
       })
     }
 
-    if (this.fetchConfig.afterResponse) {
-      await this.fetchConfig.afterResponse({
+    if (config.afterResponse) {
+      await config.afterResponse({
         id,
         ctx: this.ctx,
         enableTraceLoggingRespData,
@@ -90,7 +97,7 @@ export class FetchComponent {
       })
     }
 
-    if (this.fetchConfig.enableDefaultCallbacks) {
+    if (config.enableDefaultCallbacks) {
       await defaultfetchConfigCallbacks.afterResponse({
         id,
         ctx: this.ctx,
