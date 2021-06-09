@@ -38,11 +38,11 @@ const beforeRequest: FetchComponentConfig['beforeRequest'] = async (options) => 
   }
   if (isTraceLoggingReqBody) {
     if (typeof opts.data !== 'undefined') {
-      tags[TracerTag.respBody] = opts.data
+      tags[TracerTag.reqQuery] = opts.data
     }
   }
   else {
-    tags[TracerTag.respBody] = 'Not logged'
+    tags[TracerTag.reqQuery] = 'Not logged'
   }
 
   span.addTags(tags)
