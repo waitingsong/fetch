@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 11.0.0 (2021-06-09)
+
+
+### Features
+
+* **midway-component-fetch:** breaking change types of FetchComponentConfig ([3a592a0](https://github.com/waitingsong/rxxfetch/commit/3a592a0530fb62525c4cb6484a3ee5218dd0e68f))
+
+
+
+
+
 ## 10.0.1 (2021-06-09)
 
 
