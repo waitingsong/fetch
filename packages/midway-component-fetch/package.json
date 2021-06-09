@@ -36,7 +36,6 @@
     "@midwayjs/web": "2",
     "@types/node": "15",
     "cross-env": "7",
-    "egg": "^2.29.0",
     "opentracing": "*",
     "typescript": "4"
   },

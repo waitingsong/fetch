@@ -1,5 +1,3 @@
-// @ts-expect-error
-import type { Context } from '@midwayjs/core'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import type { Span } from 'opentracing'
 
@@ -22,4 +20,10 @@ declare module '@midwayjs/core' {
     fetchRequestSpanMap: Map<symbol, Span>
   }
 }
+
+// declare module 'egg' {
+//   interface EggAppConfig {
+//     fetch: FetchComponentConfig
+//   }
+// }
 
