@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 11.2.2 (2021-06-10)
+
+
+### Bug Fixes
+
+* **midway-component-fetch:** fetchConfig.genRequestHeaders may undefined ([00139ff](https://github.com/waitingsong/rxxfetch/commit/00139ff58eb7594e3bba0bc2e150acd68c315780))
+
+
+
+
+
 ## 11.2.1 (2021-06-10)
 
 **Note:** Version bump only for package @waiting/egg-fetch
