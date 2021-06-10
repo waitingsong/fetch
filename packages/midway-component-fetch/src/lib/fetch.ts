@@ -149,6 +149,10 @@ export class FetchComponent {
   ): Headers {
 
     const headers = new Node_Headers(initHeaders)
+    if (typeof this.fetchConfig.genRequestHeaders !== 'function') {
+      return headers
+    }
+
     const tmpHeader = this.fetchConfig.genRequestHeaders(this.ctx, this.headers, span)
     tmpHeader.forEach((value, key) => {
       // headers.append(key, value)
