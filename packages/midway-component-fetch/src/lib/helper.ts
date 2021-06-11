@@ -27,14 +27,17 @@ const beforeRequest: FetchComponentConfig['beforeRequest'] = async (options) => 
     traceLoggingReqHeaders,
     opts,
   } = options
-  const input: SpanLogInput = {
+
+  const time = genISO8601String()
+  const mem = humanMemoryUsage()
+  const parentInput: SpanLogInput = {
     event: TracerLog.fetchStart,
     url: opts.url,
     method: opts.method,
-    time: genISO8601String(),
-    [TracerLog.svcMemoryUsage]: humanMemoryUsage(),
+    time,
+    [TracerLog.svcMemoryUsage]: mem,
   }
-  ctx.tracerManager.spanLog(input)
+  ctx.tracerManager.spanLog(parentInput) // parent span log
 
   const { tracerManager, fetchRequestSpanMap } = ctx
   const span = tracerManager.genSpan('FetchComponent')
@@ -60,20 +63,28 @@ const beforeRequest: FetchComponentConfig['beforeRequest'] = async (options) => 
   })
 
   span.addTags(tags)
-  span.log(input)
+
+  const input: SpanLogInput = {
+    event: TracerLog.fetchStart,
+    time,
+    [TracerLog.svcMemoryUsage]: mem,
+  }
+  span.log(input) // current span log
   fetchRequestSpanMap.set(id, span)
 }
 
 const afterResponse: FetchComponentConfig['afterResponse'] = async (options) => {
   const { id, ctx, enableTraceLoggingRespData, opts, resultData } = options
-  const input: SpanLogInput = {
+  const time = genISO8601String()
+  const mem = humanMemoryUsage()
+  const parentInput: SpanLogInput = {
     event: TracerLog.fetchFinish,
     url: opts.url,
     method: opts.method,
-    time: genISO8601String(),
-    [TracerLog.svcMemoryUsage]: humanMemoryUsage(),
+    time,
+    [TracerLog.svcMemoryUsage]: mem,
   }
-  ctx.tracerManager.spanLog(input)
+  ctx.tracerManager.spanLog(parentInput)
 
   const { fetchRequestSpanMap } = ctx
   const span = fetchRequestSpanMap.get(id)
@@ -91,7 +102,14 @@ const afterResponse: FetchComponentConfig['afterResponse'] = async (options) => 
   }
 
   Object.keys(tags).length && span.addTags(tags)
+
+  const input: SpanLogInput = {
+    event: TracerLog.fetchStart,
+    time,
+    [TracerLog.svcMemoryUsage]: mem,
+  }
   span.log(input)
+
   span.finish()
   fetchRequestSpanMap.delete(id)
 }
