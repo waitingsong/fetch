@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 11.3.1 (2021-06-15)
+
+
+### Bug Fixes
+
+* **midway-component-fetch:** callback of exception ([4f86a09](https://github.com/waitingsong/rxxfetch/commit/4f86a09bc7426b0e0aca3333d29f79adb204a8cd))
+
+
+
+
+
 # 11.3.0 (2021-06-15)
 
 
