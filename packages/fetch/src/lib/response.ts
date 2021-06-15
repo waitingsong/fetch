@@ -21,7 +21,8 @@ export async function handleResponseError(
     .catch((err: Error) => JSON.stringify(err))
     .then((txt) => {
       const str = `${FetchMsg.httpErrorMsgPrefix}${status}\nstatusText: ${statusText}\nResponse: ${txt}`
-      throw new Error(str)
+      const ex = new Error(str)
+      return Promise.reject(ex)
     })
   return ret
 }
