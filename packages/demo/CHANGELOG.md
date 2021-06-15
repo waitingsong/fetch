@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 11.5.0 (2021-06-15)
+
+
+### Features
+
+* **fetch:** return Promise.reject() instead of throw error within handleResponseError() ([5c39153](https://github.com/waitingsong/npm-mono-base/commit/5c39153c088f86aa69addb7af8e24059cd1602d6))
+
+
+
+
+
 ## 11.4.3 (2021-06-15)
 
 **Note:** Version bump only for package demo
