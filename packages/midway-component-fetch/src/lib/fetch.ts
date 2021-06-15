@@ -111,7 +111,17 @@ export class FetchComponent {
       return ret
     }
     catch (ex) {
-      if (typeof config.processEx === 'function') {
+      if (config.enableDefaultCallbacks) {
+        if (typeof defaultfetchConfigCallbacks.processEx === 'function') {
+          return defaultfetchConfigCallbacks.processEx({
+            id,
+            ctx: this.ctx,
+            opts,
+            exception: ex as Error,
+          })
+        }
+      }
+      else if (typeof config.processEx === 'function') {
         return config.processEx({
           id,
           ctx: this.ctx,
@@ -119,9 +129,7 @@ export class FetchComponent {
           exception: ex as Error,
         })
       }
-      else {
-        throw ex
-      }
+      throw ex
     }
   }
 

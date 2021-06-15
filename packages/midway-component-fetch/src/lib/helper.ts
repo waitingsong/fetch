@@ -114,7 +114,7 @@ const afterResponse: FetchComponentConfig['afterResponse'] = async (options) => 
   fetchRequestSpanMap.delete(id)
 }
 
-export const handleEx: FetchComponentConfig['processEx'] = (options) => {
+export const processEx: FetchComponentConfig['processEx'] = (options) => {
   const { id, ctx, exception } = options
   const time = genISO8601String()
   const mem = humanMemoryUsage()
@@ -160,7 +160,7 @@ export const defaultfetchConfigCallbacks = {
   // genRequestHeaders,
   beforeRequest,
   afterResponse,
-  handleEx,
+  processEx,
 }
 
 export function retrieveHeadersItem(
