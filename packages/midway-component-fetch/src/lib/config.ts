@@ -1,4 +1,5 @@
 import { Node_Headers } from '@waiting/fetch'
+import { HeadersKey } from 'midway-component-jaeger'
 
 import { FetchComponentConfig } from './types'
 
@@ -11,6 +12,7 @@ export const defaultFetchComponentConfig: FetchComponentConfig = {
   traceLoggingReqHeaders: [
     'authorization',
     'user-agent',
+    HeadersKey.reqId,
   ],
   traceLoggingRespHeaders: [
     'content-type',
