@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 11.3.0 (2021-06-15)
+
+
+### Features
+
+* **midway-component-fetch:** process caught exception with optional processEx() ([9a1ce90](https://github.com/waitingsong/rxxfetch/commit/9a1ce9086caea0142d1becf9296b185e5b4c40e9))
+
+
+
+
+
 ## 11.2.3 (2021-06-11)
 
 **Note:** Version bump only for package midway-component-fetch
