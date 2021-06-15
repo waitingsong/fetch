@@ -8,11 +8,5 @@ export const fetch: FetchComponentConfig = {
   enableTraceLoggingReqBody: false,
   enableTraceLoggingRespData: false,
   traceLoggingReqHeaders: [],
-  traceLoggingRespHeaders: [
-    'content-type',
-    'server',
-    'x-aspnet-version',
-    'x-powered-by',
-  ],
 }
 
