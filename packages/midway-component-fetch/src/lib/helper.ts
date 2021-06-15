@@ -114,10 +114,53 @@ const afterResponse: FetchComponentConfig['afterResponse'] = async (options) => 
   fetchRequestSpanMap.delete(id)
 }
 
+export const handleEx: FetchComponentConfig['processEx'] = (options) => {
+  const { id, ctx, exception } = options
+  const time = genISO8601String()
+  const mem = humanMemoryUsage()
+
+  const { fetchRequestSpanMap } = ctx
+  const span = fetchRequestSpanMap.get(id)
+  if (! span) {
+    if (exception instanceof Error) {
+      throw exception
+    }
+    else {
+      throw new Error(exception)
+    }
+  }
+
+  const tags: SpanLogInput = {
+    [Tags.ERROR]: true,
+    [TracerTag.logLevel]: 'error',
+    [TracerTag.svcException]: exception,
+  }
+  span.addTags(tags)
+
+  const input: SpanLogInput = {
+    level: 'error',
+    event: TracerLog.fetchException,
+    time,
+    [TracerLog.svcMemoryUsage]: mem,
+  }
+  span.log(input)
+
+  span.finish()
+  fetchRequestSpanMap.delete(id)
+
+  if (exception instanceof Error) {
+    throw exception
+  }
+  else {
+    throw new Error(exception)
+  }
+}
+
 export const defaultfetchConfigCallbacks = {
   // genRequestHeaders,
   beforeRequest,
   afterResponse,
+  handleEx,
 }
 
 export function retrieveHeadersItem(
@@ -142,4 +185,5 @@ export function retrieveHeadersItem(
 
   return ''
 }
+
 

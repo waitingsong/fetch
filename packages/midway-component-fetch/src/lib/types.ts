@@ -28,8 +28,17 @@ export interface FetchComponentConfig {
    */
   afterResponse?: <T = unknown>(options: RespCallbackOptions<T>) => Promise<void>
   /**
+   * Callback handling exception
+   * @description process caught Exception then throw it
+   */
+  processEx?: (options: ProcessExCallbackOptions) => never
+  /**
    * Enable default tracing callbacks
    * @default false
+   * @description callbacks
+   *   - beforeRequest() in helper.ts
+   *   - afterResponse() in helper.ts
+   *   - processEx() in helper.ts
    */
   enableDefaultCallbacks: boolean
   enableTraceLoggingReqBody?: boolean
@@ -54,5 +63,12 @@ export interface RespCallbackOptions <T = unknown> {
   enableTraceLoggingRespData: boolean
   opts: Options
   resultData: T
+}
+
+export interface ProcessExCallbackOptions {
+  id: symbol
+  ctx: Context
+  opts: Options
+  exception: Error
 }
 

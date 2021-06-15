@@ -75,39 +75,54 @@ export class FetchComponent {
       })
     }
 
-    let ret = await fetch<T>(opts)
+    try {
+      let ret = await fetch<T>(opts)
 
-    if (config.processResult) {
-      ret = config.processResult({
-        id,
-        ctx: this.ctx,
-        enableTraceLoggingRespData,
-        opts,
-        resultData: ret,
-      })
+      if (config.processResult) {
+        ret = config.processResult({
+          id,
+          ctx: this.ctx,
+          enableTraceLoggingRespData,
+          opts,
+          resultData: ret,
+        })
+      }
+
+      if (config.afterResponse) {
+        await config.afterResponse({
+          id,
+          ctx: this.ctx,
+          enableTraceLoggingRespData,
+          opts,
+          resultData: ret,
+        })
+      }
+
+      if (config.enableDefaultCallbacks) {
+        await defaultfetchConfigCallbacks.afterResponse({
+          id,
+          ctx: this.ctx,
+          enableTraceLoggingRespData,
+          opts,
+          resultData: ret,
+        })
+      }
+
+      return ret
     }
-
-    if (config.afterResponse) {
-      await config.afterResponse({
-        id,
-        ctx: this.ctx,
-        enableTraceLoggingRespData,
-        opts,
-        resultData: ret,
-      })
+    catch (ex) {
+      if (typeof config.processEx === 'function') {
+        return config.processEx({
+          id,
+          ctx: this.ctx,
+          opts,
+          exception: ex as Error,
+        })
+      }
+      else {
+        throw ex
+      }
     }
-
-    if (config.enableDefaultCallbacks) {
-      await defaultfetchConfigCallbacks.afterResponse({
-        id,
-        ctx: this.ctx,
-        enableTraceLoggingRespData,
-        opts,
-        resultData: ret,
-      })
-    }
-
-    return ret
   }
 
 
