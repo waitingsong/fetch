@@ -1,23 +1,11 @@
-import { Node_Headers } from '@waiting/fetch'
-
+import { defaultFetchComponentConfig } from '../lib/config'
 import { FetchComponentConfig } from '../lib/types'
 
 
 export const fetch: FetchComponentConfig = {
-  genRequestHeaders: () => new Node_Headers(),
+  ...defaultFetchComponentConfig,
   enableDefaultCallbacks: false,
   enableTraceLoggingReqBody: true,
   enableTraceLoggingRespData: true,
-  traceLoggingReqHeaders: [
-    'authorization',
-    'user-agent',
-  ],
-  traceLoggingRespHeaders: [
-    'authorization',
-    'user-agent',
-    'server',
-    'x-aspnet-version',
-    'x-powered-by',
-  ],
 }
 
