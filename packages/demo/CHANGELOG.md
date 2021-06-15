@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 12.1.0 (2021-06-15)
+
+
+### Features
+
+* **midway-component-fetch:** export defaultFetchComponentConfig ([4d92ddc](https://github.com/waitingsong/npm-mono-base/commit/4d92ddcc3b1e7567dcb6ebce688e04e3667466a4))
+
+
+
+
+
 # 12.0.0 (2021-06-15)
 
 
