@@ -23,10 +23,12 @@ const beforeRequest: FetchComponentConfig['beforeRequest'] = async (options) => 
   const {
     id,
     ctx,
-    enableTraceLoggingReqBody,
-    traceLoggingReqHeaders,
     opts,
   } = options
+  const {
+    enableTraceLoggingReqBody,
+    traceLoggingReqHeaders,
+  } = options.config
 
   const time = genISO8601String()
   const mem = humanMemoryUsage()
@@ -55,12 +57,14 @@ const beforeRequest: FetchComponentConfig['beforeRequest'] = async (options) => 
     tags[TracerTag.reqQuery] = 'Not logged'
   }
 
-  traceLoggingReqHeaders.forEach((name) => {
-    const val = retrieveHeadersItem(opts.headers, name)
-    if (val) {
-      tags[`http.${name}`] = val
-    }
-  })
+  if (Array.isArray(traceLoggingReqHeaders)) {
+    traceLoggingReqHeaders.forEach((name) => {
+      const val = retrieveHeadersItem(opts.headers, name)
+      if (typeof val !== 'undefined') {
+        tags[`http.${name}`] = val
+      }
+    })
+  }
 
   span.addTags(tags)
 
@@ -74,7 +78,17 @@ const beforeRequest: FetchComponentConfig['beforeRequest'] = async (options) => 
 }
 
 const afterResponse: FetchComponentConfig['afterResponse'] = async (options) => {
-  const { id, ctx, enableTraceLoggingRespData, opts, resultData } = options
+  const {
+    id,
+    ctx,
+    opts,
+    resultData,
+  } = options
+  const {
+    enableTraceLoggingRespData,
+    traceLoggingRespHeaders,
+  } = options.config
+
   const time = genISO8601String()
   const mem = humanMemoryUsage()
   const parentInput: SpanLogInput = {
@@ -101,6 +115,15 @@ const afterResponse: FetchComponentConfig['afterResponse'] = async (options) => 
     tags[TracerTag.respBody] = 'Not logged'
   }
 
+  if (Array.isArray(traceLoggingRespHeaders)) {
+    traceLoggingRespHeaders.forEach((name) => {
+      const val = retrieveHeadersItem(opts.headers, name)
+      if (typeof val !== 'undefined') {
+        tags[`http.${name}`] = val
+      }
+    })
+  }
+
   Object.keys(tags).length && span.addTags(tags)
 
   const input: SpanLogInput = {
@@ -115,7 +138,10 @@ const afterResponse: FetchComponentConfig['afterResponse'] = async (options) => 
 }
 
 export const processEx: FetchComponentConfig['processEx'] = (options) => {
-  const { id, ctx, exception } = options
+  const { id, ctx, opts, exception } = options
+  const {
+    traceLoggingRespHeaders,
+  } = options.config
   const time = genISO8601String()
   const mem = humanMemoryUsage()
 
@@ -135,6 +161,16 @@ export const processEx: FetchComponentConfig['processEx'] = (options) => {
     [TracerTag.logLevel]: 'error',
     [TracerTag.svcException]: exception,
   }
+
+  if (Array.isArray(traceLoggingRespHeaders)) {
+    traceLoggingRespHeaders.forEach((name) => {
+      const val = retrieveHeadersItem(opts.headers, name)
+      if (typeof val !== 'undefined') {
+        tags[`http.${name}`] = val
+      }
+    })
+  }
+
   span.addTags(tags)
 
   const input: SpanLogInput = {

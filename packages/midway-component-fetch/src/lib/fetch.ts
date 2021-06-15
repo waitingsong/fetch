@@ -42,20 +42,13 @@ export class FetchComponent {
     opts.headers = this.genReqHeadersFromOptionsAndConfigCallback(opts.headers)
 
     const config = this.fetchConfig
-
-    const enableTraceLoggingReqBody = !! config.enableTraceLoggingReqBody
-    const enableTraceLoggingRespData = !! config.enableTraceLoggingRespData
-    const traceLoggingReqHeaders = Array.isArray(config.traceLoggingReqHeaders)
-      ? config.traceLoggingReqHeaders
-      : []
     const id = Symbol(opts.url)
 
     if (this.fetchConfig.enableDefaultCallbacks) {
       await defaultfetchConfigCallbacks.beforeRequest({
         id,
         ctx: this.ctx,
-        enableTraceLoggingReqBody,
-        traceLoggingReqHeaders,
+        config: this.fetchConfig,
         opts,
       })
 
@@ -69,8 +62,7 @@ export class FetchComponent {
       await config.beforeRequest({
         id,
         ctx: this.ctx,
-        enableTraceLoggingReqBody,
-        traceLoggingReqHeaders,
+        config: this.fetchConfig,
         opts,
       })
     }
@@ -82,7 +74,7 @@ export class FetchComponent {
         ret = config.processResult({
           id,
           ctx: this.ctx,
-          enableTraceLoggingRespData,
+          config: this.fetchConfig,
           opts,
           resultData: ret,
         })
@@ -92,7 +84,7 @@ export class FetchComponent {
         await config.afterResponse({
           id,
           ctx: this.ctx,
-          enableTraceLoggingRespData,
+          config: this.fetchConfig,
           opts,
           resultData: ret,
         })
@@ -102,7 +94,7 @@ export class FetchComponent {
         await defaultfetchConfigCallbacks.afterResponse({
           id,
           ctx: this.ctx,
-          enableTraceLoggingRespData,
+          config: this.fetchConfig,
           opts,
           resultData: ret,
         })
@@ -116,6 +108,7 @@ export class FetchComponent {
           return defaultfetchConfigCallbacks.processEx({
             id,
             ctx: this.ctx,
+            config: this.fetchConfig,
             opts,
             exception: ex as Error,
           })
@@ -125,6 +118,7 @@ export class FetchComponent {
         return config.processEx({
           id,
           ctx: this.ctx,
+          config: this.fetchConfig,
           opts,
           exception: ex as Error,
         })

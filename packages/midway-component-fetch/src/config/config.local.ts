@@ -8,5 +8,16 @@ export const fetch: FetchComponentConfig = {
   enableDefaultCallbacks: false,
   enableTraceLoggingReqBody: true,
   enableTraceLoggingRespData: true,
+  traceLoggingReqHeaders: [
+    'authorization',
+    'user-agent',
+  ],
+  traceLoggingRespHeaders: [
+    'authorization',
+    'user-agent',
+    'server',
+    'x-aspnet-version',
+    'x-powered-by',
+  ],
 }
 

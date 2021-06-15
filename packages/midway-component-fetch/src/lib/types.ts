@@ -47,20 +47,23 @@ export interface FetchComponentConfig {
    * @example ['authorization', 'user-agent']
    */
   traceLoggingReqHeaders?: string[]
+  /**
+   * @example ['authorization', 'user-agent', 'server']
+   */
+  traceLoggingRespHeaders?: string[]
 }
 
 export interface ReqCallbackOptions {
   id: symbol
   ctx: Context
-  enableTraceLoggingReqBody: boolean
-  traceLoggingReqHeaders: string[]
+  config: FetchComponentConfig
   opts: Options
 }
 
 export interface RespCallbackOptions <T = unknown> {
   id: symbol
   ctx: Context
-  enableTraceLoggingRespData: boolean
+  config: FetchComponentConfig
   opts: Options
   resultData: T
 }
@@ -68,6 +71,7 @@ export interface RespCallbackOptions <T = unknown> {
 export interface ProcessExCallbackOptions {
   id: symbol
   ctx: Context
+  config: FetchComponentConfig
   opts: Options
   exception: Error
 }
