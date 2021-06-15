@@ -1,7 +1,7 @@
 {
   "name": "midway-component-fetch",
   "author": "waiting",
-  "version": "11.4.1",
+  "version": "11.4.2",
   "description": "",
   "private": false,
   "keywords": [
@@ -24,7 +24,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@waiting/fetch": "^11.4.1",
+    "@waiting/fetch": "^11.4.2",
     "@waiting/shared-core": "^13.0.0",
     "@waiting/shared-types": "^13.0.0",
     "midway-component-jaeger": ">=6.11.2"
