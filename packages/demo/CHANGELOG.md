@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 11.4.0 (2021-06-15)
+
+
+### Features
+
+* bump deps ([3baacdd](https://github.com/waitingsong/npm-mono-base/commit/3baacddfa591772019c76dd5cf7b38e624c63708))
+
+
+
+
+
 ## 11.3.1 (2021-06-15)
 
 
