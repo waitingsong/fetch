@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 12.2.0 (2021-06-16)
+
+
+### Features
+
+* **midway-component-fetch:** update defaultFetchComponentConfig.traceLoggingReqHeaders ([66d2d3c](https://github.com/waitingsong/rxxfetch/commit/66d2d3cdc56f4cdef2ed215ac8500a491ad70b1f))
+
+
+
+
+
 # 12.1.0 (2021-06-15)
 
 
