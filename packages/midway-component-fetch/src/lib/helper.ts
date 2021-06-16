@@ -127,7 +127,7 @@ const afterResponse: FetchComponentConfig['afterResponse'] = async (options) => 
   Object.keys(tags).length && span.addTags(tags)
 
   const input: SpanLogInput = {
-    event: TracerLog.fetchStart,
+    event: TracerLog.fetchFinish,
     time,
     [TracerLog.svcMemoryUsage]: mem,
   }
