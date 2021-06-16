@@ -145,6 +145,15 @@ export const processEx: FetchComponentConfig['processEx'] = (options) => {
   const time = genISO8601String()
   const mem = humanMemoryUsage()
 
+  const parentInput: SpanLogInput = {
+    event: TracerLog.fetchException,
+    url: opts.url,
+    method: opts.method,
+    time,
+    [TracerLog.svcMemoryUsage]: mem,
+  }
+  ctx.tracerManager.spanLog(parentInput) // parent span log
+
   const { fetchRequestSpanMap } = ctx
   const span = fetchRequestSpanMap.get(id)
   if (! span) {
