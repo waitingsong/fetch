@@ -60,7 +60,7 @@ const beforeRequest: FetchComponentConfig['beforeRequest'] = async (options) => 
   if (Array.isArray(traceLoggingReqHeaders)) {
     traceLoggingReqHeaders.forEach((name) => {
       const val = retrieveHeadersItem(opts.headers, name)
-      if (typeof val !== 'undefined') {
+      if (val) {
         tags[`http.${name}`] = val
       }
     })
@@ -118,7 +118,7 @@ const afterResponse: FetchComponentConfig['afterResponse'] = async (options) => 
   if (Array.isArray(traceLoggingRespHeaders)) {
     traceLoggingRespHeaders.forEach((name) => {
       const val = retrieveHeadersItem(opts.headers, name)
-      if (typeof val !== 'undefined') {
+      if (val) {
         tags[`http.${name}`] = val
       }
     })
@@ -165,7 +165,7 @@ export const processEx: FetchComponentConfig['processEx'] = (options) => {
   if (Array.isArray(traceLoggingRespHeaders)) {
     traceLoggingRespHeaders.forEach((name) => {
       const val = retrieveHeadersItem(opts.headers, name)
-      if (typeof val !== 'undefined') {
+      if (val) {
         tags[`http.${name}`] = val
       }
     })
