@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 12.3.0 (2021-06-16)
+
+
+### Features
+
+* **midway-component-fetch:** logging on parent span when exception ([33379bc](https://github.com/waitingsong/rxxfetch/commit/33379bcfa601a46813289b8b2228f2c80f7e6b44))
+
+
+
+
+
 ## 12.2.1 (2021-06-16)
 
 **Note:** Version bump only for package @waiting/fetch
