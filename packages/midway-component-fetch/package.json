@@ -24,10 +24,10 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@mw-components/jaeger": "^6.13.1",
     "@waiting/fetch": "^12.3.0",
     "@waiting/shared-core": "^13.0.0",
-    "@waiting/shared-types": "^13.0.0",
-    "midway-component-jaeger": ">=6.11.2"
+    "@waiting/shared-types": "^13.0.0"
   },
   "devDependencies": {
     "@midwayjs/cli": "1",

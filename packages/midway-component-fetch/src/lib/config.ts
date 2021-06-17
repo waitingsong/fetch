@@ -1,5 +1,5 @@
+import { HeadersKey } from '@mw-components/jaeger'
 import { Node_Headers } from '@waiting/fetch'
-import { HeadersKey } from 'midway-component-jaeger'
 
 import { FetchComponentConfig } from './types'
 

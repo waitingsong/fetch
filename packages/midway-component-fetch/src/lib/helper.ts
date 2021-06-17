@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
+import { SpanLogInput, TracerLog, TracerTag, HeadersKey } from '@mw-components/jaeger'
 import { Node_Headers } from '@waiting/fetch'
 import { genISO8601String, humanMemoryUsage } from '@waiting/shared-core'
-import { SpanLogInput, TracerLog, TracerTag, HeadersKey } from 'midway-component-jaeger'
 import { Tags } from 'opentracing'
 
 import { FetchComponentConfig } from './types'
