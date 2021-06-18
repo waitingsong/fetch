@@ -31,8 +31,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@waiting/shared-core": "^13.0.0",
-    "@waiting/shared-types": "^13.0.0",
+    "@waiting/shared-core": "^14.0.0",
+    "@waiting/shared-types": "^14.0.0",
     "rxxfetch": "^12.4.1"
   },
   "devDependencies": {
