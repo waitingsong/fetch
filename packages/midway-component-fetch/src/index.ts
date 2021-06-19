@@ -21,9 +21,4 @@ declare module '@midwayjs/core' {
   }
 }
 
-// declare module 'egg' {
-//   interface EggAppConfig {
-//     fetch: FetchComponentConfig
-//   }
-// }
 
