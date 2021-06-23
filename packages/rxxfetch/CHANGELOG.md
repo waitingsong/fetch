@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 12.6.0 (2021-06-23)
+
+
+### Features
+
+* **midway-component-fetch:** update defaultFetchComponentConfig.genRequestHeaders ([d870e18](https://github.com/waitingsong/rxxfetch/commit/d870e188009c825b70c6c1b02c9582aa63550577))
+
+
+
+
+
 ## 12.5.1 (2021-06-21)
 
 **Note:** Version bump only for package rxxfetch
