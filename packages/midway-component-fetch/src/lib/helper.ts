@@ -7,6 +7,9 @@ import { Tags } from 'opentracing'
 import { FetchComponentConfig } from './types'
 
 
+/**
+ * Generate request header contains span and reqId if possible
+ */
 export const genRequestHeaders: FetchComponentConfig['genRequestHeaders'] = (ctx, headersInit, span) => {
   const spanHeader = ctx.tracerManager.headerOfCurrentSpan(span)
   const newHeadersInit = {
