@@ -26,8 +26,8 @@
   "dependencies": {
     "@mw-components/jaeger": "^6.13.1",
     "@waiting/fetch": "^12.5.1",
-    "@waiting/shared-core": "^14.0.0",
-    "@waiting/shared-types": "^14.0.0"
+    "@waiting/shared-core": "^14.2.0",
+    "@waiting/shared-types": "^14.2.0"
   },
   "devDependencies": {
     "@midwayjs/cli": "1",
