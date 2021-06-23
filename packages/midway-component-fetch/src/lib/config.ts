@@ -1,11 +1,11 @@
 import { HeadersKey } from '@mw-components/jaeger'
-import { Node_Headers } from '@waiting/fetch'
 
+import { genRequestHeaders } from './helper'
 import { FetchComponentConfig } from './types'
 
 
 export const defaultFetchComponentConfig: FetchComponentConfig = {
-  genRequestHeaders: () => new Node_Headers(),
+  genRequestHeaders,
   enableDefaultCallbacks: true,
   enableTraceLoggingReqBody: true,
   enableTraceLoggingRespData: true,
