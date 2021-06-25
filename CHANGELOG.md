@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 12.6.2 (2021-06-25)
+
+
+### Bug Fixes
+
+* **midway-component-fetch:** context undefined during unit test 5770bf6
+
+
+
+
+
 ## 12.6.1 (2021-06-23)
 
 **Note:** Version bump only for package rxxfetch
