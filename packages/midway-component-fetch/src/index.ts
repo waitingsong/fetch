@@ -14,6 +14,7 @@ export {
   JsonType,
 } from '@waiting/fetch'
 
+export { retrieveHeadersItem } from '@waiting/shared-core'
 
 declare module '@midwayjs/core' {
   interface Context {
