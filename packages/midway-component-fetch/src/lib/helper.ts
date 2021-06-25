@@ -11,7 +11,10 @@ import { FetchComponentConfig } from './types'
  * Generate request header contains span and reqId if possible
  */
 export const genRequestHeaders: FetchComponentConfig['genRequestHeaders'] = (ctx, headersInit, span) => {
-  const spanHeader = ctx.tracerManager.headerOfCurrentSpan(span)
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  const spanHeader = ctx.tracerManager
+    ? ctx.tracerManager.headerOfCurrentSpan(span)
+    : void 0
   const newHeadersInit = {
     ...headersInit,
     ...spanHeader,
@@ -23,11 +26,11 @@ export const genRequestHeaders: FetchComponentConfig['genRequestHeaders'] = (ctx
 }
 
 const beforeRequest: FetchComponentConfig['beforeRequest'] = async (options) => {
-  const {
-    id,
-    ctx,
-    opts,
-  } = options
+  const { id, ctx, opts } = options
+
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (! ctx.tracerManager) { return }
+
   const {
     enableTraceLoggingReqBody,
     traceLoggingReqHeaders,
@@ -81,12 +84,11 @@ const beforeRequest: FetchComponentConfig['beforeRequest'] = async (options) => 
 }
 
 const afterResponse: FetchComponentConfig['afterResponse'] = async (options) => {
-  const {
-    id,
-    ctx,
-    opts,
-    resultData,
-  } = options
+  const { id, ctx, opts, resultData } = options
+
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (! ctx.tracerManager) { return }
+
   const {
     enableTraceLoggingRespData,
     traceLoggingRespHeaders,
@@ -142,6 +144,12 @@ const afterResponse: FetchComponentConfig['afterResponse'] = async (options) => 
 
 export const processEx: FetchComponentConfig['processEx'] = (options) => {
   const { id, ctx, opts, exception } = options
+
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (! ctx.tracerManager) {
+    throw exception
+  }
+
   const {
     traceLoggingRespHeaders,
   } = options.config

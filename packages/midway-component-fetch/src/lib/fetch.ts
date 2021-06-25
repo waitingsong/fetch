@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable import/no-extraneous-dependencies */
 import { Config, Init, Inject, Provide } from '@midwayjs/decorator'
-import type { Context } from '@midwayjs/web'
+import { Context } from '@midwayjs/web'
 import {
   FetchResponse,
   Options,
@@ -19,7 +19,7 @@ import { FetchComponentConfig } from './types'
 @Provide()
 export class FetchComponent {
 
-  @Inject() readonly ctx: Context
+  @Inject() protected ctx: Context
 
   @Config('fetch') readonly fetchConfig: FetchComponentConfig
 
@@ -170,12 +170,18 @@ export class FetchComponent {
       return headers
     }
 
-    const tmpHeader = this.fetchConfig.genRequestHeaders(this.ctx, this.headers, span)
-    tmpHeader.forEach((value, key) => {
-      // headers.append(key, value)
-      headers.set(key, value)
-    })
-    return headers
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if (this.ctx) {
+      const tmpHeader = this.fetchConfig.genRequestHeaders(this.ctx, this.headers, span)
+      tmpHeader.forEach((value, key) => {
+        // headers.append(key, value)
+        headers.set(key, value)
+      })
+      return headers
+    }
+    else {
+      return headers
+    }
   }
 
 }
