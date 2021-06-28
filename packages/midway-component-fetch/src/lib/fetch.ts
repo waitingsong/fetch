@@ -1,7 +1,11 @@
 /* eslint-disable node/no-unpublished-import */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable import/no-extraneous-dependencies */
-import { Config, Init, Inject, Provide } from '@midwayjs/decorator'
+import {
+  Config,
+  Inject,
+  Provide,
+} from '@midwayjs/decorator'
 import { Context } from '@midwayjs/web'
 import {
   FetchResponse,
@@ -24,15 +28,16 @@ export class FetchComponent {
   @Config('fetch') readonly fetchConfig: FetchComponentConfig
 
   headers: Record<string, string> = {}
+  fetchRequestSpanMap = new Map<symbol, Span>()
 
-  @Init()
-  async init(): Promise<void> {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if (this.ctx.fetchRequestSpanMap) {
-      return
-    }
-    this.ctx.fetchRequestSpanMap = new Map()
-  }
+  // @Init()
+  // async init(): Promise<void> {
+  //   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  //   if (this.ctx.fetchRequestSpanMap) {
+  //     return
+  //   }
+  //   this.ctx.fetchRequestSpanMap = new Map()
+  // }
 
   async fetch<T extends FetchResponse = any>(
     options: Options,
@@ -49,10 +54,11 @@ export class FetchComponent {
         id,
         ctx: this.ctx,
         config: this.fetchConfig,
+        fetchRequestSpanMap: this.fetchRequestSpanMap,
         opts,
       })
 
-      const currSpan = this.ctx.fetchRequestSpanMap.get(id)
+      const currSpan = this.fetchRequestSpanMap.get(id)
       if (currSpan) {
         opts.headers = this.genReqHeadersFromOptionsAndConfigCallback(opts.headers, currSpan)
       }
@@ -62,6 +68,7 @@ export class FetchComponent {
       await config.beforeRequest({
         id,
         ctx: this.ctx,
+        fetchRequestSpanMap: this.fetchRequestSpanMap,
         config: this.fetchConfig,
         opts,
       })
@@ -75,6 +82,7 @@ export class FetchComponent {
           id,
           ctx: this.ctx,
           config: this.fetchConfig,
+          fetchRequestSpanMap: this.fetchRequestSpanMap,
           opts,
           resultData: ret,
         })
@@ -85,6 +93,7 @@ export class FetchComponent {
           id,
           ctx: this.ctx,
           config: this.fetchConfig,
+          fetchRequestSpanMap: this.fetchRequestSpanMap,
           opts,
           resultData: ret,
         })
@@ -95,6 +104,7 @@ export class FetchComponent {
           id,
           ctx: this.ctx,
           config: this.fetchConfig,
+          fetchRequestSpanMap: this.fetchRequestSpanMap,
           opts,
           resultData: ret,
         })
@@ -109,6 +119,7 @@ export class FetchComponent {
             id,
             ctx: this.ctx,
             config: this.fetchConfig,
+            fetchRequestSpanMap: this.fetchRequestSpanMap,
             opts,
             exception: ex as Error,
           })
@@ -119,6 +130,7 @@ export class FetchComponent {
           id,
           ctx: this.ctx,
           config: this.fetchConfig,
+          fetchRequestSpanMap: this.fetchRequestSpanMap,
           opts,
           exception: ex as Error,
         })

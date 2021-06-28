@@ -57,6 +57,7 @@ export interface ReqCallbackOptions {
   id: symbol
   ctx: Context
   config: FetchComponentConfig
+  fetchRequestSpanMap: Map<symbol, Span>
   opts: Options
 }
 
@@ -64,6 +65,7 @@ export interface RespCallbackOptions <T = unknown> {
   id: symbol
   ctx: Context
   config: FetchComponentConfig
+  fetchRequestSpanMap: Map<symbol, Span>
   opts: Options
   resultData: T
 }
@@ -72,6 +74,7 @@ export interface ProcessExCallbackOptions {
   id: symbol
   ctx: Context
   config: FetchComponentConfig
+  fetchRequestSpanMap: Map<symbol, Span>
   opts: Options
   exception: Error
 }
