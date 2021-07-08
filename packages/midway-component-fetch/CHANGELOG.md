@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [13.0.0](https://github.com/waitingsong/rxxfetch/compare/v12.6.4...v13.0.0) (2021-07-08)
+
+
+### Features
+
+* **midway-component-fetch:** use namespace 'fetch' ([273742c](https://github.com/waitingsong/rxxfetch/commit/273742ca5b71c886610a753f904d628836fd01a1))
+
+
+
+
+
 ## 12.6.4 (2021-07-06)
 
 **Note:** Version bump only for package @mw-components/fetch
