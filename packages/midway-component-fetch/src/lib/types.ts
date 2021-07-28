@@ -12,7 +12,7 @@ export interface FetchComponentConfig {
    */
   genRequestHeaders: (
     ctx: Context,
-    headersInit?: Record<string, string>,
+    headersInit?: Record<string, string> | Headers,
     span?: Span,
   ) => Headers
   /**
