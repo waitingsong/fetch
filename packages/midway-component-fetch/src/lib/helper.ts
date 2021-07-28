@@ -17,13 +17,13 @@ import { FetchComponentConfig } from './types'
  */
 export const genRequestHeaders: FetchComponentConfig['genRequestHeaders'] = (ctx, headersInit, span) => {
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  const spanHeader = ctx && ctx.tracerManager
+  const spanHeader = ctx && ctx.tracerManager && span
     ? ctx.tracerManager.headerOfCurrentSpan(span)
     : void 0
   const newHeadersInit = {
-    ...headersInit,
     ...spanHeader,
     [HeadersKey.reqId]: ctx.reqId as string,
+    ...headersInit,
   } as HeadersInit
 
   const headers = new Node_Headers(newHeadersInit)
