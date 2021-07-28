@@ -28,7 +28,7 @@ export class FetchComponent {
   @Config('fetch') readonly fetchConfig: FetchComponentConfig
 
   headers: Record<string, string> = {}
-  fetchRequestSpanMap = new Map<symbol, Span>()
+  readonly fetchRequestSpanMap = new Map<symbol, Span>()
 
   // @Init()
   // async init(): Promise<void> {
@@ -184,16 +184,10 @@ export class FetchComponent {
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (this.ctx) {
-      const tmpHeader = this.fetchConfig.genRequestHeaders(this.ctx, this.headers, span)
-      tmpHeader.forEach((value, key) => {
-        // headers.append(key, value)
-        headers.set(key, value)
-      })
-      return headers
+      const ret = this.fetchConfig.genRequestHeaders(this.ctx, headers, span)
+      return ret
     }
-    else {
-      return headers
-    }
+    return headers
   }
 
 }
