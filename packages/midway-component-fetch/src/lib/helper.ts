@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 /* eslint-disable import/no-extraneous-dependencies */
-import { SpanLogInput, TracerLog, TracerTag, HeadersKey } from '@mw-components/jaeger'
+import { SpanLogInput, TracerLog, TracerTag, HeadersKey, SpanHeaderInit } from '@mw-components/jaeger'
 import { Node_Headers } from '@waiting/fetch'
 import {
   genISO8601String,
@@ -16,18 +16,28 @@ import { FetchComponentConfig } from './types'
  * Generate request header contains span and reqId if possible
  */
 export const genRequestHeaders: FetchComponentConfig['genRequestHeaders'] = (ctx, headersInit, span) => {
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  const spanHeader = ctx && ctx.tracerManager && span
-    ? ctx.tracerManager.headerOfCurrentSpan(span)
-    : void 0
-  const newHeadersInit = {
-    ...spanHeader,
-    [HeadersKey.reqId]: ctx.reqId as string,
-    ...headersInit,
-  } as HeadersInit
+  const ret = new Node_Headers(headersInit)
 
-  const headers = new Node_Headers(newHeadersInit)
-  return headers
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (! ctx) {
+    return ret
+  }
+
+  if (! ret.has(HeadersKey.traceId)) {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    const spanHeader: SpanHeaderInit | undefined = ctx.tracerManager && span
+      ? ctx.tracerManager.headerOfCurrentSpan(span)
+      : void 0
+    if (spanHeader) {
+      ret.set(HeadersKey.traceId, spanHeader[HeadersKey.traceId])
+    }
+  }
+
+  if (ctx.reqId && ! ret.has(HeadersKey.reqId)) {
+    ret.set(HeadersKey.reqId, ctx.reqId)
+  }
+
+  return ret
 }
 
 const beforeRequest: FetchComponentConfig['beforeRequest'] = async (options) => {
