@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [13.1.0](/compare/v13.0.0...v13.1.0) (2021-07-28)
+
+
+### Features
+
+* **midway-component-fetch:** change order of merging headers within genRequestHeaders() 1863a41
+
+
+
+
+
 # [13.0.0](/compare/v12.6.4...v13.0.0) (2021-07-08)
 
 
