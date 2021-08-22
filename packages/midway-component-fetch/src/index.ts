@@ -7,9 +7,12 @@ export {
   Node_Headers,
   initialOptions,
   FetchResponse,
-  JsonResp,
-  JsonType,
 } from '@waiting/fetch'
 
 export { retrieveHeadersItem } from '@waiting/shared-core'
+export {
+  JsonResp,
+  JsonType,
+  JsonObject,
+} from '@waiting/shared-types'
 
