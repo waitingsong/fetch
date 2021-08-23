@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [14.0.0](https://github.com/waitingsong/rxxfetch/compare/v13.3.0...v14.0.0) (2021-08-23)
+
+**Note:** Version bump only for package @waiting/egg-fetch
+
+
+
+
+
 # [13.0.0](https://github.com/waitingsong/rxxfetch/compare/v12.6.4...v13.0.0) (2021-07-08)
 
 **Note:** Version bump only for package @waiting/egg-fetch
