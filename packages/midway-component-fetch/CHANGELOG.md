@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [13.3.0](https://github.com/waitingsong/rxxfetch/compare/v13.2.0...v13.3.0) (2021-08-23)
+
+
+### Features
+
+* **midway-component-fetch:** update defaultFetchComponentConfig ([1defcb6](https://github.com/waitingsong/rxxfetch/commit/1defcb6b4f8d43f6f669754e6ef37aa7f7053fe6))
+
+
+
+
+
 # [13.2.0](https://github.com/waitingsong/rxxfetch/compare/v13.1.0...v13.2.0) (2021-07-28)
 
 

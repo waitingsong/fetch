@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [13.3.0](/compare/v13.2.0...v13.3.0) (2021-08-23)
+
+
+### Features
+
+* **midway-component-fetch:** update defaultFetchComponentConfig 1defcb6
+
+
+
+
+
 # [13.2.0](/compare/v13.1.0...v13.2.0) (2021-07-28)
 
 
