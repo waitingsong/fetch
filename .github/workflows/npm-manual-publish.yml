@@ -13,7 +13,7 @@ on:
 jobs:
   build:
     runs-on: ${{ matrix.os }}
-    container: node:14.17-buster
+    container: node:14-bullseye
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
 
     strategy:
@@ -25,9 +25,9 @@ jobs:
       - name: Prepare
         run: |
           uname -a
-          sudo apt-get update -qq --yes > /dev/null
-          sudo apt-get upgrade -qq --yes > /dev/null
-          sudo apt-get install -qq --yes --no-install-recommends bash git postgresql-client jq
+          apt-get update -qq --yes > /dev/null
+          apt-get upgrade -qq --yes > /dev/null
+          apt-get install -qq --yes --no-install-recommends bash dnsutils git postgresql-client jq
           npm -v && node -v
           git --version
           uname -a
@@ -47,24 +47,12 @@ jobs:
         run: |
           echo $GITHUB_REF
           # github project/settings/Secrets/New repository secret: NPM_TOKEN
-          npm whoami
-          #psql -V
-          #dig postgres
-          #echo "\l" | psql -h $POSTGRES_HOST -p $POSTGRES_PORT -U$POSTGRES_USER -d postgres
-          #psql -h $POSTGRES_HOST -p $POSTGRES_PORT -U$POSTGRES_USER -d $POSTGRES_DB -1 -bq -f ./packages/demo-service/src/database/init.sql
-          #psql -h $POSTGRES_HOST -p $POSTGRES_PORT -U$POSTGRES_USER -d $POSTGRES_DB -c "\d+"
-          #psql -h $POSTGRES_HOST -p $POSTGRES_PORT -U$POSTGRES_USER -d $POSTGRES_DB -c "SELECT * FROM tb_user"
           dig httpbin
           curl http://httpbin/get
+          npm whoami
         env:
           CI: true
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          #POSTGRES_HOST: postgres
-          #POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
-          #POSTGRES_DB: db_ci_test
-          #POSTGRES_USER: postgres
-          #POSTGRES_PASSWORD: postgres
-          #PGPASSWORD: postgres
 
       - name: npm build
         run: |
