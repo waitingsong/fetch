@@ -4,9 +4,7 @@ import { FetchComponentConfig } from '../lib/types'
 
 export const fetch: FetchComponentConfig = {
   ...defaultFetchComponentConfig,
-  enableDefaultCallbacks: false,
-  enableTraceLoggingReqBody: false,
-  enableTraceLoggingRespData: false,
-  traceLoggingReqHeaders: [],
+  traceLoggingReqHeaders: [...defaultFetchComponentConfig.traceLoggingReqHeaders],
+  traceLoggingRespHeaders: [...defaultFetchComponentConfig.traceLoggingRespHeaders],
 }
 

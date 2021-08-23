@@ -45,12 +45,31 @@ export interface FetchComponentConfig {
   enableTraceLoggingRespData?: boolean
   /**
    * @example ['authorization', 'user-agent']
+   * @default
+   *   - 'Accept'
+   *   - 'authorization'
+   *   - 'Content-Length'
+   *   - 'Date'
+   *   - 'Host'
+   *   - 'user-agent'
+   *   - HeadersKey.reqId
    */
-  traceLoggingReqHeaders?: string[]
+  traceLoggingReqHeaders: string[]
   /**
    * @example ['authorization', 'user-agent', 'server']
+   * @default
+   *   - 'Age'
+   *   - 'Cache-Control'
+   *   - 'Content-Encoding'
+   *   - 'Content-Length'
+   *   - 'content-type'
+   *   - 'Date'
+   *   - 'Location'
+   *   - 'server'
+   *   - 'x-aspnet-version'
+   *   - 'x-powered-by'
    */
-  traceLoggingRespHeaders?: string[]
+  traceLoggingRespHeaders: string[]
 }
 
 export interface ReqCallbackOptions {
