@@ -1,5 +1,0 @@
-export * from './lib/index'
-export * from './lib/types'
-export * from './lib/util'
-export { parseRespCookie } from './lib/response'
-export { rxfetch as fetch } from './lib/index'
