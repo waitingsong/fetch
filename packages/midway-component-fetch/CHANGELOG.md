@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [14.3.0](https://github.com/waitingsong/fetch/compare/v14.2.0...v14.3.0) (2021-08-31)
+
+
+### Features
+
+* **midway-component:** log exception in current span ([1609f23](https://github.com/waitingsong/fetch/commit/1609f236a81ecba132acd1df676e0f8c39a697b8))
+
+
+
+
+
 # [14.2.0](https://github.com/waitingsong/fetch/compare/v14.1.0...v14.2.0) (2021-08-31)
 
 
