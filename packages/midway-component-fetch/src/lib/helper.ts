@@ -215,6 +215,7 @@ export const processEx: FetchComponentConfig['processEx'] = (options) => {
     event: TracerLog.fetchException,
     time,
     [TracerLog.svcMemoryUsage]: mem,
+    [TracerTag.svcException]: exception,
   }
   span.log(input)
 
