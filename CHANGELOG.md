@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [14.2.0](/compare/v14.1.0...v14.2.0) (2021-08-31)
+
+
+### Features
+
+* **midway-component-fetch:** process param span within beforeRequest() 475df6a
+
+
+
+
+
 # [14.1.0](/compare/v14.0.0...v14.1.0) (2021-08-31)
 
 

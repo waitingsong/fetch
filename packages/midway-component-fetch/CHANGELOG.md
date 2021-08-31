@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [14.2.0](https://github.com/waitingsong/fetch/compare/v14.1.0...v14.2.0) (2021-08-31)
+
+
+### Features
+
+* **midway-component-fetch:** process param span within beforeRequest() ([475df6a](https://github.com/waitingsong/fetch/commit/475df6a26fffde04218be699585528ae2a52ae6d))
+
+
+
+
+
 # [14.1.0](https://github.com/waitingsong/fetch/compare/v14.0.0...v14.1.0) (2021-08-31)
 
 **Note:** Version bump only for package @mw-components/fetch
