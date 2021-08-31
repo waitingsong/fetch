@@ -200,7 +200,7 @@ describe(filename, function() {
             assert(next.cookies.bar === bar.toString())
             assert(next.cookies.baz === baz)
           }
-          catch (ex) {
+          catch (ex: any) {
             assert(false, ex)
           }
 
