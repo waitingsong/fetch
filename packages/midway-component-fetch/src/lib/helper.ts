@@ -63,7 +63,11 @@ const beforeRequest: FetchComponentConfig['beforeRequest'] = async (options) => 
   ctx.tracerManager.spanLog(parentInput) // parent span log
 
   const { tracerManager } = ctx
-  const span = tracerManager.genSpan('FetchComponent')
+  const span = opts.span
+    ? opts.span
+    : tracerManager.genSpan('FetchComponent')
+  opts.span = span
+
   const tags: SpanLogInput = {
     [Tags.HTTP_URL]: opts.url,
     [Tags.HTTP_METHOD]: opts.method,
