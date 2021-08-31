@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [14.1.0](/compare/v14.0.0...v14.1.0) (2021-08-31)
+
+
+### Features
+
+* **fetch:** support tracer log by passing parameter span de78ba4
+
+
+
+
+
 # [14.0.0](/compare/v13.3.0...v14.0.0) (2021-08-23)
 
 

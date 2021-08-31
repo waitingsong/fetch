@@ -1,7 +1,7 @@
 {
   "name": "@mw-components/fetch",
   "author": "waiting",
-  "version": "14.0.0",
+  "version": "14.1.0",
   "description": "",
   "private": false,
   "keywords": [
@@ -25,7 +25,7 @@
   "license": "MIT",
   "dependencies": {
     "@mw-components/jaeger": "^9.0.0",
-    "@waiting/fetch": "^14.0.0",
+    "@waiting/fetch": "^14.1.0",
     "@waiting/shared-core": "^14.4.1",
     "@waiting/shared-types": "^14.4.1"
   },

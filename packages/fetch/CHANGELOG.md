@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [14.1.0](https://github.com/waitingsong/fetch/compare/v14.0.0...v14.1.0) (2021-08-31)
+
+
+### Features
+
+* **fetch:** support tracer log by passing parameter span ([de78ba4](https://github.com/waitingsong/fetch/commit/de78ba41df5886c7bff8171bfd3c129d7520a752))
+
+
+
+
+
 # [14.0.0](https://github.com/waitingsong/rxxfetch/compare/v13.3.0...v14.0.0) (2021-08-23)
 
 **Note:** Version bump only for package @waiting/fetch
