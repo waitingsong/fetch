@@ -1,3 +1,6 @@
+import type { Span } from 'opentracing'
+
+import { traceLog } from './tracer'
 import { Args } from './types'
 import {
   processInitOpts,
@@ -13,28 +16,33 @@ import {
  *
  * parameter init ignored during parameter input is typeof Request
  */
-export function _fetch(
+export async function _fetch(
   input: Request | string,
   args: Args,
   requestInit: RequestInit,
+  span?: Span | undefined,
 ): Promise<Response> {
 
-  const req = createRequest(input, args, requestInit)
-  const res = req.then(resp => handleRedirect(resp, args, requestInit))
+  const resp = await createRequest(input, args, requestInit, span)
+  const res = await handleRedirect(resp, args, requestInit)
+  traceLog('handleRedirect-finish', span)
   return res
 }
 
 
-export function createRequest(
+export async function createRequest(
   input: Request | string,
   args: Args,
   requestInit: RequestInit,
+  span?: Span | undefined,
 ): Promise<Response> {
 
   let inputNew = input
   const fetchModule = selectFecthModule(args.fetchModule)
+  let resp: Response
 
   if (typeof input === 'string') {
+    traceLog('request-processRequestData', span)
 
     if (['GET', 'DELETE'].includes(requestInit.method as string)) {
       inputNew = processRequestGetLikeData(input, args)
@@ -50,11 +58,16 @@ export function createRequest(
       throw new TypeError(`Invalid method value: "${requestInit.method}"`)
     }
 
-    return fetchModule(inputNew, requestInit)
+    traceLog('request-start', span)
+    resp = await fetchModule(inputNew, requestInit)
   }
   else {
-    return fetchModule(input)
+    traceLog('request-start', span)
+    resp = await fetchModule(input)
   }
+
+  traceLog('request-finish', span)
+  return resp
 }
 
 
@@ -64,7 +77,7 @@ export function createRequest(
  *
  * docs: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
  */
-export function handleRedirect(
+export async function handleRedirect(
   resp: Response,
   args: Args,
   init: RequestInit,
@@ -97,5 +110,5 @@ export function handleRedirect(
     }
   }
 
-  return Promise.resolve(resp)
+  return resp
 }

@@ -3,6 +3,7 @@ import { OverwriteAnyToUnknown } from '@waiting/shared-types'
 
 import { _fetch } from './request'
 import { handleResponseError, processResponseType } from './response'
+import { traceLog } from './tracer'
 import { FetchResponse, Options } from './types'
 import { processParams } from './util'
 
@@ -16,6 +17,7 @@ export async function fetch<T extends FetchResponse = any>(
   options: Options,
 ): Promise<OverwriteAnyToUnknown<T>> {
 
+  traceLog('processParams', options.span)
   const { args, requestInit } = processParams(options)
   const { timeout } = args
   const timeout$ = typeof timeout === 'undefined' || timeout === Infinity || timeout < 0
@@ -33,11 +35,15 @@ export async function fetch<T extends FetchResponse = any>(
 
   if (typeof data === 'undefined') { // timeout
     abortReq(args.abortController)
+    traceLog('timeout', options.span)
     throw new Error(`fetch timeout in "${timeout as number}ms"`)
   }
   const dataType = args.dataType as NonNullable<Options['dataType']>
+  traceLog('handleResponseError', options.span)
   const resp = await handleResponseError(data, dataType === 'bare')
+  traceLog('processResponseType-start', options.span)
   const ret = await processResponseType(resp, dataType)
+  traceLog('processResponseType-finish', options.span)
   return ret as OverwriteAnyToUnknown<T>
 }
 

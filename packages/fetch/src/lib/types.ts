@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { JsonType } from '@waiting/shared-types'
+import type { Span } from 'opentracing'
 
 
 export interface Options extends RequestInit, Args {
@@ -84,6 +85,12 @@ export interface Args {
    * @default true
    */
   processData?: boolean
+
+
+  /**
+   * Tracer Span
+   */
+  span?: Span
 
   /**
    * Request timeout in msec.
