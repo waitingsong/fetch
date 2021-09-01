@@ -23,11 +23,20 @@ export const genRequestHeaders: FetchComponentConfig['genRequestHeaders'] = (ctx
     return ret
   }
 
-  if (! ret.has(HeadersKey.traceId)) {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    const spanHeader: SpanHeaderInit | undefined = ctx.tracerManager && span
-      ? ctx.tracerManager.headerOfCurrentSpan(span)
-      : void 0
+  // if (! ret.has(HeadersKey.traceId)) {
+  //   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  //   const spanHeader: SpanHeaderInit | undefined = ctx.tracerManager && span
+  //     ? ctx.tracerManager.headerOfCurrentSpan(span)
+  //     : void 0
+  //   if (spanHeader) {
+  //     ret.set(HeadersKey.traceId, spanHeader[HeadersKey.traceId])
+  //   }
+  // }
+
+  // override traceId
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (span && ctx.tracerManager) {
+    const spanHeader: SpanHeaderInit | undefined = ctx.tracerManager.headerOfCurrentSpan(span)
     if (spanHeader) {
       ret.set(HeadersKey.traceId, spanHeader[HeadersKey.traceId])
     }
@@ -231,7 +240,6 @@ export const processEx: FetchComponentConfig['processEx'] = (options) => {
 }
 
 export const defaultfetchConfigCallbacks = {
-  // genRequestHeaders,
   beforeRequest,
   afterResponse,
   processEx,

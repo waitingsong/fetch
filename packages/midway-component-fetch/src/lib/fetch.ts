@@ -44,7 +44,7 @@ export class FetchComponent {
   ): Promise<OverwriteAnyToUnknown<T>> {
 
     const opts: Options = { ...options }
-    opts.headers = this.genReqHeadersFromOptionsAndConfigCallback(opts.headers)
+    opts.headers = this.genReqHeadersFromOptionsAndConfigCallback(opts.headers, opts.span)
 
     const config = this.fetchConfig
     const id = Symbol(opts.url)
