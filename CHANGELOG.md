@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [15.0.0](/compare/v14.3.0...v15.0.0) (2021-09-01)
+
+
+### Features
+
+* **midway-component-fetch:** breaking change override header traceId if passing span within genRequestHeaders() 5818b6a
+
+
+
+
+
 # [14.3.0](/compare/v14.2.0...v14.3.0) (2021-08-31)
 
 
