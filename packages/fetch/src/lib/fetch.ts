@@ -24,7 +24,7 @@ export async function fetch<T extends FetchResponse = any>(
     ? null
     : new Promise<undefined>(done => setTimeout(done, args.timeout))
 
-  const req$ = _fetch(options.url, args, requestInit)
+  const req$ = _fetch(options.url, args, requestInit, options.span)
 
   const pm: (Promise<Response | undefined>)[] = [req$]
   if (timeout$) {
