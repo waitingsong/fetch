@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [15.0.1](https://github.com/waitingsong/fetch/compare/v15.0.0...v15.0.1) (2021-09-14)
+
+
+### Bug Fixes
+
+* **fetch:** pass options.span to _fetch() ([b376d95](https://github.com/waitingsong/fetch/commit/b376d95c062b9c6c3c2e1d86fb2bb4a5020c9753))
+
+
+
+
+
 # [15.0.0](https://github.com/waitingsong/fetch/compare/v14.3.0...v15.0.0) (2021-09-01)
 
 **Note:** Version bump only for package @waiting/fetch
