@@ -114,9 +114,10 @@ const beforeRequest: FetchComponentConfig['beforeRequest'] = async (options) => 
 
 const afterResponse: FetchComponentConfig['afterResponse'] = async (options) => {
   const { id, ctx, fetchRequestSpanMap, opts, resultData } = options
+  const span = fetchRequestSpanMap.get(id)
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (! ctx.tracerManager) { return }
+  if (! span && ! ctx.tracerManager) { return }
 
   const {
     enableTraceLoggingRespData,
@@ -132,9 +133,11 @@ const afterResponse: FetchComponentConfig['afterResponse'] = async (options) => 
     time,
     [TracerLog.svcMemoryUsage]: mem,
   }
-  ctx.tracerManager.spanLog(parentInput)
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (ctx && ctx.tracerManager) {
+    ctx.tracerManager.spanLog(parentInput)
+  }
 
-  const span = fetchRequestSpanMap.get(id)
   if (! span) {
     return
   }
@@ -223,9 +226,10 @@ export const processEx: FetchComponentConfig['processEx'] = (options) => {
   const input: SpanLogInput = {
     level: 'error',
     event: TracerLog.fetchException,
-    time,
+    time: genISO8601String(),
+    'err.msg': exception.message,
+    'err.stack': exception.stack,
     [TracerLog.svcMemoryUsage]: mem,
-    [TracerTag.svcException]: exception,
   }
   span.log(input)
 
