@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "declaration": true,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "incremental": true,
     "module": "commonjs",
+    "moduleResolution": "node",
     "newLine": "lf",
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
@@ -20,9 +22,10 @@
     "sourceMap": true,
     "strict": true,
     "strictPropertyInitialization": false,
+    "stripInternal": true,
     "target": "ES2020",
     "tsBuildInfoFile": ".vscode/.tsbuildinfo",
-    "types" : ["node", "mocha"]
+    "types" : ["mocha", "node"]
   },
   "include": [
     "src/**/*.ts"

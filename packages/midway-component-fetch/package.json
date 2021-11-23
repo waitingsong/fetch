@@ -24,22 +24,22 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@mw-components/jaeger": "^9.0.0",
+    "@mw-components/jaeger": "^9.0.3",
     "@waiting/fetch": "^15.0.1",
-    "@waiting/shared-core": "^14.4.1",
-    "@waiting/shared-types": "^14.4.1"
+    "@waiting/shared-core": "^15.1.0",
+    "@waiting/shared-types": "^15.1.0"
   },
   "devDependencies": {
-    "@midwayjs/cli": "1",
-    "@midwayjs/core": "2",
-    "@midwayjs/decorator": "2",
-    "@midwayjs/web": "2",
+    "@midwayjs/cli": "^1.2.90",
+    "@midwayjs/core": "^2.13.0",
+    "@midwayjs/decorator": "^2.13.0",
+    "@midwayjs/web": "^2.13.0",
     "@types/node": "16",
     "cross-env": "7",
     "opentracing": "^0.14.5"
   },
   "engines": {
-    "node": ">=14.16.0"
+    "node": ">=16.13.0"
   },
   "files": [
     "dist/**/*.js",
@@ -61,32 +61,5 @@
     "test": "cross-env TS_NODE_PROJECT=test/tsconfig.json mocha",
     "test:local": "cross-env TS_NODE_PROJECT=test/tsconfig.json ../../node_modules/.bin/mocha --parallel=false",
     "tsc": "tsc -p tsconfig.json"
-  },
-  "nyc": {
-    "include": [
-      "src/**/*.ts"
-    ],
-    "exclude": [
-      ".githooks",
-      "dist",
-      "node_modules*",
-      "src/bin",
-      "src/domain.ts",
-      "src/interface.ts",
-      "test*",
-      "**/node_modules*",
-      "**/*.d.ts",
-      "**/*.js"
-    ],
-    "extension": [
-      ".ts"
-    ],
-    "reporter": [
-      "html",
-      "json",
-      "text",
-      "text-summary"
-    ],
-    "all": true
   }
 }
