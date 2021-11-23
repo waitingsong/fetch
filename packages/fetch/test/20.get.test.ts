@@ -196,8 +196,8 @@ describe(filename, function() {
             fr.readAsArrayBuffer(blob)
 
           },
-          (err) => {
-            assert(false, err)
+          (ex) => {
+            assert(false, (ex as Error).message)
             done()
           },
         )
