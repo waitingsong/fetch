@@ -1,5 +1,5 @@
 {
-  "version": "15.0.2",
+  "version": "16.0.0",
   "packages": [
     "packages/*"
   ],
@@ -24,7 +24,10 @@
     },
     "version": {
       "conventionalCommits": true,
-      "allowBranch": ["main", "release"],
+      "allowBranch": [
+        "main",
+        "release"
+      ],
       "registry": "https://registry.npmjs.org/"
     }
   },
