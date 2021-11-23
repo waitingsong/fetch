@@ -1,9 +1,7 @@
-import { basename } from '@waiting/shared-core'
-import { AbortController as _AbortController } from 'abortcontroller-polyfill/dist/cjs-ponyfill.js'
+import { relative } from 'path'
 
 import {
   get,
-  Args,
   Options,
 } from '../src/index'
 
@@ -11,7 +9,7 @@ import {
 import assert = require('power-assert')
 
 
-const filename = basename(__filename)
+const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')
 
 describe(filename, () => {
 
@@ -39,7 +37,7 @@ describe(filename, () => {
     })
 
     it('with passing abortController and timeout', async () => {
-      const abc = new _AbortController() as AbortController
+      const abc = new AbortController()
       const opts: Options = {
         ...initOpts,
         abortController: abc,
@@ -60,7 +58,7 @@ describe(filename, () => {
     })
 
     it('cancel manually', async () => {
-      const abc = new _AbortController() as AbortController
+      const abc = new AbortController()
       const opts: Options = {
         ...initOpts,
         abortController: abc,
@@ -75,7 +73,7 @@ describe(filename, () => {
         await get(url, opts)
       }
       catch (ex) {
-        assert(ex && (ex as Error).name === 'AbortError', ex)
+        assert(ex && (ex as Error).name === 'AbortError', (ex as Error).message)
         assert(
           !! abc.signal.aborted,
           'Should args.abortController.signal.aborted be TRUE after timeout',

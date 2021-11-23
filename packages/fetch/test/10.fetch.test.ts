@@ -1,4 +1,4 @@
-import { basename } from '@waiting/shared-core'
+import { relative } from 'path'
 
 import { fetch, Options } from '../src/index'
 
@@ -8,7 +8,7 @@ import { HOST, HOST_GET } from './config'
 import assert = require('power-assert')
 
 
-const filename = basename(__filename)
+const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')
 
 describe(filename, () => {
   describe('Should fetch() throw error with invalid input', () => {

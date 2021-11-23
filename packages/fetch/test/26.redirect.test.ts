@@ -1,7 +1,6 @@
-import { basename } from '@waiting/shared-core'
+import { relative } from 'path'
 
 import {
-  Args,
   get,
   post,
   Options,
@@ -21,7 +20,7 @@ import { HttpbinGetResponse } from './test.types'
 import assert = require('power-assert')
 
 
-const filename = basename(__filename)
+const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')
 
 // skip while https://github.com/postmanlabs/httpbin/issues/617
 

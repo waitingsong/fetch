@@ -1,4 +1,5 @@
-import { basename } from '@waiting/shared-core'
+import { relative } from 'path'
+
 import { Response } from 'node-fetch'
 
 import { FetchMsg } from '../src/index'
@@ -8,7 +9,7 @@ import { handleResponseError } from '../src/lib/response'
 import assert = require('power-assert')
 
 
-const filename = basename(__filename)
+const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')
 
 describe(filename, () => {
 

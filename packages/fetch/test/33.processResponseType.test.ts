@@ -1,4 +1,5 @@
-import { basename } from '@waiting/shared-core'
+import { relative } from 'path'
+
 import FormData from 'form-data'
 import { Response } from 'node-fetch'
 
@@ -8,7 +9,7 @@ import { processResponseType } from '../src/lib/response'
 import assert = require('power-assert')
 
 
-const filename = basename(__filename)
+const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')
 
 describe(filename, () => {
 

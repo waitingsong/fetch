@@ -1,4 +1,5 @@
-import { basename } from '@waiting/shared-core'
+import { relative } from 'path'
+
 import FormData from 'form-data'
 
 import { put, Options, ContentTypeList } from '../src/index'
@@ -10,7 +11,7 @@ import { HttpbinPostResponse, PostForm1 } from './test.types'
 import assert = require('power-assert')
 
 
-const filename = basename(__filename)
+const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')
 
 describe(filename, function() {
   this.retries(3)
@@ -38,7 +39,7 @@ describe(filename, function() {
         assert(form && form.p2 === pdata.p2, `Should got "${pdata.p2}"`)
       }
       catch (ex) {
-        assert(false, ex)
+        assert(false, (ex as Error).message)
       }
     })
 
@@ -62,7 +63,7 @@ describe(filename, function() {
         assert(form && form['p3[foo]'] === pdata.p3.foo, `Should got "${pdata.p3.foo}"`)
       }
       catch (ex) {
-        assert(false, ex)
+        assert(false, (ex as Error).message)
       }
     })
 
@@ -85,7 +86,7 @@ describe(filename, function() {
         assert(form && form.p2 === p2, `Should got "${p2}"`)
       }
       catch (ex) {
-        assert(false, ex)
+        assert(false, (ex as Error).message)
       }
     })
   })

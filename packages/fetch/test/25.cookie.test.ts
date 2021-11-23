@@ -1,4 +1,4 @@
-import { basename } from '@waiting/shared-core'
+import { relative } from 'path'
 
 import { Args, get, Options } from '../src/index'
 import { patchedFetch, Node_Headers } from '../src/lib/patch'
@@ -10,7 +10,7 @@ import { HttpbinRetCookie } from './test.types'
 import assert = require('power-assert')
 
 
-const filename = basename(__filename)
+const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')
 
 describe(filename, function() {
   this.retries(3)

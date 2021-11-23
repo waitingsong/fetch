@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-import { basename } from '@waiting/shared-core'
+import { relative } from 'path'
 
 import {
   get,
@@ -14,8 +14,7 @@ import { HOST, HOST_POST } from './config'
 import assert = require('power-assert')
 
 
-const filename = basename(__filename)
-
+const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')
 
 describe(filename, function() {
   this.retries(3)

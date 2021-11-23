@@ -1,6 +1,8 @@
 import { createReadStream } from 'fs'
+import { readFile } from 'fs/promises'
+import { relative } from 'path'
 
-import { basename, join, readFileAsync } from '@waiting/shared-core'
+import { join } from '@waiting/shared-core'
 import FormData from 'form-data'
 
 import { post, Options, ContentTypeList } from '../src/index'
@@ -12,7 +14,7 @@ import { HttpbinPostResponse, PostForm1 } from './test.types'
 import assert = require('power-assert')
 
 
-const filename = basename(__filename)
+const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')
 
 describe(filename, function() {
   this.retries(3)
@@ -77,7 +79,7 @@ describe(filename, function() {
     })
 
     it('send a txt file and key:value data via FormData', async () => {
-      const buf = await readFileAsync(join(__dirname, 'p2.txt'))
+      const buf = await readFile(join(__dirname, 'p2.txt'))
 
       const pdata = new FormData()
       const p1 = Math.random().toString()

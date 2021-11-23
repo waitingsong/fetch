@@ -1,4 +1,4 @@
-import { basename } from '@waiting/shared-core'
+import { relative } from 'path'
 
 import { post, Options, ContentTypeList } from '../src/index'
 
@@ -9,7 +9,7 @@ import { HttpbinPostResponse } from './test.types'
 import assert = require('power-assert')
 
 
-const filename = basename(__filename)
+const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')
 
 describe(filename, function() {
   this.retries(3)

@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import {
-  ab2str,
-  basename,
-} from '@waiting/shared-core'
+import { relative } from 'path'
+
+import { ab2str } from '@waiting/shared-core'
 import QueryString from 'qs'
 
 import { get, Options } from '../src/index'
@@ -14,7 +13,7 @@ import { HttpbinGetResponse, PDATA, PostForm1 } from './test.types'
 import assert = require('power-assert')
 
 
-const filename = basename(__filename)
+const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')
 
 describe(filename, function() {
   this.retries(3)
@@ -143,7 +142,7 @@ describe(filename, function() {
         assert(pdata.p3 && res.args['p3[foo]'] === foo, `Should got ${foo}`)
       }
       catch (ex) {
-        assert(false, ex)
+        assert(false, (ex as Error).message)
       }
     })
   })
@@ -284,7 +283,7 @@ describe(filename, function() {
         assert(pdata.p3 && res.args['p3[foo]'] === foo, `Should got ${foo}`)
       }
       catch (ex) {
-        assert(false, ex)
+        assert(false, (ex as Error).message)
       }
     })
   })

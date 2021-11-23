@@ -1,4 +1,5 @@
-import { basename } from '@waiting/shared-core'
+import { relative } from 'path'
+
 import FormData from 'form-data'
 import QueryString from 'qs'
 
@@ -11,7 +12,7 @@ import { HttpbinPostResponse, PDATA } from './test.types'
 import assert = require('power-assert')
 
 
-const filename = basename(__filename)
+const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')
 
 describe(filename, function() {
   this.retries(3)
@@ -40,7 +41,7 @@ describe(filename, function() {
         assert(res.args.p2 === pdata.p2, `Should p2 get ${pdata.p2}, but got "${res.args && res.args.p2}"`)
       }
       catch (ex) {
-        assert(false, ex)
+        assert(false, (ex as Error).message)
       }
     })
 
@@ -70,7 +71,7 @@ describe(filename, function() {
         )
       }
       catch (ex) {
-        assert(false, ex)
+        assert(false, (ex as Error).message)
       }
     })
 
@@ -94,7 +95,7 @@ describe(filename, function() {
         assert(form && form.p2 === p2, `Should p2 get "${p2}", but got "${form && form.p2}"`)
       }
       catch (ex) {
-        assert(false, ex)
+        assert(false, (ex as Error).message)
       }
     })
   })
