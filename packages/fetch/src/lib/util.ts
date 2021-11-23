@@ -2,7 +2,6 @@ import NodeFormData from 'form-data'
 import QueryString from 'qs'
 
 import { initialOptions } from './config'
-import { _AbortController } from './patch'
 import {
   Args,
   ArgsRequestInitCombined,
@@ -172,27 +171,16 @@ If running under Node.js, it must pass HeaderClass such come from package "node-
 function processAbortController(options: ArgsRequestInitCombined): ArgsRequestInitCombined {
   const { args, requestInit } = options
 
-  /* istanbul ignore else */
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (! args.abortController || ! args.abortController.signal || typeof args.abortController.abort !== 'function') {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    args.abortController = typeof AbortController === 'function'
-      ? new AbortController()
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-      : new _AbortController()
-    // if (typeof AbortController === 'function') {
-    //   args.abortController = new AbortController()
-    // }
-    // else {
-    //   throw new Error('AbortController not avaiable')
-    // }
+  if (! args.abortController || typeof args.abortController.abort !== 'function') {
+    if (typeof AbortController === 'function') {
+      args.abortController = new AbortController()
+    }
+    else {
+      throw new Error('AbortController not avaiable')
+    }
   }
 
-  /* istanbul ignore else */
-  if (args.abortController) {
-    requestInit.signal = args.abortController.signal
-  }
+  requestInit.signal = args.abortController.signal
 
   return { args, requestInit }
 }
