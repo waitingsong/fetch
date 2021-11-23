@@ -3,6 +3,7 @@
   "packages": [
     "packages/*"
   ],
+  "ignore": "",
   "command": {
     "publish": {
       "ignoreChanges": [
@@ -18,15 +19,12 @@
         "egg"
       ],
       "npmClientArgs": [
-        "--no-package-lock"
+        "--legacy-peer-deps"
       ]
     },
     "version": {
       "conventionalCommits": true,
-      "allowBranch": [
-        "master",
-        "release"
-      ],
+      "allowBranch": ["main", "release"],
       "registry": "https://registry.npmjs.org/"
     }
   },
