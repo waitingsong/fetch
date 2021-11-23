@@ -42,7 +42,7 @@ export const genRequestHeaders: FetchComponentConfig['genRequestHeaders'] = (ctx
     }
   }
 
-  if (ctx.reqId && ! ret.has(HeadersKey.reqId)) {
+  if (typeof ctx.reqId === 'string' && ctx.reqId && ! ret.has(HeadersKey.reqId)) {
     ret.set(HeadersKey.reqId, ctx.reqId)
   }
 
