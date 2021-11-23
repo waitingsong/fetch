@@ -4,8 +4,8 @@
   "description": "Observable HTTP fetch API for browser and Node.js. Handle 302/303 redirect correctly on Node.js",
   "private": true,
   "devDependencies": {
-    "@commitlint/cli": "14",
-    "@commitlint/config-conventional": "14",
+    "@commitlint/cli": "15",
+    "@commitlint/config-conventional": "15",
     "@rollup/plugin-commonjs": "21",
     "@rollup/plugin-node-resolve": "13",
     "@types/mocha": "9",
@@ -14,7 +14,7 @@
     "@types/rewire": "2",
     "@types/rimraf": "3",
     "@types/yargs": "17",
-    "@waiting/eslint-config": "^6.12.0",
+    "@waiting/eslint-config": "^7.1.0",
     "coveralls": "3",
     "debug": "^4.3.0",
     "eslint": "8",
@@ -28,13 +28,13 @@
     "rollup-plugin-terser": "7",
     "rxjs": "^7.4.0",
     "rxrunscript": "6",
-    "ts-node": "10",
+    "ts-node": "^10.4.0",
     "tsconfig-paths": "3",
-    "typescript": "4",
+    "typescript": "^4.5.0",
     "yargs": "17"
   },
   "engines": {
-    "node": ">=14.15.0"
+    "node": ">=16.13.0"
   },
   "scripts": {
     "add:pkg": "sh .scripts/add-pkg.sh",

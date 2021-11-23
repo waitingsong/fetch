@@ -13,12 +13,12 @@ on:
 jobs:
   build:
     runs-on: ${{ matrix.os }}
-    container: node:14-bullseye
+    container: node:16-bullseye
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
 
     strategy:
       matrix:
-        node: [14]
+        node: [16]
         os: [ubuntu-latest]
 
     steps:
@@ -28,10 +28,12 @@ jobs:
           export DEBIAN_FRONTEND=noninteractive
           apt-get update -qq --yes > /dev/null
           apt-get upgrade -qq --yes > /dev/null
-          apt-get install -qq --yes --no-install-recommends bash  dnsutils git jq net-tools postgresql-client wget > /dev/null
+          apt-get install -qq --yes --no-install-recommends bash dnsutils git jq net-tools postgresql-client wget > /dev/null
+          uname -a
           npm -v && node -v
           git --version
-          uname -a
+          openssl version
+          cat /etc/*release
       - uses: actions/checkout@v2
         with:
           # pulls all commits (needed for lerna / semantic release to correctly version)
@@ -44,6 +46,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
           registry-url: 'https://registry.npmjs.org'
+
       - name: Verify
         run: |
           echo $GITHUB_REF
@@ -55,20 +58,41 @@ jobs:
           CI: true
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: npm build
+      - name: Build
         run: |
+          whoami
           export cwd=`pwd`
-          openssl version
-          node -v
+          sh .scripts/ci/ci-prepare.sh
+          sh .github/workflows/fix.sh
           npm i -g c8 lerna rollup
+          sh .github/workflows/fix.sh
           npm run bootstrap
+          sh .github/workflows/fix.sh
           npm run build --if-present
         env:
           CI: true
-      - name: npm ci
+
+      # - name: Init Database
+      #   run: |
+      #     export cwd=`pwd`
+      #     .scripts/ci/ci-init-db.sh
+      #   env:
+      #     CI: true
+      #     POSTGRES_HOST: postgres
+      #     POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
+      #     POSTGRES_DB: db_ci_test
+      #     POSTGRES_USER: postgres
+      #     POSTGRES_PASSWORD: postgres
+      #     PGPASSWORD: postgres
+
+      - name: Lint
         run: |
-          # lint must after build
           npm run lint:nofix
+        env:
+          CI: true
+
+      - name: Testing
+        run: |
           npm run ci
         env:
           CI: true
@@ -76,6 +100,7 @@ jobs:
 
       - name: npm publish
         run: |
+          git restore .
           git config user.name $GITHUB_ACTOR
           git config user.email gh-actions-${GITHUB_ACTOR}@github.com
           # npm run pub major
@@ -94,4 +119,16 @@ jobs:
         image: kennethreitz/httpbin
         ports:
           - 80:80 # no 443
+
+    services:
+      postgres:
+        image: postgres:alpine
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_DB: db_ci_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
