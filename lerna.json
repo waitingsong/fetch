@@ -3,7 +3,7 @@
   "packages": [
     "packages/*"
   ],
-  "ignore": "",
+  "ignore": "demo",
   "command": {
     "publish": {
       "ignoreChanges": [
