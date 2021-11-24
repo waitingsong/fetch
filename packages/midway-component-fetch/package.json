@@ -42,8 +42,8 @@
     "node": ">=16.13.0"
   },
   "files": [
-    "dist/**/*.js",
-    "dist/**/*.d.ts"
+    "bin/*.js",
+    "dist"
   ],
   "publishConfig": {
     "access": "public"
