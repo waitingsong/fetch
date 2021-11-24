@@ -65,7 +65,6 @@ jobs:
           netstat -tunpl
           dig httpbin
           curl http://httpbin/get
-          psql -h $POSTGRES_HOST -p $POSTGRES_PORT -U$POSTGRES_USER -d $POSTGRES_DB -c "SHOW TIMEZONE;"
         env:
           CI: true
 
