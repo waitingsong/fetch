@@ -10,7 +10,7 @@ const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')
 
 describe(filename, () => {
 
-  describe('parseRespCookie() works', () => {
+  describe('parseRespCookie() work', () => {
     it('with valid input', () => {
       const value = Math.random().toString()
       const cookie = `foo=${value}; Secure; Path=/`

@@ -18,7 +18,7 @@ const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')
 describe(filename, function() {
   this.retries(3)
 
-  describe('Should get() works with httpbin.org', () => {
+  describe('Should get() work with httpbin.org', () => {
     const url = HOST_GET
     const initOpts = {} as Options
 
@@ -91,7 +91,7 @@ describe(filename, function() {
   })
 
 
-  describe('Should get() dataType:"json" works with httpbin.org', () => {
+  describe('Should get() dataType:"json" work with httpbin.org', () => {
     const url = HOST_GET
     const initData: PDATA = {
       p1: Math.random(),
@@ -154,7 +154,7 @@ describe(filename, function() {
   this.retries(3)
   beforeEach(resolve => setTimeout(resolve, DELAY))
 
-  describe('Should get() works with httpbin.org', () => {
+  describe('Should get() work with httpbin.org', () => {
     const url = HOST_GET
     const initOpts = {} as Options
 
@@ -232,7 +232,7 @@ describe(filename, function() {
   })
 
 
-  describe('Should get() dataType:"json" works with httpbin.org', () => {
+  describe('Should get() dataType:"json" work with httpbin.org', () => {
     const url = HOST_GET
     const initData: PDATA = {
       p1: Math.random(),

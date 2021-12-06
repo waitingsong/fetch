@@ -18,7 +18,7 @@ describe(filename, function() {
   this.retries(3)
   beforeEach(resolve => setTimeout(resolve, DELAY))
 
-  describe('Should remove() works with httpbin.org', () => {
+  describe('Should remove() work with httpbin.org', () => {
     const url = HOST_DELETE
     const initOpts = {} as Options
 

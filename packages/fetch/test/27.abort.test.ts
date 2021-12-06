@@ -13,7 +13,7 @@ const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')
 
 describe(filename, () => {
 
-  describe('Should get() works with AbortSignal', () => {
+  describe('Should get() work with AbortSignal', () => {
     const url = 'https://github.com/waitingsong/rxxfetch#readme'
     const initOpts: Options = {
       url,

@@ -1,4 +1,3 @@
-import { createReadStream } from 'fs'
 import { readFile } from 'fs/promises'
 import { relative } from 'path'
 
@@ -20,7 +19,7 @@ describe(filename, function() {
   this.retries(3)
   beforeEach(resolve => setTimeout(resolve, DELAY))
 
-  describe('Should post() works with httpbin.org', () => {
+  describe('Should post() work with httpbin.org', () => {
     const url = HOST_POST
     const initOpts = {
       contentType: ContentTypeList.formUrlencoded,
@@ -96,37 +95,6 @@ describe(filename, function() {
       const str = '<FileList><P00001.jpg /></FileList>'
       assert(form && form.p1 === p1, `Should got "${p1}"`)
       assert(form && form.p2 === str, `Should got "${str}"`)
-    })
-
-    it('send an image file via Buffer', (done) => {
-      const path = join(__dirname, 'images/loading-1.gif')
-      const readerStream = createReadStream(path)
-      const readerStream2 = createReadStream(path)
-      const args: Options = {
-        ...initOpts, data: readerStream, processData: false, contentType: false,
-      }
-      let buf: Buffer = Buffer.alloc(0)
-
-      readerStream2.on('data', (data: Buffer) => {
-        buf = Buffer.concat([buf, data])
-      })
-      readerStream2.on('error', () => {
-        assert(false, 'read file failed')
-        done()
-      })
-
-      // eslint-disable-next-line @typescript-eslint/no-misused-promises
-      readerStream2.on('end', async () => {
-        const res = await post<HttpbinPostResponse>(url, args)
-        const base64 = buf.toString('base64')
-        assert(res && res.url === url)
-        assert(
-          res.data && res.data === 'data:application/octet-stream;base64,' + base64,
-          `Should get "${base64.slice(0, 50)}..." but got ${res && res.data}`,
-        )
-
-        done()
-      })
     })
 
     it('with URLSearchParams', async () => {

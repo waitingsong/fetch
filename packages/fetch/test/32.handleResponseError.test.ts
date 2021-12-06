@@ -13,7 +13,7 @@ const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')
 
 describe(filename, () => {
 
-  describe('handleResponseError() works', () => {
+  describe('handleResponseError() work', () => {
     it('pass ok', async () => {
       const statusText = 'test resp'
       const status = 200

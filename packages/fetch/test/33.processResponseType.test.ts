@@ -13,7 +13,7 @@ const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')
 
 describe(filename, () => {
 
-  describe('processResponseType() works', () => {
+  describe('processResponseType() work', () => {
     const statusText = 'test resp'
     const status = 200
     const init = { status, statusText }

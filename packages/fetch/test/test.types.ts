@@ -34,7 +34,10 @@ export interface HttpbinGetResponse <T = unknown> {
 /** POST Response Interface of httpbin.org */
 export interface HttpbinPostResponse <T = unknown> extends HttpbinGetResponse <T> {
   data: string
-  files: unknown
+  files?: {
+    /** base64 */
+    uploadFile?: string | undefined,
+  } | undefined
   form: Record<keyof T, string>
   json: T
 }

@@ -17,7 +17,7 @@ describe(filename, function() {
   this.retries(3)
   beforeEach(resolve => setTimeout(resolve, DELAY))
 
-  describe('Should put() works with httpbin.org', () => {
+  describe('Should put() work with httpbin.org', () => {
     const url = HOST_PUT
     const initOpts = {
       contentType: ContentTypeList.formUrlencoded,

@@ -25,7 +25,7 @@ describe(filename, function() {
     keepRedirectCookies: true, // intercept redirect
   }
 
-  describe('Should works with keepRedirectCookies:true', () => {
+  describe('Should work with keepRedirectCookies:true', () => {
     it('set by get()', async () => {
       const value = Math.random().toString()
       const url = HOST_COOKIES + '/set/foo/' + value
@@ -37,7 +37,7 @@ describe(filename, function() {
     })
   })
 
-  describe('Should works with keepRedirectCookies:false', () => {
+  describe('Should work with keepRedirectCookies:false', () => {
     it('retrieve cookies with bare:true and redirect:"manual"', async () => {
       const value = Math.random().toString()
       const url = HOST_COOKIES + '/set/foo/' + value

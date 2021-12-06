@@ -14,7 +14,7 @@ const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')
 describe(filename, function() {
   this.retries(3)
 
-  describe('Should get() for compressed response works with httpbin.org', () => {
+  describe('Should get() for compressed response work with httpbin.org', () => {
     const initOpts = {
       timeout: 20 * 1000,
     } as Options

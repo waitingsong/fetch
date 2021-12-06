@@ -15,7 +15,7 @@ describe(filename, function() {
   this.retries(3)
   beforeEach(done => setTimeout(done, DELAY))
 
-  describe('Should post() works with httpbin.org', () => {
+  describe('Should post() work with httpbin.org', () => {
     const url = HOST_POST
     const initOpts = {
       contentType: ContentTypeList.json,
