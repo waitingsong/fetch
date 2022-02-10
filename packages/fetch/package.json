@@ -31,11 +31,11 @@
     "@waiting/shared-core": "^15.1.0",
     "@waiting/shared-types": "^15.1.0",
     "form-data": "^4.0.0",
-    "node-fetch": "^2.6.1",
-    "qs": "^6.10.1"
+    "node-fetch": "^2.6.7",
+    "qs": "^6.10.3"
   },
   "devDependencies": {
-    "@mw-components/jaeger": "^9.0.3",
+    "@mw-components/jaeger": "^9.0.4",
     "@types/node-fetch": "^2.5.12",
     "@types/qs": "^6.9.7",
     "cross-env": "7",

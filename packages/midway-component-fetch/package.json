@@ -24,7 +24,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@mw-components/jaeger": "^9.0.3",
+    "@mw-components/jaeger": "^9.0.4",
     "@waiting/fetch": "^16.0.1",
     "@waiting/shared-core": "^15.1.0",
     "@waiting/shared-types": "^15.1.0"
@@ -34,7 +34,7 @@
     "@midwayjs/core": "^2.13.0",
     "@midwayjs/decorator": "^2.13.0",
     "@midwayjs/web": "^2.13.0",
-    "@types/node": "16",
+    "@types/node": "17",
     "cross-env": "7",
     "opentracing": "^0.14.5"
   },
