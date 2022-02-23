@@ -33,7 +33,7 @@
     "@midwayjs/cli": "^1.2.99",
     "@midwayjs/core": "^3.0.7",
     "@midwayjs/decorator": "^3.0.7",
-    "@midwayjs/web": "^3.0.7",
+    "@midwayjs/koa": "^3.0.7",
     "@types/node": "17",
     "cross-env": "7",
     "opentracing": "^0.14.5"
