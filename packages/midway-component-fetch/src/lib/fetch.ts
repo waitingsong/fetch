@@ -6,7 +6,6 @@ import {
   Inject,
   Provide,
 } from '@midwayjs/decorator'
-import { Context } from '@midwayjs/web'
 import {
   FetchResponse,
   Options,
@@ -15,6 +14,8 @@ import {
 } from '@waiting/fetch'
 import { OverwriteAnyToUnknown } from '@waiting/shared-types'
 import type { Span } from 'opentracing'
+
+import type { Context } from '../interface'
 
 import { defaultfetchConfigCallbacks } from './helper'
 import { FetchComponentConfig } from './types'
