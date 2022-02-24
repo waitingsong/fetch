@@ -24,14 +24,14 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@mw-components/jaeger": "^9.0.4",
+    "@mw-components/jaeger": "^10.0.0",
     "@waiting/fetch": "^17.0.0",
     "@waiting/shared-core": "^15.1.0",
     "@waiting/shared-types": "^15.1.0",
     "tsconfig-paths": "3"
   },
   "devDependencies": {
-    "@midwayjs/cli": "^1.2.99",
+    "@midwayjs/cli": "^1.3.0",
     "@midwayjs/core": "^3.0.7",
     "@midwayjs/decorator": "^3.0.7",
     "@midwayjs/koa": "^3.0.7",
