@@ -1,7 +1,7 @@
 {
   "name": "@mw-components/fetch",
   "author": "waiting",
-  "version": "17.0.0",
+  "version": "17.0.1",
   "description": "",
   "private": false,
   "keywords": [
@@ -25,7 +25,7 @@
   "license": "MIT",
   "dependencies": {
     "@mw-components/jaeger": "^10.0.0",
-    "@waiting/fetch": "^17.0.0",
+    "@waiting/fetch": "^17.0.1",
     "@waiting/shared-core": "^15.1.0",
     "@waiting/shared-types": "^15.1.0",
     "tsconfig-paths": "3"

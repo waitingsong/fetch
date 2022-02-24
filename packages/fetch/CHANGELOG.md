@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [17.0.1](https://github.com/waitingsong/fetch/compare/v17.0.0...v17.0.1) (2022-02-24)
+
+**Note:** Version bump only for package @waiting/fetch
+
+
+
+
+
 # [17.0.0](https://github.com/waitingsong/fetch/compare/v16.0.3...v17.0.0) (2022-02-23)
 
 **Note:** Version bump only for package @waiting/fetch
