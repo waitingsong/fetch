@@ -16,7 +16,6 @@
   ],
   "exclude": [
     "asset/",
-    "fixtures/",
     "node_modules*",
     "**/*.d.ts",
     "**/*.spec.ts"
