@@ -1,24 +1,27 @@
-/* eslint-disable node/no-unpublished-import */
 import {
   Controller,
   Get,
-  // Inject,
 } from '@midwayjs/decorator'
 
-import { Context } from '../../../../src/interface'
-// import { FetchComponent } from '../../../../src/index'
-import { TestRespBody } from '../../../root.config'
+import { TestRespBody } from '@/root.config'
+import { Context } from '~/interface'
+import {
+  getConfigFromApp,
+  getMiddlewareConfigFromApp,
+} from '~/index'
 
 
 @Controller('/')
 export class HomeController {
 
-  // @Inject('fetch:fetchComponent') private readonly fetchService: FetchComponent
-
   @Get('/')
   async home(ctx: Context): Promise<TestRespBody> {
-    const { cookies, header, url } = ctx
+    const { app, cookies, header, url } = ctx
+    const config = getConfigFromApp(app)
+    const mwConfig = getMiddlewareConfigFromApp(app)
     const res = {
+      config,
+      mwConfig,
       cookies,
       header,
       url,

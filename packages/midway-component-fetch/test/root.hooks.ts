@@ -1,5 +1,5 @@
 import 'tsconfig-paths/register'
-
+import assert from 'assert/strict'
 import { join } from 'path'
 
 import * as WEB from '@midwayjs/koa'
@@ -26,15 +26,15 @@ export const mochaHooks = async () => {
 
   return {
     beforeAll: async () => {
-      const configs = {
+      const globalConfig = {
         keys: Math.random().toString(),
       }
       const opts = {
         imports: [WEB],
-        globalConfig: configs,
+        globalConfig,
       }
       const app = await createApp(join(__dirname, 'fixtures', 'base-app'), opts) as Application
-      app.addConfigObject(configs)
+      app.addConfigObject(globalConfig)
       testConfig.app = app
       testConfig.httpRequest = createHttpRequest(app)
       const { url } = testConfig.httpRequest.get('/')
