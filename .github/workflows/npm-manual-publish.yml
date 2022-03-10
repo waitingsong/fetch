@@ -30,7 +30,7 @@ jobs:
         # pulls all tags (needed for lerna / semantic release to correctly version)
         run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
       - name: Use Node.js ${{ matrix.node }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
           registry-url: 'https://registry.npmjs.org'
@@ -134,7 +134,8 @@ jobs:
         run: |
           export cwd=`pwd`
           . .scripts/ci/ci-env.sh
-          git restore .
+          # git restore .
+          git reset --hard
           git config user.name $GITHUB_ACTOR
           git config user.email gh-actions-${GITHUB_ACTOR}@github.com
           # npm run pub major
