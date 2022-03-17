@@ -1,4 +1,4 @@
-import assert from 'assert'
+import assert from 'assert/strict'
 import { relative } from 'path'
 
 import { testConfig, TestRespBody } from '@/root.config'
@@ -16,10 +16,11 @@ describe(filename, () => {
     const resp = await httpRequest
       .get(path)
     const ret = resp.body as TestRespBody
-    const { url, header } = ret
+    const { url, header, config } = ret
     const { host } = header
     assert(url === '/')
     assert(host && testConfig.host.includes(host))
+    assert.deepEqual(config, testConfig.config)
   })
 
 })
