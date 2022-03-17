@@ -1,6 +1,11 @@
-/* eslint-disable @typescript-eslint/prefer-optional-chain */
-/* eslint-disable import/no-extraneous-dependencies */
-import { SpanLogInput, TracerLog, TracerTag, HeadersKey, SpanHeaderInit } from '@mw-components/jaeger'
+import {
+  SpanLogInput,
+  TracerLog,
+  TracerTag,
+  HeadersKey,
+  SpanHeaderInit,
+  TracerManager,
+} from '@mw-components/jaeger'
 import { Node_Headers } from '@waiting/fetch'
 import {
   genISO8601String,
@@ -9,17 +14,21 @@ import {
 } from '@waiting/shared-core'
 import { Tags } from 'opentracing'
 
-import { FetchComponentConfig } from './types'
+import { Config } from './types'
 
 
 /**
  * Generate request header contains span and reqId if possible
  */
-export const genRequestHeaders: FetchComponentConfig['genRequestHeaders'] = (ctx, headersInit, span) => {
+export const genRequestHeaders: Config['genRequestHeaders'] = async (ctx, headersInit, span) => {
   const ret = new Node_Headers(headersInit)
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (! ctx) {
+    return ret
+  }
+  const tracerManager = await ctx.requestContext.getAsync(TracerManager)
+  if (! tracerManager) {
     return ret
   }
 
@@ -34,9 +43,8 @@ export const genRequestHeaders: FetchComponentConfig['genRequestHeaders'] = (ctx
   // }
 
   // override traceId
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (span && ctx.tracerManager) {
-    const spanHeader: SpanHeaderInit | undefined = ctx.tracerManager.headerOfCurrentSpan(span)
+  if (span) {
+    const spanHeader: SpanHeaderInit | undefined = tracerManager.headerOfCurrentSpan(span)
     if (spanHeader) {
       ret.set(HeadersKey.traceId, spanHeader[HeadersKey.traceId])
     }
@@ -49,12 +57,17 @@ export const genRequestHeaders: FetchComponentConfig['genRequestHeaders'] = (ctx
   return ret
 }
 
-const beforeRequest: FetchComponentConfig['beforeRequest'] = async (options) => {
-  const { id, ctx, fetchRequestSpanMap, opts } = options
-  const { span: pSpan } = opts
+const beforeRequest: Config['beforeRequest'] = async (options) => {
+  const { id, fetchRequestSpanMap, opts } = options
+  const { ctx, span: pSpan } = opts
 
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (! pSpan && (! ctx || ! ctx.tracerManager)) { return }
+  if (! ctx) { return }
+  if (! pSpan) { return }
+
+  const tracerManager = await ctx.requestContext.getAsync(TracerManager)
+  if (! tracerManager) {
+    return
+  }
 
   const {
     enableTraceLoggingReqBody,
@@ -70,9 +83,8 @@ const beforeRequest: FetchComponentConfig['beforeRequest'] = async (options) => 
     time,
     [TracerLog.svcMemoryUsage]: mem,
   }
-  ctx.tracerManager.spanLog(parentInput) // parent span log
+  tracerManager.spanLog(parentInput) // parent span log
 
-  const { tracerManager } = ctx
   const span = pSpan
     ? pSpan
     : tracerManager.genSpan('FetchComponent')
@@ -112,12 +124,16 @@ const beforeRequest: FetchComponentConfig['beforeRequest'] = async (options) => 
   fetchRequestSpanMap.set(id, span)
 }
 
-const afterResponse: FetchComponentConfig['afterResponse'] = async (options) => {
-  const { id, ctx, fetchRequestSpanMap, opts, resultData } = options
+const afterResponse: Config['afterResponse'] = async (options) => {
+  const { id, fetchRequestSpanMap, opts, resultData } = options
+  const { ctx } = opts
   const span = fetchRequestSpanMap.get(id)
 
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (! span && ! ctx.tracerManager) { return }
+  const tracerManager = await ctx?.requestContext.getAsync(TracerManager)
+  if (! tracerManager) {
+    return
+  }
+  if (! span) { return }
 
   const {
     enableTraceLoggingRespData,
@@ -173,12 +189,17 @@ const afterResponse: FetchComponentConfig['afterResponse'] = async (options) => 
   fetchRequestSpanMap.delete(id)
 }
 
-export const processEx: FetchComponentConfig['processEx'] = (options) => {
-  const { id, ctx, fetchRequestSpanMap, opts, exception } = options
+export const processEx: Config['processEx'] = async (options) => {
+  const { id, fetchRequestSpanMap, opts, exception } = options
+  const { ctx } = opts
   const span = fetchRequestSpanMap.get(id)
 
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (! span && (! ctx || ! ctx.tracerManager)) {
+  const tracerManager = await ctx?.requestContext.getAsync(TracerManager)
+  if (! tracerManager) {
+    throw exception
+  }
+
+  if (! span) {
     throw exception
   }
 
@@ -195,7 +216,7 @@ export const processEx: FetchComponentConfig['processEx'] = (options) => {
     time,
     [TracerLog.svcMemoryUsage]: mem,
   }
-  ctx.tracerManager.spanLog(parentInput) // parent span log
+  tracerManager.spanLog(parentInput) // parent span log
 
   if (! span) {
     if (exception instanceof Error) {

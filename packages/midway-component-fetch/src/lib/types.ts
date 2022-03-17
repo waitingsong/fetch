@@ -1,11 +1,15 @@
-/* eslint-disable node/no-unpublished-import */
-import { Options } from '@waiting/fetch'
+import { Options as FetchOptions } from '@waiting/fetch'
+import { MiddlewareConfig as MWConfig } from '@waiting/shared-types'
 import type { Span } from 'opentracing'
 
 import { Context } from '../interface'
 
 
-export interface FetchComponentConfig {
+export type Options = FetchOptions & {
+  ctx?: Context | undefined,
+}
+
+export interface Config {
   /**
    * Generate headersInit from request context for Fetch request
    *
@@ -15,7 +19,7 @@ export interface FetchComponentConfig {
     ctx: Context,
     headersInit?: Record<string, string> | Headers,
     span?: Span,
-  ) => Headers
+  ) => Promise<Headers>
   /**
    * Callback before request
    */
@@ -32,7 +36,7 @@ export interface FetchComponentConfig {
    * Callback handling exception
    * @description process caught Exception then throw it
    */
-  processEx?: (options: ProcessExCallbackOptions) => never
+  processEx?: (options: ProcessExCallbackOptions) => Promise<never>
   /**
    * Enable default tracing callbacks
    * @default false
@@ -72,19 +76,25 @@ export interface FetchComponentConfig {
    */
   traceLoggingRespHeaders: string[]
 }
+export type FetchComponentConfig = Config
+
+export interface MiddlewareOptions {
+  debug: boolean
+}
+export type MiddlewareConfig = MWConfig<MiddlewareOptions>
+
+
 
 export interface ReqCallbackOptions {
   id: symbol
-  ctx: Context
-  config: FetchComponentConfig
+  config: Config
   fetchRequestSpanMap: Map<symbol, Span>
   opts: Options
 }
 
 export interface RespCallbackOptions <T = unknown> {
   id: symbol
-  ctx: Context
-  config: FetchComponentConfig
+  config: Config
   fetchRequestSpanMap: Map<symbol, Span>
   opts: Options
   resultData: T
@@ -92,8 +102,7 @@ export interface RespCallbackOptions <T = unknown> {
 
 export interface ProcessExCallbackOptions {
   id: symbol
-  ctx: Context
-  config: FetchComponentConfig
+  config: Config
   fetchRequestSpanMap: Map<symbol, Span>
   opts: Options
   exception: Error

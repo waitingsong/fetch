@@ -35,7 +35,8 @@
     "opentracing": "^0.14.5"
   },
   "peerDependencies": {
-    "@midwayjs/core": ">=3"
+    "@midwayjs/core": ">=3",
+    "@midwayjs/decorator": "*"
   },
   "engines": {
     "node": ">=16.13.0"
@@ -49,7 +50,7 @@
   },
   "scripts": {
     "build": "npm run tsc",
-    "clean": "npm run clean:lock & npm run clean:cache & rm -rf dist/* -rf",
+    "clean": "npm run clean:cache & rm -rf dist/* -rf",
     "clean:cache": "rm -rf .eslintcache .vscode/.tsbuildinfo .vscode/.tsbuildinfo.*",
     "clean:lock": "rm package-lock.json -f",
     "cov": "cross-env TS_NODE_PROJECT=test/tsconfig.json c8 mocha --parallel=false",

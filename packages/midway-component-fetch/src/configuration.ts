@@ -4,11 +4,11 @@ import { join } from 'path'
 
 import { Configuration } from '@midwayjs/decorator'
 
+import { ConfigKey } from '~/index'
 
-const namespace = 'fetch'
 
 @Configuration({
-  namespace,
+  namespace: ConfigKey.namespace,
   importConfigs: [join(__dirname, 'config')],
 })
 export class AutoConfiguration {

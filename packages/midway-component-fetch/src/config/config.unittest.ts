@@ -8,13 +8,15 @@ import {
 
 export const fetchConfig: Config = {
   ...initialConfig,
-  traceLoggingReqHeaders: [...initialConfig.traceLoggingReqHeaders],
-  traceLoggingRespHeaders: [...initialConfig.traceLoggingRespHeaders],
+  enableTraceLoggingReqBody: false,
+  enableTraceLoggingRespData: false,
+  traceLoggingReqHeaders: [],
+  traceLoggingRespHeaders: [],
 }
 
 export const fetchMiddlewareConfig: Readonly<Omit<MiddlewareConfig, 'match'>> = {
   ...initialMiddlewareConfig,
-  ignore: [],
+  ignore: [], // !
   options: {
     ...initMiddlewareOptions,
   },

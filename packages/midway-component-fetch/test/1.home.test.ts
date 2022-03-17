@@ -20,6 +20,8 @@ describe(filename, () => {
     const { host } = header
     assert(url === '/')
     assert(host && testConfig.host.includes(host))
+    // @ts-expect-error
+    delete testConfig.config.genRequestHeaders
     assert.deepEqual(config, testConfig.config)
   })
 

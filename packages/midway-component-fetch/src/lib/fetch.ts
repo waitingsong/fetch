@@ -1,14 +1,12 @@
-/* eslint-disable node/no-unpublished-import */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable import/no-extraneous-dependencies */
 import {
-  Config,
+  Config as _Config,
   Inject,
   Provide,
+  Scope,
+  ScopeEnum,
 } from '@midwayjs/decorator'
 import {
   FetchResponse,
-  Options,
   fetch,
   Node_Headers,
 } from '@waiting/fetch'
@@ -17,16 +15,18 @@ import type { Span } from 'opentracing'
 
 import type { Context } from '../interface'
 
+import { ConfigKey } from './config'
 import { defaultfetchConfigCallbacks } from './helper'
-import { FetchComponentConfig } from './types'
+import { Config, Options } from './types'
 
 
 @Provide()
+@Scope(ScopeEnum.Request, { allowDowngrade: true })
 export class FetchComponent {
 
-  @Inject() protected ctx: Context
+  @_Config(ConfigKey.config) readonly fetchConfig: Config
 
-  @Config('fetch') readonly fetchConfig: FetchComponentConfig
+  @Inject() protected readonly ctx: Context
 
   headers: Record<string, string> = {}
   readonly fetchRequestSpanMap = new Map<symbol, Span>()
@@ -45,7 +45,10 @@ export class FetchComponent {
   ): Promise<OverwriteAnyToUnknown<T>> {
 
     const opts: Options = { ...options }
-    opts.headers = this.genReqHeadersFromOptionsAndConfigCallback(opts.headers, opts.span)
+    if (! opts.ctx && this.ctx) {
+      opts.ctx = this.ctx
+    }
+    opts.headers = await this.genReqHeadersFromOptionsAndConfigCallback(opts.ctx, opts.headers, opts.span)
 
     const config = this.fetchConfig
     const id = Symbol(opts.url)
@@ -53,7 +56,6 @@ export class FetchComponent {
     if (this.fetchConfig.enableDefaultCallbacks) {
       await defaultfetchConfigCallbacks.beforeRequest({
         id,
-        ctx: this.ctx,
         config: this.fetchConfig,
         fetchRequestSpanMap: this.fetchRequestSpanMap,
         opts,
@@ -61,14 +63,13 @@ export class FetchComponent {
 
       const currSpan = this.fetchRequestSpanMap.get(id)
       if (currSpan) {
-        opts.headers = this.genReqHeadersFromOptionsAndConfigCallback(opts.headers, currSpan)
+        opts.headers = await this.genReqHeadersFromOptionsAndConfigCallback(opts.ctx, opts.headers, currSpan)
       }
     }
 
     if (config.beforeRequest) {
       await config.beforeRequest({
         id,
-        ctx: this.ctx,
         fetchRequestSpanMap: this.fetchRequestSpanMap,
         config: this.fetchConfig,
         opts,
@@ -81,7 +82,6 @@ export class FetchComponent {
       if (config.processResult) {
         ret = config.processResult({
           id,
-          ctx: this.ctx,
           config: this.fetchConfig,
           fetchRequestSpanMap: this.fetchRequestSpanMap,
           opts,
@@ -92,7 +92,6 @@ export class FetchComponent {
       if (config.afterResponse) {
         await config.afterResponse({
           id,
-          ctx: this.ctx,
           config: this.fetchConfig,
           fetchRequestSpanMap: this.fetchRequestSpanMap,
           opts,
@@ -103,7 +102,6 @@ export class FetchComponent {
       if (config.enableDefaultCallbacks) {
         await defaultfetchConfigCallbacks.afterResponse({
           id,
-          ctx: this.ctx,
           config: this.fetchConfig,
           fetchRequestSpanMap: this.fetchRequestSpanMap,
           opts,
@@ -118,7 +116,6 @@ export class FetchComponent {
         if (typeof defaultfetchConfigCallbacks.processEx === 'function') {
           return defaultfetchConfigCallbacks.processEx({
             id,
-            ctx: this.ctx,
             config: this.fetchConfig,
             fetchRequestSpanMap: this.fetchRequestSpanMap,
             opts,
@@ -129,7 +126,6 @@ export class FetchComponent {
       else if (typeof config.processEx === 'function') {
         return config.processEx({
           id,
-          ctx: this.ctx,
           config: this.fetchConfig,
           fetchRequestSpanMap: this.fetchRequestSpanMap,
           opts,
@@ -173,10 +169,11 @@ export class FetchComponent {
    * Duplicate key will be overwritten,
    * by headers.set() instead of headers.append()
    */
-  genReqHeadersFromOptionsAndConfigCallback(
+  async genReqHeadersFromOptionsAndConfigCallback(
+    ctx: Context | undefined,
     initHeaders: Options['headers'],
     span?: Span,
-  ): Headers {
+  ): Promise<Headers> {
 
     const headers = new Node_Headers(initHeaders)
     if (typeof this.fetchConfig.genRequestHeaders !== 'function') {
@@ -184,8 +181,8 @@ export class FetchComponent {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if (this.ctx) {
-      const ret = this.fetchConfig.genRequestHeaders(this.ctx, headers, span)
+    if (ctx) {
+      const ret = await this.fetchConfig.genRequestHeaders(ctx, headers, span)
       return ret
     }
     return headers
