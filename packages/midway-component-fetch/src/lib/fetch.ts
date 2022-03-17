@@ -53,10 +53,10 @@ export class FetchComponent {
     const config = this.fetchConfig
     const id = Symbol(opts.url)
 
-    if (this.fetchConfig.enableDefaultCallbacks) {
+    if (config.enableDefaultCallbacks) {
       await defaultfetchConfigCallbacks.beforeRequest({
         id,
-        config: this.fetchConfig,
+        config,
         fetchRequestSpanMap: this.fetchRequestSpanMap,
         opts,
       })
@@ -71,7 +71,7 @@ export class FetchComponent {
       await config.beforeRequest({
         id,
         fetchRequestSpanMap: this.fetchRequestSpanMap,
-        config: this.fetchConfig,
+        config,
         opts,
       })
     }
@@ -82,7 +82,7 @@ export class FetchComponent {
       if (config.processResult) {
         ret = config.processResult({
           id,
-          config: this.fetchConfig,
+          config,
           fetchRequestSpanMap: this.fetchRequestSpanMap,
           opts,
           resultData: ret,
@@ -92,7 +92,7 @@ export class FetchComponent {
       if (config.afterResponse) {
         await config.afterResponse({
           id,
-          config: this.fetchConfig,
+          config,
           fetchRequestSpanMap: this.fetchRequestSpanMap,
           opts,
           resultData: ret,
@@ -102,7 +102,7 @@ export class FetchComponent {
       if (config.enableDefaultCallbacks) {
         await defaultfetchConfigCallbacks.afterResponse({
           id,
-          config: this.fetchConfig,
+          config,
           fetchRequestSpanMap: this.fetchRequestSpanMap,
           opts,
           resultData: ret,
