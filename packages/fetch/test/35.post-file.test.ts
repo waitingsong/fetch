@@ -1,3 +1,4 @@
+import assert from 'assert/strict'
 import { createReadStream } from 'fs'
 import { relative } from 'path'
 
@@ -8,9 +9,6 @@ import { post, Options, ContentTypeList } from '../src/index'
 
 import { DELAY, HOST_POST } from './config'
 import { HttpbinPostResponse, PostForm1 } from './test.types'
-
-// eslint-disable-next-line import/order
-import assert = require('power-assert')
 
 
 const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')

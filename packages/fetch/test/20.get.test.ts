@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import assert from 'assert/strict'
 import { relative } from 'path'
 
 import { ab2str } from '@waiting/shared-core'
@@ -8,9 +9,6 @@ import { get, Options } from '../src/index'
 
 import { DELAY, HOST_GET } from './config'
 import { HttpbinGetResponse, PDATA, PostForm1 } from './test.types'
-
-// eslint-disable-next-line import/order
-import assert = require('power-assert')
 
 
 const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')

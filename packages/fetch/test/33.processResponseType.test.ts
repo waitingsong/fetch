@@ -1,12 +1,10 @@
+import assert from 'assert/strict'
 import { relative } from 'path'
 
 import FormData from 'form-data'
 import { Response } from 'node-fetch'
 
 import { processResponseType } from '../src/lib/response'
-
-// eslint-disable-next-line import/order
-import assert = require('power-assert')
 
 
 const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')

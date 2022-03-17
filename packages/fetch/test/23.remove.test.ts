@@ -1,3 +1,4 @@
+import assert from 'assert/strict'
 import { relative } from 'path'
 
 import FormData from 'form-data'
@@ -7,9 +8,6 @@ import { remove, Options } from '../src/index'
 
 import { DELAY, HOST_DELETE } from './config'
 import { HttpbinPostResponse, PDATA } from './test.types'
-
-// eslint-disable-next-line import/order
-import assert = require('power-assert')
 
 
 const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')

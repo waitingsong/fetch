@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
+import assert from 'assert/strict'
 import { relative } from 'path'
 
 import {
@@ -7,9 +8,6 @@ import {
   Options,
   initialOptions,
 } from '../src/index'
-
-// eslint-disable-next-line import/order
-import assert = require('power-assert')
 
 
 const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')
