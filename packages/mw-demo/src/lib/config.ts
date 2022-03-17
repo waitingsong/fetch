@@ -1,25 +1,29 @@
-import { Config } from './types'
+import {
+  Config,
+  MiddlewareConfig,
+  MiddlewareOptions,
+} from './types'
 
-import { MiddlewareConfig } from '~/interface'
-
-
-export const enum ConfigKey {
-  config = 'demoConfig',
-  middlewareConfig = 'demoMiddlewareConfig',
-  namespace = 'demo',
-  componentName = 'demoComponent',
-  middlewareName = 'demoMiddleware'
-}
 
 export const initialConfig: Readonly<Config> = {
   secret: '',
 }
-export const initialMiddlewareConfig: Readonly<MiddlewareConfig> = {
+export const initMiddlewareOptions: MiddlewareOptions = {
+  debug: false,
+}
+export const initialMiddlewareConfig: Readonly<Omit<MiddlewareConfig, 'ignore' | 'match' | 'options'>> = {
   enableMiddleware: true,
-  ignore: [
-    '/metrics',
-    '/favicon.ico',
-    '/favicon.png',
-  ],
+}
+
+export const enum ConfigKey {
+  namespace = 'demo',
+  config = 'demoConfig',
+  middlewareConfig = 'demoMiddlewareConfig',
+  componentName = 'demoComponent',
+  middlewareName = 'demoMiddleware'
+}
+
+export enum Msg {
+  AuthFailed = 'Authentication Failed',
 }
 

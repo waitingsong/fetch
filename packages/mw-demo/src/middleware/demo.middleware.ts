@@ -1,8 +1,15 @@
 import { Middleware } from '@midwayjs/decorator'
 
-import { ConfigKey, getConfigFromApp, getMiddlewareConfigFromApp } from '~/index'
+import {
+  ConfigKey,
+  DemoComponent,
+  Demo2Component,
+} from '~/index'
 import { Context, IMiddleware, NextFunction } from '~/interface'
-import { matchFunc } from '~/util/common'
+import {
+  getMiddlewareConfig,
+  matchFunc,
+} from '~/util/common'
 
 
 @Middleware()
@@ -13,27 +20,38 @@ export class DemoMiddleware implements IMiddleware<Context, NextFunction> {
   }
 
   match(ctx?: Context) {
-    return matchFunc(ctx)
+    if (ctx) {
+      if (! ctx.state) {
+        ctx.state = {}
+      }
+    }
+
+    const flag = matchFunc(ctx)
+    return flag
   }
 
   resolve() {
-    return demoMiddleware
+    return middleware
   }
 
 }
 
 
-async function demoMiddleware(
+async function middleware(
   ctx: Context,
   next: NextFunction,
 ): Promise<void> {
 
   const { app } = ctx
 
-  const config = getConfigFromApp(app)
-  const mwConfig = getMiddlewareConfigFromApp(app)
-  void config
+  const mwConfig = getMiddlewareConfig(app)
   void mwConfig
+
+  const demoComponent = await ctx.requestContext.getAsync(DemoComponent)
+  void demoComponent
+  const demo2Component = await ctx.requestContext.getAsync(Demo2Component)
+  void demo2Component
+
 
   return next()
 }
