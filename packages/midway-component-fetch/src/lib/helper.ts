@@ -23,8 +23,7 @@ import { Config } from './types'
 export const genRequestHeaders: Config['genRequestHeaders'] = async (ctx, headersInit, span) => {
   const ret = new Node_Headers(headersInit)
 
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (! ctx) {
+  if (! ctx || ! ctx.requestContext) {
     return ret
   }
   const tracerManager = await ctx.requestContext.getAsync(TracerManager)
@@ -61,7 +60,7 @@ const beforeRequest: Config['beforeRequest'] = async (options) => {
   const { id, fetchRequestSpanMap, opts } = options
   const { ctx, span: pSpan } = opts
 
-  if (! ctx) { return }
+  if (! ctx || ! ctx.requestContext) { return }
   if (! pSpan) { return }
 
   const tracerManager = await ctx.requestContext.getAsync(TracerManager)
@@ -127,9 +126,10 @@ const beforeRequest: Config['beforeRequest'] = async (options) => {
 const afterResponse: Config['afterResponse'] = async (options) => {
   const { id, fetchRequestSpanMap, opts, resultData } = options
   const { ctx } = opts
-  const span = fetchRequestSpanMap.get(id)
+  if (! ctx || ! ctx.requestContext) { return }
 
-  const tracerManager = await ctx?.requestContext.getAsync(TracerManager)
+  const span = fetchRequestSpanMap.get(id)
+  const tracerManager = await ctx.requestContext.getAsync(TracerManager)
   if (! tracerManager) {
     return
   }
@@ -149,9 +149,8 @@ const afterResponse: Config['afterResponse'] = async (options) => {
     time,
     [TracerLog.svcMemoryUsage]: mem,
   }
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (ctx && ctx.tracerManager) {
-    ctx.tracerManager.spanLog(parentInput)
+  if (tracerManager) {
+    tracerManager.spanLog(parentInput)
   }
 
   if (! span) {
@@ -192,9 +191,12 @@ const afterResponse: Config['afterResponse'] = async (options) => {
 export const processEx: Config['processEx'] = async (options) => {
   const { id, fetchRequestSpanMap, opts, exception } = options
   const { ctx } = opts
+  if (! ctx || ! ctx.requestContext) {
+    throw exception
+  }
   const span = fetchRequestSpanMap.get(id)
 
-  const tracerManager = await ctx?.requestContext.getAsync(TracerManager)
+  const tracerManager = await ctx.requestContext.getAsync(TracerManager)
   if (! tracerManager) {
     throw exception
   }
