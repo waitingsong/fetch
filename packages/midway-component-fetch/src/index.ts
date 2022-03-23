@@ -1,3 +1,8 @@
+import {
+  Config,
+  ConfigKey,
+} from './lib/index'
+
 
 export { AutoConfiguration as Configuration } from './configuration'
 export * from './lib/index'
@@ -15,3 +20,9 @@ export {
   JsonObject,
 } from '@waiting/shared-types'
 
+
+declare module '@midwayjs/core' {
+  interface MidwayConfig {
+    [ConfigKey.config]: Config
+  }
+}
