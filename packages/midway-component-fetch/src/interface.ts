@@ -4,7 +4,6 @@ import { Context as KoaContext } from '@midwayjs/koa'
 import {
   Config,
   ConfigKey,
-  MiddlewareConfig,
 } from './lib/index'
 
 
@@ -15,11 +14,10 @@ export {
   NpmPkg,
 } from '@waiting/shared-types'
 
-declare module '@midwayjs/core/dist/interface' {
+declare module '@midwayjs/core' {
   // 将配置合并到 MidwayConfig 中
   interface MidwayConfig {
     [ConfigKey.config]: Config
-    [ConfigKey.middlewareConfig]: MiddlewareConfig
   }
 }
 
