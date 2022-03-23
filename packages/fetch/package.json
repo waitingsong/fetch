@@ -35,7 +35,7 @@
     "qs": "^6.10.3"
   },
   "devDependencies": {
-    "@mw-components/jaeger": "^10.0.0",
+    "@mw-components/jaeger": "^11.0.0",
     "@types/node-fetch": "^2.5.12",
     "@types/qs": "^6.9.7",
     "cross-env": "7",
