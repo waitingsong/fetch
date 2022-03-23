@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [18.0.3](/compare/v18.0.2...v18.0.3) (2022-03-23)
+
+
+### Bug Fixes
+
+* **boilerplate:** devDeps version 2e29b42
+
+
+
+
+
 ## [18.0.2](/compare/v18.0.1...v18.0.2) (2022-03-23)
 
 **Note:** Version bump only for package rxxfetch
