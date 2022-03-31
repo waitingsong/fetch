@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [18.0.5](https://github.com/waitingsong/fetch/compare/v18.0.4...v18.0.5) (2022-03-31)
+
+
+### Bug Fixes
+
+* **midway-component-fetch:** ConfigKey define ([942428f](https://github.com/waitingsong/fetch/commit/942428f731d183fb09f8dcfeae111097ecae842f))
+* **midway-component-fetch:** import ([03f4431](https://github.com/waitingsong/fetch/commit/03f44317787ff6a2b8b4aca7ff51d6130eca56fa))
+
+
+
+
+
 ## [18.0.4](https://github.com/waitingsong/fetch/compare/v18.0.3...v18.0.4) (2022-03-23)
 
 **Note:** Version bump only for package @mw-components/fetch
