@@ -38,7 +38,7 @@ export const initialMiddlewareConfig: Readonly<Omit<MiddlewareConfig, 'ignore' |
   enableMiddleware: true,
 }
 
-export const enum ConfigKey {
+export enum ConfigKey {
   namespace = 'fetch',
   config = 'fetchConfig',
   middlewareConfig = 'fetchMiddlewareConfig',
