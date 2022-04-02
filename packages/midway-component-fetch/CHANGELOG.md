@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [18.0.7](https://github.com/waitingsong/fetch/compare/v18.0.6...v18.0.7) (2022-04-02)
+
+**Note:** Version bump only for package @mw-components/fetch
+
+
+
+
+
 ## [18.0.6](https://github.com/waitingsong/fetch/compare/v18.0.5...v18.0.6) (2022-04-02)
 
 **Note:** Version bump only for package @mw-components/fetch
