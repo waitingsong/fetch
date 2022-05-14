@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-
 
 /**
  * @see https://mochajs.org/#root-hook-plugins
@@ -18,13 +14,13 @@ export const mochaHooks = async () => {
   }
 
   return {
-    // beforeAll() {
-    //   void 0
-    // },
+    beforeAll() {
+      void 0
+    },
 
-    // afterAll() {
-    //   void 0
-    // },
+    afterAll() {
+      void 0
+    },
   }
 
 }
