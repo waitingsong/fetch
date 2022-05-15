@@ -1,4 +1,4 @@
 #!/bin/bash
 
-lerna run cov --ignore demo --concurrency=1
+lerna run cov --concurrency=1
 
