@@ -5,13 +5,13 @@ export {
   post,
   remove,
   put,
-} from './fetch'
-export * from './config'
-export * from './types'
+} from './fetch.js'
+export * from './config.js'
+export * from './types.js'
 export {
   buildQueryString,
   getGloalRequestOptions,
   setGloalRequestOptions,
-} from './util'
-export { Node_Headers } from './patch'
+} from './util.js'
+export { Node_Headers } from './patch.js'
 

@@ -1,15 +1,14 @@
-import assert from 'assert/strict'
-import { relative } from 'path'
+import assert from 'node:assert/strict'
 
-import { get, Options } from '../src/index'
+import { fileShortPath } from '@waiting/shared-core'
 
-import { HOST } from './config'
-import { HttpbinGetResponse } from './test.types'
+import { get, Options } from '../src/index.js'
+
+import { HOST } from './config.js'
+import { HttpbinGetResponse } from './test.types.js'
 
 
-const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')
-
-describe(filename, function() {
+describe(fileShortPath(import.meta.url), function() {
   this.retries(3)
 
   describe('Should get() for compressed response work with httpbin.org', () => {

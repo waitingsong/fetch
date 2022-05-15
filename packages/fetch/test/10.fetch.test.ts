@@ -1,14 +1,13 @@
-import assert from 'assert/strict'
-import { relative } from 'path'
+import assert from 'node:assert/strict'
 
-import { fetch, Options } from '../src/index'
+import { fileShortPath } from '@waiting/shared-core'
 
-import { HOST, HOST_GET } from './config'
+import { fetch, Options } from '../src/index.js'
+
+import { HOST, HOST_GET } from './config.js'
 
 
-const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')
-
-describe(filename, () => {
+describe(fileShortPath(import.meta.url), () => {
   describe('Should fetch() throw error with invalid input', () => {
     const initOpts: Options = {
       url: '',

@@ -1,14 +1,14 @@
 import type { Span } from 'opentracing'
 
-import { traceLog } from './tracer'
-import { Args } from './types'
+import { traceLog } from './tracer.js'
+import { Args } from './types.js'
 import {
   processInitOpts,
   processRequestGetLikeData,
   processRequestPostLikeData,
   parseRespCookie,
   selectFecthModule,
-} from './util'
+} from './util.js'
 
 
 /**

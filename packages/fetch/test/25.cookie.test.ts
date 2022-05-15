@@ -1,16 +1,15 @@
-import assert from 'assert/strict'
-import { relative } from 'path'
+import assert from 'node:assert/strict'
 
-import { Args, get, Options } from '../src/index'
-import { patchedFetch, Node_Headers } from '../src/lib/patch'
+import { fileShortPath } from '@waiting/shared-core'
 
-import { DELAY, HOST, HOST_COOKIES } from './config'
-import { HttpbinRetCookie } from './test.types'
+import { Args, get, Options } from '../src/index.js'
+import { patchedFetch, Node_Headers } from '../src/lib/patch.js'
+
+import { DELAY, HOST, HOST_COOKIES } from './config.js'
+import { HttpbinRetCookie } from './test.types.js'
 
 
-const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')
-
-describe(filename, function() {
+describe(fileShortPath(import.meta.url), function() {
   this.retries(3)
   beforeEach(resolve => setTimeout(resolve, DELAY))
 

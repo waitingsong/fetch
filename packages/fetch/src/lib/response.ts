@@ -1,9 +1,9 @@
-import { assertNever } from './shared'
+import { assertNever } from './shared.js'
 import {
   FetchMsg,
   FetchResponse,
   RespDataType,
-} from './types'
+} from './types.js'
 
 
 export async function handleResponseError(

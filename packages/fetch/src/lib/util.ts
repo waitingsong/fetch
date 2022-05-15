@@ -1,13 +1,13 @@
 import NodeFormData from 'form-data'
 import QueryString from 'qs'
 
-import { initialOptions } from './config'
+import { initialOptions } from './config.js'
 import {
   Args,
   ArgsRequestInitCombined,
   ContentTypeList,
   Options,
-} from './types'
+} from './types.js'
 
 
 /** Update initialFetchOptions */

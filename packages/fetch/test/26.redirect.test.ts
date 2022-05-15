@@ -1,28 +1,25 @@
-import assert from 'assert/strict'
-import { relative } from 'path'
+import assert from 'node:assert/strict'
+
+import { fileShortPath } from '@waiting/shared-core'
 
 import {
   get,
   post,
   Options,
-} from '../src/index'
-import { patchedFetch, Node_Headers } from '../src/lib/patch'
+} from '../src/index.js'
+import { patchedFetch, Node_Headers } from '../src/lib/patch.js'
 
 import {
   DELAY,
   HOST_ABSOLUTE_REDIRECT,
   HOST_GET,
-  HOST_REDIRECT,
   HOST_STATUS,
-} from './config'
-import { HttpbinGetResponse } from './test.types'
+} from './config.js'
+import { HttpbinGetResponse } from './test.types.js'
 
-
-const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')
 
 // skip while https://github.com/postmanlabs/httpbin/issues/617
-
-describe.skip(filename, function() {
+describe.skip(fileShortPath(import.meta.url), function() {
   this.retries(3)
   beforeEach(resolve => setTimeout(resolve, DELAY))
 

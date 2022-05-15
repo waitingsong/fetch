@@ -1,20 +1,19 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-import assert from 'assert/strict'
-import { relative } from 'path'
+import assert from 'node:assert/strict'
+
+import { fileShortPath } from '@waiting/shared-core'
 
 import {
   get,
   Options,
   FetchMsg,
   initialOptions,
-} from '../src/index'
+} from '../src/index.js'
 
-import { HOST, HOST_POST } from './config'
+import { HOST, HOST_POST } from './config.js'
 
 
-const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')
-
-describe(filename, function() {
+describe(fileShortPath(import.meta.url), function() {
   this.retries(3)
 
   describe('Should handleResponseError work', () => {

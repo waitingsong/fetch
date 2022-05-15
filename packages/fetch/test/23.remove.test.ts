@@ -1,18 +1,16 @@
-import assert from 'assert/strict'
-import { relative } from 'path'
+import assert from 'node:assert/strict'
 
+import { fileShortPath } from '@waiting/shared-core'
 import FormData from 'form-data'
 import QueryString from 'qs'
 
-import { remove, Options } from '../src/index'
+import { remove, Options } from '../src/index.js'
 
-import { DELAY, HOST_DELETE } from './config'
-import { HttpbinPostResponse, PDATA } from './test.types'
+import { DELAY, HOST_DELETE } from './config.js'
+import { HttpbinPostResponse, PDATA } from './test.types.js'
 
 
-const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')
-
-describe(filename, function() {
+describe(fileShortPath(import.meta.url), function() {
   this.retries(3)
   beforeEach(resolve => setTimeout(resolve, DELAY))
 

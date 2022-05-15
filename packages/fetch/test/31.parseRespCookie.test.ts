@@ -1,12 +1,11 @@
-import assert from 'assert/strict'
-import { relative } from 'path'
+import assert from 'node:assert/strict'
 
-import { parseRespCookie } from '../src/lib/util'
+import { fileShortPath } from '@waiting/shared-core'
+
+import { parseRespCookie } from '../src/lib/util.js'
 
 
-const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')
-
-describe(filename, () => {
+describe(fileShortPath(import.meta.url), () => {
 
   describe('parseRespCookie() work', () => {
     it('with valid input', () => {

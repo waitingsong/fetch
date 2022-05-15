@@ -1,5 +1,5 @@
-import { patchedFetch, Node_Headers } from './patch'
-import { Options } from './types'
+import { patchedFetch, Node_Headers } from './patch.js'
+import { Options } from './types.js'
 
 
 export const initialOptions: Options = {

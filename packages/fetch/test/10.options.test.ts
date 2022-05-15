@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-import assert from 'assert/strict'
-import { relative } from 'path'
+import assert from 'node:assert/strict'
+
+import { fileShortPath } from '@waiting/shared-core'
 
 import {
   getGloalRequestOptions,
   setGloalRequestOptions,
   Options,
   initialOptions,
-} from '../src/index'
+} from '../src/index.js'
 
 
-const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')
 const defaultOptions: Readonly<Options> = getGloalRequestOptions()
 
-describe(filename, () => {
+describe(fileShortPath(import.meta.url), () => {
   afterEach(() => {
     setGloalRequestOptions(defaultOptions)
   })

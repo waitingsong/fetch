@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { OverwriteAnyToUnknown } from '@waiting/shared-types'
 
-import { _fetch } from './request'
-import { handleResponseError, processResponseType } from './response'
-import { traceLog } from './tracer'
-import { FetchResponse, Options } from './types'
-import { processParams } from './util'
+import { _fetch } from './request.js'
+import { handleResponseError, processResponseType } from './response.js'
+import { traceLog } from './tracer.js'
+import { FetchResponse, Options } from './types.js'
+import { processParams } from './util.js'
 
 
 /**

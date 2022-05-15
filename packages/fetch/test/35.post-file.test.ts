@@ -1,19 +1,19 @@
-import assert from 'assert/strict'
-import { createReadStream } from 'fs'
-import { relative } from 'path'
+import assert from 'node:assert/strict'
+import { createReadStream } from 'node:fs'
+import { fileURLToPath } from 'node:url'
 
-import { join } from '@waiting/shared-core'
+import { fileShortPath, join } from '@waiting/shared-core'
 import FormData from 'form-data'
 
-import { post, Options, ContentTypeList } from '../src/index'
+import { post, Options, ContentTypeList } from '../src/index.js'
 
-import { DELAY, HOST_POST } from './config'
-import { HttpbinPostResponse, PostForm1 } from './test.types'
+import { DELAY, HOST_POST } from './config.js'
+import { HttpbinPostResponse, PostForm1 } from './test.types.js'
 
 
-const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')
+const __filename = fileURLToPath(import.meta.url)
 
-describe(filename, function() {
+describe(fileShortPath(import.meta.url), function() {
   this.retries(3)
   beforeEach(resolve => setTimeout(resolve, DELAY))
 
@@ -24,7 +24,7 @@ describe(filename, function() {
     } as Options
 
     it('post Form contains an image file via Stream', (done) => {
-      const path = join(__dirname, 'images/loading-1.gif')
+      const path = join(__filename, '../images/loading-1.gif')
       const stream1 = createReadStream(path)
       const stream2 = createReadStream(path)
 
@@ -78,7 +78,7 @@ describe(filename, function() {
     })
 
     it('post Form contains an image file via Buffer', (done) => {
-      const path = join(__dirname, 'images/loading-1.gif')
+      const path = join(__filename, '../images/loading-1.gif')
       const readerStream = createReadStream(path)
       const readerStream2 = createReadStream(path)
       const args: Options = {

@@ -1,19 +1,19 @@
-import assert from 'assert/strict'
-import { readFile } from 'fs/promises'
-import { relative } from 'path'
+import assert from 'node:assert/strict'
+import { readFile } from 'node:fs/promises'
+import { fileURLToPath } from 'node:url'
 
-import { join } from '@waiting/shared-core'
+import { join, fileShortPath } from '@waiting/shared-core'
 import FormData from 'form-data'
 
-import { post, Options, ContentTypeList } from '../src/index'
+import { post, Options, ContentTypeList } from '../src/index.js'
 
-import { DELAY, HOST_POST } from './config'
-import { HttpbinPostResponse, PostForm1 } from './test.types'
+import { DELAY, HOST_POST } from './config.js'
+import { HttpbinPostResponse, PostForm1 } from './test.types.js'
 
 
-const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')
+const __filename = fileURLToPath(import.meta.url)
 
-describe(filename, function() {
+describe(fileShortPath(import.meta.url), function() {
   this.retries(3)
   beforeEach(resolve => setTimeout(resolve, DELAY))
 
@@ -76,7 +76,7 @@ describe(filename, function() {
     })
 
     it('send a txt file and key:value data via FormData', async () => {
-      const buf = await readFile(join(__dirname, 'p2.txt'))
+      const buf = await readFile(join(__filename, '../p2.txt'))
 
       const pdata = new FormData()
       const p1 = Math.random().toString()
