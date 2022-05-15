@@ -22,6 +22,10 @@ if (typeof window === 'undefined') {
   if (typeof fetch !== 'function') {
     initialOptions.fetchModule = patchedFetch
   }
+  else if (process.version.startsWith('v18.')) {
+    initialOptions.fetchModule = patchedFetch // not use undici
+  }
+
   if (typeof Headers !== 'function') {
     initialOptions.headersInitClass = Node_Headers
   }
