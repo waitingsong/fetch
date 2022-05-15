@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [19.0.0](https://github.com/waitingsong/fetch/compare/v18.0.7...v19.0.0) (2022-05-15)
+
+
+### Bug Fixes
+
+* **fetch:** not use undici when nodejs v18 ([01f2929](https://github.com/waitingsong/fetch/commit/01f292963d305140e7144cc0ea7ea0cfac91b87a))
+
+
+
+
+
 ## [18.0.2](https://github.com/waitingsong/fetch/compare/v18.0.1...v18.0.2) (2022-03-23)
 
 **Note:** Version bump only for package @waiting/fetch

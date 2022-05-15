@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [19.0.0](/compare/v18.0.7...v19.0.0) (2022-05-15)
+
+
+### Bug Fixes
+
+* **boilerplate:** define enum without const 37ffd10
+* **boilerplate:** devDeps version 2e29b42
+* **fetch:** not use undici when nodejs v18 01f2929
+
+
+
+
+
 ## [18.0.7](/compare/v18.0.6...v18.0.7) (2022-04-02)
 
 
