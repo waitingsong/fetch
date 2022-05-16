@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [19.0.1](https://github.com/waitingsong/fetch/compare/v19.0.0...v19.0.1) (2022-05-16)
+
+
+### Bug Fixes
+
+* **fetch:** add types as dependencies ([926d053](https://github.com/waitingsong/fetch/commit/926d05346c2756165e9bf5e613654c9a60a603d6))
+
+
+
+
+
 # [19.0.0](https://github.com/waitingsong/fetch/compare/v18.0.7...v19.0.0) (2022-05-15)
 
 

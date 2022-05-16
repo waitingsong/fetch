@@ -1,7 +1,7 @@
 {
   "name": "@waiting/fetch",
   "author": "waiting",
-  "version": "19.0.0",
+  "version": "19.0.1",
   "description": "HTTP fetch API for browser and Node.js. Handle 302/303 redirect correctly on Node.js",
   "keywords": [
     "http",
