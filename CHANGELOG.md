@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [19.0.2](/compare/v19.0.1...v19.0.2) (2022-06-08)
+
+**Note:** Version bump only for package rxxfetch
+
+
+
+
+
 ## [19.0.1](/compare/v19.0.0...v19.0.1) (2022-05-16)
 
 
