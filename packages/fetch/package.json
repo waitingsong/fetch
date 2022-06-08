@@ -42,7 +42,7 @@
     "qs": "^6.10.3"
   },
   "devDependencies": {
-    "@mw-components/jaeger": "^11.0.0",
+    "@mw-components/jaeger": "^12.0.0",
     "cross-env": "7",
     "opentracing": "^0.14.5"
   },
