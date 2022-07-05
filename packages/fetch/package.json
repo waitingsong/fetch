@@ -35,8 +35,8 @@
   "dependencies": {
     "@types/node-fetch": "^2.5.12",
     "@types/qs": "^6.9.7",
-    "@waiting/shared-core": "^18.0.0",
-    "@waiting/shared-types": "^18.0.0",
+    "@waiting/shared-core": "^19.0.0",
+    "@waiting/shared-types": "^19.0.0",
     "form-data": "^4.0.0",
     "node-fetch": "^2.6.7",
     "qs": "^6.10.3"
