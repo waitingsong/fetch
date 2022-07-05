@@ -19,10 +19,10 @@ export const initialOptions: Options = {
 
 // for non-browser, like node.js
 if (typeof window === 'undefined') {
-  if (typeof fetch !== 'function') {
+  if (typeof fetch !== 'function' && patchedFetch) {
     initialOptions.fetchModule = patchedFetch
   }
-  else if (process.version.startsWith('v18.')) {
+  else if (process.version.startsWith('v18.') && patchedFetch) {
     initialOptions.fetchModule = patchedFetch // not use undici
   }
 

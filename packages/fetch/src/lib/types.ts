@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import { JsonType } from '@waiting/shared-types'
+import type { JsonType } from '@waiting/shared-types'
 import type { Span } from 'opentracing'
 
 
