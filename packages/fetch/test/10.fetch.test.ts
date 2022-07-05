@@ -36,7 +36,7 @@ describe(fileShortPath(import.meta.url), () => {
       method: 'GET',
       dataType: 'text',
     }
-    initOpts.fetchModule = void 0
+    // initOpts.fetchModule = void 0
 
     it('with invalid fetchModule', async () => {
       const opts = { ...initOpts }

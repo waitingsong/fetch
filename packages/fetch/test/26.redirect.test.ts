@@ -23,6 +23,7 @@ describe.skip(fileShortPath(import.meta.url), function() {
   this.retries(3)
   beforeEach(resolve => setTimeout(resolve, DELAY))
 
+  assert(patchedFetch)
   const initOpts: Options = {
     url: '',
     method: 'POST',
