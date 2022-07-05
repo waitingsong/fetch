@@ -49,8 +49,8 @@ export const genRequestHeaders: Config['genRequestHeaders'] = async (ctx, header
     }
   }
 
-  if (typeof ctx.reqId === 'string' && ctx.reqId && ! ret.has(HeadersKey.reqId)) {
-    ret.set(HeadersKey.reqId, ctx.reqId)
+  if (typeof ctx['reqId'] === 'string' && ctx['reqId'] && ! ret.has(HeadersKey.reqId)) {
+    ret.set(HeadersKey.reqId, ctx['reqId'])
   }
 
   return ret
