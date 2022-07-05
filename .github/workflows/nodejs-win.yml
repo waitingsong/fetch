@@ -1,19 +1,18 @@
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: ci
+name: ci-win
 
 on: [push, pull_request]
 
 jobs:
   build:
     runs-on: ${{ matrix.os }}
-    container: node:18-bullseye
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
 
     strategy:
       matrix:
-        node: [16]
-        os: [ubuntu-latest]
+        node: [16, 18]
+        os: [windows-2019, windows-latest]
 
     steps:
       - uses: actions/checkout@v3
@@ -24,9 +23,9 @@ jobs:
 
       - name: Cache
         uses: actions/cache@v3
-        id: cache-lerna
+        id: cache-lerna-win
         env:
-          cache-name: cache-lerna
+          cache-name: cache-lerna-win
         with:
           path: |
             node_modules
@@ -34,65 +33,44 @@ jobs:
             packages/*/.eslintcache
             packages/*/.vscode
             packages/*/dist
-            packages/*/node_modules
             packages/*/package-lock.json
           key: ${{ runner.OS }}-build-${{ env.cache-name }}-${{ github.ref }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.OS }}-build-${{ env.cache-name }}-${{ github.ref }}-
+
       - name: Prepare
+        shell: bash
         run: |
-          uname -a
-          export DEBIAN_FRONTEND=noninteractive
-          apt-get update -qq --yes > /dev/null
-          apt-get upgrade -qq --yes > /dev/null
-          apt-get install -qq --yes --no-install-recommends bash dnsutils git jq locales net-tools wget > /dev/null
-          apt-get install -qq --yes postgresql-client > /dev/null
           uname -a
           npm -v && node -v
           git --version
           openssl version
-          cat /etc/*release
-          sed -i 's/^# *\(en_US.UTF-8\)/\1/' /etc/locale.gen
-          locale-gen
-          locale -a
-          chmod a+w -R .
-
-      - name: Verify
-        run: |
-          uname -a
-          export DEBIAN_FRONTEND=noninteractive
-          apt-get -qq -y update > /dev/null
-          apt-get -qq -y install dnsutils jq net-tools > /dev/null
-          netstat -tunpl
-          dig httpbin
-          curl http://httpbin/get
-        env:
-          CI: true
+          ./.githooks/init-repo.sh
+          git config --local core.autocrlf false
+          git config --local core.eol lf
 
       - name: Inatall Dependencies
+        shell: bash
         run: |
-          chmod a+w -R .
-          # DO NOT execute: npm config set unsafe-perm=true
-          export cwd=`pwd`
-          # .github/workflows/fix.sh
-          npm i -g c8 lerna rollup zx
+          .github/workflows/fix.sh
+          npm i -g c8 lerna rollup zx node-gyp
           npm run bootstrap
         env:
           CI: true
 
       - name: Build
+        shell: bash
         run: |
-          chmod a+w -R .
           whoami
           export cwd=`pwd`
           . .scripts/ci/ci-env.sh
           .scripts/ci/ci-prepare.sh
-          # .github/workflows/fix.sh
           npm run build --if-present
         env:
           CI: true
 
       - name: Lint
+        shell: bash
         run: |
           export cwd=`pwd`
           . .scripts/ci/ci-env.sh
@@ -102,22 +80,8 @@ jobs:
         env:
           CI: true
 
-      # - name: Init Database
-      #   run: |
-      #     export cwd=`pwd`
-      #     . .scripts/ci/ci-env.sh
-      #     .scripts/ci/ci-prepare.sh
-      #     .scripts/ci/ci-init-db.sh
-      #   env:
-      #     CI: true
-      #     POSTGRES_HOST: postgres
-      #     POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
-      #     POSTGRES_DB: db_ci_test
-      #     POSTGRES_USER: postgres
-      #     POSTGRES_PASSWORD: postgres
-      #     PGPASSWORD: postgres
-
       - name: Testing
+        shell: bash
         run: |
           export cwd=`pwd`
           . .scripts/ci/ci-env.sh
@@ -125,14 +89,19 @@ jobs:
           npm run ci
         env:
           CI: true
-          HTTPBIN_HOST: httpbin
+          # use `localhost` if running the job on the VM
+          # use `postgres` if running the job on a container
+          POSTGRES_HOST: postgres
+          POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
+          POSTGRES_DB: db_ci_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          PGPASSWORD: postgres
+          # redis
+          REDIS_HOST: redis
+          REDIS_PORT: 6379
+
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
 
-
-    services:
-      httpbin:
-        image: kennethreitz/httpbin
-        ports:
-          - 80:80 # no 443
 
