@@ -1,7 +1,7 @@
 
 export * from './lib/index.js'
 
-export {
+export type {
   JsonResp,
   JsonType,
   PlainJsonValue,
