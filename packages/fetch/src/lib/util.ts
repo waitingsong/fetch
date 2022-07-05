@@ -128,10 +128,13 @@ export function processInitOpts(options: ArgsRequestInitCombined): ArgsRequestIn
   opts = processMethod(opts)
   opts.args.dataType = processDataType(opts.args.dataType)
   opts.args.timeout = parseTimeout(opts.args.timeout)
-  opts.requestInit.redirect = processRedirect(
+  const redirect = processRedirect(
     opts.args.keepRedirectCookies as boolean,
     opts.requestInit.redirect,
   )
+  if (redirect) {
+    opts.requestInit.redirect = redirect
+  }
 
   return opts
 }
