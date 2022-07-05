@@ -1,5 +1,5 @@
 {
-  "version": "19.0.2",
+  "version": "19.0.3",
   "packages": [
     "packages/*"
   ],
@@ -26,8 +26,7 @@
         "cross-env",
         "egg"
       ],
-      "npmClientArgs": [
-      ]
+      "npmClientArgs": []
     },
     "version": {
       "conventionalCommits": true,
