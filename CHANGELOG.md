@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [19.0.5](/compare/v19.0.4...v19.0.5) (2022-07-07)
+
+
+### Bug Fixes
+
+* **boilerplate:** define enum without const 37ffd10
+* **boilerplate:** devDeps version 2e29b42
+
+
+
+
+
 ## [19.0.4](/compare/v19.0.3...v19.0.4) (2022-07-05)
 
 **Note:** Version bump only for package rxxfetch
