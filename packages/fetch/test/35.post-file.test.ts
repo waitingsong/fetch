@@ -1,8 +1,9 @@
 import assert from 'node:assert/strict'
 import { createReadStream } from 'node:fs'
+import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { fileShortPath, join } from '@waiting/shared-core'
+import { fileShortPath } from '@waiting/shared-core'
 import FormData from 'form-data'
 
 import { post, Options, ContentTypeList } from '../src/index.js'
