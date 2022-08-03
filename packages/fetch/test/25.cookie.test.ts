@@ -31,7 +31,7 @@ describe(fileShortPath(import.meta.url), function() {
 
       const res = await get<HttpbinRetCookie>(url, opts)
       assert(res && res.cookies)
-      assert(res.cookies.foo === value)
+      assert(res.cookies['foo'] === value)
     })
   })
 

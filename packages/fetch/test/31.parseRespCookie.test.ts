@@ -13,7 +13,7 @@ describe(fileShortPath(import.meta.url), () => {
       const cookie = `foo=${value}; Secure; Path=/`
       const ret = parseRespCookie(cookie)
 
-      assert(ret && ret.foo === value, `Should get "${value}"`)
+      assert(ret && ret['foo'] === value, `Should get "${value}"`)
     })
 
     it('with invalid input', () => {
