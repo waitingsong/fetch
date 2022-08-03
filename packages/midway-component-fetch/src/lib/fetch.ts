@@ -1,5 +1,6 @@
 import {
   Config as _Config,
+  Init,
   Inject,
   Provide,
   Scope,
@@ -15,7 +16,7 @@ import type { Span } from 'opentracing'
 
 import type { Context } from '../interface'
 
-import { ConfigKey } from './config'
+import { ConfigKey, initialConfig } from './config'
 import { defaultfetchConfigCallbacks } from './helper'
 import { Config, Options } from './types'
 
@@ -24,21 +25,22 @@ import { Config, Options } from './types'
 @Scope(ScopeEnum.Request, { allowDowngrade: true })
 export class FetchComponent {
 
-  @_Config(ConfigKey.config) readonly fetchConfig: Config
+  @_Config(ConfigKey.config) readonly _config: Config
 
   @Inject() protected readonly ctx: Context
 
+  fetchConfig: Config
   headers: Record<string, string> = {}
   readonly fetchRequestSpanMap = new Map<symbol, Span>()
 
-  // @Init()
-  // async init(): Promise<void> {
-  //   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  //   if (this.ctx.fetchRequestSpanMap) {
-  //     return
-  //   }
-  //   this.ctx.fetchRequestSpanMap = new Map()
-  // }
+  @Init()
+  async init(): Promise<void> {
+    const config = {
+      ...initialConfig,
+      ...this._config,
+    }
+    this.fetchConfig = config
+  }
 
   async fetch<T extends FetchResponse = any>(
     options: Options,
