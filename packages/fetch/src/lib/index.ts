@@ -6,7 +6,7 @@ export {
   remove,
   put,
 } from './fetch.js'
-export * from './config.js'
+// export * from './config.js'
 export * from './types.js'
 export {
   buildQueryString,

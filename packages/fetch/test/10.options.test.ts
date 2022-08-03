@@ -7,8 +7,8 @@ import {
   getGloalRequestOptions,
   setGloalRequestOptions,
   Options,
-  initialOptions,
 } from '../src/index.js'
+import { initialOptions } from '../src/lib/config.js'
 
 
 const defaultOptions: Readonly<Options> = getGloalRequestOptions()

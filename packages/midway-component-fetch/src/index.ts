@@ -12,7 +12,6 @@ export * from './lib/index'
 
 export {
   Node_Headers,
-  initialOptions,
   FetchResponse,
 } from '@waiting/fetch'
 

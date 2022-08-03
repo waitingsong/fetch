@@ -7,7 +7,6 @@ import {
   get,
   Options,
   FetchMsg,
-  initialOptions,
 } from '../src/index.js'
 
 import { HOST, HOST_POST } from './config.js'
@@ -17,8 +16,7 @@ describe(fileShortPath(import.meta.url), function() {
   this.retries(3)
 
   describe('Should handleResponseError work', () => {
-    const opts: Options = {
-      ...initialOptions,
+    const opts: Partial<Options > = {
       dataType: 'text',
     }
 
