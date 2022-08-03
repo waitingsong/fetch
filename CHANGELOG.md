@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [20.0.0](/compare/v19.0.6...v20.0.0) (2022-08-03)
+
+
+### Bug Fixes
+
+* **boilerplate:** define enum without const 37ffd10
+* **boilerplate:** devDeps version 2e29b42
+
+
+### Features
+
+* breaking change remove export of initialOptions 7dd3ef3
+* **midway-component-fetch:** merge input config with initialConfig when component initialize 1ca5a3c
+
+
+
+
+
 ## [19.0.6](/compare/v19.0.5...v19.0.6) (2022-07-08)
 
 

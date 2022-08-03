@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [20.0.0](https://github.com/waitingsong/fetch/compare/v19.0.6...v20.0.0) (2022-08-03)
+
+
+### Features
+
+* breaking change remove export of initialOptions ([7dd3ef3](https://github.com/waitingsong/fetch/commit/7dd3ef30e19216e4d958191b0fa6c5bcfe5545d7))
+
+
+
+
+
 ## [19.0.6](https://github.com/waitingsong/fetch/compare/v19.0.5...v19.0.6) (2022-07-08)
 
 **Note:** Version bump only for package @waiting/fetch

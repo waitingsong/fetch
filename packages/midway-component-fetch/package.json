@@ -1,7 +1,7 @@
 {
   "name": "@mw-components/fetch",
   "author": "waiting",
-  "version": "19.0.6",
+  "version": "20.0.0",
   "description": "",
   "private": false,
   "keywords": [
@@ -24,7 +24,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@waiting/fetch": "^19.0.6",
+    "@waiting/fetch": "^20.0.0",
     "@waiting/shared-core": "^20.3.0"
   },
   "devDependencies": {
