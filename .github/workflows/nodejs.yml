@@ -75,7 +75,7 @@ jobs:
           # DO NOT execute: npm config set unsafe-perm=true
           export cwd=`pwd`
           # .github/workflows/fix.sh
-          npm i -g c8 lerna rollup zx
+          npm i --no-audit -g c8 lerna rollup zx
           npm run bootstrap
         env:
           CI: true
@@ -127,7 +127,7 @@ jobs:
           CI: true
           HTTPBIN_HOST: httpbin
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3
 
 
     services:
