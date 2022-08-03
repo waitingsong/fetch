@@ -1,6 +1,3 @@
-// @ts-ignore
-import { PowerPartial } from '@midwayjs/core'
-
 import {
   Config,
   ConfigKey,
@@ -26,6 +23,6 @@ export {
 // @ts-ignore
 declare module '@midwayjs/core/dist/interface' {
   interface MidwayConfig {
-    [ConfigKey.config]: PowerPartial<Config>
+    [ConfigKey.config]: Partial<Config>
   }
 }
