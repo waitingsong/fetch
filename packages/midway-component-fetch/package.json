@@ -25,10 +25,10 @@
   "license": "MIT",
   "dependencies": {
     "@waiting/fetch": "^19.0.6",
-    "@waiting/shared-core": "^20.1.0"
+    "@waiting/shared-core": "^20.3.0"
   },
   "devDependencies": {
-    "@waiting/shared-types": "^20.1.0",
+    "@waiting/shared-types": "^20.2.0",
     "cross-env": "7",
     "opentracing": "^0.14.5"
   },
@@ -49,7 +49,7 @@
   },
   "scripts": {
     "build": "npm run tsc",
-    "clean": "npm run clean:cache & rm -rf dist/* -rf",
+    "clean": "npm run clean:lock & npm run clean:cache & rm -rf dist/*",
     "clean:cache": "rm -rf .eslintcache .vscode/.tsbuildinfo .vscode/.tsbuildinfo.*",
     "clean:lock": "rm package-lock.json -f",
     "cov": "cross-env MIDWAY_SERVER_ENV=unittest TS_NODE_PROJECT=test/tsconfig.json c8 mocha --parallel=false",

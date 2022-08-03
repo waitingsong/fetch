@@ -21,8 +21,8 @@ import { Application } from '~/interface'
  */
 export const mochaHooks = async () => {
   // avoid run multi times
-  if (! process.env.mochaRootHookFlag) {
-    process.env.mochaRootHookFlag = 'true'
+  if (! process.env['mochaRootHookFlag']) {
+    process.env['mochaRootHookFlag'] = 'true'
   }
 
   return {
@@ -43,6 +43,8 @@ export const mochaHooks = async () => {
       const { url } = testConfig.httpRequest.get('/')
       testConfig.host = url
 
+      testConfig.container = app.getApplicationContext()
+      // const svc = await testConfig.container.getAsync(TaskQueueService)
       // const names = app.getMiddleware().getNames()
       // assert(names.includes(ConfigKey.middlewareName) === mwConfig.enableMiddleware)
 
