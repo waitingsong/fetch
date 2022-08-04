@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [20.1.1](https://github.com/waitingsong/fetch/compare/v20.1.0...v20.1.1) (2022-08-04)
+
+
+### Bug Fixes
+
+* **midway-component-fetch:** span not opened ([7ad2948](https://github.com/waitingsong/fetch/commit/7ad2948653c1b388fa6336bf4db4462ea361e7bd))
+
+
+
+
+
 # [20.1.0](https://github.com/waitingsong/fetch/compare/v20.0.0...v20.1.0) (2022-08-04)
 
 
