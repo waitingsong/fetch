@@ -35,11 +35,8 @@ Update project `src/config/config.(prod | local | unittest).ts`
 import { FetchComponentConfig, genRequestHeaders } from 'midway-component-fetch'
 
 export const fetch: FetchComponentConfig = {
-  enableTraceLoggingReqBody: true,
-  enableTraceLoggingRespData: true,
-  enableDefaultCallbacks: true,
+  // change to only authorization
   traceLoggingReqHeaders: ['authorization'],
-  genRequestHeaders,
 }
 ```
 

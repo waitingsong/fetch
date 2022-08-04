@@ -1,4 +1,4 @@
-import { HeadersKey } from '@mw-components/jaeger'
+import { HeadersKey, TracerTag } from '@mw-components/jaeger'
 
 import { genRequestHeaders } from './helper'
 import { Config, MiddlewareConfig, MiddlewareOptions } from './types'
@@ -17,6 +17,9 @@ export const initialConfig: Readonly<Config> = {
     'Host',
     'user-agent',
     HeadersKey.reqId,
+    HeadersKey.traceId,
+    TracerTag.svcName,
+    TracerTag.svcVer,
   ],
   traceLoggingRespHeaders: [
     'Age',
@@ -29,6 +32,10 @@ export const initialConfig: Readonly<Config> = {
     'server',
     'x-aspnet-version',
     'x-powered-by',
+    HeadersKey.reqId,
+    HeadersKey.traceId,
+    TracerTag.svcName,
+    TracerTag.svcVer,
   ],
 }
 export const initMiddlewareOptions: MiddlewareOptions = {
