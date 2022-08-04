@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [20.1.0](https://github.com/waitingsong/fetch/compare/v20.0.0...v20.1.0) (2022-08-04)
+
+
+### Features
+
+* **midway-component-fetch:** update traceLoggingReqHeaders, traceLoggingRespHeaders of initialConfig ([b4622ea](https://github.com/waitingsong/fetch/commit/b4622ea232732dd81b29e2807729cd21fb8a81a6))
+
+
+
+
+
 # [20.0.0](https://github.com/waitingsong/fetch/compare/v19.0.6...v20.0.0) (2022-08-03)
 
 

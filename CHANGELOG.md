@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [20.1.0](/compare/v20.0.0...v20.1.0) (2022-08-04)
+
+
+### Features
+
+* **midway-component-fetch:** update traceLoggingReqHeaders, traceLoggingRespHeaders of initialConfig b4622ea
+
+
+
+
+
 # [20.0.0](/compare/v19.0.6...v20.0.0) (2022-08-03)
 
 
