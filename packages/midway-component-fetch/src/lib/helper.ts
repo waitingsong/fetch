@@ -61,7 +61,7 @@ const beforeRequest: Config['beforeRequest'] = async (options) => {
   const { ctx, span: pSpan } = opts
 
   if (! ctx || ! ctx.requestContext) { return }
-  if (! pSpan) { return }
+  // if (! pSpan) { return }
 
   const tracerManager = await ctx.requestContext.getAsync(TracerManager)
   if (! tracerManager) {
