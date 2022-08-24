@@ -25,17 +25,12 @@
   "license": "MIT",
   "dependencies": {
     "@waiting/fetch": "^20.0.0",
-    "@waiting/shared-core": "^20.3.0"
+    "@waiting/shared-core": "^20.5.0"
   },
   "devDependencies": {
-    "@waiting/shared-types": "^20.2.0",
+    "@waiting/shared-types": "^20.5.0",
     "cross-env": "7",
     "opentracing": "^0.14.5"
-  },
-  "peerDependencies": {
-    "@midwayjs/core": ">=3",
-    "@midwayjs/decorator": ">=3",
-    "@mw-components/jaeger": ">=12"
   },
   "engines": {
     "node": ">=16.13.0"
