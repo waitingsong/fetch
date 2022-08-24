@@ -11,7 +11,7 @@ HTTP fetch component for midway.js
 ## Install
 
 ```sh
-npm i midway-component-fetch
+npm i @mw-components/fetch
 ```
 
 ## Usage
