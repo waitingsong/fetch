@@ -40,7 +40,10 @@ export async function fetch<T extends FetchResponse = any>(
   }
   const dataType = args.dataType as NonNullable<Options['dataType']>
   traceLog('handleResponseError', options.span)
-  const resp = await handleResponseError(data, dataType === 'bare')
+  let resp = await handleResponseError(data, dataType === 'bare')
+  if (typeof options.beforeProcessResponseCallback === 'function') {
+    resp = await options.beforeProcessResponseCallback(resp)
+  }
   traceLog('processResponseType-start', options.span)
   const ret = await processResponseType(resp, dataType)
   traceLog('processResponseType-finish', options.span)

@@ -7,6 +7,7 @@ export interface Options extends RequestInit, Args {
   url: string
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'OPTIONS'
   referrer?: 'client' | 'no-referrer'
+  beforeProcessResponseCallback?: (res: Response) => Promise<Response>
 }
 /** Typeof original Response data */
 export type FetchResponse = ArrayBuffer | Blob | FormData | Response | string | JsonType | void | never | object
