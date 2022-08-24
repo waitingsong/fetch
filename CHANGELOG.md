@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [20.2.0](/compare/v20.1.2...v20.2.0) (2022-08-24)
+
+
+### Bug Fixes
+
+* **midway-component-fetch:** tracing response headers 57dde05
+
+
+### Features
+
+* **fetch:** add Options['beforeProcessResponseCallback'] 944594f
+
+
+
+
+
 ## [20.1.2](/compare/v20.1.1...v20.1.2) (2022-08-24)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [20.2.0](https://github.com/waitingsong/fetch/compare/v20.1.2...v20.2.0) (2022-08-24)
+
+
+### Bug Fixes
+
+* **midway-component-fetch:** tracing response headers ([57dde05](https://github.com/waitingsong/fetch/commit/57dde05935f29eeeb59d5904b790c11914511bbe))
+
+
+
+
+
 ## [20.1.2](https://github.com/waitingsong/fetch/compare/v20.1.1...v20.1.2) (2022-08-24)
 
 **Note:** Version bump only for package @mw-components/fetch

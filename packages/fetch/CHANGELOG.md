@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [20.2.0](https://github.com/waitingsong/fetch/compare/v20.1.2...v20.2.0) (2022-08-24)
+
+
+### Features
+
+* **fetch:** add Options['beforeProcessResponseCallback'] ([944594f](https://github.com/waitingsong/fetch/commit/944594f5ef7aa3f85eb9d11a0d57792feb487b05))
+
+
+
+
+
 ## [20.1.2](https://github.com/waitingsong/fetch/compare/v20.1.1...v20.1.2) (2022-08-24)
 
 **Note:** Version bump only for package @waiting/fetch
