@@ -124,7 +124,7 @@ const beforeRequest: Config['beforeRequest'] = async (options) => {
 }
 
 const afterResponse: Config['afterResponse'] = async (options) => {
-  const { id, fetchRequestSpanMap, opts, resultData } = options
+  const { id, fetchRequestSpanMap, opts, resultData, respHeaders } = options
   const { ctx } = opts
   if (! ctx || ! ctx.requestContext) { return }
 
@@ -166,11 +166,11 @@ const afterResponse: Config['afterResponse'] = async (options) => {
     tags[TracerTag.respBody] = 'Not logged'
   }
 
-  if (Array.isArray(traceLoggingRespHeaders)) {
+  if (respHeaders && Array.isArray(traceLoggingRespHeaders)) {
     traceLoggingRespHeaders.forEach((name) => {
-      const val = retrieveHeadersItem(opts.headers, name)
+      const val = retrieveHeadersItem(respHeaders, name)
       if (val) {
-        tags[`http.${name}`] = val
+        tags[`http.resp.${name}`] = val
       }
     })
   }

@@ -32,6 +32,7 @@ export class FetchComponent {
   fetchConfig: Config
   headers: Record<string, string> = {}
   readonly fetchRequestSpanMap = new Map<symbol, Span>()
+  readonly responseHeadersMap = new Map<symbol, Headers>()
 
   @Init()
   async init(): Promise<void> {
@@ -50,10 +51,11 @@ export class FetchComponent {
     if (! opts.ctx && this.ctx) {
       opts.ctx = this.ctx
     }
+    const id = Symbol(opts.url)
     opts.headers = await this.genReqHeadersFromOptionsAndConfigCallback(opts.ctx, opts.headers, opts.span)
+    opts.beforeProcessResponseCallback = (input: Response) => this.cacheRespHeaders(id, input)
 
     const config = this.fetchConfig
-    const id = Symbol(opts.url)
 
     if (config.enableDefaultCallbacks) {
       await defaultfetchConfigCallbacks.beforeRequest({
@@ -81,6 +83,8 @@ export class FetchComponent {
     try {
       let ret = await fetch<T>(opts)
 
+      const respHeaders = this.responseHeadersMap.get(id)
+
       if (config.processResult) {
         ret = config.processResult({
           id,
@@ -88,6 +92,7 @@ export class FetchComponent {
           fetchRequestSpanMap: this.fetchRequestSpanMap,
           opts,
           resultData: ret,
+          respHeaders,
         })
       }
 
@@ -98,6 +103,7 @@ export class FetchComponent {
           fetchRequestSpanMap: this.fetchRequestSpanMap,
           opts,
           resultData: ret,
+          respHeaders,
         })
       }
 
@@ -108,9 +114,11 @@ export class FetchComponent {
           fetchRequestSpanMap: this.fetchRequestSpanMap,
           opts,
           resultData: ret,
+          respHeaders,
         })
       }
 
+      this.responseHeadersMap.delete(id)
       return ret
     }
     catch (ex) {
@@ -134,6 +142,7 @@ export class FetchComponent {
           exception: ex as Error,
         })
       }
+      this.responseHeadersMap.delete(id)
       throw ex
     }
   }
@@ -190,5 +199,12 @@ export class FetchComponent {
     return headers
   }
 
+  protected async cacheRespHeaders(id: symbol, input: Response): Promise<Response> {
+    if (input && input.headers) {
+      this.responseHeadersMap.set(id, input.headers)
+    }
+
+    return input
+  }
 }
 

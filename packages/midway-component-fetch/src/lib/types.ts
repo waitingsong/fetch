@@ -98,6 +98,7 @@ export interface RespCallbackOptions <T = unknown> {
   fetchRequestSpanMap: Map<symbol, Span>
   opts: Options
   resultData: T
+  respHeaders: Headers | undefined
 }
 
 export interface ProcessExCallbackOptions {
