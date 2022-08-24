@@ -12,7 +12,7 @@
   ],
   "type": "module",
   "bin": {},
-  "types": "./dist/index.d.ts",
+  "types": "./src/index.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -31,11 +31,7 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@waiting/shared-core": "^20.3.0",
     "cross-env": "7"
-  },
-  "peerDependencies": {
-    "@waiting/shared-types": "^20.2.0"
   },
   "engines": {
     "node": ">=16.13.0"
@@ -51,7 +47,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "npm run tsc && npm run rp",
+    "build": "npm run tsc && tsc-alias && npm run rp",
     "clean": "npm run clean:lock & npm run clean:cache & rm -rf dist/*",
     "clean:cache": "rm -rf .eslintcache .vscode/.tsbuildinfo .vscode/.tsbuildinfo.*",
     "clean:lock": "rm package-lock.json -f",

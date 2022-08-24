@@ -1,105 +1,155 @@
-# NodeJS Fetch
+# NPM mono repository
 
-[![GitHub tag](https://img.shields.io/github/tag/waitingsong/fetch.svg)]()
+
+[![GitHub tag](https://img.shields.io/github/tag/waitingsong/npm-mono-base.svg)]()
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![](https://img.shields.io/badge/lang-TypeScript-blue.svg)]()
-[![ci](https://github.com/waitingsong/fetch/workflows/ci/badge.svg)](https://github.com/waitingsong/fetch/actions?query=workflow%3A%22ci%22)
-[![codecov](https://codecov.io/gh/waitingsong/fetch/branch/master/graph/badge.svg?token=v1yioFcT20)](https://codecov.io/gh/waitingsong/fetch)
+[![ci](https://github.com/waitingsong/npm-mono-base/workflows/ci/badge.svg)](https://github.com/waitingsong/npm-mono-base/actions?query=workflow%3A%22ci%22)
+[![codecov](https://codecov.io/gh/waitingsong/npm-mono-base/branch/main/graph/badge.svg?token=Voxor5PtnG)](https://codecov.io/gh/waitingsong/npm-mono-base)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 
 
-## Installing
+以下所有命令行操作都在 `git-bash` 窗口中执行
 
-```bash
-npm install @waiting/fetch
+## 创建新项目
+
+### 克隆新项目仓库
+
+```sh
+git clone git@git.foo.com:<group>/<project> && cd <project>
+# 比如
+git clone git@git.foo.com:foo/uc && cd uc
 ```
 
-## Usage
+### 初始化仓库
 
-### GET JSON
+```sh
+# GitLab
+git archive --remote=git@github.com:waitingsong/npm-mono-base.git HEAD package.json | tar -x > package.json
+# GitHub
+curl -kL https://github.com.cnpmjs.org/waitingsong/npm-mono-base/raw/main/package.json > package.json
+git add package.json
+git commit -m "chore: initialize"
+npm run bp:add
+git fetch bp -v && git merge bp/main --allow-unrelated-histories -m "Merge remote-tracking branch 'bp/main'"
 
-```ts
-import { get } from '@waiting/fetch'
+# 使用目录名作为项目名
+sh init-project.sh
+# 或者指定项目名
+sh init-project.sh @foo/my_project
 
-const url = 'https://httpbin.org/get'
-const ret = await get<HttpbinGetResponse>(url, args).subscribe(
-
-/** GET Response Interface of httpbin.org */
-export interface HttpbinGetResponse {
-  args: any
-  headers: {
-    Accept: string
-    Connection: string
-    Host: string
-    'User-Agent': string,
-  }
-  origin: string  // ip
-  url: string
-}
+# 初始化依赖
+npm run repo:init
+lerna list
 ```
 
-### POST
+### 根据模板选择初始化子包
 
-#### JSON
-```ts
-import { post, RxRequestInit } from '@waiting/fetch'
-
-const url = 'https://httpbin.org/post'
-const pdata = {
-  cn: '测试',
-  p1: Math.random(),
-  p2: Math.random().toString(),
-  p3: {
-    foo: Math.random() + '',
-  },
-}
-const args: RxRequestInit = {}
-args.data = { ...pdata }
-
-const res = await post<HttpbinPostResponse>(url, args)
-assert(res && res.url === url)
-
-const json: typeof pdata = res.json
-assert(json.cn === pdata.cn, `Should got "${pdata.cn}"`)
-assert(json.p1 === pdata.p1, `Should got "${pdata.p1}"`)
-assert(json.p2 === pdata.p2, `Should got "${pdata.p2}"`)
-assert(json.p3.foo === pdata.p3.foo, `Should got "${pdata.p3.foo}"`)
+#### 创建目录
+```sh
+npm run add:pkg my_pkg
 ```
 
+#### 更新项目配置
 
-### `PUT` `REMOVE` goto [TEST](https://github.com/waitingsong/rxxfetch/tree/master/test_browser)
+1. 更新仓库顶级 `package.json` 文件 `description` 等字段
+2. 修改**新建**各子包配置文件 `package.json`
+3. 更新本文档 [Packages](#packages) 表格的子包信息
+
+---
+
+
+
+
+
+
+
+
 
 
 ## Packages
 
-| Package                               | Version                  | Dependencies                   | DevDependencies                  |
-| ------------------------------------- | ------------------------ | ------------------------------ | -------------------------------- |
-| [`@waiting/fetch`][`fetch`]           | [![fetch-svg]][fetch-ch] | [![fetch-d-svg]][fetch-d-link] | [![fetch-dd-svg]][fetch-dd-link] |
-| [`@mw-components/fetch`][`com-fetch`] | [![com-svg]][com-ch]     | [![com-d-svg]][com-d-link]     | [![com-dd-svg]][com-dd-link]     |
+| Package      | Version                | Dependencies                 | DevDependencies                |
+| ------------ | ---------------------- | ---------------------------- | ------------------------------ |
+| [`demo`]     | [![main-svg]][main-ch] | [![main-d-svg]][main-d-link] | [![main-dd-svg]][main-dd-link] |
+| [`demo-cli`] | [![cli-svg]][cli-ch]   | [![cli-d-svg]][cli-d-link]   | [![cli-dd-svg]][cli-dd-link]   |
+
+## Initialize and install dependencies
+
+run it at first time and any time
+```sh
+npm run repo:init
+```
 
 
+## Compile
+
+Run under root folder
+```sh
+npm run build
+# specify scope
+npm run build @scope/demo-docs
+# specify scopes
+npm run build @scope/demo-docs @scope/demo-serivce
+```
+
+
+## Update package
+
+```sh
+npm run bootstrap
+```
+
+## Add package
+
+```sh
+npm run add:pkg new_module
+```
+
+## Test
+
+- Use `npm run lint` to check code style.
+- Use `npm run test` to run unit test.
+
+## Clan or Purge
+
+```sh
+# clean build dist, cache and build
+npm run clean
+# clean and remove all node_modules
+npm run purge
+```
+
+## Note
+
+- Run `npm run clean` before `npm run build`, if any file under typescript outDir folder was deleted manually.
+- Default publish registry is `NPM`, configurated in file `lerna.json`
+- Any commands above (such as `npm run build`) running in `Git-Bash` under Windows OS
 
 ## License
-
 [MIT](LICENSE)
 
 
+### Languages
+- [English](README.md)
+- [中文](README.zh-CN.md)
+
 <br>
 
-[`fetch`]: https://github.com/waitingsong/fetch/tree/master/packages/fetch
-[fetch-svg]: https://img.shields.io/npm/v/@waiting/fetch.svg?maxAge=86400
-[fetch-ch]: https://github.com/waitingsong/fetch/tree/master/packages/fetch/CHANGELOG.md
-[fetch-d-svg]: https://david-dm.org/waitingsong/fetch.svg?path=packages/fetch
-[fetch-d-link]: https://david-dm.org/waitingsong/fetch.svg?path=packages/fetch
-[fetch-dd-svg]: https://david-dm.org/waitingsong/fetch/dev-status.svg?path=packages/fetch
-[fetch-dd-link]: https://david-dm.org/waitingsong/fetch?path=packages/fetch#info=devDependencies
+[`demo`]: https://github.com/waitingsong/npm-mono-base/tree/main/packages/demo
+[main-svg]: https://img.shields.io/npm/v/kmore.svg?maxAge=7200
+[main-ch]: https://github.com/waitingsong/kmore/tree/main/packages/demo/CHANGELOG.md
+[main-d-svg]: https://david-dm.org/waitingsong/kmore.svg?path=packages/kmore
+[main-d-link]: https://david-dm.org/waitingsong/kmore.svg?path=packages/kmore
+[main-dd-svg]: https://david-dm.org/waitingsong/kmore/dev-status.svg?path=packages/kmore
+[main-dd-link]: https://david-dm.org/waitingsong/kmore?path=packages/kmore#info=devDependencies
 
-[`com-fetch`]: https://github.com/waitingsong/fetch/tree/master/packages/midway-component-fetch
-[com-svg]: https://img.shields.io/npm/v/@mw-components/fetch.svg?maxAge=86400
-[com-ch]: https://github.com/waitingsong/fetch/tree/master/packages/midway-component-fetch/CHANGELOG.md
-[com-d-svg]: https://david-dm.org/waitingsong/fetch.svg?path=packages/midway-component-fetch
-[com-d-link]: https://david-dm.org/waitingsong/fetch.svg?path=packages/midway-component-fetch
-[com-dd-svg]: https://david-dm.org/waitingsong/fetch/dev-status.svg?path=packages/midway-component-fetch
-[com-dd-link]: https://david-dm.org/waitingsong/fetch?path=packages/midway-component-fetch#info=devDependencies
+[`demo-cli`]: https://github.com/waitingsong/kmore/tree/main/packages/kmore-cli
+[cli-svg]: https://img.shields.io/npm/v/kmore-cli.svg?maxAge=7200
+[cli-ch]: https://github.com/waitingsong/kmore/tree/main/packages/kmore-clie/CHANGELOG.md
+[cli-d-svg]: https://david-dm.org/waitingsong/kmore.svg?path=packages/kmore-cli
+[cli-d-link]: https://david-dm.org/waitingsong/kmore.svg?path=packages/kmore-cli
+[cli-dd-svg]: https://david-dm.org/waitingsong/kmore/dev-status.svg?path=packages/kmore-cli
+[cli-dd-link]: https://david-dm.org/waitingsong/kmore?path=packages/kmore-cli#info=devDependencies
 
