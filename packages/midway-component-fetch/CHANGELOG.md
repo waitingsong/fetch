@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [20.3.1](https://github.com/waitingsong/fetch/compare/v20.3.0...v20.3.1) (2022-08-31)
+
+
+### Bug Fixes
+
+* **mwcp:** imports ([e51285a](https://github.com/waitingsong/fetch/commit/e51285ab3a5f12dde74270626f7bf7128992bb6a))
+
+
+
+
+
 # [20.3.0](https://github.com/waitingsong/fetch/compare/v20.2.2...v20.3.0) (2022-08-31)
 
 
