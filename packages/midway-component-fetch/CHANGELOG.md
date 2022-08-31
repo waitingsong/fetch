@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [20.3.0](https://github.com/waitingsong/fetch/compare/v20.2.2...v20.3.0) (2022-08-31)
+
+
+### Features
+
+* **midway-component-fetch:** use new npm scope "[@mwcp](https://github.com/mwcp)" ([548f002](https://github.com/waitingsong/fetch/commit/548f002b774dbd0e0a261831a7e52d2a78e02dba))
+
+
+
+
+
 ## [20.2.2](https://github.com/waitingsong/fetch/compare/v20.2.1...v20.2.2) (2022-08-24)
 
 **Note:** Version bump only for package @mw-components/fetch
