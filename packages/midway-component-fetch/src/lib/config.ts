@@ -1,4 +1,4 @@
-import { HeadersKey, TracerTag } from '@mw-components/jaeger'
+import { HeadersKey, TracerTag } from '@mwcp/jaeger'
 
 import { genRequestHeaders } from './helper'
 import { Config, MiddlewareConfig, MiddlewareOptions } from './types'

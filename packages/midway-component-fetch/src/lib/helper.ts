@@ -5,7 +5,7 @@ import {
   HeadersKey,
   SpanHeaderInit,
   TracerManager,
-} from '@mw-components/jaeger'
+} from '@mwcp/jaeger'
 import { Node_Headers } from '@waiting/fetch'
 import {
   genISO8601String,
