@@ -28,10 +28,10 @@ npm i @mw-components/fetch
 
 ## Packages
 
-| Package                  | Version                |
-| ------------------------ | ---------------------- |
-| [`fetch`]                | [![main-svg]][main-ch] |
-| [`@mw-components/fetch`] | [![mw-svg]][mw-ch]     |
+| Package         | Version                |
+| --------------- | ---------------------- |
+| [`fetch`]       | [![main-svg]][main-ch] |
+| [`@mwcp/fetch`] | [![mw-svg]][mw-ch]     |
 
 ## Initialize and install dependencies
 
@@ -51,7 +51,7 @@ npm run repo:init
 [main-svg]: https://img.shields.io/npm/v/@waiting/fetch.svg?maxAge=7200
 [main-ch]: https://github.com/waitingsong/fetch/tree/main/packages/fetch/CHANGELOG.md
 
-[`@mw-components/fetch`]: https://github.com/waitingsong/fetch/tree/main/packages/midway-component-fetch
-[mw-svg]: https://img.shields.io/npm/v/@mw-components/fetch.svg?maxAge=7200
+[`@mwcp/fetch`]: https://github.com/waitingsong/fetch/tree/main/packages/midway-component-fetch
+[mw-svg]: https://img.shields.io/npm/v/@mwcp/fetch.svg?maxAge=7200
 [mw-ch]: https://github.com/waitingsong/kmore/tree/main/packages/midway-component-fetch/CHANGELOG.md
 
