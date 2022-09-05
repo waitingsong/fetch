@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [20.3.2](https://github.com/waitingsong/npm-mono-base/compare/v20.3.1...v20.3.2) (2022-09-05)
+
+
+### Bug Fixes
+
+* **boilerplate:** define enum without const ([37ffd10](https://github.com/waitingsong/npm-mono-base/commit/37ffd10749d0aaa7c3d0ddf8e3c41c7a9bfedc3b))
+* **boilerplate:** devDeps version ([2e29b42](https://github.com/waitingsong/npm-mono-base/commit/2e29b42d3eb679cdbced3a0a3d65a9172bd2da34))
+
+
+
+
+
 # [20.3.0](https://github.com/waitingsong/npm-mono-base/compare/v20.2.2...v20.3.0) (2022-08-31)
 
 
