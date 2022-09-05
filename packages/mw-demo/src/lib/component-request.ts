@@ -1,4 +1,4 @@
-import assert from 'assert/strict'
+import assert from 'node:assert/strict'
 
 import {
   Config as _Config,
@@ -6,11 +6,9 @@ import {
   Inject,
   Provide,
 } from '@midwayjs/decorator'
+import type { Context } from '@mwcp/share'
 
-import { ConfigKey } from './config'
-import { Config } from './types'
-
-import type { Context } from '~/interface'
+import { Config, ConfigKey } from './types'
 
 
 @Provide()

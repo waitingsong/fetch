@@ -1,16 +1,15 @@
 import { Middleware } from '@midwayjs/decorator'
+import type { Context, IMiddleware, NextFunction } from '@mwcp/share'
 
 import {
-  ConfigKey,
   DemoComponent,
   Demo2Component,
 } from '../lib/index'
+import { ConfigKey } from '../lib/types'
 import {
   getMiddlewareConfig,
   matchFunc,
 } from '../util/common'
-
-import type { Context, IMiddleware, NextFunction } from '~/interface'
 
 
 @Middleware()

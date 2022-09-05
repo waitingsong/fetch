@@ -4,10 +4,9 @@ import { join } from 'node:path'
 
 import * as WEB from '@midwayjs/koa'
 import { createApp, close, createHttpRequest } from '@midwayjs/mock'
+import type { Application } from '@mwcp/share'
 
 import { testConfig } from '@/root.config'
-import { ConfigKey } from '~/index'
-import { Application } from '~/interface'
 
 
 /**

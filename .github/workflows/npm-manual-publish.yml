@@ -14,11 +14,12 @@ jobs:
   build:
     runs-on: ${{ matrix.os }}
     container: node:18-bullseye
+    timeout-minutes: 60
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
 
     strategy:
       matrix:
-        node: [18]
+        node: ['current']
         os: [ubuntu-latest]
 
     steps:
@@ -80,6 +81,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Inatall Dependencies
+        timeout-minutes: 15
         run: |
           chmod a+w -R .
           # DO NOT execute: npm config set unsafe-perm=true
@@ -87,6 +89,7 @@ jobs:
           .github/workflows/fix.sh
           npm i -g c8 lerna rollup zx
           # .github/workflows/fix.sh
+          # npm run purge
           npm run bootstrap
         env:
           CI: true

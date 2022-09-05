@@ -1,19 +1,25 @@
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+name: benchmark
 
-name: ci
-
-on: [push, pull_request]
+on:
+  push:
+    paths-ignore:
+      - 'site/**'
+      - '*.md'
+  pull_request:
+    paths-ignore:
+      - 'site/**'
+      - '*.md'
 
 jobs:
   build:
     runs-on: ${{ matrix.os }}
     container: node:18-bullseye
-    timeout-minutes: 60
+    timeout-minutes: 20
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
 
     strategy:
       matrix:
-        node: ['lts/*']
+        node: ['current']
         os: [ubuntu-latest]
 
     steps:
@@ -37,9 +43,10 @@ jobs:
             packages/*/dist
             packages/*/node_modules
             packages/*/package-lock.json
-          key: ${{ runner.OS }}-build-${{ env.cache-name }}-${{ github.ref }}-${{ matrix.node }}-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.OS }}-build-${{ env.cache-name }}-${{ github.ref }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.OS }}-build-${{ env.cache-name }}-${{ github.ref }}-${{ matrix.node }}-
+            ${{ runner.OS }}-build-${{ env.cache-name }}-${{ github.ref }}-
+
       - name: Prepare
         run: |
           uname -a
@@ -60,25 +67,27 @@ jobs:
 
       - name: Verify
         run: |
-          uname -a
-          export DEBIAN_FRONTEND=noninteractive
-          apt-get -qq -y update > /dev/null
-          apt-get -qq -y install dnsutils jq net-tools > /dev/null
-          netstat -tunpl
-          dig httpbin
-          curl http://httpbin/get
+          psql -V
+          dig postgres
+          echo "\l" | psql -h $POSTGRES_HOST -p $POSTGRES_PORT -U$POSTGRES_USER -d postgres
+          psql -h $POSTGRES_HOST -p $POSTGRES_PORT -U$POSTGRES_USER -d $POSTGRES_DB -c "\d+"
+          psql -h $POSTGRES_HOST -p $POSTGRES_PORT -U$POSTGRES_USER -d $POSTGRES_DB -c "SHOW TIMEZONE;"
         env:
           CI: true
+          POSTGRES_HOST: postgres
+          POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
+          POSTGRES_DB: db_ci_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          PGPASSWORD: postgres
 
       - name: Inatall Dependencies
         timeout-minutes: 15
         run: |
           chown -R 1001:121 "/github/home/.npm"
           chmod a+w -R .
-          # DO NOT execute: npm config set unsafe-perm=true
           export cwd=`pwd`
-          # .github/workflows/fix.sh
-          npm i --no-audit -g c8 lerna rollup zx
+          npm i --no-audit -g lerna zx autocannon
           # npm run purge
           npm run bootstrap
         env:
@@ -96,47 +105,20 @@ jobs:
         env:
           CI: true
 
-      - name: Lint
+      - name: Benchmark hello
+        timeout-minutes: 10
         run: |
-          export cwd=`pwd`
-          . .scripts/ci/ci-env.sh
-          .scripts/ci/ci-prepare.sh
-          npm run lint:s
-          npm run lint:cycle
-        env:
-          CI: true
-
-      # - name: Init Database
-      #   run: |
-      #     export cwd=`pwd`
-      #     . .scripts/ci/ci-env.sh
-      #     .scripts/ci/ci-prepare.sh
-      #     .scripts/ci/ci-init-db.sh
-      #   env:
-      #     CI: true
-      #     POSTGRES_HOST: postgres
-      #     POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
-      #     POSTGRES_DB: db_ci_test
-      #     POSTGRES_USER: postgres
-      #     POSTGRES_PASSWORD: postgres
-      #     PGPASSWORD: postgres
-
-      - name: Testing
-        run: |
-          export cwd=`pwd`
-          . .scripts/ci/ci-env.sh
-          .scripts/ci/ci-prepare.sh
-          npm run ci
-        env:
-          CI: true
-          HTTPBIN_HOST: httpbin
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-
+          .scripts/benchmark/start-benchmark.mjs --qps=2800 --api=demo/hello --p=mw-demo
 
     services:
-      httpbin:
-        image: kennethreitz/httpbin
+      postgres:
+        image: postgres:alpine
         ports:
-          - 80:80 # no 443
+          - 5432:5432
+        env:
+          POSTGRES_DB: db_ci_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 

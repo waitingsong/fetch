@@ -1,4 +1,4 @@
-import assert from 'assert/strict'
+import assert from 'node:assert/strict'
 
 import {
   App,
@@ -8,11 +8,9 @@ import {
   Scope,
   ScopeEnum,
 } from '@midwayjs/decorator'
+import type { Application } from '@mwcp/share'
 
-import { ConfigKey } from './config'
-import { Config } from './types'
-
-import type { Application } from '~/interface'
+import { Config, ConfigKey } from './types'
 
 
 @Provide()

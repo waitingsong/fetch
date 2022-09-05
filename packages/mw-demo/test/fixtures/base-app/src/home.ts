@@ -3,14 +3,14 @@ import {
   Controller,
   Get,
 } from '@midwayjs/decorator'
+import type { Context } from '@mwcp/share'
 
 import { TestRespBody } from '@/root.config'
-import { Context } from '~/interface'
 import {
   Config,
   ConfigKey,
   MiddlewareConfig,
-} from '~/index'
+} from '~/lib/types'
 
 
 @Controller('/')
@@ -22,15 +22,11 @@ export class HomeController {
   @Get('/')
   async home(ctx: Context): Promise<TestRespBody> {
     const {
-      cookies, 
-      header, 
+      cookies,
+      header,
       url,
     } = ctx
-    const config = this.config
-    const mwConfig = this.mwConfig
     const res = {
-      config,
-      mwConfig,
       cookies,
       header,
       url,

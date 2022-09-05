@@ -1,17 +1,14 @@
 import { IncomingHttpHeaders } from 'node:http'
 
+import type { Application, IMidwayContainer } from '@mwcp/share'
 import supertest, { SuperTest } from 'supertest'
 
-import { Application, IMidwayContainer } from '~/interface'
-import { MiddlewareConfig } from '~/lib/index'
 
-
-const CI = !! process.env.CI
+const CI = !! process.env['CI']
 export type TestResponse = supertest.Response
 export interface TestRespBody {
   header: IncomingHttpHeaders
   url: string
-  mwConfig: MiddlewareConfig
   cookies: unknown
 }
 
