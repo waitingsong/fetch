@@ -3,9 +3,9 @@ import {
   Controller,
   Get,
 } from '@midwayjs/decorator'
+import type { Context } from '@mwcp/share'
 
 import { TestRespBody } from '@/root.config'
-import { Context } from '~/interface'
 import {
   Config,
   ConfigKey,
@@ -26,11 +26,7 @@ export class HomeController {
       header, 
       url,
     } = ctx
-    const config = this.config
-    const mwConfig = this.mwConfig
     const res = {
-      config,
-      mwConfig,
       cookies,
       header,
       url,
