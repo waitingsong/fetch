@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import {
   Config as _Config,
   Init,
@@ -200,7 +202,7 @@ export class FetchComponent {
   }
 
   protected async cacheRespHeaders(id: symbol, input: Response): Promise<Response> {
-    if (input && input.headers) {
+    if (input?.headers) {
       this.responseHeadersMap.set(id, input.headers)
     }
 

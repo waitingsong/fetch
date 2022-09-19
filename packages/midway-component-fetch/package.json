@@ -28,8 +28,8 @@
     "@waiting/shared-core": "^20.6.3"
   },
   "devDependencies": {
-    "@mwcp/jaeger": "^14.0.0",
-    "@mwcp/share": "^2.0.0",
+    "@mwcp/jaeger": "^14.0.1",
+    "@mwcp/share": "^2.0.1",
     "@waiting/shared-types": "^20.5.0",
     "cross-env": "7",
     "opentracing": "^0.14.7"
