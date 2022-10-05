@@ -3,8 +3,8 @@ import { OverwriteAnyToUnknown } from '@waiting/shared-types'
 
 import { _fetch } from './request.js'
 import { handleResponseError, processResponseType } from './response.js'
-import { traceLog } from './tracer.js'
-import { FetchResponse, Options } from './types.js'
+import { trace } from './trace.js'
+import { AttributeKey, FetchResponse, Options } from './types.js'
 import { processParams } from './util.js'
 
 
@@ -17,7 +17,7 @@ export async function fetch<T extends FetchResponse = any>(
   options: Options,
 ): Promise<OverwriteAnyToUnknown<T>> {
 
-  traceLog('processParams', options.span)
+  trace(AttributeKey.PrepareRequestData, options.span)
   const { args, requestInit } = processParams(options)
   const { timeout } = args
   const timeout$ = typeof timeout === 'undefined' || timeout === Infinity || timeout < 0
@@ -35,18 +35,19 @@ export async function fetch<T extends FetchResponse = any>(
 
   if (typeof data === 'undefined') { // timeout
     abortReq(args.abortController)
-    traceLog('timeout', options.span)
+    trace(AttributeKey.RequestTimeout, options.span)
     throw new Error(`fetch timeout in "${timeout as number}ms"`)
   }
   const dataType = args.dataType as NonNullable<Options['dataType']>
-  traceLog('handleResponseError', options.span)
+
+  trace(AttributeKey.ProcessResponseStart, options.span)
   let resp = await handleResponseError(data, dataType === 'bare')
   if (typeof options.beforeProcessResponseCallback === 'function') {
     resp = await options.beforeProcessResponseCallback(resp)
   }
-  traceLog('processResponseType-start', options.span)
   const ret = await processResponseType(resp, dataType)
-  traceLog('processResponseType-finish', options.span)
+  trace(AttributeKey.ProcessResponseFinish, options.span)
+
   return ret as OverwriteAnyToUnknown<T>
 }
 

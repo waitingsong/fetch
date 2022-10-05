@@ -10,4 +10,5 @@ rules:
     - packageDir:
       - ./
       - ../../node_modules/@mwcp/share/
+      - ../../node_modules/@mwcp/otel/
 

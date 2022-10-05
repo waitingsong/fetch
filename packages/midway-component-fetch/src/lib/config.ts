@@ -1,4 +1,4 @@
-import { HeadersKey, TracerTag } from '@mwcp/jaeger'
+import { HeadersKey, AttrNames } from '@mwcp/otel'
 
 import { genRequestHeaders } from './helper'
 import { Config, MiddlewareConfig, MiddlewareOptions } from './types'
@@ -6,10 +6,11 @@ import { Config, MiddlewareConfig, MiddlewareOptions } from './types'
 
 export const initialConfig: Readonly<Config> = {
   genRequestHeaders,
-  enableDefaultCallbacks: true,
-  enableTraceLoggingReqBody: true,
-  enableTraceLoggingRespData: true,
-  traceLoggingReqHeaders: [
+  enableTrace: false,
+  traceEvent: true,
+  traceRequestBody: true,
+  traceResponseData: true,
+  captureRequestHeaders: [
     'Accept',
     'authorization',
     'Content-Length',
@@ -17,11 +18,10 @@ export const initialConfig: Readonly<Config> = {
     'Host',
     'user-agent',
     HeadersKey.reqId,
-    HeadersKey.traceId,
-    TracerTag.svcName,
-    TracerTag.svcVer,
+    AttrNames.ServiceName,
+    AttrNames.ServiceVersion,
   ],
-  traceLoggingRespHeaders: [
+  captureResponseHeaders: [
     'Age',
     'Cache-Control',
     'Content-Encoding',
@@ -33,9 +33,8 @@ export const initialConfig: Readonly<Config> = {
     'x-aspnet-version',
     'x-powered-by',
     HeadersKey.reqId,
-    HeadersKey.traceId,
-    TracerTag.svcName,
-    TracerTag.svcVer,
+    AttrNames.ServiceName,
+    AttrNames.ServiceVersion,
   ],
 }
 export const initMiddlewareOptions: MiddlewareOptions = {

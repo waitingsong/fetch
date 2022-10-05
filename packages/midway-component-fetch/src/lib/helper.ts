@@ -1,174 +1,115 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import {
-  SpanLogInput,
-  TracerLog,
-  TracerTag,
+  Attributes,
+  AttrNames,
   HeadersKey,
-  SpanHeaderInit,
-  TracerManager,
-} from '@mwcp/jaeger'
+  SemanticAttributes,
+  SpanStatusCode,
+} from '@mwcp/otel'
+import { propagation } from '@opentelemetry/api'
 import { Node_Headers } from '@waiting/fetch'
 import {
   genISO8601String,
-  humanMemoryUsage,
   retrieveHeadersItem,
 } from '@waiting/shared-core'
-import { Tags } from 'opentracing'
 
-import { Config } from './types'
+import { Config, ReqCallbackOptions } from './types'
 
 
 /**
  * Generate request header contains span and reqId if possible
  */
-export const genRequestHeaders: Config['genRequestHeaders'] = async (ctx, headersInit, span) => {
-  const ret = new Node_Headers(headersInit)
+export const genRequestHeaders: Config['genRequestHeaders'] = async (ctx, headersInit, traceSvc, span, traceContext) => {
+  const headers = new Node_Headers(headersInit)
 
   if (! ctx || ! ctx.requestContext) {
-    return ret
-  }
-  const tracerManager = await ctx.requestContext.getAsync(TracerManager)
-  if (! tracerManager) {
-    return ret
+    return headers
   }
 
-  // if (! ret.has(HeadersKey.traceId)) {
-  //   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  //   const spanHeader: SpanHeaderInit | undefined = ctx.tracerManager && span
-  //     ? ctx.tracerManager.headerOfCurrentSpan(span)
-  //     : void 0
-  //   if (spanHeader) {
-  //     ret.set(HeadersKey.traceId, spanHeader[HeadersKey.traceId])
-  //   }
-  // }
-
-  // override traceId
-  if (span) {
-    const spanHeader: SpanHeaderInit | undefined = tracerManager.headerOfCurrentSpan(span)
-    if (spanHeader) {
-      ret.set(HeadersKey.traceId, spanHeader[HeadersKey.traceId])
-    }
+  if (typeof ctx['reqId'] === 'string' && ctx['reqId'] && ! headers.has(HeadersKey.reqId)) {
+    headers.set(HeadersKey.reqId, ctx['reqId'])
   }
 
-  if (typeof ctx['reqId'] === 'string' && ctx['reqId'] && ! ret.has(HeadersKey.reqId)) {
-    ret.set(HeadersKey.reqId, ctx['reqId'])
+  if (! traceSvc || ! span || ! traceContext) {
+    return headers
   }
 
-  return ret
-}
-
-const beforeRequest: Config['beforeRequest'] = async (options) => {
-  const { id, fetchRequestSpanMap, opts } = options
-  const { ctx, span: pSpan } = opts
-
-  if (! ctx || ! ctx.requestContext) { return }
-  // if (! pSpan) { return }
-
-  const tracerManager = await ctx.requestContext.getAsync(TracerManager)
-  if (! tracerManager) {
-    return
-  }
-
-  const {
-    enableTraceLoggingReqBody,
-    traceLoggingReqHeaders,
-  } = options.config
-
-  const time = genISO8601String()
-  const mem = humanMemoryUsage()
-  const parentInput: SpanLogInput = {
-    event: TracerLog.fetchStart,
-    url: opts.url,
-    method: opts.method,
-    time,
-    [TracerLog.svcMemoryUsage]: mem,
-  }
-  tracerManager.spanLog(parentInput) // parent span log
-
-  const span = pSpan
-    ? pSpan
-    : tracerManager.genSpan('FetchComponent')
-  opts.span = span
-
-  const tags: SpanLogInput = {
-    [Tags.HTTP_URL]: opts.url,
-    [Tags.HTTP_METHOD]: opts.method,
-  }
-
-  if (enableTraceLoggingReqBody) {
-    if (typeof opts.data !== 'undefined') {
-      tags[TracerTag.reqQuery] = opts.data
-    }
-  }
-  else {
-    tags[TracerTag.reqQuery] = 'Not logged'
-  }
-
-  if (Array.isArray(traceLoggingReqHeaders)) {
-    traceLoggingReqHeaders.forEach((name) => {
-      const val = retrieveHeadersItem(opts.headers, name)
-      if (val) {
-        tags[`http.${name}`] = val
+  if (! headers.has(HeadersKey.otelTraceId)) {
+    const tmp = {}
+    propagation.inject(traceContext, tmp)
+    Object.entries(tmp).forEach(([key, val]) => {
+      if (typeof val === 'string') {
+        headers.set(key, val)
+      }
+      else if (typeof val === 'number') {
+        headers.set(key, val.toString())
+      }
+      else if (Array.isArray(val)) {
+        val.forEach((vv) => {
+          headers.set(key, String(vv))
+        })
       }
     })
   }
 
-  span.addTags(tags)
+  return headers
+}
 
-  const input: SpanLogInput = {
-    event: TracerLog.fetchStart,
-    time,
-    [TracerLog.svcMemoryUsage]: mem,
+const beforeRequest: Config['beforeRequest'] = async (options) => {
+  const { opts, ctx, traceService, config } = options
+  const { span } = opts
+
+  if (! ctx || ! ctx.requestContext) { return }
+
+  if (! traceService || ! span) { return }
+
+  const time = genISO8601String()
+
+  if (config.traceEvent) {
+    const currInput: Attributes = {
+      event: AttrNames.FetchStart,
+      url: opts.url,
+      method: opts.method,
+      time,
+    }
+    traceService.addEvent(span, currInput)
   }
-  span.log(input) // current span log
-  fetchRequestSpanMap.set(id, span)
+
+  const attrs = genOutgoingRequestAttributes(options)
+  attrs && traceService.setAttributes(span, attrs)
+
 }
 
 const afterResponse: Config['afterResponse'] = async (options) => {
-  const { id, fetchRequestSpanMap, opts, resultData, respHeaders } = options
-  const { ctx } = opts
+  const {
+    config,
+    opts,
+    // resultData,
+    respHeaders,
+    ctx,
+    traceService,
+  } = options
+
   if (! ctx || ! ctx.requestContext) { return }
 
-  const span = fetchRequestSpanMap.get(id)
-  const tracerManager = await ctx.requestContext.getAsync(TracerManager)
-  if (! tracerManager) {
+  if (! traceService) {
     return
   }
+  const { span } = opts
   if (! span) { return }
 
   const {
-    enableTraceLoggingRespData,
-    traceLoggingRespHeaders,
+    traceResponseData,
+    captureResponseHeaders,
   } = options.config
 
-  const time = genISO8601String()
-  const mem = humanMemoryUsage()
-  const parentInput: SpanLogInput = {
-    event: TracerLog.fetchFinish,
-    url: opts.url,
-    method: opts.method,
-    time,
-    [TracerLog.svcMemoryUsage]: mem,
-  }
-  if (tracerManager) {
-    tracerManager.spanLog(parentInput)
+  const tags: Attributes = {}
+  if (traceResponseData) {
+    tags[AttrNames.Http_Response_Body] = JSON.stringify(options.resultData, null, 2)
   }
 
-  if (! span) {
-    return
-  }
-  const tags: SpanLogInput = {}
-  if (enableTraceLoggingRespData) {
-    if (typeof resultData !== 'undefined') {
-      tags[TracerTag.respBody] = resultData
-    }
-  }
-  else {
-    tags[TracerTag.respBody] = 'Not logged'
-  }
-
-  if (respHeaders && Array.isArray(traceLoggingRespHeaders)) {
-    traceLoggingRespHeaders.forEach((name) => {
+  if (respHeaders && Array.isArray(captureResponseHeaders)) {
+    captureResponseHeaders.forEach((name) => {
       const val = retrieveHeadersItem(respHeaders, name)
       if (val) {
         tags[`http.resp.${name}`] = val
@@ -176,89 +117,86 @@ const afterResponse: Config['afterResponse'] = async (options) => {
     })
   }
 
-  Object.keys(tags).length && span.addTags(tags)
-
-  const input: SpanLogInput = {
-    event: TracerLog.fetchFinish,
-    time,
-    [TracerLog.svcMemoryUsage]: mem,
+  if (Object.keys(tags).length) {
+    traceService.setAttributes(span, tags)
   }
-  span.log(input)
 
-  span.finish()
-  fetchRequestSpanMap.delete(id)
+  if (config.traceEvent) {
+    const time = genISO8601String()
+    const attrs: Attributes = {
+      event: AttrNames.FetchFinish,
+      url: opts.url,
+      method: opts.method,
+      time,
+    }
+    traceService.addEvent(span, attrs)
+  }
+
+  // traceContext && propagateOutgoingHeader(traceContext, ctx.res)
+  traceService.endSpan(span)
 }
 
 export const processEx: Config['processEx'] = async (options) => {
-  const { id, fetchRequestSpanMap, opts, exception } = options
-  const { ctx } = opts
+  const { opts, exception, ctx, traceService } = options
+
   if (! ctx || ! ctx.requestContext) {
     throw exception
   }
-  const span = fetchRequestSpanMap.get(id)
 
-  const tracerManager = await ctx.requestContext.getAsync(TracerManager)
-  if (! tracerManager) {
+  if (! traceService) {
     throw exception
   }
 
+  const { span } = opts
   if (! span) {
     throw exception
   }
 
   const {
-    traceLoggingRespHeaders,
+    captureResponseHeaders,
   } = options.config
   const time = genISO8601String()
-  const mem = humanMemoryUsage()
+  // const mem = humanMemoryUsage()
 
-  const parentInput: SpanLogInput = {
-    event: TracerLog.fetchException,
+  const parentInput: Attributes = {
+    event: AttrNames.FetchException,
     url: opts.url,
     method: opts.method,
     time,
-    [TracerLog.svcMemoryUsage]: mem,
+    // [TracerLog.svcMemoryUsage]: mem,
   }
-  tracerManager.spanLog(parentInput) // parent span log
+  traceService.addEvent(span, parentInput) // parent span log
 
-  if (! span) {
-    if (exception instanceof Error) {
-      throw exception
-    }
-    else {
-      throw new Error(exception)
-    }
+  const attrs: Attributes = {
+    // [AttrNames.error]: true,
+    [AttrNames.LogLevel]: 'error',
+    // [AttrNames.svcException]: exception.message,
   }
 
-  const tags: SpanLogInput = {
-    [Tags.ERROR]: true,
-    [TracerTag.logLevel]: 'error',
-    [TracerTag.svcException]: exception,
-  }
-
-  if (Array.isArray(traceLoggingRespHeaders)) {
-    traceLoggingRespHeaders.forEach((name) => {
+  if (Array.isArray(captureResponseHeaders)) {
+    captureResponseHeaders.forEach((name) => {
       const val = retrieveHeadersItem(opts.headers, name)
       if (val) {
-        tags[`http.${name}`] = val
+        attrs[`http.${name}`] = val
       }
     })
   }
+  traceService.addEvent(span, attrs)
 
-  span.addTags(tags)
-
-  const input: SpanLogInput = {
+  const input: Attributes = {
     level: 'error',
-    event: TracerLog.fetchException,
+    event: AttrNames.FetchException,
     time: genISO8601String(),
     'err.msg': exception.message,
     'err.stack': exception.stack,
-    [TracerLog.svcMemoryUsage]: mem,
+    // [TracerLog.svcMemoryUsage]: mem,
   }
-  span.log(input)
+  traceService.addEvent(span, input)
 
-  span.finish()
-  fetchRequestSpanMap.delete(id)
+  traceService.endSpan(span, {
+    code: SpanStatusCode.ERROR,
+    error: exception,
+  })
 
   if (exception instanceof Error) {
     throw exception
@@ -274,3 +212,43 @@ export const defaultfetchConfigCallbacks = {
   processEx,
 }
 
+
+/**
+ * Returns outgoing request attributes
+ */
+export function genOutgoingRequestAttributes(
+  options: ReqCallbackOptions,
+): Attributes | undefined {
+
+  const { opts, ctx, traceService } = options
+  const { span } = opts
+
+  if (! ctx || ! ctx.requestContext) { return }
+
+  if (! traceService || ! span) { return }
+
+  const {
+    traceRequestBody: enableTraceLoggingReqBody,
+    captureRequestHeaders,
+  } = options.config
+
+  const tags: Attributes = {
+    [SemanticAttributes.HTTP_METHOD]: opts.method,
+    [SemanticAttributes.HTTP_URL]: opts.url,
+  }
+
+  if (enableTraceLoggingReqBody && typeof opts.data !== 'undefined') {
+    tags[AttrNames.Http_Request_Query] = JSON.stringify(opts.data, null, 2)
+  }
+
+  if (Array.isArray(captureRequestHeaders)) {
+    captureRequestHeaders.forEach((name) => {
+      const val = retrieveHeadersItem(opts.headers, name)
+      if (val) {
+        tags[`http.${name}`] = val
+      }
+    })
+  }
+
+  return tags
+}

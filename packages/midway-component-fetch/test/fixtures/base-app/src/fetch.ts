@@ -5,15 +5,13 @@ import {
   Inject,
 } from '@midwayjs/decorator'
 
-import {
-  FetchComponent,
-} from '~/index'
+import { FetchService } from '~/index'
 
 
 @Controller('/fetch')
 export class FetchController {
 
-  @Inject() private readonly fetchService: FetchComponent
+  @Inject() private readonly fetchService: FetchService
 
   @Get('/ip')
   async ip(): Promise<string> {
@@ -27,6 +25,13 @@ export class FetchController {
       ip = arr && arr.length >= 1 && arr[1] ? arr[1] : ''
     }
     return ip
+  }
+
+  @Get('/self')
+  async self(): Promise<string> {
+    const url = 'http://127.0.0.1:7002/fetch/hello'
+    const text = await this.fetchService.get<string>(url, { dataType: 'text' })
+    return text
   }
 
 }

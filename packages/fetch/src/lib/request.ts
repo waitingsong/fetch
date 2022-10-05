@@ -1,7 +1,7 @@
-import type { Span } from 'opentracing'
+import type { Span } from '@opentelemetry/api'
 
-import { traceLog } from './tracer.js'
-import { Args } from './types.js'
+import { trace } from './trace.js'
+import { Args, AttributeKey } from './types.js'
 import {
   processInitOpts,
   processRequestGetLikeData,
@@ -25,7 +25,7 @@ export async function _fetch(
 
   const resp = await createRequest(input, args, requestInit, span)
   const res = await handleRedirect(resp, args, requestInit)
-  traceLog('handleRedirect-finish', span)
+  trace(AttributeKey.HandleRedirectFinish, span)
   return res
 }
 
@@ -42,7 +42,7 @@ export async function createRequest(
   let resp: Response
 
   if (typeof input === 'string') {
-    traceLog('request-processRequestData', span)
+    trace(AttributeKey.ProcessRequestData)
 
     if (['GET', 'DELETE'].includes(requestInit.method as string)) {
       inputNew = processRequestGetLikeData(input, args)
@@ -58,15 +58,15 @@ export async function createRequest(
       throw new TypeError(`Invalid method value: "${requestInit.method}"`)
     }
 
-    traceLog('request-start', span)
+    trace(AttributeKey.RequestStart, span)
     resp = await fetchModule(inputNew, requestInit)
   }
   else {
-    traceLog('request-start', span)
+    trace(AttributeKey.RequestStart, span)
     resp = await fetchModule(input)
   }
 
-  traceLog('request-finish', span)
+  trace(AttributeKey.RequestFinish, span)
   return resp
 }
 

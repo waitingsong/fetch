@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
+import type { Span } from '@opentelemetry/api'
 import type { JsonType } from '@waiting/shared-types'
-import type { Span } from 'opentracing'
 
 
 export interface Options extends RequestInit, Args {
@@ -87,11 +87,10 @@ export interface Args {
    */
   processData?: boolean
 
-
   /**
-   * Tracer Span
+   * Current OpenTelemetry Span
    */
-  span?: Span
+  span?: Span | undefined
 
   /**
    * Request timeout in msec.
@@ -118,3 +117,14 @@ export enum FetchMsg {
 }
 
 
+export enum AttributeKey {
+  PrepareRequestData = 'prepare-request-data',
+  ProcessRequestData = 'process-request-data',
+  HandleRedirectFinish = 'handle-redirect-finish',
+  RequestStart = 'request-start',
+  RequestFinish = 'request-finish',
+  RequestTimeout = 'request-timeout',
+  HandleResponseError = 'handle-response-error',
+  ProcessResponseStart = 'process-response-start',
+  ProcessResponseFinish = 'process-response-finish',
+}

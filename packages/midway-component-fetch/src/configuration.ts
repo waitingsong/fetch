@@ -1,12 +1,15 @@
 /* eslint-disable @typescript-eslint/no-extraneous-class */
 import 'tsconfig-paths/register'
 
+import assert from 'assert'
 import { join } from 'path'
 
-import { Configuration } from '@midwayjs/decorator'
+import { ILifeCycle } from '@midwayjs/core'
+import { App, Configuration } from '@midwayjs/decorator'
 
 import { useComponents } from './imports'
-import { ConfigKey } from './lib/index'
+import { Application } from './interface'
+import { ConfigKey, FetchComponent } from './lib/index'
 
 
 @Configuration({
@@ -14,6 +17,15 @@ import { ConfigKey } from './lib/index'
   importConfigs: [join(__dirname, 'config')],
   imports: useComponents,
 })
-export class AutoConfiguration {
+export class AutoConfiguration implements ILifeCycle {
+
+  @App() protected readonly app: Application
+
+  async onReady(): Promise<void> {
+    assert(this.app, 'this.app must be set')
+    const fetch = await this.app.getApplicationContext().getAsync(FetchComponent)
+    assert(fetch)
+  }
+
 }
 
