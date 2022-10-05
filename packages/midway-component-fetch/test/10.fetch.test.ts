@@ -17,9 +17,23 @@ describe(filename, () => {
       .expect(200)
 
     const ip = resp.text as string
+    console.log({ ip })
     assert(typeof ip === 'string')
     assert(ip.length > 0)
     assert(/[\d.]+/.test(ip))
+  })
+
+  it.skip('Should work self', async () => {
+    const { httpRequest } = testConfig
+
+    const path = '/fetch/self'
+    const resp = await httpRequest
+      .get(path)
+      .expect(200)
+
+    const ip = resp.text as string
+    console.log({ ip })
+    assert(typeof ip === 'string')
   })
 
 })

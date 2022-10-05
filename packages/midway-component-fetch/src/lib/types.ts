@@ -1,13 +1,17 @@
-import { Options as FetchOptions } from '@waiting/fetch'
+import type { Context as TraceContext, Span, TraceService } from '@mwcp/otel'
+import type { Options } from '@waiting/fetch'
 import { MiddlewareConfig as MWConfig } from '@waiting/shared-types'
-import type { Span } from 'opentracing'
 
 import { Context } from '../interface'
 
 
-export type Options = FetchOptions & {
-  ctx?: Context | undefined,
-}
+export type FetchOptions = Options
+// export type FetchOptions = Options & {
+//   /**
+//    * Current OpenTelemetry Trace Context
+//    */
+//   traceContext?: TraceContext | undefined,
+// }
 
 export interface Config {
   /**
@@ -19,6 +23,8 @@ export interface Config {
     ctx: Context,
     headersInit?: Record<string, string> | Headers,
     span?: Span,
+    traceService?: TraceService,
+    traceContext?: TraceContext | undefined,
   ) => Promise<Headers>
   /**
    * Callback before request
@@ -38,16 +44,26 @@ export interface Config {
    */
   processEx?: (options: ProcessExCallbackOptions) => Promise<never>
   /**
-   * Enable default tracing callbacks
+   * Enable OpenTeleMetry trace
    * @default false
    * @description callbacks
    *   - beforeRequest() in helper.ts
    *   - afterResponse() in helper.ts
    *   - processEx() in helper.ts
    */
-  enableDefaultCallbacks: boolean
-  enableTraceLoggingReqBody?: boolean
-  enableTraceLoggingRespData?: boolean
+  enableTrace: boolean
+  /**
+   * @default true
+   */
+  traceEvent: boolean
+  /**
+   * @default true
+   */
+  traceRequestBody?: boolean
+  /**
+   * @default true
+   */
+  traceResponseData?: boolean
   /**
    * @example ['authorization', 'user-agent']
    * @default
@@ -59,7 +75,7 @@ export interface Config {
    *   - 'user-agent'
    *   - HeadersKey.reqId
    */
-  traceLoggingReqHeaders: string[]
+  captureRequestHeaders: string[]
   /**
    * @example ['authorization', 'user-agent', 'server']
    * @default
@@ -74,7 +90,7 @@ export interface Config {
    *   - 'x-aspnet-version'
    *   - 'x-powered-by'
    */
-  traceLoggingRespHeaders: string[]
+  captureResponseHeaders: string[]
 }
 export type FetchComponentConfig = Config
 
@@ -84,28 +100,34 @@ export interface MiddlewareOptions {
 export type MiddlewareConfig = MWConfig<MiddlewareOptions>
 
 
-
 export interface ReqCallbackOptions {
   id: symbol
   config: Config
-  fetchRequestSpanMap: Map<symbol, Span>
-  opts: Options
+  opts: FetchOptions
+  ctx: Context
+  traceService: TraceService | undefined
 }
 
 export interface RespCallbackOptions <T = unknown> {
   id: symbol
   config: Config
-  fetchRequestSpanMap: Map<symbol, Span>
-  opts: Options
+  opts: FetchOptions
   resultData: T
   respHeaders: Headers | undefined
+  ctx: Context
+  traceService: TraceService | undefined
+  traceContext: TraceContext | undefined
 }
 
 export interface ProcessExCallbackOptions {
   id: symbol
   config: Config
-  fetchRequestSpanMap: Map<symbol, Span>
-  opts: Options
+  opts: FetchOptions
   exception: Error
+  ctx: Context
+  traceService: TraceService | undefined
 }
+
+
+export type ResponseHeadersMap = Map<symbol, Headers>
 

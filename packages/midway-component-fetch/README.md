@@ -2,7 +2,7 @@
 
 HTTP fetch component for midway.js
 
-[![Version](https://img.shields.io/npm/v/midway-component-fetch.svg)](https://www.npmjs.com/package/midway-component-fetch)
+[![Version](https://img.shields.io/npm/v/@mwcp/fetch.svg)](https://www.npmjs.com/package/midway-component-fetch)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![](https://img.shields.io/badge/lang-TypeScript-blue.svg)]()
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
@@ -18,7 +18,7 @@ npm i @mw-components/fetch
 
 Update project `src/configuration.ts`
 ```ts
-import * as fetch from 'midway-component-fetch'
+import * as fetch from '@mwcp/fetch'
 
 @Configuration({
   imports: [
