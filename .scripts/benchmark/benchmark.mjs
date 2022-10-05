@@ -6,19 +6,21 @@ import autocannon from 'autocannon'
 
 const api = argv.api ?? ''
 const reqestAvg = argv.qps ?? 2800
+const sleepTime = argv.wait ?? 25000  // msec
 
 const format = function (bytes) {
   return (bytes / 1024 / 1024).toFixed(2) + ' MB'
 };
 
 const url = `http://127.0.0.1:7001/${api}`
+const connections = 100
 
 const cannon = () => {
   return new Promise((resolve, reject) => {
     autocannon(
       {
         url,
-        connections: 100,
+        connections,
         pipelining: 2,
         duration: 30,
       },
@@ -85,7 +87,7 @@ if (results.requests.average < reqestAvg) {
   exitWithError()
 }
 
-await sleep(15000)
+await sleep(sleepTime)
 
 // 采集一次内存
 const secondMem = await collectMem();
@@ -94,7 +96,7 @@ echo`  - second memory (before gc1), rss=${format(secondMem.rss)}, heapUsed=${fo
   )}`
 
 child.send({ action: 'gc' })
-await sleep(15000)
+await sleep(sleepTime)
 
 // gc 后采集一次内存
 const thirdMem = await collectMem();
@@ -120,7 +122,7 @@ if (results.requests.average < reqestAvg) {
   exitWithError()
 }
 
-await sleep(15000)
+await sleep(sleepTime)
 
 const fourthMem = await collectMem()
 echo`  - fourth memory (before gc2), rss=${format(
@@ -128,7 +130,7 @@ echo`  - fourth memory (before gc2), rss=${format(
   )}, heapUsed=${format(fourthMem.heapUsed)}`
 
 child.send({ action: 'gc' })
-await sleep(15000)
+await sleep(sleepTime)
 
 // gc 后采集一次内存
 const fifthMem = await collectMem()
@@ -137,9 +139,9 @@ echo`  - fifth  memory (after  gc2), rss=${format(fifthMem.rss)}, heapUsed =${fo
   )}`
 
 // 第二次检查，第二次 gc 中的堆内存和第一次 gc 持平，gc 前的数值不定，容错率大一些
-const ratio2 = +Math.abs(fourthMem.heapUsed / secondMem.heapUsed).toFixed(2)
-echo`ratio4-2: ${ratio2}`
-if (ratio2 > 1.9) {
+const ratio2 = +Math.abs(fourthMem.heapUsed / Math.max(secondMem.heapUsed, firstMem.heapUsed) ).toFixed(2)
+echo`ratio4-(2|1): ${ratio2}`
+if (ratio2 > 1.6) {
   console.error('check2: memory leak warning')
   exitWithError()
 }
@@ -147,13 +149,13 @@ if (ratio2 > 1.9) {
 // 第三次检查，第三次 gc 之后和第一次 gc 结果持平
 const ratio3 = +Math.abs(fifthMem.heapUsed / thirdMem.heapUsed).toFixed(2)
 echo`ratio5-3: ${ratio3}`
-if (ratio3 > 1.2) {
+if (ratio3 > 1.1) {
   console.error('check3: memory leak warning')
   exitWithError()
 }
 
 echo` \n`
-await $`autocannon -c 100 -p 2 -d 60 http://127.0.0.1:7001/${api}`
+await $`autocannon -c ${connections} -p 2 -d 60 http://127.0.0.1:7001/${api}`
 echo` \n`
 
 

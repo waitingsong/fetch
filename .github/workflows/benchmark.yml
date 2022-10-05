@@ -40,6 +40,7 @@ jobs:
             package-lock.json
             packages/*/.eslintcache
             packages/*/.vscode
+            packages/*/.tsbuildinfo
             packages/*/dist
             packages/*/node_modules
             packages/*/package-lock.json
@@ -89,7 +90,7 @@ jobs:
           chown -R 1001:121 "/github/home/.npm"
           chmod a+w -R .
           export cwd=`pwd`
-          npm i --no-audit -g lerna zx autocannon
+          npm i --no-audit -g autocannon c8 lerna rollup zx
           # npm run purge
           npm run bootstrap
         env:
@@ -113,7 +114,7 @@ jobs:
           .scripts/benchmark/start-benchmark.mjs --qps=2800 --api=demo/hello --p=mw-demo
         env:
           CI: true
-          OTEL_EXPORTER_AGENT_HOST: jaeger
+          OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4317
 
     services:
       postgres:
@@ -133,12 +134,10 @@ jobs:
           TZ: 'Asia/Chongqing'
           COLLECTOR_OTLP_ENABLED: 'true'
         ports:
-          - 6831:6831/udp
-          - 6832:6832/udp
           - 4317:4317
           - 4318:4318
-          - 14268:14268
+          - 5778:5778
+          - 6831:6831/udp
+          - 6832:6832/udp
           - 14250:14250
           - 16686:16686
-          - 16686:16686/udp
-

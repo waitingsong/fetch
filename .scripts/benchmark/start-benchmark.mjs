@@ -6,8 +6,8 @@ import { stat, copyFile } from 'node:fs/promises'
 
 const pkgDir = argv.p ?? ''
 const httpPath = argv.api ?? ''
-const configTpl = argv.tpl ?? pkgDir
 const qps = argv.qps
+const sleepTime = argv.wait ?? 25000
 
 assert(pkgDir, 'pkg dir is required with -p')
 
@@ -22,14 +22,7 @@ catch {
   throw new Error(`Path is not exists: ${dir}`)
 }
 
-let tplDir = '.'
-try {
-  const tplStat = await stat(join(__dirname, configTpl))
-  if (tplStat.isDirectory()) {
-    tplDir = configTpl
-  }
-}
-catch { void 0 }
+const tplDir = `./${pkgDir}`
 console.log({ tplDir })
 
 const files = [
@@ -39,12 +32,18 @@ const files = [
 ]
 for (const [file, dst] of files) {
   const filePath = join(__dirname, file)
-  const fileStat = await stat(filePath)
-  if (! fileStat.isFile()) {
-    console.warn(`"${filePath}" is not a file`)
+  try {
+    const fileStat = await stat(filePath)
+    if (! fileStat.isFile()) {
+      console.warn(`"${filePath}" is not a file`)
+      continue
+    }
+    const dstPath = dst ? `${dir}/${dst}` : `${dir}/${basename(file)}`
+    await copyFile(filePath, dstPath)
   }
-  const dstPath = dst ? `${dir}/${dst}` : `${dir}/${basename(file)}`
-  await copyFile(filePath, dstPath)
+  catch (ex) {
+    console.warn(ex)
+  }
 }
 
 echo`[benchmark] script complete`
@@ -57,24 +56,29 @@ echo(chalk.blue('[benchmark] build example complete'))
 let gotError = false
 try {
   echo(chalk.blue('\n[benchmark] start'))
-  await $`zx benchmark.mjs --api=${httpPath} --qps=${qps}`
+  await $`zx benchmark.mjs --api=${httpPath} --qps=${qps} --wait=${sleepTime}`
 }
 catch (ex) {
-  console.error(ex)
+  //console.error(ex)
   gotError = true
+  throw ex
 }
 finally {
   const arr = []
   for (const [file, dst] of files) {
     const filePath = join(__dirname, file)
-    const fileStat = await stat(filePath)
-    if (!fileStat.isFile()) {
-      throw new Error(`"${filePath}" is not a file`)
+    try {
+      const fileStat = await stat(filePath)
+      if (!fileStat.isFile()) {
+        continue
+      }
+      if (dst) {
+        arr.push(dst)
+      }
     }
-    if (dst) {
-      arr.push(dst)
-    }
+    catch { void 0 }
   }
+
   if (arr.length > 0) {
     await $`git restore ${arr}`
   }

@@ -89,7 +89,7 @@ jobs:
           # DO NOT execute: npm config set unsafe-perm=true
           export cwd=`pwd`
           .github/workflows/fix.sh
-          npm i --no-audit -g c8 lerna rollup zx
+          npm i --no-audit -g autocannon c8 lerna rollup zx
           # npm run purge
           npm run bootstrap
         env:
@@ -143,7 +143,7 @@ jobs:
           CI: true
           HTTPBIN_HOST: httpbin
           # otel
-          OTEL_EXPORTER_AGENT_HOST: jaeger
+          OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4317
 
       - name: NPM Publish
         run: |
@@ -178,12 +178,11 @@ jobs:
           TZ: 'Asia/Chongqing'
           COLLECTOR_OTLP_ENABLED: 'true'
         ports:
-          - 6831:6831/udp
-          - 6832:6832/udp
           - 4317:4317
           - 4318:4318
-          - 14268:14268
+          - 5778:5778
+          - 6831:6831/udp
+          - 6832:6832/udp
           - 14250:14250
           - 16686:16686
-          - 16686:16686/udp
 
