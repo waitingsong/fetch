@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [20.3.4](https://github.com/waitingsong/fetch/compare/v20.3.3...v20.3.4) (2022-10-06)
+
+**Note:** Version bump only for package @mwcp/fetch
+
+
+
+
+
 ## [20.3.3](https://github.com/waitingsong/fetch/compare/v20.3.2...v20.3.3) (2022-09-19)
 
 **Note:** Version bump only for package @mwcp/fetch
