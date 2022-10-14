@@ -6,7 +6,7 @@ import { Config, MiddlewareConfig, MiddlewareOptions } from './types'
 
 export const initialConfig: Readonly<Config> = {
   genRequestHeaders,
-  enableTrace: false,
+  enableTrace: true,
   traceEvent: true,
   traceRequestBody: true,
   traceResponseData: true,
