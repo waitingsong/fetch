@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [21.1.0](https://github.com/waitingsong/fetch/compare/v21.0.1...v21.1.0) (2022-10-14)
+
+
+### Features
+
+* **mwcp:** set enableTrace default to true ([36f499b](https://github.com/waitingsong/fetch/commit/36f499bba88ae19a3d875806fa02eaa8c03c7562))
+
+
+
+
+
 ## [21.0.1](https://github.com/waitingsong/fetch/compare/v21.0.0...v21.0.1) (2022-10-10)
 
 **Note:** Version bump only for package @mwcp/fetch
