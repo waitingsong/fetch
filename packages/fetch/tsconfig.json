@@ -7,7 +7,7 @@
       "~/*": ["./src/*"],
       "@/*": ["./test/*"]
     },
-    "tsBuildInfoFile": ".vscode/.tsbuildinfo"
+    "tsBuildInfoFile": ".tsbuildinfo"
   },
   "ts-node": {
     "esm": true,

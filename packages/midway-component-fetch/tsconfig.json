@@ -10,7 +10,7 @@
       "@/*": ["./test/*"]
     },
     "target": "ES2022",
-    "tsBuildInfoFile": ".vscode/.tsbuildinfo"
+    "tsBuildInfoFile": ".tsbuildinfo"
   },
   "include": [
     "src/**/*.ts"
