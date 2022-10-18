@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [21.1.1](https://github.com/waitingsong/fetch/compare/v21.1.0...v21.1.1) (2022-10-18)
+
+**Note:** Version bump only for package @waiting/fetch
+
+
+
+
+
 # [21.0.0](https://github.com/waitingsong/fetch/compare/v20.4.0...v21.0.0) (2022-10-06)
 
 **Note:** Version bump only for package @waiting/fetch
