@@ -24,18 +24,19 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@mwcp/otel": "^3.8.0",
+    "@mwcp/otel": "^3.16.7",
     "@waiting/fetch": "^21.1.1",
-    "@waiting/shared-core": "^20.6.3"
+    "@waiting/shared-core": "^20.11.0"
   },
   "devDependencies": {
-    "@mwcp/share": "^2.0.0",
+    "@mwcp/share": "^2.3.2",
     "cross-env": "7"
   },
   "engines": {
     "node": ">=16.13.0"
   },
   "files": [
+    "README.*.md",
     "bin/*.js",
     "dist"
   ],
