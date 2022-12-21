@@ -2,7 +2,7 @@
 
 name: ci-win
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   build:
@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        node: [16]
+        node: ['current']
         os: [windows-latest]
 
     steps:
@@ -31,6 +31,7 @@ jobs:
         with:
           path: |
             node_modules
+            node_modules/.cache/nx
             package-lock.json
             packages/*/.eslintcache
             packages/*/.tsbuildinfo
