@@ -24,12 +24,12 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@mwcp/otel": "^3.16.7",
+    "@mwcp/otel": "^4 || ^5",
     "@waiting/fetch": "^21.1.2",
-    "@waiting/shared-core": "^20.11.0"
+    "@waiting/shared-core": "^20.11.2"
   },
   "devDependencies": {
-    "@mwcp/share": "^2.3.2",
+    "@mwcp/share": "^3 || ^4",
     "cross-env": "7"
   },
   "engines": {
