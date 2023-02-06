@@ -2,7 +2,7 @@ import {
   Config as _Config,
   Controller,
   Get,
-} from '@midwayjs/decorator'
+} from '@midwayjs/core'
 import type { Context } from '@mwcp/share'
 
 import { TestRespBody } from '@/root.config'

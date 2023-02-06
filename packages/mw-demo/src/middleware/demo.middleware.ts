@@ -1,4 +1,4 @@
-import { Middleware } from '@midwayjs/decorator'
+import { Middleware } from '@midwayjs/core'
 import type { Context, IMiddleware, NextFunction } from '@mwcp/share'
 
 import {
