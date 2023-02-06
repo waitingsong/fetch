@@ -5,7 +5,7 @@ import assert from 'assert'
 import { join } from 'path'
 
 import { ILifeCycle } from '@midwayjs/core'
-import { App, Configuration } from '@midwayjs/decorator'
+import { App, Configuration } from '@midwayjs/core'
 
 import { useComponents } from './imports'
 import { Application } from './interface'

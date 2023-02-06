@@ -3,7 +3,7 @@ import {
   Config as _Config,
   Inject,
   Provide,
-} from '@midwayjs/decorator'
+} from '@midwayjs/core'
 import {
   Context as TraceContext,
   Span,

@@ -6,7 +6,7 @@ import {
   Provide,
   Scope,
   ScopeEnum,
-} from '@midwayjs/decorator'
+} from '@midwayjs/core'
 import { Context as TraceContext, Span, TraceService } from '@mwcp/otel'
 import {
   FetchResponse,

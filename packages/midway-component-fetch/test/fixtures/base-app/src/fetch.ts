@@ -3,7 +3,7 @@ import {
   Controller,
   Get,
   Inject,
-} from '@midwayjs/decorator'
+} from '@midwayjs/core'
 
 import { FetchService } from '~/index'
 
