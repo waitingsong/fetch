@@ -1,4 +1,4 @@
-import { basename } from 'node:path'
+import { basename, dirname } from 'node:path'
 import assert from 'node:assert'
 
 import dts from "rollup-plugin-dts"
@@ -6,7 +6,7 @@ import dts from "rollup-plugin-dts"
 // import commonjs from '@rollup/plugin-commonjs'
 // import resolve from '@rollup/plugin-node-resolve'
 // import { terser } from 'rollup-plugin-terser'
-import pkg from './package.json'
+import pkg from './package.json' assert { type: 'json' }
 
 // `npm run build` -> `production` is true
 // `npm run dev` -> `production` is false
@@ -87,6 +87,7 @@ if (pkg.exports) {
     if (! row.import && ! row.require) { return }
 
     const names = genFileNamesForCTS(row)
+    // console.log({ src: row.import, names })
 
     config.push(
       {
@@ -191,7 +192,6 @@ if (pkg.bin) {
         {
           file: binPath,
           banner: shebang,
-          // format: 'cjs',
           format: 'esm',
           globals,
         },
@@ -221,6 +221,7 @@ function genFileNamesForCTS(row) {
 
   let srcPath = row.types
   let baseName = ''
+  let prefixDir = dirname(path).split('/').slice(2).join('/')
 
   if (path.startsWith('./src/') && path.endsWith('.ts')) {
     baseName = basename(path, '.ts')
@@ -228,10 +229,10 @@ function genFileNamesForCTS(row) {
   }
   else if (path.startsWith('./dist/') && path.endsWith('.js')) {
     baseName = basename(path, '.js')
-    srcPath = srcPath ?? `./src/${baseName}.ts`
+    srcPath = srcPath ?? `./src/${prefixDir}/${baseName}.ts`
   }
 
-  const ctsPath = `./dist/${baseName}.d.cts`
+  const ctsPath = `./dist/${prefixDir}/${baseName}.d.cts`
   return {
     srcPath,
     ctsPath,
