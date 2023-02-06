@@ -22,7 +22,7 @@ import { Config, ReqCallbackOptions } from './types'
 export const genRequestHeaders: Config['genRequestHeaders'] = async (ctx, headersInit, traceSvc, span, traceContext) => {
   const headers = new Node_Headers(headersInit)
 
-  if (! ctx || ! ctx.requestContext) {
+  if (! ctx?.requestContext) {
     return headers
   }
 
@@ -59,7 +59,7 @@ const beforeRequest: Config['beforeRequest'] = async (options) => {
   const { opts, ctx, traceService, config } = options
   const { span } = opts
 
-  if (! ctx || ! ctx.requestContext) { return }
+  if (! ctx?.requestContext) { return }
 
   if (! traceService || ! span) { return }
 
@@ -90,7 +90,7 @@ const afterResponse: Config['afterResponse'] = async (options) => {
     traceService,
   } = options
 
-  if (! ctx || ! ctx.requestContext) { return }
+  if (! ctx?.requestContext) { return }
 
   if (! traceService) {
     return
@@ -139,7 +139,7 @@ const afterResponse: Config['afterResponse'] = async (options) => {
 export const processEx: Config['processEx'] = async (options) => {
   const { opts, exception, ctx, traceService } = options
 
-  if (! ctx || ! ctx.requestContext) {
+  if (! ctx?.requestContext) {
     throw exception
   }
 
@@ -223,7 +223,7 @@ export function genOutgoingRequestAttributes(
   const { opts, ctx, traceService } = options
   const { span } = opts
 
-  if (! ctx || ! ctx.requestContext) { return }
+  if (! ctx?.requestContext) { return }
 
   if (! traceService || ! span) { return }
 

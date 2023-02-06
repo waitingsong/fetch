@@ -4,8 +4,7 @@ import 'tsconfig-paths/register'
 import assert from 'assert'
 import { join } from 'path'
 
-import { ILifeCycle } from '@midwayjs/core'
-import { App, Configuration } from '@midwayjs/core'
+import { App, Configuration, ILifeCycle } from '@midwayjs/core'
 
 import { useComponents } from './imports'
 import { Application } from './interface'
