@@ -2,8 +2,12 @@ import 'tsconfig-paths/register'
 import assert from 'node:assert'
 import { join } from 'node:path'
 
-import { ILifeCycle } from '@midwayjs/core'
-import { App, Config, Configuration } from '@midwayjs/decorator'
+import {
+  App,
+  Config,
+  Configuration,
+  ILifeCycle,
+} from '@midwayjs/core'
 import type { Application, IMidwayContainer } from '@mwcp/share'
 
 import { useComponents } from './imports'

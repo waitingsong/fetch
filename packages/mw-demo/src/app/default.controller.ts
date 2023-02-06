@@ -2,7 +2,7 @@ import {
   Config as _Config,
   Controller,
   Get,
-} from '@midwayjs/decorator'
+} from '@midwayjs/core'
 
 import { Config, ConfigKey, Msg } from '../lib/types'
 

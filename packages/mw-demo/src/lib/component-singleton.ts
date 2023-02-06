@@ -7,7 +7,7 @@ import {
   Provide,
   Scope,
   ScopeEnum,
-} from '@midwayjs/decorator'
+} from '@midwayjs/core'
 import type { Application } from '@mwcp/share'
 
 import { Config, ConfigKey } from './types'
