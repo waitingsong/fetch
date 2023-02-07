@@ -63,6 +63,8 @@ jobs:
           netstat -tunpl
           chmod a+w -R .
           dig jaeger
+          export cwd=`pwd`
+          git config --global --add safe.directory $cwd
 
       - name: Verify
         run: |
