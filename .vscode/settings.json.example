@@ -63,6 +63,7 @@
   "files.insertFinalNewline": true,
   "files.refactoring.autoSave": true,
   "files.watcherExclude": {
+    ".tsbuildinfo": true,
     "coverage/**": true,
     "dist/**": true,
     "packages/*/dist/**": true,
@@ -90,6 +91,7 @@
   "search.exclude": {
     ".gitlab": false,
     ".scripts": false,
+    ".tsbuildinfo": true,
     "i18n": true,
     "library/": true,
     "node_modules": true,
