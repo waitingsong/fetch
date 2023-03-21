@@ -10,6 +10,7 @@ export * from './lib/index'
 export {
   FormData,
   Headers,
+  HeadersInit,
   Response,
   ResponseData,
   RequestInfo,

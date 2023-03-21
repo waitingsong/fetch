@@ -18,6 +18,7 @@ export {
 export {
   FormData,
   Headers,
+  HeadersInit,
   Response,
   RequestInfo,
   RequestInit,
