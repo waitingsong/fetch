@@ -1,17 +1,16 @@
 import assert from 'node:assert/strict'
 
 import { fileShortPath } from '@waiting/shared-core'
-import FormData from 'form-data'
 import QueryString from 'qs'
 
-import { remove, Options } from '../src/index.js'
+import { remove, FormData, Options } from '../src/index.js'
 
 import { DELAY, HOST_DELETE } from './config.js'
 import { HttpbinPostResponse, PDATA } from './test.types.js'
 
 
 describe(fileShortPath(import.meta.url), function() {
-  this.retries(3)
+  this.retries(1)
   beforeEach(resolve => setTimeout(resolve, DELAY))
 
   describe('Should remove() work with httpbin.org', () => {

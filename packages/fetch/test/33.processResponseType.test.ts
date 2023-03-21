@@ -1,9 +1,8 @@
 import assert from 'node:assert/strict'
 
 import { fileShortPath } from '@waiting/shared-core'
-import FormData from 'form-data'
-import { Response } from 'node-fetch'
 
+import { FormData, Response } from '../src/index.js'
 import { processResponseType } from '../src/lib/response.js'
 
 
@@ -19,18 +18,15 @@ describe(fileShortPath(import.meta.url), () => {
       const ab = new ArrayBuffer(size)
       const resp = new Response(ab, init)
 
-      // @ts-ignore
       const buf: ArrayBuffer = await processResponseType(resp, 'arrayBuffer')
+      assert(buf)
+      assert(buf instanceof ArrayBuffer)
       assert(buf && buf.byteLength === size)
     })
 
     // blob
 
-    /**
-     * formData() not supported by node-fetch yet.
-     * https://github.com/bitinn/node-fetch#iface-body
-     */
-    it.skip('with formData (not supported by node-fetch yet)', async () => {
+    it('with formData', async () => {
       const form = new FormData()
       const p1 = Math.random().toString()
       const p2 = Math.random().toString()
@@ -38,10 +34,11 @@ describe(fileShortPath(import.meta.url), () => {
       form.append('p2', p2)
       const resp = new Response(form, init)
 
-      // @ts-ignore
-      const ret: Map<string, string> = await processResponseType(resp, 'formData')
-      assert(ret && ret.get('p1') === p1)
-      assert(ret && ret.get('p2') === p2)
+      const ret: FormData = await processResponseType(resp, 'formData')
+      assert(ret)
+      assert(ret instanceof FormData)
+      assert(ret.get('p1') === p1)
+      assert(ret.get('p2') === p2)
     })
 
     it('with raw', async () => {
@@ -49,8 +46,9 @@ describe(fileShortPath(import.meta.url), () => {
       const ab = new ArrayBuffer(size)
       const resp = new Response(ab, init)
 
-      // @ts-ignore
       const res: Response = await processResponseType(resp, 'raw')
+      assert(res)
+      assert(res instanceof Response)
       assert(res && res.status === status)
       assert(res && res.statusText === statusText)
 
@@ -62,8 +60,9 @@ describe(fileShortPath(import.meta.url), () => {
       const foo = Math.random().toString()
       const resp = new Response(Buffer.from(foo), init)
 
-      // @ts-ignore
       const txt: string = await processResponseType(resp, 'text')
+      assert(txt)
+      assert(typeof txt === 'string')
       assert(txt && txt === foo)
     })
 
@@ -72,8 +71,9 @@ describe(fileShortPath(import.meta.url), () => {
       const resp = new Response(Buffer.from(foo), init)
 
       try {
-        // @ts-ignore
-        await processResponseType<'text'>(resp, foo)
+        // @ts-expect-error
+        const bar = await processResponseType(resp, foo)
+        void bar
       }
       catch (ex) {
         assert(ex && (ex as Error).message.includes(foo))

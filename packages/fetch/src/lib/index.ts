@@ -11,7 +11,15 @@ export * from './types.js'
 export {
   buildQueryString,
   getGloalRequestOptions,
+  pickUrlStrFromRequestInfo,
   setGloalRequestOptions,
 } from './util.js'
-export { Node_Headers } from './patch.js'
+
+export {
+  FormData,
+  Headers,
+  Response,
+  RequestInfo,
+  RequestInit,
+} from 'undici'
 

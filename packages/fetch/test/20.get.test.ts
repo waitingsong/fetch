@@ -11,7 +11,7 @@ import { HttpbinGetResponse, PDATA, PostForm1 } from './test.types.js'
 
 describe(fileShortPath(import.meta.url), function() {
 
-  this.retries(3)
+  this.retries(1)
 
   describe('Should get() work with httpbin.org', () => {
     const url = HOST_GET

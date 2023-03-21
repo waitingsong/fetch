@@ -10,7 +10,7 @@ import { HttpbinPostResponse } from './test.types.js'
 
 describe(fileShortPath(import.meta.url), function() {
 
-  this.retries(3)
+  this.retries(1)
   beforeEach(done => setTimeout(done, DELAY))
 
   describe('Should post() work with httpbin.org', () => {

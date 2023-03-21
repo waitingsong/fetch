@@ -28,29 +28,4 @@ describe(fileShortPath(import.meta.url), () => {
     })
   })
 
-
-  describe('Should fetch() throw error with invalid parameter init', () => {
-    const url = HOST_GET
-    const initOpts: Options = {
-      url,
-      method: 'GET',
-      dataType: 'text',
-    }
-    // initOpts.fetchModule = void 0
-
-    it('with invalid fetchModule', async () => {
-      const opts = { ...initOpts }
-      // @ts-ignore
-      opts.fetchModule = 'should Function'
-
-      try {
-        await fetch(opts)
-      }
-      catch (ex) {
-        return
-      }
-      assert(false, 'Should throw error but NOT')
-    })
-  })
-
 })

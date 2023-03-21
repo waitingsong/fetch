@@ -45,7 +45,7 @@ Update project base service like `src/core/base.service.ts`
 import { Inject } from '@midwayjs/decorator'
 import {
   FetchComponent,
-  FetchResponse,
+  ResponseData,
   Options as FetchOptions,
 } from 'midway-component-fetch'
 

@@ -3,35 +3,35 @@ import assert from 'node:assert/strict'
 import { fileShortPath } from '@waiting/shared-core'
 
 import { Args, get, Options } from '../src/index.js'
-import { patchedFetch, Node_Headers } from '../src/lib/patch.js'
 
 import { DELAY, HOST, HOST_COOKIES } from './config.js'
 import { HttpbinRetCookie } from './test.types.js'
 
 
 describe(fileShortPath(import.meta.url), function() {
-  this.retries(3)
+  this.retries(1)
   beforeEach(resolve => setTimeout(resolve, DELAY))
 
-  assert(patchedFetch)
   const initOpts: Options = {
     url: '',
     method: 'GET',
     credentials: 'include',
-    fetchModule: patchedFetch,
-    headersInitClass: Node_Headers,
     keepRedirectCookies: true, // intercept redirect
   }
 
+  // https://httpbin.org/#/Cookies
   describe('Should work with keepRedirectCookies:true', () => {
     it('set by get()', async () => {
       const value = Math.random().toString()
+      // /cookies/set/{name}/{value}
       const url = HOST_COOKIES + '/set/foo/' + value
       const opts = { ...initOpts }
 
+      // https://httpbin.org/cookies/set/foo/0.8615462497448882
       const res = await get<HttpbinRetCookie>(url, opts)
       assert(res && res.cookies)
-      assert(res.cookies['foo'] === value)
+      assert(res.cookies['foo'], 'res.cookies[foo] is undefined')
+      assert(res.cookies['foo'] === value, `res.cookies['foo']=${res.cookies['foo']}`)
     })
   })
 

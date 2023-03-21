@@ -1,9 +1,8 @@
 import assert from 'node:assert/strict'
 
 import { fileShortPath } from '@waiting/shared-core'
-import { Response } from 'node-fetch'
 
-import { FetchMsg } from '../src/index.js'
+import { FetchMsg, Response } from '../src/index.js'
 import { handleResponseError } from '../src/lib/response.js'
 
 

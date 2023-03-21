@@ -1,8 +1,13 @@
-import { assertNever } from './shared.js'
+import assert from 'assert'
+
+import type { JsonObject } from '@waiting/shared-types'
+import { Response } from 'undici'
+
 import {
   FetchMsg,
-  FetchResponse,
-  RespDataType,
+  FnKeys,
+  ResponseRawKeys,
+  ResponseProcessNameKeys,
 } from './types.js'
 
 
@@ -27,48 +32,28 @@ export async function handleResponseError(
   return ret
 }
 
+type ProcessResponseTypeReturnType<K extends (ResponseProcessNameKeys | ResponseRawKeys)> =
+  K extends ResponseRawKeys
+    ? Response
+    : K extends ResponseProcessNameKeys
+      ? (Response[K] extends (...args: unknown[])
+      => Promise<infer R> ? unknown extends R ? JsonObject : R : never)
+      : never
 
-export async function processResponseType(
+export async function processResponseType<K extends (
+  ResponseProcessNameKeys | ResponseRawKeys)>(
   response: Response,
-  dataType: RespDataType,
-): Promise<FetchResponse> {
+  dataType: K,
+): Promise<ProcessResponseTypeReturnType<K>> {
 
-  let ret: FetchResponse
-
-  switch (dataType) {
-    case 'arrayBuffer':
-      ret = await response.arrayBuffer()
-      break
-
-    case 'bare':
-      ret = response
-      break
-
-    case 'blob':
-      ret = await response.blob()
-      break
-
-    case 'formData':
-      ret = await response.formData()
-      break
-
-    case 'json':
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      ret = await response.json()
-      break
-
-    case 'raw':
-      ret = response
-      break
-
-    case 'text':
-      ret = await response.text()
-      break
-
-    default:
-      return assertNever(dataType)
+  if (['raw', 'bare'].includes(dataType)) {
+    return response as ProcessResponseTypeReturnType<K>
   }
 
+  assert(dataType in FnKeys, `dataType: ${dataType} is not in ${Object.keys(FnKeys).join(', ')}`)
+  assert(typeof response[dataType as keyof Response] === 'function', `response.${dataType} is not a function`)
+  // @ts-expect-error
+  const ret = await response[dataType as keyof Response]() as Promise<ProcessResponseTypeReturnType<K>>
   return ret
 }
 

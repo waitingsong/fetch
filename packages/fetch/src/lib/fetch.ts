@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { OverwriteAnyToUnknown } from '@waiting/shared-types'
+import { Response } from 'undici'
 
 import { _fetch } from './request.js'
 import { handleResponseError, processResponseType } from './response.js'
 import { trace } from './trace.js'
-import { AttributeKey, FetchResponse, Options } from './types.js'
+import { AttributeKey, ResponseData, Options } from './types.js'
 import { processParams } from './util.js'
 
 
@@ -13,7 +14,7 @@ import { processParams } from './util.js'
  *
  * @description generics any will be overwriten to unknown
  */
-export async function fetch<T extends FetchResponse = any>(
+export async function fetch<T extends ResponseData = any>(
   options: Options,
 ): Promise<OverwriteAnyToUnknown<T>> {
 
@@ -38,7 +39,7 @@ export async function fetch<T extends FetchResponse = any>(
     trace(AttributeKey.RequestTimeout, options.span)
     throw new Error(`fetch timeout in "${timeout as number}ms"`)
   }
-  const dataType = args.dataType as NonNullable<Options['dataType']>
+  const dataType = (args.dataType ?? 'bare') as NonNullable<Options['dataType']>
 
   trace(AttributeKey.ProcessResponseStart, options.span)
   let resp = await handleResponseError(data, dataType === 'bare')
@@ -49,6 +50,7 @@ export async function fetch<T extends FetchResponse = any>(
   trace(AttributeKey.ProcessResponseFinish, options.span)
 
   return ret as OverwriteAnyToUnknown<T>
+
 }
 
 
@@ -57,7 +59,7 @@ export async function fetch<T extends FetchResponse = any>(
  *
  * @description generics any will be overwriten to unknown
  */
-export function get<T extends FetchResponse = any>(
+export function get<T extends ResponseData = any>(
   url: string,
   options?: Omit<Options, 'url' | 'method'>,
 ): Promise<OverwriteAnyToUnknown<T>> {
@@ -76,7 +78,7 @@ export function get<T extends FetchResponse = any>(
  *
  * @description generics any will be overwriten to unknown
  */
-export function post<T extends FetchResponse = any>(
+export function post<T extends ResponseData = any>(
   url: Options['url'],
   options?: Omit<Options, 'url' | 'method'>,
 ): Promise<OverwriteAnyToUnknown<T>> {
@@ -95,7 +97,7 @@ export function post<T extends FetchResponse = any>(
  *
  * @description generics any will be overwriten to unknown
  */
-export function put<T extends FetchResponse = any>(
+export function put<T extends ResponseData = any>(
   url: Options['url'],
   options?: Omit<Options, 'url' | 'method'>,
 ): Promise<OverwriteAnyToUnknown<T>> {
@@ -114,7 +116,7 @@ export function put<T extends FetchResponse = any>(
  *
  * @description generics any will be overwriten to unknown
  */
-export function remove<T extends FetchResponse = any>(
+export function remove<T extends ResponseData = any>(
   url: Options['url'],
   options?: Omit<Options, 'url' | 'method'>,
 ): Promise<OverwriteAnyToUnknown<T>> {

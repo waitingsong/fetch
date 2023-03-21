@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict'
 
 import { fileShortPath } from '@waiting/shared-core'
-import FormData from 'form-data'
+import NodeFormData from 'form-data'
+import { FormData } from 'undici'
 
 import { put, Options, ContentTypeList } from '../src/index.js'
 
@@ -10,7 +11,7 @@ import { HttpbinPostResponse, PostForm1 } from './test.types.js'
 
 
 describe(fileShortPath(import.meta.url), function() {
-  this.retries(3)
+  this.retries(1)
   beforeEach(resolve => setTimeout(resolve, DELAY))
 
   describe('Should put() work with httpbin.org', () => {
@@ -78,13 +79,35 @@ describe(fileShortPath(import.meta.url), function() {
       assert(res && res.url === url)
       try {
         const { form } = res
-        assert(form && form.p1 === p1.toString(), `Should got "${p1}"`)
-        assert(form && form.p2 === p2, `Should got "${p2}"`)
+        assert(form && form.p1 === p1.toString(), `Should get "${p1}", but got "${form.p1}`)
+        assert(form && form.p2 === p2, `Should got "${p2}", but got "${form.p2}`)
       }
       catch (ex) {
         assert(false, (ex as Error).message)
       }
     })
+
+    it('error FormData from pkg "form-data"', async () => {
+      const pdata = new NodeFormData()
+      const p1 = Math.random()
+      const p2 = Math.random().toString()
+      pdata.append('p1', p1)
+      pdata.append('p2', p2)
+
+      const opts: Options = {
+        ...initOpts, data: pdata, processData: false, contentType: false,
+      }
+
+      try {
+        await put<HttpbinPostResponse<PostForm1>>(url, opts)
+      }
+      catch (ex) {
+        assert(ex instanceof TypeError, 'Should got TypeError')
+        return
+      }
+      assert(false, 'Should throw TypeError')
+    })
+
   })
 
 })

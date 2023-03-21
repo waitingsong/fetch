@@ -10,7 +10,7 @@ import {
   TraceService,
   setSpan,
 } from '@mwcp/otel'
-import type { FetchResponse } from '@waiting/fetch'
+import { ResponseData, Headers, pickUrlStrFromRequestInfo } from '@waiting/fetch'
 import type { OverwriteAnyToUnknown } from '@waiting/shared-types'
 
 import type { Context } from '../interface'
@@ -34,7 +34,7 @@ export class FetchService {
 
   readonly responseHeadersMap: ResponseHeadersMap = new Map<symbol, Headers>()
 
-  async fetch<T extends FetchResponse = any>(
+  async fetch<T extends ResponseData = any>(
     options: FetchOptions,
   ): Promise<OverwriteAnyToUnknown<T>> {
 
@@ -57,7 +57,7 @@ export class FetchService {
   }
 
 
-  get<T extends FetchResponse = any>(
+  get<T extends ResponseData = any>(
     input: string,
     options?: Omit<FetchOptions, 'url' | 'method'>,
   ): Promise<OverwriteAnyToUnknown<T>> {
@@ -71,7 +71,7 @@ export class FetchService {
   }
 
 
-  post<T extends FetchResponse = any>(
+  post<T extends ResponseData = any>(
     input: string,
     options?: Omit<FetchOptions, 'url' | 'method'>,
   ): Promise<OverwriteAnyToUnknown<T>> {
@@ -92,7 +92,9 @@ export class FetchService {
 
     const opts = { ...options } as FetchOptions
     if (! opts.span) {
-      const url = new URL(opts.url)
+
+      const txt = pickUrlStrFromRequestInfo(opts.url)
+      const url = new URL(txt)
       const host = url.host.endsWith('/') ? url.host.slice(0, -1) : url.host
       const name = `HTTP ${opts.method.toLocaleUpperCase()} ${host}${url.pathname}`
 

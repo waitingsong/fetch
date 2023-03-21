@@ -1,5 +1,5 @@
 import type { Context as TraceContext, Span, TraceService } from '@mwcp/otel'
-import type { Options } from '@waiting/fetch'
+import type { Headers, Options } from '@waiting/fetch'
 import { MiddlewareConfig as MWConfig } from '@waiting/shared-types'
 
 import { Context } from '../interface'

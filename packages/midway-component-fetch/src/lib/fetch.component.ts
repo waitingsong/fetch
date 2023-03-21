@@ -9,9 +9,11 @@ import {
 } from '@midwayjs/core'
 import { Context as TraceContext, Span, TraceService } from '@mwcp/otel'
 import {
-  FetchResponse,
+  Headers,
+  Response,
   fetch,
-  Node_Headers,
+  pickUrlStrFromRequestInfo,
+  ResponseData,
 } from '@waiting/fetch'
 import { OverwriteAnyToUnknown } from '@waiting/shared-types'
 
@@ -29,7 +31,7 @@ export class FetchComponent {
   @_Config(ConfigKey.config) protected readonly fetchConfig: Config
   // headers: Record<string, string> = {}
 
-  async fetch<T extends FetchResponse = any>(
+  async fetch<T extends ResponseData = any>(
     options: FetchOptions,
     ctx: Context,
     responseHeadersMap: ResponseHeadersMap,
@@ -38,7 +40,9 @@ export class FetchComponent {
   ): Promise<OverwriteAnyToUnknown<T>> {
 
     const opts: FetchOptions = { ...options }
-    const id = Symbol(opts.url)
+
+    const url = pickUrlStrFromRequestInfo(opts.url)
+    const id = Symbol(url)
     opts.headers = await this.genReqHeadersFromOptionsAndConfigCallback(ctx, opts.headers, opts.span, traceContext)
     opts.beforeProcessResponseCallback = (input: Response) => this.cacheRespHeaders(id, input, responseHeadersMap)
 
@@ -163,7 +167,7 @@ export class FetchComponent {
     traceContext?: TraceContext,
   ): Promise<Headers> {
 
-    const headers = new Node_Headers(initHeaders)
+    const headers = new Headers(initHeaders)
     if (typeof this.fetchConfig.genRequestHeaders !== 'function') {
       return headers
     }

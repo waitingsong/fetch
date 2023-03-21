@@ -7,7 +7,6 @@ import {
   post,
   Options,
 } from '../src/index.js'
-import { patchedFetch, Node_Headers } from '../src/lib/patch.js'
 
 import {
   DELAY,
@@ -20,16 +19,13 @@ import { HttpbinGetResponse } from './test.types.js'
 
 // skip while https://github.com/postmanlabs/httpbin/issues/617
 describe.skip(fileShortPath(import.meta.url), function() {
-  this.retries(3)
+  this.retries(1)
   beforeEach(resolve => setTimeout(resolve, DELAY))
 
-  assert(patchedFetch)
   const initOpts: Options = {
     url: '',
     method: 'POST',
     credentials: 'include',
-    fetchModule: patchedFetch,
-    headersInitClass: Node_Headers,
     keepRedirectCookies: true, // intercept redirect
   }
 

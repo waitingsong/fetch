@@ -1,5 +1,13 @@
+import { ReadStream } from 'fs'
+
 import NodeFormData from 'form-data'
 import QueryString from 'qs'
+import {
+  FormData,
+  Headers,
+  RequestInfo as UndiciRequestInfo,
+  RequestInit,
+} from 'undici'
 
 import { initialOptions } from './config.js'
 import {
@@ -62,51 +70,38 @@ export function splitInitArgs(options: Options): ArgsRequestInitCombined {
   }
   delete opts.contentType
 
-  /* istanbul ignore else */
   if (typeof opts.data !== 'undefined') {
     args.data = opts.data
   }
   delete opts.data
 
-  /* istanbul ignore else */
   if (opts.dataType) {
     args.dataType = opts.dataType
   }
   delete opts.dataType
 
-  /* istanbul ignore else */
-  if (opts.fetchModule) {
-    args.fetchModule = opts.fetchModule
-  }
-  delete opts.fetchModule
-
-  /* istanbul ignore else */
-  if (opts.headersInitClass) {
-    args.headersInitClass = opts.headersInitClass
-  }
-  delete opts.headersInitClass
-
-  /* istanbul ignore else */
+  /* c8 ignore next */
   if (typeof opts.keepRedirectCookies !== 'undefined') {
     args.keepRedirectCookies = !! opts.keepRedirectCookies
   }
   delete opts.keepRedirectCookies
 
-  /* istanbul ignore else */
+  /* c8 ignore next */
   if (typeof opts.processData !== 'undefined') {
     args.processData = opts.processData
   }
   delete opts.processData
 
-  /* istanbul ignore else */
+  /* c8 ignore next */
   if (typeof opts.timeout !== 'undefined') {
     args.timeout = opts.timeout
   }
   delete opts.timeout
 
+  const requestInit = { ...opts } as RequestInit
   return {
     args,
-    requestInit: { ...opts } as RequestInit,
+    requestInit,
   }
 }
 
@@ -143,26 +138,12 @@ export function processInitOpts(options: ArgsRequestInitCombined): ArgsRequestIn
 function processHeaders(options: ArgsRequestInitCombined): ArgsRequestInitCombined {
   const { args, requestInit } = options
 
-  /* istanbul ignore else */
-  if (args.headersInitClass) { // node.js need pass headers class
-    const headers = requestInit.headers
-      ? new args.headersInitClass(requestInit.headers)
-      : new args.headersInitClass()
-    requestInit.headers = headers
-  }
-  else if (typeof Headers === 'function') { // browser native
-    requestInit.headers = requestInit.headers
-      ? new Headers(requestInit.headers)
-      : new Headers()
-  }
-  else {
-    throw new TypeError(`parseHeaders(): Headers Class undefined.
-If running under Node.js, it must pass HeaderClass such come from package "node-fetch".`)
-  }
+  requestInit.headers = requestInit.headers
+    ? new Headers(requestInit.headers)
+    : new Headers()
 
   const { headers } = requestInit
 
-  /* istanbul ignore else */
   if (! headers.has('Accept')) {
     headers.set('Accept', 'application/json, text/html, text/javascript, text/plain, */*')
   }
@@ -301,28 +282,6 @@ function processRedirect(
   return curValue ? curValue : 'follow'
 }
 
-/** Select fetch instance from args.fetchModule or native */
-export function selectFecthModule(mod: Args['fetchModule'] | null): NonNullable<Args['fetchModule']> {
-  let fetchModule: Args['fetchModule'] | null = null
-
-  if (mod) {
-    /* istanbul ignore else */
-    if (typeof mod !== 'function') {
-      throw new TypeError('fetchModule is not Function')
-    }
-    fetchModule = mod
-  }
-  /* istanbul ignore else */
-  else if (typeof fetch === 'function') { // native fetch
-    fetchModule = fetch
-  }
-  else {
-    throw new TypeError('fetchModule/fetch not Function')
-  }
-
-  return fetchModule
-}
-
 
 /**
  * Return input url string
@@ -346,24 +305,27 @@ export function processRequestGetLikeData(input: string, args: Args): string {
 }
 
 
-export function processRequestPostLikeData(args: Args): NonNullable<RequestInit['body']> | undefined {
-  let body: NonNullable<RequestInit['body']> | undefined
+export function processRequestPostLikeData(args: Args): RequestInit['body'] | null {
+  let body: RequestInit['body'] | null
   const { data } = args
 
   if (typeof data === 'string') {
     body = data
   }
-  else if (typeof data === 'undefined' || data === null) {
-    // void
+  else if (typeof data === 'undefined') {
+    body = null
   }
-  else if (typeof FormData !== 'undefined' && data instanceof FormData) {
+  else if (data === null) {
+    body = null
+  }
+  else if (data instanceof FormData) {
     body = data
   }
-  else if (typeof NodeFormData !== 'undefined' && data instanceof NodeFormData) {
-    // @ts-expect-error
-    body = data
+  else if (data instanceof NodeFormData) {
+    throw new TypeError('NodeFormData from pkg "form-data" not supported, use FormData from "undici" instead')
   }
   else if (typeof Blob !== 'undefined' && data instanceof Blob) {
+    // @ts-expect-error
     body = data
   }
   else if (typeof ArrayBuffer !== 'undefined' && data instanceof ArrayBuffer) {
@@ -373,19 +335,23 @@ export function processRequestPostLikeData(args: Args): NonNullable<RequestInit[
     body = data
   }
   else if (typeof ReadableStream !== 'undefined' && data instanceof ReadableStream) {
+    // @ts-expect-error
     body = data
   }
-  else { // json object or Array, or other
-    // eslint-disable-next-line no-lonely-if
-    if (args.processData && args.contentType && args.contentType.includes('json')) {
+  else if (typeof ReadStream !== 'undefined' && data instanceof ReadStream) {
+    body = data
+  }
+  else if (args.processData) {
+    const ctype = args.contentType as string | false
+    if (typeof ctype === 'string' && ctype.includes('json')) {
       body = JSON.stringify(data)
     }
-    else if (args.processData) {
+    else {
       body = QueryString.stringify(data)
     }
-    else {
-      body = data as NonNullable<RequestInit['body']>
-    }
+  }
+  else {
+    body = data as NonNullable<RequestInit['body']>
   }
 
   return body
@@ -427,3 +393,21 @@ export function parseRespCookie(cookie: string | null): Args['cookies'] {
   }
 }
 
+
+export function pickUrlStrFromRequestInfo(input: RequestInfo | UndiciRequestInfo): string {
+  let url = ''
+  if (typeof input === 'string') {
+    url = input
+  }
+  else if (input instanceof URL) {
+    url = input.toString()
+  }
+  else if (input instanceof Request) {
+    url = input.url
+  }
+  else {
+    url = ''
+  }
+
+  return url
+}

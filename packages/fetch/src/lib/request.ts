@@ -1,4 +1,12 @@
+import assert from 'assert'
+
 import type { Span } from '@opentelemetry/api'
+import {
+  Response,
+  RequestInit,
+  RequestInfo,
+  fetch,
+} from 'undici'
 
 import { trace } from './trace.js'
 import { Args, AttributeKey } from './types.js'
@@ -7,7 +15,6 @@ import {
   processRequestGetLikeData,
   processRequestPostLikeData,
   parseRespCookie,
-  selectFecthModule,
 } from './util.js'
 
 
@@ -17,7 +24,7 @@ import {
  * parameter init ignored during parameter input is typeof Request
  */
 export async function _fetch(
-  input: Request | string,
+  input: RequestInfo,
   args: Args,
   requestInit: RequestInit,
   span?: Span | undefined,
@@ -31,31 +38,43 @@ export async function _fetch(
 
 
 export async function createRequest(
-  input: Request | string,
+  input: RequestInfo,
   args: Args,
   requestInit: RequestInit,
   span?: Span | undefined,
 ): Promise<Response> {
 
   let inputNew = input
-  const fetchModule = selectFecthModule(args.fetchModule)
+  const fetchModule = fetch
   let resp: Response
 
   if (typeof input === 'string') {
     trace(AttributeKey.ProcessRequestData)
+    assert(input, 'input should not be empty when typeof input is string')
 
     if (['GET', 'DELETE'].includes(requestInit.method as string)) {
       inputNew = processRequestGetLikeData(input, args)
     }
     else if (['POST', 'PUT', 'OPTIONS'].includes(requestInit.method as string)) {
-      const body: NonNullable<RequestInit['body']> | undefined = processRequestPostLikeData(args)
-      if (typeof body !== 'undefined') {
-        requestInit.body = body
-      }
+      const body = processRequestPostLikeData(args) ?? null
+      requestInit.body = body
     }
     else {
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       throw new TypeError(`Invalid method value: "${requestInit.method}"`)
+    }
+
+    // fix undici not support referrer value 'client' and 'no-referrer'
+    const { referrer } = requestInit
+    if (! referrer || referrer === 'client' || referrer === 'no-referrer') {
+      // @ts-expect-error
+      requestInit.referrer = void 0
+    }
+
+    // @ts-expect-error
+    if (requestInit.url) {
+      // @ts-expect-error
+      delete requestInit.url
     }
 
     trace(AttributeKey.RequestStart, span)
@@ -84,15 +103,21 @@ export async function handleRedirect(
 ): Promise<Response> {
 
   // test by test/30_cookie.test.ts
-  /* istanbul ignore next */
   if (args.keepRedirectCookies === true && resp.status >= 301 && resp.status <= 308) {
-    const url = resp.headers.get('location')
-    const cookie = resp.headers.get('Set-Cookie')
+    // do NOT use resp.url, it's the final url
+    const location = resp.headers.get('location')
 
-    /* istanbul ignore if */
+    if (! location) {
+      return resp
+    }
+
+    const url = location.toLocaleLowerCase().startsWith('http')
+      ? location
+      : new URL(location, resp.url).toString()
+
     if (url) {
+      const cookie = resp.headers.get('Set-Cookie')
       const cookieObj = parseRespCookie(cookie)
-      /* istanbul ignore else */
       if (cookieObj) {
         args.cookies = args.cookies
           ? { ...args.cookies, ...cookieObj }

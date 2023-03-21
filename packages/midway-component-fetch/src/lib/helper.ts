@@ -7,7 +7,10 @@ import {
   SpanStatusCode,
 } from '@mwcp/otel'
 import { propagation } from '@opentelemetry/api'
-import { Node_Headers } from '@waiting/fetch'
+import {
+  Headers,
+  pickUrlStrFromRequestInfo,
+} from '@waiting/fetch'
 import {
   genISO8601String,
   retrieveHeadersItem,
@@ -20,7 +23,7 @@ import { Config, ReqCallbackOptions } from './types'
  * Generate request header contains span and reqId if possible
  */
 export const genRequestHeaders: Config['genRequestHeaders'] = async (ctx, headersInit, traceSvc, span, traceContext) => {
-  const headers = new Node_Headers(headersInit)
+  const headers = new Headers(headersInit)
 
   if (! ctx?.requestContext) {
     return headers
@@ -64,11 +67,12 @@ const beforeRequest: Config['beforeRequest'] = async (options) => {
   if (! traceService || ! span) { return }
 
   const time = genISO8601String()
+  const url = pickUrlStrFromRequestInfo(opts.url)
 
   if (config.traceEvent) {
     const currInput: Attributes = {
       event: AttrNames.FetchStart,
-      url: opts.url,
+      url,
       method: opts.method,
       time,
     }
@@ -120,12 +124,13 @@ const afterResponse: Config['afterResponse'] = async (options) => {
   if (Object.keys(tags).length) {
     traceService.setAttributes(span, tags)
   }
+  const url = pickUrlStrFromRequestInfo(opts.url)
 
   if (config.traceEvent) {
     const time = genISO8601String()
     const attrs: Attributes = {
       event: AttrNames.FetchFinish,
-      url: opts.url,
+      url,
       method: opts.method,
       time,
     }
@@ -157,10 +162,11 @@ export const processEx: Config['processEx'] = async (options) => {
   } = options.config
   const time = genISO8601String()
   // const mem = humanMemoryUsage()
+  const url = pickUrlStrFromRequestInfo(opts.url)
 
   const parentInput: Attributes = {
     event: AttrNames.FetchException,
-    url: opts.url,
+    url,
     method: opts.method,
     time,
     // [TracerLog.svcMemoryUsage]: mem,
@@ -175,6 +181,7 @@ export const processEx: Config['processEx'] = async (options) => {
 
   if (Array.isArray(captureResponseHeaders)) {
     captureResponseHeaders.forEach((name) => {
+      // @ts-expect-error for undici types
       const val = retrieveHeadersItem(opts.headers, name)
       if (val) {
         attrs[`http.${name}`] = val
@@ -232,9 +239,10 @@ export function genOutgoingRequestAttributes(
     captureRequestHeaders,
   } = options.config
 
+  const url = pickUrlStrFromRequestInfo(opts.url)
   const tags: Attributes = {
     [SemanticAttributes.HTTP_METHOD]: opts.method,
-    [SemanticAttributes.HTTP_URL]: opts.url,
+    [SemanticAttributes.HTTP_URL]: url,
   }
 
   if (enableTraceLoggingReqBody && typeof opts.data !== 'undefined') {
@@ -243,6 +251,7 @@ export function genOutgoingRequestAttributes(
 
   if (Array.isArray(captureRequestHeaders)) {
     captureRequestHeaders.forEach((name) => {
+      // @ts-expect-error for undici types
       const val = retrieveHeadersItem(opts.headers, name)
       if (val) {
         tags[`http.${name}`] = val

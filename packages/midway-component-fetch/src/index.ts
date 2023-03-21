@@ -8,8 +8,12 @@ export { AutoConfiguration as Configuration } from './configuration'
 export * from './lib/index'
 
 export {
-  Node_Headers,
-  FetchResponse,
+  FormData,
+  Headers,
+  Response,
+  ResponseData,
+  RequestInfo,
+  RequestInit,
 } from '@waiting/fetch'
 
 export { retrieveHeadersItem } from '@waiting/shared-core'

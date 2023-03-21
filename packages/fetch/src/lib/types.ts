@@ -1,30 +1,34 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import type { Span } from '@opentelemetry/api'
-import type { JsonType } from '@waiting/shared-types'
+import type { JsonObject } from '@waiting/shared-types'
+import {
+  FormData,
+  Response as UndiciResponse,
+  RequestInfo,
+  RequestInit,
+} from 'undici'
 
 
 export interface Options extends RequestInit, Args {
-  url: string
+  url: RequestInfo
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'OPTIONS'
-  referrer?: 'client' | 'no-referrer'
-  beforeProcessResponseCallback?: (res: Response) => Promise<Response>
+  beforeProcessResponseCallback?: (res: UndiciResponse) => Promise<UndiciResponse>
 }
-/** Typeof original Response data */
-export type FetchResponse = ArrayBuffer | Blob | FormData | Response | string | JsonType | void | never | object
+/** Typeof resolved Response data */
+export type ResponseData = ArrayBuffer | Blob | FormData |
+string | JsonObject | void | never | object
 
 
-export interface RespDataTypeList {
-  arrayBuffer: ArrayBuffer
-  /** Same as RespDataTypeList['raw'] but regardless of response status */
-  bare: Response
-  blob: Blob
-  /** Not supported with fetch polyfill yet */
-  formData: FormData
-  json: JsonType
-  text: string
-  raw: Response
+export enum FnKeys {
+  'arrayBuffer' = 'arrayBuffer',
+  'blob' = 'blob',
+  'formData' = 'formData',
+  'json' = 'json',
+  'text' = 'text',
 }
-export type RespDataType = keyof RespDataTypeList
+export type ResponseProcessNameKeys = keyof UndiciResponse & keyof typeof FnKeys
+export type ResponseRawKeys = 'raw' | 'bare'
+
 
 
 /** @link https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type */
@@ -56,7 +60,7 @@ export interface Args {
    * Send to server, resolve to query string during GET | DELETE and key/value pairs during POST.
    * If not undefined then will override the value of `body`
    **/
-  data?: string | JsonType | Blob | FormData | object | URLSearchParams | null
+  data?: string | JsonObject | Blob | FormData | object | URLSearchParams | null
 
   /**
    * Expect data type returned from server. jQuery behavior.
@@ -64,11 +68,7 @@ export interface Args {
    *
    * @default 'json'
    */
-  dataType?: RespDataType
-
-  /** Pass a fetch() module for isomorphic usage such as node-fetch or isomorphic-fetch */
-  fetchModule?: (input: string | Request, init?: RequestInit) => Promise<Response>
-  headersInitClass?: typeof Headers
+  dataType?: ResponseProcessNameKeys | ResponseRawKeys
 
   /**
    * Under Node.js,
