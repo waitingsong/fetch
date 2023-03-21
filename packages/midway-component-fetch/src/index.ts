@@ -15,6 +15,7 @@ export {
   ResponseData,
   RequestInfo,
   RequestInit,
+  pickUrlStrFromRequestInfo,
 } from '@waiting/fetch'
 
 export { retrieveHeadersItem } from '@waiting/shared-core'
