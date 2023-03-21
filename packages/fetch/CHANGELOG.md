@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [22.0.0](https://github.com/waitingsong/fetch/compare/v21.2.0...v22.0.0) (2023-03-21)
+
+
+### Features
+
+* use pkg undici instead of node-fetch ([841dda4](https://github.com/waitingsong/fetch/commit/841dda423718cb15fd5b897b34ce671bc6c648b0))
+
+
+
+
+
 # [21.2.0](https://github.com/waitingsong/fetch/compare/v21.1.3...v21.2.0) (2023-02-06)
 
 **Note:** Version bump only for package @waiting/fetch
