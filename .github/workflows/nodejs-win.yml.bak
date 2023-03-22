@@ -52,6 +52,8 @@ jobs:
           ./.githooks/init-repo.sh
           git config --local core.autocrlf false
           git config --local core.eol lf
+          export cwd=`pwd`
+          git config --global --add safe.directory $cwd
 
       - name: Inatall Dependencies
         timeout-minutes: 15
