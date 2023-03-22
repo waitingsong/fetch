@@ -16,34 +16,13 @@ import { HttpbinPostResponse, PostForm1 } from './test.types.js'
 const __filename = fileURLToPath(import.meta.url)
 
 const path = join(__filename, '../images/loading-1.gif')
-const file = await readFile(path)
+const buf = await readFile(path)
 const blob = typeof Blob === 'undefined'
-  ? new NodeBlob([file], { type: 'image/gif' })
-  : new Blob([file], { type: 'image/gif' })
-
-let flag = false
-let buf: Buffer = Buffer.alloc(0)
+  ? new NodeBlob([buf], { type: 'image/gif' })
+  : new Blob([buf], { type: 'image/gif' })
 
 describe(fileShortPath(import.meta.url), function() {
   this.retries(1)
-
-  this.beforeAll((done) => {
-    if (! flag) {
-      const readerStream2 = createReadStream(path)
-
-      readerStream2.on('data', (data: Buffer) => {
-        buf = Buffer.concat([buf, data])
-      })
-      readerStream2.on('error', () => {
-        assert(false, 'read file failed')
-      })
-
-      flag = true
-      readerStream2.on('end', () => {
-        done()
-      })
-    }
-  })
 
   beforeEach((done) => {
     setTimeout(done, DELAY)
