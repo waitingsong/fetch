@@ -89,7 +89,6 @@ jobs:
           export cwd=`pwd`
           .github/workflows/fix.sh
           npm i --no-audit -g autocannon c8 lerna rollup zx
-          npm i nx@15.9.1
           # npm run purge
           npm run bootstrap
         env:
