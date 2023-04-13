@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [22.1.0](https://github.com/waitingsong/fetch/compare/v22.0.5...v22.1.0) (2023-04-13)
+
+
+### Features
+
+* bump deps version ([09dbb16](https://github.com/waitingsong/fetch/commit/09dbb16fff9400547c9b6aa43e2e1e9ef237b5fc))
+
+
+
+
+
 ## [22.0.5](https://github.com/waitingsong/fetch/compare/v22.0.4...v22.0.5) (2023-03-23)
 
 **Note:** Version bump only for package @waiting/fetch
