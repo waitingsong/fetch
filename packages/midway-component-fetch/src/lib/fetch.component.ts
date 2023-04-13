@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import {
+  Autoload,
   Config as _Config,
   Provide,
   Scope,
@@ -24,6 +25,7 @@ import { defaultfetchConfigCallbacks } from './helper'
 import { Config, FetchOptions, ResponseHeadersMap } from './types'
 
 
+@Autoload()
 @Provide()
 @Scope(ScopeEnum.Singleton)
 export class FetchComponent {
