@@ -5,8 +5,9 @@ import {
   Autoload,
   Config as _Config,
   Singleton,
+  Inject,
 } from '@midwayjs/core'
-import { Context as TraceContext, Span, TraceService } from '@mwcp/otel'
+import { OtelComponent } from '@mwcp/otel'
 import {
   Headers,
   Response,
@@ -15,8 +16,6 @@ import {
   ResponseData,
 } from '@waiting/fetch'
 import { OverwriteAnyToUnknown } from '@waiting/shared-types'
-
-import type { Context } from '../interface'
 
 import { ConfigKey } from './config'
 import { defaultfetchConfigCallbacks } from './helper'
@@ -28,21 +27,22 @@ import { Config, FetchOptions, ResponseHeadersMap } from './types'
 export class FetchComponent {
 
   @_Config(ConfigKey.config) protected readonly fetchConfig: Config
-  // headers: Record<string, string> = {}
+
+  @Inject() readonly otel: OtelComponent
 
   async fetch<T extends ResponseData = any>(
     options: FetchOptions,
-    ctx: Context,
     responseHeadersMap: ResponseHeadersMap,
-    traceService: TraceService | undefined,
-    traceContext: TraceContext | undefined,
   ): Promise<OverwriteAnyToUnknown<T>> {
 
     const opts: FetchOptions = { ...options }
 
     const url = pickUrlStrFromRequestInfo(opts.url)
     const id = Symbol(url)
-    opts.headers = await this.genReqHeadersFromOptionsAndConfigCallback(ctx, opts.headers, opts.span, traceContext)
+    opts.headers = this.genReqHeadersFromOptionsAndConfigCallback(
+      opts,
+      opts.headers,
+    )
     opts.beforeProcessResponseCallback = (input: Response) => this.cacheRespHeaders(id, input, responseHeadersMap)
 
     const config = this.fetchConfig
@@ -52,16 +52,12 @@ export class FetchComponent {
         id,
         config,
         opts,
-        ctx,
-        traceService,
       })
 
       if (opts.span) {
-        opts.headers = await this.genReqHeadersFromOptionsAndConfigCallback(
-          ctx,
+        opts.headers = this.genReqHeadersFromOptionsAndConfigCallback(
+          opts,
           opts.headers,
-          opts.span,
-          traceContext,
         )
       }
     }
@@ -71,8 +67,6 @@ export class FetchComponent {
         id,
         config,
         opts,
-        ctx,
-        traceService,
       })
     }
 
@@ -92,9 +86,6 @@ export class FetchComponent {
           opts,
           resultData: ret,
           respHeaders,
-          ctx,
-          traceService,
-          traceContext,
         })
       }
 
@@ -105,9 +96,6 @@ export class FetchComponent {
           opts,
           resultData: ret,
           respHeaders,
-          ctx,
-          traceService,
-          traceContext,
         })
       }
 
@@ -118,9 +106,6 @@ export class FetchComponent {
           opts,
           resultData: ret,
           respHeaders,
-          ctx,
-          traceService,
-          traceContext,
         })
       }
 
@@ -135,8 +120,6 @@ export class FetchComponent {
             config: this.fetchConfig,
             opts,
             exception: ex as Error,
-            ctx,
-            traceService,
           })
         }
       }
@@ -146,8 +129,6 @@ export class FetchComponent {
           config: this.fetchConfig,
           opts,
           exception: ex as Error,
-          ctx,
-          traceService,
         })
       }
       responseHeadersMap.delete(id)
@@ -159,31 +140,21 @@ export class FetchComponent {
    * Duplicate key will be overwritten,
    * by headers.set() instead of headers.append()
    */
-  async genReqHeadersFromOptionsAndConfigCallback(
-    ctx: Context | undefined,
+  genReqHeadersFromOptionsAndConfigCallback(
+    options: FetchOptions,
     initHeaders: FetchOptions['headers'],
-    span?: Span,
-    traceContext?: TraceContext,
-  ): Promise<Headers> {
+  ): Headers {
 
     const headers = new Headers(initHeaders)
     if (typeof this.fetchConfig.genRequestHeaders !== 'function') {
       return headers
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if (ctx) {
-      const traceSvc = await ctx.requestContext.getAsync(TraceService)
-      const ret = await this.fetchConfig.genRequestHeaders(
-        ctx,
-        headers,
-        span,
-        traceSvc,
-        traceContext,
-      )
-      return ret
-    }
-    return headers
+    const ret = this.fetchConfig.genRequestHeaders(
+      options,
+      headers,
+    )
+    return ret
   }
 
   protected async cacheRespHeaders(

@@ -22,8 +22,11 @@ import { Config, ReqCallbackOptions } from './types'
 /**
  * Generate request header contains span and reqId if possible
  */
-export const genRequestHeaders: Config['genRequestHeaders'] = async (ctx, headersInit, traceSvc, span, traceContext) => {
+export const genRequestHeaders: Config['genRequestHeaders'] = (options, headersInit) => {
+
   const headers = new Headers(headersInit)
+
+  const { webContext: ctx, traceService, traceContext, span } = options
 
   if (! ctx?.requestContext) {
     return headers
@@ -33,7 +36,7 @@ export const genRequestHeaders: Config['genRequestHeaders'] = async (ctx, header
     headers.set(HeadersKey.reqId, ctx['reqId'])
   }
 
-  if (! traceSvc || ! span || ! traceContext) {
+  if (! traceService || ! traceContext || ! span) {
     return headers
   }
 
@@ -59,11 +62,10 @@ export const genRequestHeaders: Config['genRequestHeaders'] = async (ctx, header
 }
 
 const beforeRequest: Config['beforeRequest'] = async (options) => {
-  const { opts, ctx, traceService, config } = options
-  const { span } = opts
+  const { opts, config } = options
+  const { webContext: ctx, span, traceService } = opts
 
   if (! ctx?.requestContext) { return }
-
   if (! traceService || ! span) { return }
 
   const time = genISO8601String()
@@ -90,17 +92,13 @@ const afterResponse: Config['afterResponse'] = async (options) => {
     opts,
     // resultData,
     respHeaders,
-    ctx,
-    traceService,
   } = options
 
-  if (! ctx?.requestContext) { return }
 
-  if (! traceService) {
-    return
-  }
-  const { span } = opts
-  if (! span) { return }
+  if (! opts.webContext?.requestContext) { return }
+
+  const { span, traceService } = opts
+  if (! span || ! traceService) { return }
 
   const {
     traceResponseData,
@@ -142,18 +140,14 @@ const afterResponse: Config['afterResponse'] = async (options) => {
 }
 
 export const processEx: Config['processEx'] = async (options) => {
-  const { opts, exception, ctx, traceService } = options
+  const { opts, exception } = options
+  const { webContext: ctx, span, traceService } = opts
 
-  if (! ctx?.requestContext) {
+  if (! ctx || ! span || ! traceService) {
     throw exception
   }
 
-  if (! traceService) {
-    throw exception
-  }
-
-  const { span } = opts
-  if (! span) {
+  if (! ctx.requestContext) {
     throw exception
   }
 
@@ -161,7 +155,6 @@ export const processEx: Config['processEx'] = async (options) => {
     captureResponseHeaders,
   } = options.config
   const time = genISO8601String()
-  // const mem = humanMemoryUsage()
   const url = pickUrlStrFromRequestInfo(opts.url)
 
   const parentInput: Attributes = {
@@ -169,7 +162,6 @@ export const processEx: Config['processEx'] = async (options) => {
     url,
     method: opts.method,
     time,
-    // [TracerLog.svcMemoryUsage]: mem,
   }
   traceService.addEvent(span, parentInput) // parent span log
 
@@ -227,11 +219,10 @@ export function genOutgoingRequestAttributes(
   options: ReqCallbackOptions,
 ): Attributes | undefined {
 
-  const { opts, ctx, traceService } = options
-  const { span } = opts
+  const { opts } = options
+  const { webContext: ctx, span, traceService } = opts
 
   if (! ctx?.requestContext) { return }
-
   if (! traceService || ! span) { return }
 
   const {

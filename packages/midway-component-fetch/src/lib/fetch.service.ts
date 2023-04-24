@@ -39,20 +39,14 @@ export class FetchService {
   ): Promise<OverwriteAnyToUnknown<T>> {
 
     let opts = options
-    let traceContext
 
     if (this.fetchConfig.enableTrace) {
-      const traceCtx = this.traceService.getActiveContext()
-      opts = this.prepareTrace(options, traceCtx)
-      traceContext = setSpan(traceCtx, opts.span as Span)
+      opts = this.prepareTrace(options)
     }
 
     return this.fetchComponent.fetch(
       opts,
-      this.ctx,
       this.responseHeadersMap,
-      this.traceService,
-      traceContext,
     )
   }
 
@@ -87,22 +81,24 @@ export class FetchService {
 
   protected prepareTrace(
     options: FetchOptions,
-    traceContext: TraceContext,
   ): FetchOptions {
 
-    const opts = { ...options } as FetchOptions
-    if (! opts.span) {
+    const opts = options
 
+    if (! opts.span) {
       const txt = pickUrlStrFromRequestInfo(opts.url)
       const url = new URL(txt)
       const host = url.host.endsWith('/') ? url.host.slice(0, -1) : url.host
       const name = `HTTP ${opts.method.toLocaleUpperCase()} ${host}${url.pathname}`
 
-      opts.span = this.traceService.startSpan(
+      const traceContext: TraceContext = this.traceService.getActiveContext()
+      const span: Span = this.traceService.startSpan(
         name,
         void 0,
         traceContext,
       )
+      opts.traceContext = setSpan(traceContext, span)
+      opts.span = span
     }
 
     return opts

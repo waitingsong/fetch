@@ -1,17 +1,15 @@
-import type { Context as TraceContext, Span, TraceService } from '@mwcp/otel'
+import type {
+  AbstractTraceService,
+  Context as TraceContext,
+} from '@mwcp/otel'
 import type { Headers, Options } from '@waiting/fetch'
 import { MiddlewareConfig as MWConfig } from '@waiting/shared-types'
 
 import { Context } from '../interface'
 
 
-export type FetchOptions = Options
-// export type FetchOptions = Options & {
-//   /**
-//    * Current OpenTelemetry Trace Context
-//    */
-//   traceContext?: TraceContext | undefined,
-// }
+// export type FetchOptions = Options
+export type FetchOptions = Options & TraceOptions
 
 export interface Config {
   /**
@@ -20,12 +18,9 @@ export interface Config {
    * @default customGenReqHeadersInit()
    */
   genRequestHeaders: (
-    ctx: Context,
-    headersInit?: Record<string, string> | Headers,
-    span?: Span,
-    traceService?: TraceService,
-    traceContext?: TraceContext | undefined,
-  ) => Promise<Headers>
+    options: FetchOptions,
+    headersInit: Record<string, string> | Headers,
+  ) => Headers
   /**
    * Callback before request
    */
@@ -104,8 +99,6 @@ export interface ReqCallbackOptions {
   id: symbol
   config: Config
   opts: FetchOptions
-  ctx: Context
-  traceService: TraceService | undefined
 }
 
 export interface RespCallbackOptions <T = unknown> {
@@ -114,9 +107,6 @@ export interface RespCallbackOptions <T = unknown> {
   opts: FetchOptions
   resultData: T
   respHeaders: Headers | undefined
-  ctx: Context
-  traceService: TraceService | undefined
-  traceContext: TraceContext | undefined
 }
 
 export interface ProcessExCallbackOptions {
@@ -124,10 +114,15 @@ export interface ProcessExCallbackOptions {
   config: Config
   opts: FetchOptions
   exception: Error
-  ctx: Context
-  traceService: TraceService | undefined
 }
 
 
 export type ResponseHeadersMap = Map<symbol, Headers>
+
+
+export interface TraceOptions {
+  webContext?: Context | undefined
+  traceService?: AbstractTraceService | undefined
+  traceContext?: TraceContext | undefined
+}
 
