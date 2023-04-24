@@ -42,9 +42,9 @@ export class FetchService {
     let traceContext
 
     if (this.fetchConfig.enableTrace) {
-      const ctx = this.traceService.getActiveContext()
-      opts = this.prepareTrace(options, ctx)
-      traceContext = setSpan(ctx, opts.span as Span)
+      const traceCtx = this.traceService.getActiveContext()
+      opts = this.prepareTrace(options, traceCtx)
+      traceContext = setSpan(traceCtx, opts.span as Span)
     }
 
     return this.fetchComponent.fetch(
