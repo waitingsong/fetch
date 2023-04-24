@@ -4,9 +4,7 @@
 import {
   Autoload,
   Config as _Config,
-  Provide,
-  Scope,
-  ScopeEnum,
+  Singleton,
 } from '@midwayjs/core'
 import { Context as TraceContext, Span, TraceService } from '@mwcp/otel'
 import {
@@ -26,8 +24,7 @@ import { Config, FetchOptions, ResponseHeadersMap } from './types'
 
 
 @Autoload()
-@Provide()
-@Scope(ScopeEnum.Singleton)
+@Singleton()
 export class FetchComponent {
 
   @_Config(ConfigKey.config) protected readonly fetchConfig: Config
