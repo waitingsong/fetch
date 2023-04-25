@@ -3,6 +3,7 @@ import type { Span } from '@opentelemetry/api'
 import type { JsonObject } from '@waiting/shared-types'
 import {
   FormData,
+  HeadersInit as UndiciHeadersInit,
   Response as UndiciResponse,
   RequestInfo,
   RequestInit,
@@ -13,6 +14,7 @@ export interface Options extends RequestInit, Args {
   url: RequestInfo
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'OPTIONS'
   beforeProcessResponseCallback?: (res: UndiciResponse) => Promise<UndiciResponse>
+  headers?: UndiciHeadersInit
 }
 /** Typeof resolved Response data */
 export type ResponseData = ArrayBuffer | Blob | FormData |

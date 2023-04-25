@@ -1,6 +1,7 @@
 
 export {
   fetch,
+  fetch2,
   get,
   post,
   remove,
