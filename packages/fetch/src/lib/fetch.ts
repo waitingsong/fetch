@@ -18,6 +18,21 @@ export async function fetch<T extends ResponseData = any>(
   options: Options,
 ): Promise<OverwriteAnyToUnknown<T>> {
 
+  const [ret] = await fetch2<T>(options)
+  return ret as OverwriteAnyToUnknown<T>
+}
+
+
+/**
+ * Fetch with strict types
+ *
+ * @returns [result, response header]
+ * @description generics any will be overwriten to unknown
+ */
+export async function fetch2<T extends ResponseData>(
+  options: Options,
+): Promise<[T, Headers]> {
+
   trace(AttributeKey.PrepareRequestData, options.span)
   const { args, requestInit } = processParams(options)
   const { timeout } = args
@@ -42,15 +57,15 @@ export async function fetch<T extends ResponseData = any>(
   const dataType = (args.dataType ?? 'bare') as NonNullable<Options['dataType']>
 
   trace(AttributeKey.ProcessResponseStart, options.span)
-  let resp = await handleResponseError(data, dataType === 'bare')
+  let resp: Response = await handleResponseError(data, dataType === 'bare')
+  const respHeaders = resp.headers as unknown as Headers
   if (typeof options.beforeProcessResponseCallback === 'function') {
     resp = await options.beforeProcessResponseCallback(resp)
   }
-  const ret = await processResponseType(resp, dataType)
+  const ret = await processResponseType(resp, dataType) as T
   trace(AttributeKey.ProcessResponseFinish, options.span)
 
-  return ret as OverwriteAnyToUnknown<T>
-
+  return [ret, respHeaders]
 }
 
 
