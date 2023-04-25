@@ -16,12 +16,3 @@ export {
   setGloalRequestOptions,
 } from './util.js'
 
-export {
-  FormData,
-  Headers,
-  HeadersInit,
-  Response,
-  RequestInfo,
-  RequestInit,
-} from 'undici'
-
