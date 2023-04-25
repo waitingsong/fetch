@@ -3,7 +3,7 @@ import { Response } from 'undici'
 import { _fetch } from './request.js'
 import { handleResponseError, processResponseType } from './response.js'
 import { trace } from './trace.js'
-import { AttributeKey, ResponseData, Options } from './types.js'
+import { AttributeKey, Headers, ResponseData, Options } from './types.js'
 import { processParams } from './util.js'
 
 
@@ -56,7 +56,7 @@ export async function fetch2<T extends ResponseData>(
 
   trace(AttributeKey.ProcessResponseStart, options.span)
   let resp: Response = await handleResponseError(data, dataType === 'bare')
-  const respHeaders = resp.headers as unknown as Headers
+  const respHeaders = new Headers(resp.headers)
   if (typeof options.beforeProcessResponseCallback === 'function') {
     resp = await options.beforeProcessResponseCallback(resp)
   }
