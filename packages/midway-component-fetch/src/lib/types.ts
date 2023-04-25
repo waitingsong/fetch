@@ -2,7 +2,7 @@ import type {
   AbstractTraceService,
   Context as TraceContext,
 } from '@mwcp/otel'
-import type { Headers, Options } from '@waiting/fetch'
+import type { Headers as UndiciHeaders, Options } from '@waiting/fetch'
 import { MiddlewareConfig as MWConfig } from '@waiting/shared-types'
 
 import { Context } from '../interface'
@@ -19,8 +19,8 @@ export interface Config {
    */
   genRequestHeaders: (
     options: FetchOptions,
-    headersInit: Record<string, string> | Headers,
-  ) => Headers
+    headersInit: FetchOptions['headers'],
+  ) => UndiciHeaders
   /**
    * Callback before request
    */
@@ -106,7 +106,7 @@ export interface RespCallbackOptions <T = unknown> {
   config: Config
   opts: FetchOptions
   resultData: T
-  respHeaders: Headers | undefined
+  respHeaders: UndiciHeaders
 }
 
 export interface ProcessExCallbackOptions {
@@ -117,7 +117,7 @@ export interface ProcessExCallbackOptions {
 }
 
 
-export type ResponseHeadersMap = Map<symbol, Headers>
+// export type ResponseHeadersMap = Map<symbol, UndiciHeaders>
 
 
 export interface TraceOptions {

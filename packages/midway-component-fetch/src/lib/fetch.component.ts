@@ -10,8 +10,7 @@ import {
 import { OtelComponent } from '@mwcp/otel'
 import {
   Headers,
-  Response,
-  fetch,
+  fetch2,
   pickUrlStrFromRequestInfo,
   ResponseData,
 } from '@waiting/fetch'
@@ -19,7 +18,7 @@ import { OverwriteAnyToUnknown } from '@waiting/shared-types'
 
 import { ConfigKey } from './config'
 import { defaultfetchConfigCallbacks } from './helper'
-import { Config, FetchOptions, ResponseHeadersMap } from './types'
+import { Config, FetchOptions } from './types'
 
 
 @Autoload()
@@ -32,7 +31,6 @@ export class FetchComponent {
 
   async fetch<T extends ResponseData = any>(
     options: FetchOptions,
-    responseHeadersMap: ResponseHeadersMap,
   ): Promise<OverwriteAnyToUnknown<T>> {
 
     const opts: FetchOptions = { ...options }
@@ -43,24 +41,15 @@ export class FetchComponent {
       opts,
       opts.headers,
     )
-    opts.beforeProcessResponseCallback = (input: Response) => this.cacheRespHeaders(id, input, responseHeadersMap)
+    // opts.beforeProcessResponseCallback = (input: Response) => this.cacheRespHeaders(id, input, responseHeadersMap)
 
     const config = this.fetchConfig
 
-    if (config.enableTrace) {
-      await defaultfetchConfigCallbacks.beforeRequest({
-        id,
-        config,
-        opts,
-      })
-
-      if (opts.span) {
-        opts.headers = this.genReqHeadersFromOptionsAndConfigCallback(
-          opts,
-          opts.headers,
-        )
-      }
-    }
+    await defaultfetchConfigCallbacks.beforeRequest({
+      id,
+      config,
+      opts,
+    })
 
     if (config.beforeRequest) {
       await config.beforeRequest({
@@ -74,18 +63,18 @@ export class FetchComponent {
       const opts2 = { ...opts }
       if (! this.fetchConfig.traceEvent) {
         delete opts2.span
+        delete opts2.traceService
+        delete opts2.traceContext
       }
-      let ret = await fetch<T>(opts2)
-
-      const respHeaders = responseHeadersMap.get(id)
+      const data = await fetch2<T>(opts2)
 
       if (config.processResult) {
-        ret = config.processResult({
+        data[0] = config.processResult({
           id,
           config,
           opts,
-          resultData: ret,
-          respHeaders,
+          resultData: data[0],
+          respHeaders: data[1],
         })
       }
 
@@ -94,8 +83,8 @@ export class FetchComponent {
           id,
           config,
           opts,
-          resultData: ret,
-          respHeaders,
+          resultData: data[0],
+          respHeaders: data[1],
         })
       }
 
@@ -104,13 +93,12 @@ export class FetchComponent {
           id,
           config,
           opts,
-          resultData: ret,
-          respHeaders,
+          resultData: data[0],
+          respHeaders: data[1],
         })
       }
 
-      responseHeadersMap.delete(id)
-      return ret
+      return data[0]
     }
     catch (ex) {
       if (config.enableTrace) {
@@ -131,7 +119,6 @@ export class FetchComponent {
           exception: ex as Error,
         })
       }
-      responseHeadersMap.delete(id)
       throw ex
     }
   }
@@ -142,7 +129,7 @@ export class FetchComponent {
    */
   genReqHeadersFromOptionsAndConfigCallback(
     options: FetchOptions,
-    initHeaders: FetchOptions['headers'],
+    initHeaders: FetchOptions['headers'] | undefined,
   ): Headers {
 
     const headers = new Headers(initHeaders)
@@ -155,18 +142,6 @@ export class FetchComponent {
       headers,
     )
     return ret
-  }
-
-  protected async cacheRespHeaders(
-    id: symbol,
-    input: Response,
-    responseHeadersMap: ResponseHeadersMap,
-  ): Promise<Response> {
-
-    if (input?.headers) {
-      responseHeadersMap.set(id, input.headers)
-    }
-    return input
   }
 
 }

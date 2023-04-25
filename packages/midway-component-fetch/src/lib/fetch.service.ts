@@ -10,7 +10,7 @@ import {
   TraceService,
   setSpan,
 } from '@mwcp/otel'
-import { ResponseData, Headers, pickUrlStrFromRequestInfo } from '@waiting/fetch'
+import { ResponseData, pickUrlStrFromRequestInfo } from '@waiting/fetch'
 import type { OverwriteAnyToUnknown } from '@waiting/shared-types'
 
 import type { Context } from '../interface'
@@ -20,7 +20,6 @@ import { FetchComponent } from './fetch.component'
 import {
   Config,
   FetchOptions,
-  ResponseHeadersMap,
 } from './types'
 
 
@@ -32,7 +31,6 @@ export class FetchService {
   @Inject() protected readonly fetchComponent: FetchComponent
   @Inject() protected readonly traceService: TraceService
 
-  readonly responseHeadersMap: ResponseHeadersMap = new Map<symbol, Headers>()
 
   async fetch<T extends ResponseData = any>(
     options: FetchOptions,
@@ -44,10 +42,7 @@ export class FetchService {
       opts = this.prepareTrace(options)
     }
 
-    return this.fetchComponent.fetch(
-      opts,
-      this.responseHeadersMap,
-    )
+    return this.fetchComponent.fetch(opts)
   }
 
 
