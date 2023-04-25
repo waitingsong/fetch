@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { OverwriteAnyToUnknown } from '@waiting/shared-types'
 import { Response } from 'undici'
 
 import { _fetch } from './request.js'
@@ -14,12 +12,12 @@ import { processParams } from './util.js'
  *
  * @description generics any will be overwriten to unknown
  */
-export async function fetch<T extends ResponseData = any>(
+export async function fetch<T extends ResponseData>(
   options: Options,
-): Promise<OverwriteAnyToUnknown<T>> {
+): Promise<T> {
 
   const [ret] = await fetch2<T>(options)
-  return ret as OverwriteAnyToUnknown<T>
+  return ret as T
 }
 
 
@@ -74,10 +72,10 @@ export async function fetch2<T extends ResponseData>(
  *
  * @description generics any will be overwriten to unknown
  */
-export function get<T extends ResponseData = any>(
+export function get<T extends ResponseData>(
   url: string,
   options?: Omit<Options, 'url' | 'method'>,
-): Promise<OverwriteAnyToUnknown<T>> {
+): Promise<T> {
 
   const opts: Options = {
     ...options,
@@ -93,10 +91,10 @@ export function get<T extends ResponseData = any>(
  *
  * @description generics any will be overwriten to unknown
  */
-export function post<T extends ResponseData = any>(
+export function post<T extends ResponseData>(
   url: Options['url'],
   options?: Omit<Options, 'url' | 'method'>,
-): Promise<OverwriteAnyToUnknown<T>> {
+): Promise<T> {
 
   const opts: Options = {
     ...options,
@@ -112,10 +110,10 @@ export function post<T extends ResponseData = any>(
  *
  * @description generics any will be overwriten to unknown
  */
-export function put<T extends ResponseData = any>(
+export function put<T extends ResponseData>(
   url: Options['url'],
   options?: Omit<Options, 'url' | 'method'>,
-): Promise<OverwriteAnyToUnknown<T>> {
+): Promise<T> {
 
   const opts: Options = {
     ...options,
@@ -131,10 +129,10 @@ export function put<T extends ResponseData = any>(
  *
  * @description generics any will be overwriten to unknown
  */
-export function remove<T extends ResponseData = any>(
+export function remove<T extends ResponseData>(
   url: Options['url'],
   options?: Omit<Options, 'url' | 'method'>,
-): Promise<OverwriteAnyToUnknown<T>> {
+): Promise<T> {
 
   const opts: Options = {
     ...options,
