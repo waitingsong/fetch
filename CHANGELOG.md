@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [23.0.0](https://github.com/waitingsong/fetch/compare/v22.2.0...v23.0.0) (2023-04-25)
+
+
+### Features
+
+* **fetch:** add fetch2() ([da78acd](https://github.com/waitingsong/fetch/commit/da78acdb54b71e769bf7971e81ab612c067e8196))
+* **fetch:** change Options['headers'] using UndiciHeadersInit ([794a7ba](https://github.com/waitingsong/fetch/commit/794a7ba47b8e4e7e5566f1ac1e7e27abf9b961a2))
+* **fetch:** remove default generics any of fetch, get, post, put, remove ([58de7ba](https://github.com/waitingsong/fetch/commit/58de7bad1c099efc34b783a3e925e94bcc602a20))
+* **fetch:** use types from undici ([148c8ed](https://github.com/waitingsong/fetch/commit/148c8ed1ae7d585dc0abe5ec752801177f3e2987))
+* **mwcp:** breaking change remove 2nd param responseHeadersMap of FetchComponent.fetch.component.ts() ([1193d14](https://github.com/waitingsong/fetch/commit/1193d14e3bccf24200fceb697f83806c76c3d2b2))
+* **mwcp:** breaking change types and parameters ([aacb4d4](https://github.com/waitingsong/fetch/commit/aacb4d446811d84f4b57bfbd6ba8315fa830c145))
+
+
+
+
+
 # [22.2.0](https://github.com/waitingsong/fetch/compare/v22.1.0...v22.2.0) (2023-04-23)
 
 

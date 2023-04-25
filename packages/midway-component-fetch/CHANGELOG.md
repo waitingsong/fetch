@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [23.0.0](https://github.com/waitingsong/fetch/compare/v22.2.0...v23.0.0) (2023-04-25)
+
+
+### Features
+
+* **mwcp:** breaking change remove 2nd param responseHeadersMap of FetchComponent.fetch.component.ts() ([1193d14](https://github.com/waitingsong/fetch/commit/1193d14e3bccf24200fceb697f83806c76c3d2b2))
+* **mwcp:** breaking change types and parameters ([aacb4d4](https://github.com/waitingsong/fetch/commit/aacb4d446811d84f4b57bfbd6ba8315fa830c145))
+
+
+
+
+
 # [22.2.0](https://github.com/waitingsong/fetch/compare/v22.1.0...v22.2.0) (2023-04-23)
 
 
