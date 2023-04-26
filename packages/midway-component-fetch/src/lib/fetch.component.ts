@@ -35,6 +35,10 @@ export class FetchComponent {
 
     const opts: FetchOptions = { ...options }
 
+    if (! opts.otelComponent) {
+      opts.otelComponent = this.otel
+    }
+
     const url = pickUrlStrFromRequestInfo(opts.url)
     const id = Symbol(url)
     opts.headers = this.genReqHeadersFromOptionsAndConfigCallback(

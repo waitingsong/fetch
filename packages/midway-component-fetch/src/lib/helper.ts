@@ -26,17 +26,15 @@ export const genRequestHeaders: Config['genRequestHeaders'] = (options, headersI
 
   const headers = new Headers(headersInit)
 
-  const { webContext: ctx, traceService, traceContext, span } = options
+  const { webContext: ctx, traceContext, span } = options
 
-  if (! ctx?.requestContext) {
-    return headers
+  if (ctx?.requestContext) {
+    if (typeof ctx['reqId'] === 'string' && ctx['reqId'] && ! headers.has(HeadersKey.reqId)) {
+      headers.set(HeadersKey.reqId, ctx['reqId'])
+    }
   }
 
-  if (typeof ctx['reqId'] === 'string' && ctx['reqId'] && ! headers.has(HeadersKey.reqId)) {
-    headers.set(HeadersKey.reqId, ctx['reqId'])
-  }
-
-  if (! traceService || ! traceContext || ! span) {
+  if (! traceContext || ! span) {
     return headers
   }
 
@@ -63,10 +61,9 @@ export const genRequestHeaders: Config['genRequestHeaders'] = (options, headersI
 
 const beforeRequest: Config['beforeRequest'] = async (options) => {
   const { opts, config } = options
-  const { webContext: ctx, span, traceService } = opts
+  const { span, otelComponent } = opts
 
-  if (! ctx?.requestContext) { return }
-  if (! traceService || ! span) { return }
+  if (! span || ! otelComponent) { return }
 
   const time = genISO8601String()
   const url = pickUrlStrFromRequestInfo(opts.url)
@@ -78,12 +75,11 @@ const beforeRequest: Config['beforeRequest'] = async (options) => {
       method: opts.method,
       time,
     }
-    traceService.addEvent(span, currInput)
+    otelComponent.addEvent(span, currInput)
   }
 
   const attrs = genOutgoingRequestAttributes(options)
-  attrs && traceService.setAttributes(span, attrs)
-
+  attrs && otelComponent.setAttributes(span, attrs)
 }
 
 const afterResponse: Config['afterResponse'] = async (options) => {
@@ -97,8 +93,8 @@ const afterResponse: Config['afterResponse'] = async (options) => {
 
   if (! opts.webContext?.requestContext) { return }
 
-  const { span, traceService } = opts
-  if (! span || ! traceService) { return }
+  const { span, otelComponent, traceService } = opts
+  if (! span || ! otelComponent) { return }
 
   const {
     traceResponseData,
@@ -120,7 +116,7 @@ const afterResponse: Config['afterResponse'] = async (options) => {
   }
 
   if (Object.keys(tags).length) {
-    traceService.setAttributes(span, tags)
+    otelComponent.setAttributes(span, tags)
   }
   const url = pickUrlStrFromRequestInfo(opts.url)
 
@@ -132,22 +128,23 @@ const afterResponse: Config['afterResponse'] = async (options) => {
       method: opts.method,
       time,
     }
-    traceService.addEvent(span, attrs)
+    otelComponent.addEvent(span, attrs)
   }
 
   // traceContext && propagateOutgoingHeader(traceContext, ctx.res)
-  traceService.endSpan(span)
+  if (traceService) {
+    traceService.endSpan(span)
+  }
+  else {
+    otelComponent.endSpan(void 0, span)
+  }
 }
 
 export const processEx: Config['processEx'] = async (options) => {
   const { opts, exception } = options
-  const { webContext: ctx, span, traceService } = opts
+  const { otelComponent, span, traceService } = opts
 
-  if (! ctx || ! span || ! traceService) {
-    throw exception
-  }
-
-  if (! ctx.requestContext) {
+  if (! span || ! otelComponent) {
     throw exception
   }
 
@@ -163,7 +160,7 @@ export const processEx: Config['processEx'] = async (options) => {
     method: opts.method,
     time,
   }
-  traceService.addEvent(span, parentInput) // parent span log
+  otelComponent.addEvent(span, parentInput) // parent span log
 
   const attrs: Attributes = {
     // [AttrNames.error]: true,
@@ -180,7 +177,7 @@ export const processEx: Config['processEx'] = async (options) => {
       }
     })
   }
-  traceService.addEvent(span, attrs)
+  otelComponent.addEvent(span, attrs)
 
   const input: Attributes = {
     level: 'error',
@@ -190,12 +187,18 @@ export const processEx: Config['processEx'] = async (options) => {
     'err.stack': exception.stack,
     // [TracerLog.svcMemoryUsage]: mem,
   }
-  traceService.addEvent(span, input)
+  otelComponent.addEvent(span, input)
 
-  traceService.endSpan(span, {
+  const status = {
     code: SpanStatusCode.ERROR,
     error: exception,
-  })
+  }
+  if (traceService) {
+    traceService.endSpan(span, status)
+  }
+  else {
+    otelComponent.endSpan(void 0, span, status)
+  }
 
   if (exception instanceof Error) {
     throw exception
@@ -220,10 +223,6 @@ export function genOutgoingRequestAttributes(
 ): Attributes | undefined {
 
   const { opts } = options
-  const { webContext: ctx, span, traceService } = opts
-
-  if (! ctx?.requestContext) { return }
-  if (! traceService || ! span) { return }
 
   const {
     traceRequestBody: enableTraceLoggingReqBody,
