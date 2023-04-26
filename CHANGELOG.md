@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [23.1.0](https://github.com/waitingsong/fetch/compare/v23.0.2...v23.1.0) (2023-04-26)
+
+
+### Features
+
+* **mwcp:** add fetch2() of FetchComponent and FetchService ([6e45dfa](https://github.com/waitingsong/fetch/commit/6e45dfa9c1223c360e42b5eb6edd0d8eb87983f3))
+* **mwcp:** remove OverwriteAnyToUnknown convert for result type ([d84a39e](https://github.com/waitingsong/fetch/commit/d84a39e7bfb518eff2fc8a7da32adea80736cb3e))
+
+
+
+
+
 ## [23.0.2](https://github.com/waitingsong/fetch/compare/v23.0.1...v23.0.2) (2023-04-26)
 
 **Note:** Version bump only for package rxxfetch
