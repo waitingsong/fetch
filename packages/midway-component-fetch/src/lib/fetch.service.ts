@@ -10,7 +10,7 @@ import {
   TraceService,
   setSpan,
 } from '@mwcp/otel'
-import { ResponseData, pickUrlStrFromRequestInfo } from '@waiting/fetch'
+import { Headers, ResponseData, pickUrlStrFromRequestInfo } from '@waiting/fetch'
 
 import type { Context } from '../interface'
 
@@ -35,13 +35,22 @@ export class FetchService {
     options: FetchOptions,
   ): Promise<T> {
 
+    const [ret] = await this.fetch2<T>(options)
+    return ret
+  }
+
+  async fetch2<T extends ResponseData>(
+    options: FetchOptions,
+  ): Promise<[T, Headers]> {
+
     let opts = options
 
     if (this.fetchConfig.enableTrace) {
       opts = this.prepareTrace(options)
     }
 
-    return this.fetchComponent.fetch(opts)
+    const ret = this.fetchComponent.fetch2<T>(opts)
+    return ret
   }
 
 

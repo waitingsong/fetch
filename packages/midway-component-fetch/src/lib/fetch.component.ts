@@ -32,6 +32,14 @@ export class FetchComponent {
     options: FetchOptions,
   ): Promise<T> {
 
+    const [ret] = await this.fetch2<T>(options)
+    return ret
+  }
+
+  async fetch2<T extends ResponseData>(
+    options: FetchOptions,
+  ): Promise<[T, Headers]> {
+
     const opts: FetchOptions = { ...options }
 
     if (! opts.otelComponent) {
@@ -101,7 +109,7 @@ export class FetchComponent {
         })
       }
 
-      return data[0]
+      return data
     }
     catch (ex) {
       if (config.enableTrace) {
