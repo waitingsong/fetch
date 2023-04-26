@@ -11,7 +11,6 @@ import {
   setSpan,
 } from '@mwcp/otel'
 import { ResponseData, pickUrlStrFromRequestInfo } from '@waiting/fetch'
-import type { OverwriteAnyToUnknown } from '@waiting/shared-types'
 
 import type { Context } from '../interface'
 
@@ -32,9 +31,9 @@ export class FetchService {
   @Inject() protected readonly traceService: TraceService
 
 
-  async fetch<T extends ResponseData = any>(
+  async fetch<T extends ResponseData>(
     options: FetchOptions,
-  ): Promise<OverwriteAnyToUnknown<T>> {
+  ): Promise<T> {
 
     let opts = options
 
@@ -46,10 +45,10 @@ export class FetchService {
   }
 
 
-  get<T extends ResponseData = any>(
+  get<T extends ResponseData>(
     input: string,
     options?: Omit<FetchOptions, 'url' | 'method'>,
-  ): Promise<OverwriteAnyToUnknown<T>> {
+  ): Promise<T> {
 
     const opts = {
       ...options,
@@ -60,10 +59,10 @@ export class FetchService {
   }
 
 
-  post<T extends ResponseData = any>(
+  post<T extends ResponseData>(
     input: string,
     options?: Omit<FetchOptions, 'url' | 'method'>,
-  ): Promise<OverwriteAnyToUnknown<T>> {
+  ): Promise<T> {
 
     const opts = {
       ...options,

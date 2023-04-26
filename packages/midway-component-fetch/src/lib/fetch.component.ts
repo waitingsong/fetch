@@ -14,7 +14,6 @@ import {
   pickUrlStrFromRequestInfo,
   ResponseData,
 } from '@waiting/fetch'
-import { OverwriteAnyToUnknown } from '@waiting/shared-types'
 
 import { ConfigKey } from './config'
 import { defaultfetchConfigCallbacks } from './helper'
@@ -29,9 +28,9 @@ export class FetchComponent {
 
   @Inject() readonly otel: OtelComponent
 
-  async fetch<T extends ResponseData = any>(
+  async fetch<T extends ResponseData>(
     options: FetchOptions,
-  ): Promise<OverwriteAnyToUnknown<T>> {
+  ): Promise<T> {
 
     const opts: FetchOptions = { ...options }
 
