@@ -64,6 +64,12 @@ const beforeRequest: Config['beforeRequest'] = async (options) => {
   const { opts, config } = options
   const { span, otelComponent, traceContext } = opts
 
+  if (traceContext) {
+    const headers = new Headers(opts.headers)
+    propagateHeader(traceContext, headers)
+    opts.headers = headers
+  }
+
   if (! span || ! otelComponent) { return }
 
   const time = genISO8601String()
@@ -82,11 +88,6 @@ const beforeRequest: Config['beforeRequest'] = async (options) => {
   const attrs = genOutgoingRequestAttributes(options)
   attrs && otelComponent.setAttributes(span, attrs)
 
-  if (traceContext) {
-    const headers = new Headers(opts.headers)
-    propagateHeader(traceContext, headers)
-    opts.headers = headers
-  }
 }
 
 const afterResponse: Config['afterResponse'] = async (options) => {
