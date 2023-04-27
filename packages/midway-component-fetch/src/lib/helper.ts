@@ -3,6 +3,7 @@ import {
   Attributes,
   AttrNames,
   HeadersKey,
+  propagateHeader,
   SemanticAttributes,
   SpanStatusCode,
 } from '@mwcp/otel'
@@ -61,7 +62,7 @@ export const genRequestHeaders: Config['genRequestHeaders'] = (options, headersI
 
 const beforeRequest: Config['beforeRequest'] = async (options) => {
   const { opts, config } = options
-  const { span, otelComponent } = opts
+  const { span, otelComponent, traceContext } = opts
 
   if (! span || ! otelComponent) { return }
 
@@ -80,6 +81,12 @@ const beforeRequest: Config['beforeRequest'] = async (options) => {
 
   const attrs = genOutgoingRequestAttributes(options)
   attrs && otelComponent.setAttributes(span, attrs)
+
+  if (traceContext) {
+    const headers = new Headers(opts.headers)
+    propagateHeader(traceContext, headers)
+    opts.headers = headers
+  }
 }
 
 const afterResponse: Config['afterResponse'] = async (options) => {
