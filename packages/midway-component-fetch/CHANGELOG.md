@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [23.2.0](https://github.com/waitingsong/fetch/compare/v23.1.0...v23.2.0) (2023-04-27)
+
+
+### Features
+
+* **mwcp:** process headers within defaultfetchConfigCallbacks.beforeRequest() ([316aa00](https://github.com/waitingsong/fetch/commit/316aa0093b9a9d839dfce944659599a471c6bc07))
+
+
+
+
+
 # [23.1.0](https://github.com/waitingsong/fetch/compare/v23.0.2...v23.1.0) (2023-04-26)
 
 
