@@ -49,7 +49,7 @@ export class FetchService {
       opts = this.prepareTrace(options)
     }
 
-    const ret = this.fetchComponent.fetch2<T>(opts)
+    const ret = await this.fetchComponent.fetch2<T>(opts)
     return ret
   }
 
