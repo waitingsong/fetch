@@ -4,13 +4,13 @@ input="$@"
 scope=''
 
 if [ -z "$input" ]; then
-  lerna run build --ignore demo
+  lerna run build
 else
   for pkg in $input
   do
     scope="$scope --scope $pkg"
   done
 
-  lerna run build --ignore demo $scope
+  lerna run build $scope
 fi
 

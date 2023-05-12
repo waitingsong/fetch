@@ -18,7 +18,7 @@ jobs:
 
     strategy:
       matrix:
-        node: ['current']
+        node: ['lts/*']
         os: [ubuntu-latest]
 
     steps:
@@ -77,12 +77,21 @@ jobs:
           echo $GITHUB_REF
           # github project/settings/Secrets/New repository secret: NPM_TOKEN
           npm ping
-          dig httpbin
-          curl http://httpbin/get
           npm whoami
+          psql -V
+          dig postgres
+          echo "\l" | psql -h $POSTGRES_HOST -p $POSTGRES_PORT -U$POSTGRES_USER -d postgres
+          psql -h $POSTGRES_HOST -p $POSTGRES_PORT -U$POSTGRES_USER -d $POSTGRES_DB -c "\d+"
+          psql -h $POSTGRES_HOST -p $POSTGRES_PORT -U$POSTGRES_USER -d $POSTGRES_DB -c "SHOW TIMEZONE;"
         env:
           CI: true
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          POSTGRES_HOST: postgres
+          POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
+          POSTGRES_DB: db_ci_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          PGPASSWORD: postgres
 
       - name: Inatall Dependencies
         timeout-minutes: 15
@@ -143,7 +152,17 @@ jobs:
           npm run test
         env:
           CI: true
-          HTTPBIN_HOST: httpbin
+          # use `localhost` if running the job on the VM
+          # use `postgres` if running the job on a container
+          POSTGRES_HOST: postgres
+          POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
+          POSTGRES_DB: db_ci_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          PGPASSWORD: postgres
+          # redis
+          REDIS_HOST: redis
+          REDIS_PORT: 6379
           # otel
           OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4317
 
@@ -161,7 +180,9 @@ jobs:
           git config user.name $GITHUB_ACTOR
           git config user.email gh-actions-${GITHUB_ACTOR}@github.com
           # npm run pub major
-          .scripts/publish.sh --yes --no-verify-access --conventional-commits --create-release github ${{ github.event.inputs.semver }}
+          rm -rf package-lock.json
+          rm -rf packages/*/package-lock.json
+          .scripts/publish.sh --yes --conventional-commits --create-release github ${{ github.event.inputs.semver }}
           git push -v origin --follow-tags
         env:
           CI: true
@@ -170,11 +191,18 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
 
+
     services:
-      httpbin:
-        image: kennethreitz/httpbin
+      postgres:
+        image: postgres:alpine
         ports:
-          - 80:80 # no 443
+          - 5432:5432
+        env:
+          POSTGRES_DB: db_ci_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
       jaeger:
         image: jaegertracing/all-in-one

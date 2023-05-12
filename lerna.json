@@ -1,12 +1,9 @@
 {
-  "version": "23.2.2",
+  "version": "0.0.0",
   "packages": [
     "packages/*"
   ],
-  "ignore": [
-    "demo",
-    "@mw-components/demo"
-  ],
+  "ignore": [],
   "command": {
     "publish": {
       "ignoreChanges": [
