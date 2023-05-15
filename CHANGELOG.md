@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [23.3.0](https://github.com/waitingsong/fetch/compare/v23.2.3...v23.3.0) (2023-05-15)
+
+
+### Features
+
+* **mwcp:** update error message creation within FetchComponent.fetch2() ([27c10c1](https://github.com/waitingsong/fetch/commit/27c10c18fcdb23cf6bcfe76169b182367d06aa5d))
+
+
+
+
+
 ## [23.2.3](https://github.com/waitingsong/fetch/compare/v23.2.2...v23.2.3) (2023-05-12)
 
 **Note:** Version bump only for package rxxfetch
