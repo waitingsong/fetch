@@ -112,13 +112,18 @@ export class FetchComponent {
       return data
     }
     catch (ex) {
+      let msg = `[${ConfigKey.componentName}] fetch error: "${url}"`
+      if (ex instanceof Error) {
+        msg += `>> ${ex.message}`
+      }
+      const err = new Error(msg, { cause: ex })
       if (config.enableTrace) {
         if (typeof defaultfetchConfigCallbacks.processEx === 'function') {
           return defaultfetchConfigCallbacks.processEx({
             id,
             config: this.fetchConfig,
             opts,
-            exception: ex as Error,
+            exception: err,
           })
         }
       }
@@ -127,10 +132,10 @@ export class FetchComponent {
           id,
           config: this.fetchConfig,
           opts,
-          exception: ex as Error,
+          exception: err,
         })
       }
-      throw ex
+      throw err
     }
   }
 
