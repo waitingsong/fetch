@@ -48,6 +48,13 @@ export async function createRequest(
   const fetchModule = fetch
   let resp: Response
 
+  // @ts-ignore
+  delete requestInit.otelComponent
+  // @ts-ignore
+  delete requestInit.span
+  // @ts-ignore
+  delete requestInit.traceContext
+
   if (typeof input === 'string') {
     trace(AttributeKey.ProcessRequestData)
     assert(input, 'input should not be empty when typeof input is string')
