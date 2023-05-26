@@ -38,7 +38,7 @@
     "@waiting/shared-types": "^21.2.0",
     "form-data": "^4.0.0",
     "qs": "^6.11.1",
-    "undici": "^5.22.1"
+    "undici": "*"
   },
   "devDependencies": {
     "cross-env": "7"
