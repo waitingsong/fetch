@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [23.3.4](https://github.com/waitingsong/fetch/compare/v23.3.3...v23.3.4) (2023-06-16)
+
+
+### Bug Fixes
+
+* **mwcp:** default afterResponse() ([26e0968](https://github.com/waitingsong/fetch/commit/26e096852c08c61df8120c5d5a40453a95fe4555))
+
+
+
+
+
 ## [23.3.3](https://github.com/waitingsong/fetch/compare/v23.3.2...v23.3.3) (2023-05-29)
 
 **Note:** Version bump only for package rxxfetch
