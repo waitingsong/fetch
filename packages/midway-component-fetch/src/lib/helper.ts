@@ -99,7 +99,7 @@ const afterResponse: Config['afterResponse'] = async (options) => {
   } = options
 
 
-  if (! opts.webContext?.requestContext) { return }
+  // if (! opts.webContext?.requestContext) { return }
 
   const { span, otelComponent, traceService } = opts
   if (! span || ! otelComponent) { return }
