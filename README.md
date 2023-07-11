@@ -40,8 +40,7 @@ sh init-project.sh
 sh init-project.sh @foo/my_project
 
 # 初始化依赖
-npm run repo:init
-lerna list
+npm install
 ```
 
 ### 根据模板选择初始化子包

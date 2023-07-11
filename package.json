@@ -20,12 +20,10 @@
     "coveralls": "3",
     "debug": "^4.3.4",
     "eslint": "^8.43.0",
-    "lerna": "6",
-    "lerna-relinker": "^1.5.0",
+    "lerna": "7",
     "madge": "^6.0.0",
     "mocha": "10",
     "mocha-lcov-reporter": "1",
-    "nx": "16",
     "rewire": "6",
     "rimraf": "4",
     "rollup-plugin-dts": "^5.3.0",
@@ -40,13 +38,17 @@
   "engines": {
     "node": ">=16.13.0"
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "add:pkg": "sh .scripts/add-pkg.sh",
     "bp:add": "git remote add bp https://github.com/waitingsong/npm-mono-base",
     "bp:sync": "git fetch --all -v && git pull origin && git merge bp/main -m \"Merge remote-tracking branch 'bp/main'\" ",
     "bp:syncxo": "git fetch --all -v && git pull origin && git merge bp/main -m \"Merge remote-tracking branch 'bp/main'\" -Xours",
-    "bootstrap": "lerna bootstrap --loglevel notice --concurrency 4",
-    "bootstrap2": "lerna bootstrap --loglevel notice -- --legacy-peer-deps",
+    "bootstrap": "npm i",
+    "bootstrap:info": "npm i --loglevel info",
+    "bootstrap2": "npm i -legacy-peer-deps",
     "postbootstrap": "npm run repo:init",
     "build": "sh .scripts/build.sh",
     "ci": "npm run cov",
