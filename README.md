@@ -139,16 +139,11 @@ npm run purge
 [`demo`]: https://github.com/waitingsong/npm-mono-base/tree/main/packages/demo
 [main-svg]: https://img.shields.io/npm/v/kmore.svg?maxAge=7200
 [main-ch]: https://github.com/waitingsong/kmore/tree/main/packages/demo/CHANGELOG.md
-[main-d-svg]: https://david-dm.org/waitingsong/kmore.svg?path=packages/kmore
-[main-d-link]: https://david-dm.org/waitingsong/kmore.svg?path=packages/kmore
-[main-dd-svg]: https://david-dm.org/waitingsong/kmore/dev-status.svg?path=packages/kmore
-[main-dd-link]: https://david-dm.org/waitingsong/kmore?path=packages/kmore#info=devDependencies
+
 
 [`demo-cli`]: https://github.com/waitingsong/kmore/tree/main/packages/kmore-cli
 [cli-svg]: https://img.shields.io/npm/v/kmore-cli.svg?maxAge=7200
 [cli-ch]: https://github.com/waitingsong/kmore/tree/main/packages/kmore-clie/CHANGELOG.md
-[cli-d-svg]: https://david-dm.org/waitingsong/kmore.svg?path=packages/kmore-cli
-[cli-d-link]: https://david-dm.org/waitingsong/kmore.svg?path=packages/kmore-cli
-[cli-dd-svg]: https://david-dm.org/waitingsong/kmore/dev-status.svg?path=packages/kmore-cli
-[cli-dd-link]: https://david-dm.org/waitingsong/kmore?path=packages/kmore-cli#info=devDependencies
+
+
 

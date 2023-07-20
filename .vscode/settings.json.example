@@ -121,7 +121,7 @@
       "args": ["-l"]
     }
   },
-  "terminal.integrated.defaultProfile.windows": "git-bash",
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
   "terminal.integrated.defaultProfile.linux": "bash (login)",
   "typescript.autoClosingTags": false,
   "typescript.format.enable": true,
