@@ -25,9 +25,7 @@ if [ -z "$CI" ]; then
   git config --local remote.pushdefault origin
 fi;
 
-if [ -z $CI ]; then
-  echo It may going for a long time. Plese wait...
-  cd .githooks && tsc && ts-node-esm gen-file-from-example.ts && cd -
-fi;
+echo It may going for a long time. Plese wait...
+cd .githooks && ts-node-esm gen-file-from-example.ts && cd -
 
 lerna list

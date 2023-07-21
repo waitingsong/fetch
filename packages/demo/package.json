@@ -39,8 +39,9 @@
   },
   "files": [
     "README.*.md",
-    "tsconfig.json",
     "Dockerfile",
+    "tsconfig.json",
+    "tsconfig.base.json",
     "src/**/*.ts",
     "bin/*.js",
     "dist"
