@@ -27,7 +27,7 @@ fi;
 
 if [ -z $CI ]; then
   echo It may going for a long time. Plese wait...
-  cd .githooks && tsc && node gen-file-from-example.js && cd -
+  cd .githooks && tsc && ts-node-esm gen-file-from-example.ts && cd -
 fi;
 
 lerna list

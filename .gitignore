@@ -4,6 +4,8 @@ package-lock.json
 yarn.lock
 package.json.lerna_backup
 tsconfig.tsbuildinfo
+!/tsconfig.base.json
+tsconfig.base.json
 
 .coveralls.yml
 .factorypath
