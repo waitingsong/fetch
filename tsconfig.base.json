@@ -47,5 +47,12 @@
     "test",
     "**/*.d.ts",
     "**/*.spec.ts"
-  ]
+  ],
+  "ts-node": {
+    "esm": true,
+    "experimentalResolver": true,
+    "experimentalSpecifierResolution": "node",
+    "preferTsExts": true,
+    "transpileOnly": false
+  }
 }

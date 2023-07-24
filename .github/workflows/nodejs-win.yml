@@ -51,7 +51,6 @@ jobs:
           npm -v && node -v
           git --version
           openssl version
-          ./.githooks/init-repo.sh
           git config --local core.autocrlf false
           git config --local core.eol lf
           export cwd=`pwd`

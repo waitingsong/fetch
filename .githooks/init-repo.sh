@@ -26,6 +26,6 @@ if [ -z "$CI" ]; then
 fi;
 
 echo It may going for a long time. Plese wait...
-cd .githooks && ts-node-esm gen-file-from-example.ts && cd -
+cd .githooks && node --loader ts-node/esm gen-file-from-example.ts && cd -
 
 lerna list
