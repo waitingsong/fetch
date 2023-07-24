@@ -92,7 +92,7 @@ jobs:
           # .github/workflows/fix.sh
           npm i --no-audit -g autocannon c8 lerna rollup zx
           # npm run purge
-          npm run bootstrap
+          npm i
         env:
           CI: true
 

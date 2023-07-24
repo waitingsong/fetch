@@ -1,9 +1,11 @@
 #!/bin/bash
 set +e
 
-if [ -n "$TIMEZ" ]; then
-  ln -sf /usr/share/zoneinfo/${TIMEZ} /etc/localtime
-  echo "$TIMEZ" > /etc/timezone
+if [ process.platform != "win32" ]; then
+  if [ -n "$TIMEZ" ]; then
+    ln -sf /usr/share/zoneinfo/${TIMEZ} /etc/localtime
+    echo "$TIMEZ" > /etc/timezone
+  fi
 fi
 
 # git config --system core.fileMode false

@@ -62,10 +62,9 @@ jobs:
         shell: bash
         run: |
           export cwd=`pwd`
-          .github/workflows/fix.sh
-          npm i -g c8 lerna rollup zx node-gyp
+          npm i --no-audit -g autocannon c8 lerna rollup zx
           # npm run purge
-          npm run bootstrap
+          npm i
         env:
           CI: true
 
