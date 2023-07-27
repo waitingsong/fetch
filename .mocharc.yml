@@ -12,6 +12,6 @@ spec:
   - test/**/*.test.ts
 timeout: 120000
 ui: bdd
-parallel: true
+parallel: false
 exit: true
 

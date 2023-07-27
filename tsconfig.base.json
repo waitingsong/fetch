@@ -53,6 +53,6 @@
     "experimentalResolver": true,
     "experimentalSpecifierResolution": "node",
     "preferTsExts": true,
-    "transpileOnly": false
+    "transpileOnly": true
   }
 }
