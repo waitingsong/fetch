@@ -1,16 +1,3 @@
 {
-  "extends": "./tsconfig.base.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "incremental": true,
-    "outDir": "dist",
-    "paths": {
-      "~/*": ["./src/*"],
-      "@/*": ["./test/*"]
-    },
-    "tsBuildInfoFile": ".tsbuildinfo"
-  },
-  "include": [
-    "src/**/*.ts"
-  ]
+  "extends": "./tsconfig.base.json"
 }
