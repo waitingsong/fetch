@@ -9,10 +9,11 @@
 branch=$( git branch | grep \* | cut -d ' ' -f2 )
 # ./.githooks/init-repo/is-skip-commitlint.ts $1 "$branch"
 
-code=$?
+# code=$?
+code=0
 #echo -e 'node exitCode:' $code
 
-if [[ $code = 0 ]] ; then
+if [[ $code = 0 ]] && [[ -d node_modules ]] ; then
   commitlint -e ./.git/COMMIT_EDITMSG
 fi
 
