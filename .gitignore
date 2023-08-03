@@ -4,6 +4,7 @@ package-lock.json
 yarn.lock
 package.json.lerna_backup
 tsconfig.tsbuildinfo
+npm-shrinkwrap.json
 !/tsconfig.base.json
 tsconfig.base.json
 
