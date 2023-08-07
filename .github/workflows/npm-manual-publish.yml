@@ -182,7 +182,7 @@ jobs:
           # npm run pub major
           rm -rf package-lock.json
           rm -rf packages/*/package-lock.json
-          .scripts/publish.sh --yes --conventional-commits --create-release github ${{ github.event.inputs.semver }}
+          .scripts/publish.sh --yes --no-private --conventional-commits --create-release github ${{ github.event.inputs.semver }}
           git push -v origin --follow-tags
         env:
           CI: true
