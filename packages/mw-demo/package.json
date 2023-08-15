@@ -26,8 +26,7 @@
     "@waiting/shared-core": "^21.3.0"
   },
   "devDependencies": {
-    "@mwcp/share": "6 - 8",
-    "cross-env": "7"
+    "@mwcp/share": "6 - 8"
   },
   "engines": {
     "node": ">=16.13.0"
