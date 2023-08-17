@@ -37,7 +37,9 @@
     "tsconfig.json",
     "tsconfig.base.json",
     "bin/*.js",
-    "dist"
+    "dist",
+    "!**/*.spec.*",
+    "!**/*.tsbuildinfo"
   ],
   "publishConfig": {
     "access": "public"
@@ -57,7 +59,6 @@
     "dev:debug": "cross-env MIDWAY_SERVER_ENV=local NODE_DEBUG=midway* ../../node_modules/.bin/midway-bin dev --ts",
     "lint": "eslint --fix --cache {src,test}/**/*.ts",
     "lint:nofix": "eslint --cache {src,test}/**/*.ts",
-    "prepack": "rm -f dist/tsconfig.tsbuildinfo",
     "pretest": "npm run build",
     "pretest:local": "npm run build",
     "purge": "npm run clean && rm node_modules -rf && rm package-lock.json -f",
