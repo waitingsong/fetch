@@ -23,7 +23,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@waiting/shared-core": "^21.3.0"
+    "@waiting/shared-core": "^21.4.0"
   },
   "devDependencies": {
     "@mwcp/share": "6 - 8"
@@ -33,6 +33,7 @@
   },
   "files": [
     "README.*.md",
+    "npm-shrinkwrap.json",
     "tsconfig.json",
     "tsconfig.base.json",
     "bin/*.js",
@@ -43,9 +44,11 @@
   },
   "scripts": {
     "build": "npm run tsc && tsc-alias",
-    "clean": "npm run clean:lock & npm run clean:cache & rm -rf dist/*",
-    "clean:cache": "rm -rf .eslintcache .tsbuildinfo",
+    "clean": "npm run clean:lock && npm run clean:cache && npm run clean:dist && npm run clean:log",
+    "clean:cache": "rm -rf .eslintcache .tsbuildinfo .vscode/.jest-cache",
+    "clean:dist": "rm -rf dist/* .tsbuildinfo",
     "clean:lock": "rm package-lock.json -f",
+    "clean:log": "rm -rf ./logs ./run",
     "cov": "cross-env MIDWAY_SERVER_ENV=unittest TS_NODE_PROJECT=test/tsconfig.json c8 mocha --parallel=false",
     "db:gen": "kmore gen --project tsconfig.cjs.json --path ./src",
     "db:gen-cjs": "kmore gen --project tsconfig.cjs.json --path ./src --format cjs",

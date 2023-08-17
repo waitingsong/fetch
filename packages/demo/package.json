@@ -39,6 +39,7 @@
   "files": [
     "README.*.md",
     "Dockerfile",
+    "npm-shrinkwrap.json",
     "tsconfig.json",
     "tsconfig.base.json",
     "src/**/*.ts",
@@ -50,9 +51,11 @@
   },
   "scripts": {
     "build": "npm run tsc && tsc-alias && npm run rp",
-    "clean": "npm run clean:lock & npm run clean:cache & rm -rf dist/*",
+    "clean": "npm run clean:lock && npm run clean:cache && npm run clean:dist && npm run clean:log",
     "clean:cache": "rm -rf .eslintcache .tsbuildinfo",
+    "clean:dist": "rm -rf dist/* .tsbuildinfo",
     "clean:lock": "rm package-lock.json -f",
+    "clean:log": "rm -rf ./logs ./run",
     "cov": "cross-env TS_NODE_PROJECT=test/tsconfig.json c8 mocha --parallel=false",
     "lint": "eslint --fix --cache {src,test}/**/*.ts",
     "lint:nofix": "eslint --cache {src,test}/**/*.ts",
