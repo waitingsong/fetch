@@ -1,17 +1,23 @@
-#!/usr/bin/env ts-node-esm
+#!/usr/bin/env tsx
 /**
  * 搜索指定目录以 file.example 文件为基础生成不带后缀的文件为不带 .example 后缀的文件
  */
-import { dirname, join } from 'node:path'
+import { dirname, join, sep } from 'node:path'
 import { cp, mkdir, readdir } from 'node:fs/promises'
+import { fileURLToPath } from 'node:url'
 
 import { folderArr, globalConfigFileArr } from './init.config.js'
 import { genFileFromExample } from './init-example-file.js'
 
 
+const currentURL = import.meta.url
+const currentPath = fileURLToPath(currentURL)
+const currentDir = dirname(currentPath)
+const currentFileName = currentPath.split(sep).pop()
+const rootDir = join(currentDir, '..')
+console.log({ rootDir, currentFileName })
+
 const pkgEntryName = 'packages'
-const rootDir = join(process.cwd(), '..')
-console.log({ rootDir })
 const pkgBase = join(rootDir, pkgEntryName)
 
 const files = await cpGlobalConfigsToPkgs(rootDir, globalConfigFileArr, pkgBase)

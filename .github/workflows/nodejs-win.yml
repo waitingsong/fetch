@@ -61,7 +61,7 @@ jobs:
         shell: bash
         run: |
           export cwd=`pwd`
-          npm i --no-audit -g autocannon c8 lerna rollup zx
+          npm i --no-audit -g autocannon c8 lerna rollup tsx zx
           # npm run purge
           npm i
         env:
