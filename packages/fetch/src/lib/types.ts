@@ -13,8 +13,10 @@ import {
 export {
   FormData,
   Headers,
-  HeadersInit,
   Response,
+} from 'undici'
+export type {
+  HeadersInit,
   RequestInfo,
   RequestInit,
 } from 'undici'
