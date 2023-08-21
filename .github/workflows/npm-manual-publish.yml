@@ -91,7 +91,7 @@ jobs:
           # DO NOT execute: npm config set unsafe-perm=true
           export cwd=`pwd`
           .github/workflows/fix.sh
-          npm i --no-audit -g autocannon c8 lerna@6 rollup zx
+          npm i --no-audit -g autocannon c8 lerna rollup tsx zx
           # npm run purge
           npm run bootstrap
         env:
@@ -163,7 +163,7 @@ jobs:
           # npm run pub major
           rm -rf package-lock.json
           rm -rf packages/*/package-lock.json
-          .scripts/publish.sh --yes --conventional-commits --create-release github ${{ github.event.inputs.semver }}
+          .scripts/publish.sh --yes --no-private --conventional-commits --create-release github ${{ github.event.inputs.semver }}
           git push -v origin --follow-tags
         env:
           CI: true

@@ -11,6 +11,12 @@
 
 
 
+## 安装全局依赖
+```sh
+npm i -g c8 lerna rollup tsx
+```
+
+## 创建新项目
 
 ## Installation
 ```sh
@@ -25,6 +31,9 @@ npm i @mw-components/fetch
 - [@mw-components/fetch](https://github.com/waitingsong/fetch/tree/main/packages/midway-component-fetch/test)
 
 
+# 初始化依赖
+npm install
+```
 
 ## Packages
 
@@ -54,4 +63,6 @@ npm run repo:init
 [`@mwcp/fetch`]: https://github.com/waitingsong/fetch/tree/main/packages/midway-component-fetch
 [mw-svg]: https://img.shields.io/npm/v/@mwcp/fetch.svg?maxAge=7200
 [mw-ch]: https://github.com/waitingsong/kmore/tree/main/packages/midway-component-fetch/CHANGELOG.md
+
+
 

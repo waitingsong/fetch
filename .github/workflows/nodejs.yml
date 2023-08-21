@@ -31,9 +31,9 @@ jobs:
         with:
           path: |
             node_modules
-            node_modules/.cache/nx
+            # node_modules/.cache/nx
             package-lock.json
-            packages/*/.eslintcache
+            # packages/*/.eslintcache
             packages/*/.tsbuildinfo
             packages/*/.vscode
             packages/*/dist
@@ -86,9 +86,9 @@ jobs:
           # DO NOT execute: npm config set unsafe-perm=true
           export cwd=`pwd`
           # .github/workflows/fix.sh
-          npm i --no-audit -g autocannon c8 lerna@6 rollup zx
+          npm i --no-audit -g autocannon c8 lerna rollup tsx zx
           # npm run purge
-          npm run bootstrap
+          npm i
         env:
           CI: true
 
