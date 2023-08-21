@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [23.3.5](https://github.com/waitingsong/fetch/compare/v23.3.4...v23.3.5) (2023-08-21)
+
+
+### Bug Fixes
+
+* **fetch:** export types from undici ([b014b48](https://github.com/waitingsong/fetch/commit/b014b48e65b0c51212f5df4973346eadab9db26a))
+
+
+
+
+
 ## [23.3.2](https://github.com/waitingsong/fetch/compare/v23.3.1...v23.3.2) (2023-05-26)
 
 **Note:** Version bump only for package @waiting/fetch
