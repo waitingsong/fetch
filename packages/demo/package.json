@@ -42,6 +42,7 @@
     "npm-shrinkwrap.json",
     "tsconfig.json",
     "tsconfig.base.json",
+    "asset",
     "src/**/*.ts",
     "bin/*.js",
     "dist",
