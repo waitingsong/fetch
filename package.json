@@ -14,7 +14,7 @@
     "@rollup/plugin-node-resolve": "15",
     "@types/mocha": "10",
     "@types/node": "20",
-    "@waiting/eslint-config": "^8.8.0",
+    "@waiting/eslint-config": "^9.0.0",
     "@waiting/shared-core": "^21.5.0",
     "@waiting/shared-types": "^21.5.0",
     "autocannon": "7",

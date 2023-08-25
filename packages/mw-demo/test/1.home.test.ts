@@ -33,7 +33,7 @@ describe(filename, () => {
       .get(helloPath)
       .expect(200)
 
-    const ret = resp.text as string
+    const ret = resp.text as Msg
     assert(ret === Msg.hello)
   })
 
