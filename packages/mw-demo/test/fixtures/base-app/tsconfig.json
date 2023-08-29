@@ -1,44 +1,43 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "paths": {
+      "#~/*": ["./src/*"],
+      "#@/*": ["./test/*"]
+    },
+    "rootDir": "../../..",
+    "baseUrl": "../../..",
+
     "declaration": true,
+    "declarationMap": false,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
+    "exactOptionalPropertyTypes": true,
     "experimentalDecorators": true,
-    "incremental": true,
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "forceConsistentCasingInFileNames": true,
+    "incremental": false,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "newLine": "lf",
+    "noEmit": true,
     "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
     "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "outDir": "dist",
-    "paths": {
-      "~/*": ["../../../src/*"],
-      "@/*": ["../../../test/*"]
-    },
+    "preserveConstEnums": true,
     "pretty": true,
+    "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
     "strictPropertyInitialization": false,
     "stripInternal": true,
     "target": "ESNext",
-    "tsBuildInfoFile": ".vscode/.tsbuildinfo",
     "types" : ["mocha", "node"]
   },
   "include": [
     "src/**/*.ts"
-  ],
-  "exclude": [
-    "asset",
-    "app/public",
-    "app/views",
-    "dist",
-    "node_modules*",
-    "test",
-    "**/*.d.ts",
-    "**/*.spec.ts"
   ]
 }

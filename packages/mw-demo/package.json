@@ -10,9 +10,21 @@
     "plugin",
     "ts"
   ],
+  "type": "module",
   "bin": {},
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "./dist/index.d.ts",
+  "imports": {
+    "#package.json": "./package.json",
+    "#~/*": "./src/*",
+    "#@/*": "./test/*"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
   "bugs": {
     "url": "https://github.com/waitingsong/npm-mono-base/issues"
   },
@@ -23,21 +35,23 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@waiting/shared-core": "^21.5.0"
-  },
-  "devDependencies": {
+    "@midwayjs/info": "^3.12.2",
     "@mwcp/share": "6 - 8"
   },
+  "devDependencies": {
+  },
   "engines": {
-    "node": ">=16.13.0"
+    "node": ">=18.12.0"
   },
   "files": [
     "README.*.md",
+    "Dockerfile",
     "npm-shrinkwrap.json",
     "tsconfig.json",
     "tsconfig.base.json",
     "asset",
-    "bin/*.js",
+    "bin",
+    "database",
     "dist",
     "!**/*.spec.*",
     "!**/*.tsbuildinfo"
@@ -46,26 +60,21 @@
     "access": "public"
   },
   "scripts": {
-    "build": "npm run tsc && tsc-alias",
-    "clean": "npm run clean:lock && npm run clean:cache && npm run clean:dist && npm run clean:log",
-    "clean:cache": "rm -rf .eslintcache .tsbuildinfo .vscode/.jest-cache",
-    "clean:dist": "rm -rf dist/* .tsbuildinfo",
-    "clean:lock": "rm package-lock.json -f",
+    "build": "npm run tsc && tsc-alias && npm run rp",
+    "clean": "npm run clean:lock && npm run clean:dist && npm run clean:log",
+    "clean:cache": "rm -rf .eslintcache .tsbuildinfo",
+    "clean:dist": "npm run clean:cache && rm -rf dist/*",
+    "clean:lock": "rm -f package-lock.json",
     "clean:log": "rm -rf ./logs ./run",
-    "cov": "cross-env MIDWAY_SERVER_ENV=unittest TS_NODE_PROJECT=test/tsconfig.json c8 mocha --parallel=false",
+    "cov": "c8 --all npm run test -- --parallel=false",
     "db:gen": "kmore gen --project tsconfig.cjs.json --path ./src",
-    "db:gen-cjs": "kmore gen --project tsconfig.cjs.json --path ./src --format cjs",
-    "debug": "cross-env MIDWAY_SERVER_ENV=local ../../node_modules/.bin/midway-bin dev -ts --fast --debug",
-    "dev": "cross-env MIDWAY_SERVER_ENV=local ../../node_modules/.bin/midway-bin dev --ts --fast --port=7001",
-    "dev:debug": "cross-env MIDWAY_SERVER_ENV=local NODE_DEBUG=midway* ../../node_modules/.bin/midway-bin dev --ts",
+    "dev": "cross-env MIDWAY_SERVER_ENV=local mwtsc --watch --run @midwayjs/mock/app",
     "lint": "eslint --fix --cache {src,test}/**/*.ts",
     "lint:nofix": "eslint --cache {src,test}/**/*.ts",
-    "pretest": "npm run build",
-    "pretest:local": "npm run build",
-    "purge": "npm run clean && rm node_modules -rf && rm package-lock.json -f",
-    "start": "node bootstrap.js",
-    "test": "cross-env MIDWAY_SERVER_ENV=unittest TS_NODE_PROJECT=test/tsconfig.json mocha ",
-    "test:local": "cross-env MIDWAY_SERVER_ENV=unittest TS_NODE_PROJECT=test/tsconfig.json ../../node_modules/.bin/mocha ",
+    "predev": "npm run build",
+    "rp": "rollup -c rollup.config.js --context this",
+    "start": "cross-env NODE_ENV=production node ./bootstrap.js",
+    "test": "cross-env MIDWAY_SERVER_ENV=unittest TS_NODE_PROJECT=test/tsconfig.json mocha --parallel=false",
     "tsc": "tsc -b"
   }
 }

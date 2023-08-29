@@ -1,40 +1,44 @@
 import assert from 'node:assert/strict'
-import { relative } from 'node:path'
 
-import { testConfig, TestRespBody } from '@/root.config'
-import { ConfigKey, Msg } from '~/lib/types'
+import { fileShortPath } from '@waiting/shared-core'
+
+import { ConfigKey, Msg } from '../src/lib/types.js'
+
+import { TestRespBody, testConfig } from './root.config.js'
 
 
-const filename = relative(process.cwd(), __filename).replace(/\\/ug, '/')
-
-describe(filename, () => {
+describe(fileShortPath(import.meta.url), function() {
 
   const path = '/'
-  const helloPath = `/${ConfigKey.namespace}/hello`
+  const helloPath = `/_${ConfigKey.namespace}/hello`
 
   it(`Should ${path} work`, async () => {
-    const { httpRequest } = testConfig
+    const { app, httpRequest } = testConfig
 
     const resp = await httpRequest
       .get(path)
       .expect(200)
 
     const ret = resp.body as TestRespBody
-    const { url, header } = ret
+    assert(typeof ret === 'object', JSON.stringify(ret, null, 2))
+    assert(ret.code === 0)
+    assert(typeof ret.data === 'object', JSON.stringify(ret, null, 2))
+
+    const { url, header } = ret.data
     const { host } = header
-    assert(url === '/')
-    assert(host && testConfig.host.includes(host))
+    assert(url === '/', JSON.stringify(ret, null, 2))
+    assert(host && testConfig.host.includes(host), JSON.stringify(ret, null, 2))
   })
 
   it(`Should ${helloPath} work`, async () => {
-    const { httpRequest } = testConfig
+    const { app, httpRequest } = testConfig
 
     const resp = await httpRequest
       .get(helloPath)
       .expect(200)
 
     const ret = resp.text as Msg
-    assert(ret === Msg.hello)
+    assert(ret === Msg.hello, JSON.stringify(ret, null, 2))
   })
 
 })

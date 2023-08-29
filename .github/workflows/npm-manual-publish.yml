@@ -99,7 +99,7 @@ jobs:
           chmod a+w -R .
           # DO NOT execute: npm config set unsafe-perm=true
           export cwd=`pwd`
-          .github/workflows/fix.sh
+          # .github/workflows/fix.sh
           npm i --no-audit -g autocannon c8 lerna rollup tsx zx
           # npm run purge
           npm run bootstrap

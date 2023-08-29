@@ -18,7 +18,6 @@
     "app/views",
     "dist",
     "node_modules*",
-    "test/fixtures",
     "**/*.d.ts"
   ]
 }
