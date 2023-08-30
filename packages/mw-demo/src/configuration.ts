@@ -5,7 +5,10 @@ import {
   App,
   Config,
   Configuration,
+  MidwayEnvironmentService,
+  MidwayInformationService,
   ILifeCycle,
+  Inject,
 } from '@midwayjs/core'
 import {
   Application,
@@ -43,6 +46,9 @@ export class AutoConfiguration implements ILifeCycle {
   @Config(ConfigKey.config) protected readonly config: Conf
   @Config(ConfigKey.middlewareConfig) protected readonly mwConfig: MiddlewareConfig
 
+  @Inject() protected readonly environmentService: MidwayEnvironmentService
+  @Inject() protected readonly informationService: MidwayInformationService
+
   async onReady(container: IMidwayContainer): Promise<void> {
     void container
     assert(
@@ -54,8 +60,10 @@ export class AutoConfiguration implements ILifeCycle {
       this.mwConfig.ignore.push(new RegExp(`/_${ConfigKey.namespace}/.+`, 'u'))
     }
 
+    const isDevelopmentEnvironment = this.environmentService.isDevelopmentEnvironment()
     const { enableMiddleware } = this.mwConfig
-    if (enableMiddleware) {
+
+    if (enableMiddleware && isDevelopmentEnvironment) {
       registerMiddleware(this.app, DemoMiddleware)
     }
   }
