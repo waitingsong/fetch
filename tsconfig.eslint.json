@@ -1,11 +1,16 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "noEmit": true
+    "declarationMap": false,
+    "noEmit": true,
+    "sourceMap": false
   },
   "include": [
     "src/**/*.ts",
+    "src/**/*.mts",
     "test/**/*.ts",
+    "test/**/*.mts",
+    "test_browser/**/*.ts",
     "packages/*/src/**/*.ts",
     "packages/*/test/**/*.ts"
   ],
@@ -13,7 +18,6 @@
     "asset",
     "app/public",
     "app/views",
-    "dist",
     "node_modules*",
     "**/*.d.ts"
   ]
