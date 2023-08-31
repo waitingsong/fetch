@@ -3,11 +3,11 @@ import {
   initialConfig,
   initialMiddlewareConfig,
   initMiddlewareOptions,
-} from '../lib/config.js'
+} from '##/lib/config.js'
 import {
   Config,
   MiddlewareConfig,
-} from '../lib/types.js'
+} from '##/lib/types.js'
 
 
 export const keys = Date.now()

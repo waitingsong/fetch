@@ -11,5 +11,5 @@ rules:
       - ./
       - ../../node_modules/@mwcp/share/
 
-ignorePatterns:
-  - fixtures
+# ignorePatterns:
+#   - test

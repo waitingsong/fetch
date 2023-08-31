@@ -1,43 +1,19 @@
 {
+  "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
-    "paths": {
-      "#~/*": ["./src/*"],
-      "#@/*": ["./test/*"]
-    },
     "rootDir": "../../..",
-    "baseUrl": "../../..",
-
-    "declaration": true,
     "declarationMap": false,
-    "emitDecoratorMetadata": true,
-    "esModuleInterop": true,
-    "exactOptionalPropertyTypes": true,
-    "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true,
-    "incremental": false,
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "newLine": "lf",
-    "noEmit": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noUncheckedIndexedAccess": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "outDir": "dist",
-    "preserveConstEnums": true,
-    "pretty": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "sourceMap": true,
-    "strict": true,
-    "strictPropertyInitialization": false,
-    "stripInternal": true,
-    "target": "ESNext",
-    "types" : ["mocha", "node"]
+    "strictPropertyInitialization": false
   },
   "include": [
-    "src/**/*.ts"
+    "../../../src/**/*.ts",
+    "../../../test/**/*.ts"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules*",
+    "test",
+    "**/*.d.ts",
+    "**/*.spec.ts"
   ]
 }

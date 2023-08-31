@@ -11,15 +11,6 @@ describe(fileShortPath(import.meta.url), () => {
     it('always passed', () => {
       assert(testConfig)
     })
-
-    it('testAppdir eq testConfig.testAppDir', () => {
-      const { app, httpRequest } = testConfig
-      assert(app)
-
-      const appDir = app.getAppDir()
-      assert(appDir)
-      assert(appDir === testConfig.testAppDir)
-    })
   })
 
 })

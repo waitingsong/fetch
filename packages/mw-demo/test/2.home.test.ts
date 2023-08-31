@@ -2,9 +2,8 @@ import assert from 'node:assert/strict'
 
 import { fileShortPath } from '@waiting/shared-core'
 
-import { ConfigKey, Msg } from '../src/lib/types.js'
-
-import { TestRespBody, testConfig } from './root.config.js'
+import { ConfigKey, Msg } from '##/lib/types.js'
+import { TestRespBody, testConfig } from '#@/root.config.js'
 
 
 describe(fileShortPath(import.meta.url), function() {

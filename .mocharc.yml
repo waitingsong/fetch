@@ -7,7 +7,7 @@ node-option:
   - "loader=ts-node/esm"
 require:
   - tsconfig-paths/register.js
-  - test/setup.mts
+  - test/setup.ts
 # loader:
 #  - ts-node/esm
 spec:

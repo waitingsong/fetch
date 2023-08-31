@@ -15,7 +15,7 @@
   "types": "dist/index.d.ts",
   "imports": {
     "#package.json": "./package.json",
-    "#~/*": "./src/*",
+    "##/*": "./dist/*",
     "#@/*": "./test/*"
   },
   "exports": {
@@ -72,6 +72,7 @@
     "lint": "eslint --fix --cache {src,test}/**/*.ts",
     "lint:nofix": "eslint --cache {src,test}/**/*.ts",
     "predev": "npm run build",
+    "pretest": "npm run build",
     "rp": "rollup -c rollup.config.js --context this",
     "start": "cross-env NODE_ENV=production node ./bootstrap.js",
     "test": "cross-env MIDWAY_SERVER_ENV=unittest TS_NODE_PROJECT=test/tsconfig.json mocha --parallel=false",

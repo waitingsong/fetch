@@ -4,7 +4,7 @@ import {
   Get,
 } from '@midwayjs/core'
 
-import { Config, ConfigKey, Msg } from '../lib/types.js'
+import { Config, ConfigKey, Msg } from '##/lib/types.js'
 
 
 @Controller(`/_${ConfigKey.namespace}`)

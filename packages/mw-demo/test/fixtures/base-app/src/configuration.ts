@@ -3,8 +3,9 @@ import type { Application } from '@mwcp/share'
 
 import * as SRC from '../../../../src/index.js'
 
+
 @Configuration({
-  imports: [ SRC ]
+  imports: [SRC],
 })
 export class AutoConfiguration {
   @App() readonly app: Application

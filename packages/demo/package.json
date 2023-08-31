@@ -15,7 +15,7 @@
   "types": "dist/index.d.ts",
   "imports": {
     "#package.json": "./package.json",
-    "#~/*": "./src/*",
+    "##/*": "./dist/*",
     "#@/*": "./test/*"
   },
   "exports": {
@@ -68,6 +68,7 @@
     "cov": "c8 --all npm run test -- --parallel=false",
     "lint": "eslint --fix --cache {src,test}/**/*.ts",
     "lint:nofix": "eslint --cache {src,test}/**/*.ts",
+    "pretest": "npm run build",
     "rp": "rollup -c rollup.config.js --context this",
     "test": "cross-env NODE_ENV=test TS_NODE_PROJECT=test/tsconfig.json mocha --jobs=4",
     "tsc": "tsc -b"
