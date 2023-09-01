@@ -25,7 +25,9 @@ import {
   ConfigKey,
   MiddlewareConfig,
 } from './lib/types.js'
-import { DemoMiddleware } from './middleware/index.middleware.js'
+import {
+  DemoMiddleware,
+} from './middleware/index.middleware.js'
 
 
 @Configuration({
