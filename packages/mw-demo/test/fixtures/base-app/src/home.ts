@@ -9,7 +9,7 @@ import {
   Config,
   ConfigKey,
   MiddlewareConfig,
-} from '../../../../src/lib/types.js'
+} from '../../../../dist/lib/types.js'
 import { RespData } from '../../../root.config.js'
 
 
