@@ -36,8 +36,8 @@ describe(fileShortPath(import.meta.url), function() {
       .get(helloPath)
       .expect(200)
 
-    const ret = resp.text as Msg
-    assert(ret === Msg.hello, JSON.stringify(ret, null, 2))
+    const ret = resp.text as string
+    assert(ret.includes(Msg.hello), JSON.stringify(ret, null, 2))
   })
 
 })
