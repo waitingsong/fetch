@@ -65,7 +65,7 @@
     "clean:lock": "rm -f package-lock.json",
     "clean:log": "rm -rf ./logs ./run",
     "cov": "c8 --all npm run test -- --parallel=false",
-    "db:gen": "kmore gen --project tsconfig.cjs.json --path ./src",
+    "db:gen": "kmore gen --path ./src",
     "dev": "cross-env MIDWAY_SERVER_ENV=local mwtsc --watch --run @midwayjs/mock/app",
     "lint": "eslint --fix --cache {src,test}/**/*.ts",
     "lint:nofix": "eslint --cache {src,test}/**/*.ts",
