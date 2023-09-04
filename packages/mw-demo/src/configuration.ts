@@ -8,7 +8,9 @@ import {
   MidwayEnvironmentService,
   MidwayInformationService,
   ILifeCycle,
+  ILogger,
   Inject,
+  Logger,
 } from '@midwayjs/core'
 import {
   Application,
@@ -25,9 +27,7 @@ import {
   ConfigKey,
   MiddlewareConfig,
 } from './lib/types.js'
-import {
-  DemoMiddleware,
-} from './middleware/index.middleware.js'
+import { DemoMiddleware } from './middleware/index.middleware.js'
 
 
 @Configuration({
@@ -50,6 +50,7 @@ export class AutoConfiguration implements ILifeCycle {
 
   @Inject() protected readonly environmentService: MidwayEnvironmentService
   @Inject() protected readonly informationService: MidwayInformationService
+  @Logger() protected readonly logger: ILogger
 
   async onReady(container: IMidwayContainer): Promise<void> {
     void container
@@ -68,6 +69,8 @@ export class AutoConfiguration implements ILifeCycle {
     if (enableMiddleware && isDevelopmentEnvironment) {
       registerMiddleware(this.app, DemoMiddleware)
     }
+
+    this.logger.info(`[${ConfigKey.componentName}] onReady`)
   }
 
 }
