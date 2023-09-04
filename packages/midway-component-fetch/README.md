@@ -11,7 +11,7 @@ HTTP fetch component for midway.js
 ## Install
 
 ```sh
-npm i @mw-components/fetch
+npm i @mwcp/fetch
 ```
 
 ## Usage
@@ -24,7 +24,6 @@ import * as fetch from '@mwcp/fetch'
   imports: [
     fetch,
   ],
-  importConfigs: [join(__dirname, 'config')],
 })
 export class ContainerConfiguration implements ILifeCycle {
 }

@@ -22,7 +22,7 @@ npm i -g c8 lerna rollup tsx
 ```sh
 npm i @waiting/fetch
 // for Midway.js
-npm i @mw-components/fetch
+npm i @mwcp/fetch
 ```
 
 
@@ -62,7 +62,7 @@ npm run repo:init
 
 [`@mwcp/fetch`]: https://github.com/waitingsong/fetch/tree/main/packages/midway-component-fetch
 [mw-svg]: https://img.shields.io/npm/v/@mwcp/fetch.svg?maxAge=7200
-[mw-ch]: https://github.com/waitingsong/kmore/tree/main/packages/midway-component-fetch/CHANGELOG.md
+[mw-ch]: https://github.com/waitingsong/fetch/tree/main/packages/midway-component-fetch/CHANGELOG.md
 
 
 

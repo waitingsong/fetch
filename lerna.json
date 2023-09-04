@@ -3,7 +3,6 @@
   "command": {
     "publish": {
       "ignoreChanges": [
-        "*.md",
         ".githooks",
         ".scripts",
         ".vscode",
@@ -22,7 +21,6 @@
         "versioning_*"
       ],
       "ignoreChanges": [
-        "*.md",
         ".githooks",
         ".scripts",
         ".vscode",
