@@ -14,7 +14,7 @@ let app: Application
 
 export async function mochaGlobalSetup(this: Suite) {
   app = await createAppInstance()
-  updateConfig(app, testConfig)
+  await updateConfig(app, testConfig)
 }
 
 export async function mochaGlobalTeardown(this: Suite) {
@@ -52,7 +52,7 @@ async function createAppInstance(): Promise<Application> {
   // https://midwayjs.org/docs/testing
 }
 
-function updateConfig(mockApp: Application, config: TestConfig): void {
+async function updateConfig(mockApp: Application, config: TestConfig): Promise<void> {
   config.app = mockApp
   config.httpRequest = createHttpRequest(mockApp)
 
