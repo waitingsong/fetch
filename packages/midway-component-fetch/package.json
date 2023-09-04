@@ -1,7 +1,7 @@
 {
   "name": "@mwcp/fetch",
   "author": "waiting",
-  "version": "23.3.5",
+  "version": "24.0.0",
   "description": "",
   "private": false,
   "keywords": [
@@ -36,10 +36,8 @@
   "dependencies": {
     "@mwcp/otel": "7 - 12",
     "@mwcp/share": "6 - 8",
-    "@waiting/fetch": "^23.3.5",
+    "@waiting/fetch": "^24.0.0",
     "@waiting/shared-core": "^21.5.0"
-  },
-  "devDependencies": {
   },
   "engines": {
     "node": ">=18.12.0",

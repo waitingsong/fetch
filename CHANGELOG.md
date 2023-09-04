@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [24.0.0](https://github.com/waitingsong/fetch/compare/v23.3.5...v24.0.0) (2023-09-04)
+
+**Note:** Version bump only for package rxxfetch
+
+
+
+
+
 ## [23.3.5](https://github.com/waitingsong/fetch/compare/v23.3.4...v23.3.5) (2023-08-21)
 
 
