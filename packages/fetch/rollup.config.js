@@ -104,17 +104,17 @@ if (pkg.exports) {
           },
         ],
       },
-      {
-        external: external.concat(nodeModule),
-        input: names.srcPath,
-        output: [
-          {
-            file: names.ctsPath,
-            format: 'cjs',
-          },
-        ],
-        plugins: [dts()],
-      },
+      // {
+      //   external: external.concat(nodeModule),
+      //   input: names.srcPath,
+      //   output: [
+      //     {
+      //       file: names.ctsPath,
+      //       format: 'cjs',
+      //     },
+      //   ],
+      //   plugins: [dts()],
+      // },
     )
   })
 }
@@ -175,7 +175,8 @@ if (production) {
 
 if (pkg.bin) {
   // const shebang = `#!/usr/bin/env node\n\n${banner}`
-  const shebang = `#!/usr/bin/env ts-node-esm\n\n${banner}`
+  // const shebang = `#!/usr/bin/env ts-node-esm\n\n${banner}`
+  const shebang = `#!/usr/bin/env tsx\n\n${banner}`
 
   for (const binPath of Object.values(pkg.bin)) {
     if (! binPath) {
