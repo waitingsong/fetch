@@ -17,7 +17,7 @@ import {
   retrieveHeadersItem,
 } from '@waiting/shared-core'
 
-import { Config, ReqCallbackOptions } from './types'
+import { Config, ReqCallbackOptions } from './types.js'
 
 
 /**

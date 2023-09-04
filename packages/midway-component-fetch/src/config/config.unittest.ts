@@ -10,6 +10,7 @@ export const fetchConfig: Config = {
   ...initialConfig,
   captureRequestHeaders: [...initialConfig.captureRequestHeaders],
   captureResponseHeaders: [...initialConfig.captureResponseHeaders],
+  enableTrace: true,
 }
 
 export const fetchMiddlewareConfig: Readonly<Omit<MiddlewareConfig, 'match'>> = {

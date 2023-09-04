@@ -1,10 +1,10 @@
 
-export * from './config'
-export * from './types'
-export { FetchComponent } from './fetch.component'
-export { FetchService } from './fetch.service'
+export * from './config.js'
+export * from './types.js'
+export { FetchComponent } from './fetch.component.js'
+export { FetchService } from './fetch.service.js'
 export {
   defaultfetchConfigCallbacks,
   genRequestHeaders,
-} from './helper'
+} from './helper.js'
 

@@ -4,10 +4,23 @@ import type {
   Context as TraceContext,
 } from '@mwcp/otel'
 import type { Headers as UndiciHeaders, Options } from '@waiting/fetch'
-import { MiddlewareConfig as MWConfig } from '@waiting/shared-types'
+import type { MiddlewareConfig as MWConfig } from '@waiting/shared-types'
 
-import { Context } from '../interface'
+import { Context } from '../interface.js'
 
+
+export enum ConfigKey {
+  namespace = 'fetch',
+  config = 'fetchConfig',
+  middlewareConfig = 'fetchMiddlewareConfig',
+  componentName = 'fetchComponent',
+  middlewareName = 'fetchMiddleware'
+}
+
+export enum Msg {
+  hello = 'hello world',
+  AuthFailed = 'Authentication Failed',
+}
 
 // export type FetchOptions = Options
 export type FetchOptions = Options & TraceOptions

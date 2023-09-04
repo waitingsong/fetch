@@ -12,14 +12,14 @@ import {
 } from '@mwcp/otel'
 import { Headers, ResponseData, pickUrlStrFromRequestInfo } from '@waiting/fetch'
 
-import type { Context } from '../interface'
+import type { Context } from '../interface.js'
 
-import { ConfigKey } from './config'
-import { FetchComponent } from './fetch.component'
+import { FetchComponent } from './fetch.component.js'
 import {
   Config,
+  ConfigKey,
   FetchOptions,
-} from './types'
+} from './types.js'
 
 
 @Provide()

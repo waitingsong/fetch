@@ -9,9 +9,7 @@
  * }
  */
 export interface HttpbinRetCookie {
-  cookies: {
-    [prop: string]: string,
-  }
+  cookies: Record<string, string>
 }
 
 

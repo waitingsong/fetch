@@ -30,7 +30,7 @@ export interface Options extends RequestInit, Args {
 }
 /** Typeof resolved Response data */
 export type ResponseData = ArrayBuffer | Blob | FormData |
-string | JsonObject | void | never | object
+string | JsonObject | void | object
 
 
 export enum FnKeys {
@@ -61,7 +61,7 @@ export interface Args {
   abortController?: AbortController
 
   /** Append custom cookies with key:value object */
-  cookies?: { [key: string]: string | number | null } | null
+  cookies?: Record<string, string | number | null> | null
 
   /**
    * Content-Type, jQuery behavior,

@@ -15,9 +15,8 @@ import {
   ResponseData,
 } from '@waiting/fetch'
 
-import { ConfigKey } from './config'
-import { defaultfetchConfigCallbacks } from './helper'
-import { Config, FetchOptions } from './types'
+import { defaultfetchConfigCallbacks } from './helper.js'
+import { Config, ConfigKey, FetchOptions } from './types.js'
 
 
 @Autoload()

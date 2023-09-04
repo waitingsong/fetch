@@ -1,7 +1,7 @@
 import { HeadersKey, AttrNames } from '@mwcp/otel'
 
-import { genRequestHeaders } from './helper'
-import { Config, MiddlewareConfig, MiddlewareOptions } from './types'
+import { genRequestHeaders } from './helper.js'
+import { Config, MiddlewareConfig, MiddlewareOptions } from './types.js'
 
 
 export const initialConfig: Readonly<Config> = {
@@ -42,13 +42,5 @@ export const initMiddlewareOptions: MiddlewareOptions = {
 }
 export const initialMiddlewareConfig: Readonly<Omit<MiddlewareConfig, 'ignore' | 'match' | 'options'>> = {
   enableMiddleware: true,
-}
-
-export enum ConfigKey {
-  namespace = 'fetch',
-  config = 'fetchConfig',
-  middlewareConfig = 'fetchMiddlewareConfig',
-  componentName = 'fetchComponent',
-  middlewareName = 'fetchMiddleware'
 }
 

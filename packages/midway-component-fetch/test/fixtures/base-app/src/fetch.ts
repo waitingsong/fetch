@@ -5,7 +5,7 @@ import {
   Inject,
 } from '@midwayjs/core'
 
-import { FetchService } from '~/index'
+import { FetchService } from '../../../../dist/index.js'
 
 
 @Controller('/fetch')
