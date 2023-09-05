@@ -5,6 +5,7 @@ enable-source-maps: true
 node-option:
   - no-warnings
   - "loader=ts-node/esm"
+  - "enable-source-maps"
 require:
   - tsconfig-paths/register.js
   - test/setup.ts
