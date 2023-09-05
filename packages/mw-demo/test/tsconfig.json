@@ -1,7 +1,6 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "rootDir": "..",
     "declaration": false,
     "declarationMap": false,
     "noEmit": true,
