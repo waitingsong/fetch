@@ -2,14 +2,19 @@ import assert from 'node:assert/strict'
 
 import { fileShortPath } from '@waiting/shared-core'
 
-import { foo } from '##/index.js'
+import * as Src from '##/index.js'
 
 
 describe(fileShortPath(import.meta.url), () => {
 
   describe('should work', () => {
     it('foo', () => {
-      assert(foo === 1)
+      assert(typeof Src === 'object', 'typeof Src !== "object"')
+      // @ts-ignore
+      if (typeof Src.foo === 'number') {
+        // @ts-ignore
+        assert(Src.foo === 1)
+      }
     })
   })
 

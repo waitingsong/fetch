@@ -45,12 +45,12 @@ export class AutoConfiguration implements ILifeCycle {
 
   @App() readonly app: Application
 
-  @Config(ConfigKey.config) protected readonly config: Conf
-  @Config(ConfigKey.middlewareConfig) protected readonly mwConfig: MiddlewareConfig
-
   @Inject() protected readonly environmentService: MidwayEnvironmentService
   @Inject() protected readonly informationService: MidwayInformationService
   @Logger() protected readonly logger: ILogger
+
+  @Config(ConfigKey.config) protected readonly config: Conf
+  @Config(ConfigKey.middlewareConfig) protected readonly mwConfig: MiddlewareConfig
 
   async onReady(container: IMidwayContainer): Promise<void> {
     void container
