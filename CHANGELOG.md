@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [24.0.2](https://github.com/waitingsong/fetch/compare/v24.0.1...v24.0.2) (2023-09-12)
+
+
+### Bug Fixes
+
+* **boilerplate:** package.json db:gen ([e1b4a74](https://github.com/waitingsong/fetch/commit/e1b4a744f58ce710add2edc9f5878f96b69d1009))
+
+
+
+
+
 ## [24.0.1](https://github.com/waitingsong/fetch/compare/v24.0.0...v24.0.1) (2023-09-04)
 
 **Note:** Version bump only for package rxxfetch
