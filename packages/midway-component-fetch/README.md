@@ -8,6 +8,10 @@ HTTP fetch component for midway.js
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
 
+## Note
+
+ESM build only, requires `@midwayjs >= 3.12` and set `"type": "module"` in `packages.json`
+
 ## Install
 
 ```sh

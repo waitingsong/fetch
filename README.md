@@ -10,10 +10,13 @@
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 
 
+## Note
+
+ESM build only, requires `@midwayjs >= 3.12` and set `"type": "module"` in `packages.json`
 
 ## 安装全局依赖
 ```sh
-npm i -g c8 lerna rollup tsx
+npm i -g c8 lerna rollup tsx zx
 ```
 
 ## 创建新项目
