@@ -14,9 +14,11 @@ let app: Application
 export async function mochaGlobalSetup(this: Suite) {
   app = await createAppInstance()
   await updateConfig(app, testConfig)
+  await updateConfig2(app, testConfig)
 }
 
 export async function mochaGlobalTeardown(this: Suite) {
+  await clean(app, testConfig)
   await close(app)
 }
 
@@ -56,4 +58,12 @@ async function updateConfig(mockApp: Application, config: TestConfig): Promise<v
 
   config.container = mockApp.getApplicationContext()
   // const svc = await testConfig.container.getAsync(TaskQueueService)
+}
+
+async function updateConfig2(mockApp: Application, config: TestConfig): Promise<void> {
+  void mockApp, config
+}
+
+async function clean(mockApp: Application, config: TestConfig): Promise<void> {
+  void mockApp, config
 }
