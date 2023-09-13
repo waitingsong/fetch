@@ -1,8 +1,7 @@
 // https://mochajs.org/#global-fixtures
 // https://mochajs.org/#root-hook-plugins
-import assert from 'node:assert/strict'
+import assert from 'node:assert'
 
-import * as WEB from '@midwayjs/koa'
 import { createApp, close, createHttpRequest } from '@midwayjs/mock'
 import { Application } from '@mwcp/share'
 import type { Suite } from 'mocha'
@@ -26,16 +25,8 @@ export async function mochaGlobalTeardown(this: Suite) {
  * Update testConfig in place
  */
 async function createAppInstance(): Promise<Application> {
-  const globalConfig = {
-    keys: Math.random().toString(),
-  }
-  const opts = {
-    imports: [WEB],
-    globalConfig,
-  }
-
   try {
-    app = await createApp(testConfig.testAppDir, opts) as Application
+    app = await createApp(testConfig.testAppDir) as Application
   }
   catch (ex) {
     console.error('createApp error:', ex)
@@ -43,10 +34,13 @@ async function createAppInstance(): Promise<Application> {
   }
 
   assert(app, 'app not exists')
-  app.addConfigObject(globalConfig)
+  // const globalConfig = {
+  //   keys: Math.random().toString(),
+  // }
+  // app.addConfigObject(globalConfig)
 
-  const names = app.getMiddleware().getNames()
-  console.info({ middlewares: names })
+  const middlewares = app.getMiddleware().getNames()
+  console.info({ middlewares })
 
   return app
   // https://midwayjs.org/docs/testing
