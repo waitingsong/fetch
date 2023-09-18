@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [24.0.3](https://github.com/waitingsong/fetch/compare/v24.0.2...v24.0.3) (2023-09-18)
+
+**Note:** Version bump only for package @waiting/fetch
+
+
+
+
+
 # [24.0.0](https://github.com/waitingsong/fetch/compare/v23.3.5...v24.0.0) (2023-09-04)
 
 **Note:** Version bump only for package @waiting/fetch
