@@ -19,10 +19,7 @@
     "#@/*": "./test/*"
   },
   "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    },
+    ".": "./dist/index.js",
     "./package.json": "./package.json"
   },
   "bugs": {
@@ -59,7 +56,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "npm run tsc && tsc-alias && npm run rp",
+    "build": "npm run tsc && tsc-alias",
     "clean": "npm run clean:lock && npm run clean:dist && npm run clean:log",
     "clean:cache": "rm -rf .eslintcache .tsbuildinfo",
     "clean:dist": "npm run clean:cache && rm -rf dist/*",
