@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [25.0.0](https://github.com/waitingsong/fetch/compare/v24.0.3...v25.0.0) (2023-09-19)
+
+
+### Bug Fixes
+
+* **boilerplate:** package.json db:gen ([e1b4a74](https://github.com/waitingsong/fetch/commit/e1b4a744f58ce710add2edc9f5878f96b69d1009))
+
+
+
+
+
 ## [24.0.3](https://github.com/waitingsong/fetch/compare/v24.0.2...v24.0.3) (2023-09-18)
 
 
