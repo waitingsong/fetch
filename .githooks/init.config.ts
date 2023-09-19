@@ -21,5 +21,6 @@ export const globalConfigFileArr: string[] = [
   './tsconfig.base.json',
   './tsconfig.eslint.json',
   './rollup.config.js',
+  './bin-hashbang.js',
 ]
 
