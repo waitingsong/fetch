@@ -27,7 +27,7 @@
     "mocha": "10",
     "mocha-lcov-reporter": "1",
     "mwtsc": "^1.0.1",
-    "nx": "16",
+    "nx": "17",
     "rollup-plugin-dts": "6",
     "ts-node": "^10.9.1",
     "tsc-alias": "^1.8.7",
