@@ -17,7 +17,7 @@
   "types": "dist/index.d.ts",
   "imports": {
     "#package.json": "./package.json",
-    "##/*": "./dist/*",
+    "##/*": "./src/*",
     "#@/*": "./test/*"
   },
   "exports": {
@@ -35,12 +35,12 @@
   "license": "MIT",
   "dependencies": {
     "@opentelemetry/api": "*",
-    "@types/qs": "^6.9.8",
-    "@waiting/shared-core": "^22.0.0",
-    "@waiting/shared-types": "^22.0.0",
+    "@types/qs": "^6.9.11",
+    "@waiting/shared-core": "^23.0.0",
+    "@waiting/shared-types": "^23.0.0",
     "form-data": "^4.0.0",
     "qs": "^6.11.2",
-    "undici": ">=5.23"
+    "undici": ">=6"
   },
   "engines": {
     "node": ">=18.12.0"
@@ -63,7 +63,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "npm run tsc && tsc-alias",
+    "build": "npm run tsc && tsc-alias && npm run rp",
     "clean": "npm run clean:lock && npm run clean:dist && npm run clean:log",
     "clean:cache": "rm -rf .eslintcache .tsbuildinfo",
     "clean:dist": "npm run clean:cache && rm -rf dist/*",
@@ -73,7 +73,7 @@
     "lint": "eslint --fix --cache {src,test}/**/*.ts",
     "lint:nofix": "eslint --cache {src,test}/**/*.ts",
     "pretest": "npm run build",
-    "rp": "rollup -c rollup.config.js --context this",
+    "rp": "tsx bin-hashbang.js",
     "test": "cross-env NODE_ENV=test TS_NODE_PROJECT=test/tsconfig.json mocha --jobs=4",
     "tsc": "tsc -b"
   }
