@@ -6,6 +6,10 @@
 # Date: 2023.07.21
 #
 
+if [[ -f $HOME/.nvm/nvm.sh ]]; then
+  . $HOME/.nvm/nvm.sh
+fi
+
 branch=$( git branch | grep \* | cut -d ' ' -f2 )
 # ./.githooks/init-repo/is-skip-commitlint.ts $1 "$branch"
 
@@ -14,6 +18,6 @@ code=0
 #echo -e 'node exitCode:' $code
 
 if [[ $code = 0 ]] && [[ -d node_modules ]] ; then
-  commitlint -e ./.git/COMMIT_EDITMSG
+  ./node_modules/.bin/commitlint -e ./.git/COMMIT_EDITMSG
 fi
 
