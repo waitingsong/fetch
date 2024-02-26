@@ -34,8 +34,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@mwcp/otel": "20 - 22",
-    "@mwcp/share": "20 - 22",
+    "@mwcp/otel": "22",
+    "@mwcp/share": "22",
     "@waiting/fetch": "^26.0.0",
     "@waiting/shared-core": "^23.0.0"
   },
