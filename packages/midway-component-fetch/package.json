@@ -37,11 +37,11 @@
     "@mwcp/otel": "22",
     "@mwcp/share": "22",
     "@waiting/fetch": "^26.0.0",
-    "@waiting/shared-core": "^23.0.0"
+    "@waiting/shared-core": "^23.2.0"
   },
   "engines": {
     "node": ">=18.12.0",
-    "@midwayjs/core": ">=3.14.0"
+    "@midwayjs/core": ">=3.15.0"
   },
   "files": [
     "README.*.md",
