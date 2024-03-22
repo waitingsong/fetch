@@ -60,6 +60,7 @@
   },
   "scripts": {
     "build": "npm run tsc && tsc-alias",
+    "build:test": "tsc -p test/tsconfig.json",
     "clean": "npm run clean:lock && npm run clean:dist && npm run clean:log",
     "clean:cache": "rm -rf .eslintcache .tsbuildinfo",
     "clean:dist": "npm run clean:cache && rm -rf dist/*",
@@ -68,10 +69,10 @@
     "cov": "c8 --all npm run test -- --parallel=false",
     "db:gen": "kmore gen --path ./src",
     "dev": "cross-env MIDWAY_SERVER_ENV=local mwtsc --watch --run @midwayjs/mock/app",
-    "lint": "eslint --fix --cache {src,test}/**/*.ts",
-    "lint:nofix": "eslint --cache {src,test}/**/*.ts",
+    "lint": "eslint --fix --cache src test",
+    "lint:nofix": "eslint --cache src test",
     "predev": "npm run build",
-    "pretest": "npm run build",
+    "pretest": "npm run build && npm run build:test",
     "start": "cross-env NODE_ENV=production node ./bootstrap.js",
     "test": "cross-env MIDWAY_SERVER_ENV=unittest TS_NODE_PROJECT=test/tsconfig.json mocha --parallel=false",
     "tsc": "tsc -b"
