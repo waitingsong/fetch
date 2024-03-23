@@ -15,7 +15,7 @@ import { HttpbinPostResponse, PostForm1 } from './test.types.js'
 
 const __filename = fileURLToPath(import.meta.url)
 
-describe(fileShortPath(import.meta.url), function() {
+describe(fileShortPath(import.meta.url), function () {
   this.retries(1)
   beforeEach(resolve => setTimeout(resolve, DELAY))
 

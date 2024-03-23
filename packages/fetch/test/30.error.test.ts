@@ -12,7 +12,7 @@ import {
 import { HOST, HOST_POST } from './config.js'
 
 
-describe(fileShortPath(import.meta.url), function() {
+describe(fileShortPath(import.meta.url), function () {
   this.retries(3)
 
   describe('Should handleResponseError work', () => {

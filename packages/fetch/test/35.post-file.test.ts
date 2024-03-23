@@ -21,7 +21,7 @@ const blob = typeof Blob === 'undefined'
   ? new NodeBlob([buf], { type: 'image/gif' })
   : new Blob([buf], { type: 'image/gif' })
 
-describe(fileShortPath(import.meta.url), function() {
+describe(fileShortPath(import.meta.url), function () {
   this.retries(1)
 
   beforeEach((done) => {
@@ -46,7 +46,7 @@ describe(fileShortPath(import.meta.url), function() {
       assert(res.data, 'res.data should not be empty')
       assert(
         res.data === 'data:application/octet-stream;base64,' + base64,
-        `Should get "${base64.slice(0, 50)}..." but got ${res && res.data}`,
+        `Should get "${base64.slice(0, 50)}..." but got ${res?.data}`,
       )
 
     })
@@ -69,14 +69,13 @@ describe(fileShortPath(import.meta.url), function() {
 
       if (! res.files) {
         assert(false)
-        return
       }
       const { uploadFile } = res.files
       assert(typeof uploadFile === 'string' && uploadFile)
       const base64 = buf.toString('base64')
       assert(
         uploadFile === 'data:image/gif;base64,' + base64,
-        `Should get "${base64.slice(0, 50)}..." but got ${res && res.data}`,
+        `Should get "${base64.slice(0, 50)}..." but got ${res?.data}`,
       )
 
     })
@@ -107,7 +106,6 @@ describe(fileShortPath(import.meta.url), function() {
 
       if (! res.files) {
         assert(false)
-        return
       }
       const { uploadFile } = res.files
       assert(typeof uploadFile === 'string' && uploadFile)
@@ -115,7 +113,7 @@ describe(fileShortPath(import.meta.url), function() {
       const base64 = buf.toString('base64')
       assert(
         uploadFile === 'data:image/gif;base64,' + base64,
-        `Should get "${base64.slice(0, 50)}..." but got ${res && res.data}`,
+        `Should get "${base64.slice(0, 50)}..." but got ${res?.data}`,
       )
 
     })
@@ -131,7 +129,7 @@ describe(fileShortPath(import.meta.url), function() {
       assert(res && res.url === url)
       assert(
         res.data && res.data === 'data:application/octet-stream;base64,' + base64,
-        `Should get "${base64.slice(0, 50)}..." but got ${res && res.data}`,
+        `Should get "${base64.slice(0, 50)}..." but got ${res?.data}`,
       )
 
     })

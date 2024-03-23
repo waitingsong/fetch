@@ -37,7 +37,7 @@ type ProcessResponseTypeReturnType<K extends (ResponseProcessNameKeys | Response
     ? Response
     : K extends ResponseProcessNameKeys
       ? (Response[K] extends (...args: unknown[])
-      => Promise<infer R> ? unknown extends R ? JsonObject : R : never)
+        => Promise<infer R> ? unknown extends R ? JsonObject : R : never)
       : never
 
 export async function processResponseType<K extends (

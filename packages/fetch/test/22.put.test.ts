@@ -10,7 +10,7 @@ import { DELAY, HOST_PUT } from './config.js'
 import { HttpbinPostResponse, PostForm1 } from './test.types.js'
 
 
-describe(fileShortPath(import.meta.url), function() {
+describe(fileShortPath(import.meta.url), function () {
   this.retries(1)
   beforeEach(resolve => setTimeout(resolve, DELAY))
 

@@ -106,9 +106,7 @@ export function splitInitArgs(options: Options): ArgsRequestInitCombined {
 }
 
 
-export function processParams(
-  options: Options,
-): ArgsRequestInitCombined {
+export function processParams(options: Options): ArgsRequestInitCombined {
   const initOpts: Options = { ...initialOptions, ...options }
   const opts = splitInitArgs(initOpts)
   return processInitOpts(opts)
@@ -124,7 +122,7 @@ export function processInitOpts(options: ArgsRequestInitCombined): ArgsRequestIn
   opts.args.dataType = processDataType(opts.args.dataType)
   opts.args.timeout = parseTimeout(opts.args.timeout)
   const redirect = processRedirect(
-    opts.args.keepRedirectCookies as boolean,
+    !! opts.args.keepRedirectCookies,
     opts.requestInit.redirect,
   )
   if (redirect) {
@@ -160,7 +158,7 @@ function processAbortController(options: ArgsRequestInitCombined): ArgsRequestIn
       args.abortController = new AbortController()
     }
     else {
-      throw new Error('AbortController not avaiable')
+      throw new Error('AbortController not available')
     }
   }
 
@@ -262,7 +260,7 @@ function parseTimeout(ps: unknown): number {
 
 
 /**
- * set redirect to 'manul' for retrieve cookies during 301/302 when keepRedirectCookies:TRUE
+ * set redirect to 'manual' for retrieve cookies during 301/302 when keepRedirectCookies:TRUE
  * and current value only when "follow"
  */
 function processRedirect(
@@ -272,7 +270,7 @@ function processRedirect(
 
   // not change value if on Browser
   /* istanbul ignore else */
-  if (keepRedirectCookies === true && typeof window === 'undefined') {
+  if (keepRedirectCookies && typeof window === 'undefined') {
     /* istanbul ignore else */
     if (curValue === 'follow') {
       return 'manual'
@@ -296,9 +294,7 @@ export function processRequestGetLikeData(input: string, args: Args): string {
     url = buildQueryString(input, args.data)
   }
   else {
-    throw new TypeError(
-      'Typeof args.data invalid for GET/DELETE when args.processData not true, type is :' + typeof args.data,
-    )
+    throw new TypeError('Typeof args.data invalid for GET/DELETE when args.processData not true, type is :' + typeof args.data)
   }
 
   return url
@@ -342,8 +338,8 @@ export function processRequestPostLikeData(args: Args): RequestInit['body'] | nu
     body = data
   }
   else if (args.processData) {
-    const ctype = args.contentType as string | false
-    if (typeof ctype === 'string' && ctype.includes('json')) {
+    const { contentType } = args
+    if (typeof contentType === 'string' && contentType.includes('json')) {
       body = JSON.stringify(data)
     }
     else {
@@ -357,7 +353,7 @@ export function processRequestPostLikeData(args: Args): RequestInit['body'] | nu
   return body
 }
 
-/** "foo=cookiefoo; Secure; Path=/" */
+/** "foo=cookie_foo; Secure; Path=/" */
 export function parseRespCookie(cookie: string | null): Args['cookies'] {
   /* istanbul ignore else  */
   if (! cookie) {

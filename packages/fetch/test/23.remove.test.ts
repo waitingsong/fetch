@@ -9,7 +9,7 @@ import { DELAY, HOST_DELETE } from './config.js'
 import { HttpbinPostResponse, PDATA } from './test.types.js'
 
 
-describe(fileShortPath(import.meta.url), function() {
+describe(fileShortPath(import.meta.url), function () {
   this.retries(1)
   beforeEach(resolve => setTimeout(resolve, DELAY))
 
@@ -27,13 +27,13 @@ describe(fileShortPath(import.meta.url), function() {
 
       const res = await remove<HttpbinPostResponse<PDATA>>(url, opts)
       try {
-        assert(res && res.args, 'Should response.args not empty')
+        assert(res?.args, 'Should response.args not empty')
         assert(res.url === url + '?' + QueryString.stringify(pdata))
         assert(
           res.args.p1 === pdata.p1.toString(),
-          `Should p1 get ${pdata.p1}, but got "${res.args && res.args.p1}"`,
+          `Should p1 get ${pdata.p1}, but got "${res.args?.p1}"`,
         )
-        assert(res.args.p2 === pdata.p2, `Should p2 get ${pdata.p2}, but got "${res.args && res.args.p2}"`)
+        assert(res.args.p2 === pdata.p2, `Should p2 get ${pdata.p2}, but got "${res.args?.p2}"`)
       }
       catch (ex) {
         assert(false, (ex as Error).message)
@@ -53,13 +53,13 @@ describe(fileShortPath(import.meta.url), function() {
       const res = await remove<HttpbinPostResponse<PDATA>>(url, opts)
       const sendUrl = decodeURI(url + '?' + QueryString.stringify(pdata))
       try {
-        assert(res && res.args, 'Should response.args not empty')
+        assert(res?.args, 'Should response.args not empty')
         assert(res.url === sendUrl, `Should get ${sendUrl}, but got ${res.url}`)
         assert(
           res.args.p1 === pdata.p1.toString(),
-          `Should p1 get ${pdata.p1}, but got "${res.args && res.args.p1}"`,
+          `Should p1 get ${pdata.p1}, but got "${res.args?.p1}"`,
         )
-        assert(res.args.p2 === pdata.p2, `Should p2 get ${pdata.p2}, bug got ${res.args && res.args.p2}`)
+        assert(res.args.p2 === pdata.p2, `Should p2 get ${pdata.p2}, bug got ${res.args?.p2}`)
         assert(
           pdata.p3 && res.args['p3[foo]'] === foo,
           `Should get ${foo}`,
@@ -86,8 +86,8 @@ describe(fileShortPath(import.meta.url), function() {
 
       try {
         const { form } = res
-        assert(form && form.p1 === p1, `Should p1 get "${p1}", but got "${form && form.p1}"`)
-        assert(form && form.p2 === p2, `Should p2 get "${p2}", but got "${form && form.p2}"`)
+        assert(form && form.p1 === p1, `Should p1 get "${p1}", but got "${form?.p1}"`)
+        assert(form && form.p2 === p2, `Should p2 get "${p2}", but got "${form?.p2}"`)
       }
       catch (ex) {
         assert(false, (ex as Error).message)

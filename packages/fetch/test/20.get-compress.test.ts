@@ -8,7 +8,7 @@ import { HOST } from './config.js'
 import { HttpbinGetResponse } from './test.types.js'
 
 
-describe(fileShortPath(import.meta.url), function() {
+describe(fileShortPath(import.meta.url), function () {
   this.retries(3)
 
   describe('Should get() for compressed response work with httpbin.org', () => {

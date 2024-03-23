@@ -8,7 +8,7 @@ import { DELAY, HOST, HOST_COOKIES } from './config.js'
 import { HttpbinRetCookie } from './test.types.js'
 
 
-describe(fileShortPath(import.meta.url), function() {
+describe(fileShortPath(import.meta.url), function () {
   this.retries(1)
   beforeEach(resolve => setTimeout(resolve, DELAY))
 
@@ -29,7 +29,7 @@ describe(fileShortPath(import.meta.url), function() {
 
       // https://httpbin.org/cookies/set/foo/0.8615462497448882
       const res = await get<HttpbinRetCookie>(url, opts)
-      assert(res && res.cookies)
+      assert(res?.cookies)
       assert(res.cookies['foo'], 'res.cookies[foo] is undefined')
       assert(res.cookies['foo'] === value, `res.cookies['foo']=${res.cookies['foo']}`)
     })

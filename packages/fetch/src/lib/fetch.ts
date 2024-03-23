@@ -12,12 +12,10 @@ import { processParams } from './util.js'
  *
  * @description generics any will be overwriten to unknown
  */
-export async function fetch<T extends ResponseData>(
-  options: Options,
-): Promise<T> {
+export async function fetch<T extends ResponseData>(options: Options): Promise<T> {
 
   const [ret] = await fetch2<T>(options)
-  return ret as T
+  return ret
 }
 
 
@@ -27,9 +25,7 @@ export async function fetch<T extends ResponseData>(
  * @returns [result, response header]
  * @description generics any will be overwriten to unknown
  */
-export async function fetch2<T extends ResponseData>(
-  options: Options,
-): Promise<[T, Headers]> {
+export async function fetch2<T extends ResponseData>(options: Options): Promise<[T, Headers]> {
 
   trace(AttributeKey.PrepareRequestData, options.span)
   const { args, requestInit } = processParams(options)
@@ -50,7 +46,7 @@ export async function fetch2<T extends ResponseData>(
   if (typeof data === 'undefined') { // timeout
     abortReq(args.abortController)
     trace(AttributeKey.RequestTimeout, options.span)
-    throw new Error(`fetch timeout in "${timeout as number}ms"`)
+    throw new Error(`fetch timeout in "${timeout!}ms"`)
   }
   const dataType = (args.dataType ?? 'bare') as NonNullable<Options['dataType']>
 

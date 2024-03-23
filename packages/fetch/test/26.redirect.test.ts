@@ -18,7 +18,7 @@ import { HttpbinGetResponse } from './test.types.js'
 
 
 // skip while https://github.com/postmanlabs/httpbin/issues/617
-describe.skip(fileShortPath(import.meta.url), function() {
+describe.skip(fileShortPath(import.meta.url), function () {
   this.retries(1)
   beforeEach(resolve => setTimeout(resolve, DELAY))
 

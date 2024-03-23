@@ -48,21 +48,21 @@ export async function createRequest(
   const fetchModule = fetch
   let resp: Response
 
-  // @ts-ignore
+  // @ts-expect-error
   delete requestInit.otelComponent
-  // @ts-ignore
+  // @ts-expect-error
   delete requestInit.span
-  // @ts-ignore
+  // @ts-expect-error
   delete requestInit.traceContext
 
   if (typeof input === 'string') {
     trace(AttributeKey.ProcessRequestData)
     assert(input, 'input should not be empty when typeof input is string')
 
-    if (['GET', 'DELETE'].includes(requestInit.method as string)) {
+    if (['GET', 'DELETE'].includes(requestInit.method!)) {
       inputNew = processRequestGetLikeData(input, args)
     }
-    else if (['POST', 'PUT', 'OPTIONS'].includes(requestInit.method as string)) {
+    else if (['POST', 'PUT', 'OPTIONS'].includes(requestInit.method!)) {
       const body = processRequestPostLikeData(args) ?? null
       requestInit.body = body
     }

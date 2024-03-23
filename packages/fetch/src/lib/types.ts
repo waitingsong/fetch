@@ -30,15 +30,15 @@ export interface Options extends RequestInit, Args {
 }
 /** Typeof resolved Response data */
 export type ResponseData = ArrayBuffer | Blob | FormData |
-string | JsonObject | void | object
+  string | JsonObject | void | object
 
 
 export enum FnKeys {
-  'arrayBuffer' = 'arrayBuffer',
-  'blob' = 'blob',
-  'formData' = 'formData',
-  'json' = 'json',
-  'text' = 'text',
+  arrayBuffer = 'arrayBuffer',
+  blob = 'blob',
+  formData = 'formData',
+  json = 'json',
+  text = 'text',
 }
 export type ResponseProcessNameKeys = keyof Response & keyof typeof FnKeys
 export type ResponseRawKeys = 'raw' | 'bare'
@@ -127,7 +127,7 @@ export interface ArgsRequestInitCombined {
 
 
 export enum FetchMsg {
-  httpErrorMsgPrefix = 'Fetch error status:'
+  httpErrorMsgPrefix = 'Fetch error status:',
 }
 
 

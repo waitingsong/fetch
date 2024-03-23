@@ -14,7 +14,7 @@ export interface HttpbinRetCookie {
 
 
 /** GET Response Interface of httpbin.org */
-export interface HttpbinGetResponse <T = unknown> {
+export interface HttpbinGetResponse<T = unknown> {
   args: T
   brotli?: boolean
   deflated?: boolean
@@ -30,7 +30,7 @@ export interface HttpbinGetResponse <T = unknown> {
 }
 
 /** POST Response Interface of httpbin.org */
-export interface HttpbinPostResponse <T = unknown> extends HttpbinGetResponse <T> {
+export interface HttpbinPostResponse<T = unknown> extends HttpbinGetResponse <T> {
   data: string
   files?: {
     /** base64 */

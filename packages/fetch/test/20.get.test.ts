@@ -9,7 +9,7 @@ import { DELAY, HOST_GET } from './config.js'
 import { HttpbinGetResponse, PDATA, PostForm1 } from './test.types.js'
 
 
-describe(fileShortPath(import.meta.url), function() {
+describe(fileShortPath(import.meta.url), function () {
 
   this.retries(1)
 
@@ -46,13 +46,11 @@ describe(fileShortPath(import.meta.url), function() {
         }
         fr.onerror = () => {
           assert(false, 'fr.readAsArrayBuffer(blob) throw error')
-          done()
         }
         fr.readAsArrayBuffer(blob)
       })
         .catch((err) => {
           assert(false, (err as Error).message)
-          done()
         })
 
     })
@@ -111,7 +109,7 @@ describe(fileShortPath(import.meta.url), function() {
       opts.data = pdata
 
       const res = await get<HttpbinGetResponse<PostForm1>>(url, opts)
-      assert(res && res.args, 'Should response.args not empty')
+      assert(res?.args, 'Should response.args not empty')
       assert(res.url === url + '?' + QueryString.stringify(pdata))
       assert(res.args.p1 === pdata.p1.toString(), `Should got ${pdata.p1}`)
       assert(res.args.p2 === pdata.p2, `Should got ${pdata.p2}`)
@@ -130,7 +128,7 @@ describe(fileShortPath(import.meta.url), function() {
       const sendUrl = decodeURI(url + '?' + QueryString.stringify(pdata))
 
       try {
-        assert(res && res.args, 'Should response.args not empty')
+        assert(res?.args, 'Should response.args not empty')
         assert(res.url === sendUrl, `Should get ${sendUrl}, but got ${res.url}`)
         assert(res.args.p1 === pdata.p1.toString(), `Should got ${pdata.p1}`)
         assert(res.args.p2 === pdata.p2, `Should got ${pdata.p2}`)
@@ -145,7 +143,7 @@ describe(fileShortPath(import.meta.url), function() {
 })
 
 
-describe(fileShortPath(import.meta.url), function() {
+describe(fileShortPath(import.meta.url), function () {
   this.retries(3)
   beforeEach(resolve => setTimeout(resolve, DELAY))
 
@@ -186,14 +184,12 @@ describe(fileShortPath(import.meta.url), function() {
             }
             fr.onerror = () => {
               assert(false, 'fr.readAsArrayBuffer(blob) throw error')
-              done()
             }
             fr.readAsArrayBuffer(blob)
 
           },
           (ex) => {
             assert(false, (ex as Error).message)
-            done()
           },
         )
     })
@@ -252,7 +248,7 @@ describe(fileShortPath(import.meta.url), function() {
       opts.data = pdata
 
       const res = await get<HttpbinGetResponse<PostForm1>>(url, opts)
-      assert(res && res.args, 'Should response.args not empty')
+      assert(res?.args, 'Should response.args not empty')
       assert(res.url === url + '?' + QueryString.stringify(pdata))
       assert(res.args.p1 === pdata.p1.toString(), `Should got ${pdata.p1}`)
       assert(res.args.p2 === pdata.p2, `Should got ${pdata.p2}`)
@@ -271,7 +267,7 @@ describe(fileShortPath(import.meta.url), function() {
       const sendUrl = decodeURI(url + '?' + QueryString.stringify(pdata))
 
       try {
-        assert(res && res.args, 'Should response.args not empty')
+        assert(res?.args, 'Should response.args not empty')
         assert(res.url === sendUrl, `Should get ${sendUrl}, but got ${res.url}`)
         assert(res.args.p1 === pdata.p1.toString(), `Should got ${pdata.p1}`)
         assert(res.args.p2 === pdata.p2, `Should got ${pdata.p2}`)
