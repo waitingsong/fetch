@@ -11,8 +11,8 @@ export {
 export * from './types.js'
 export {
   buildQueryString,
-  getGloalRequestOptions,
+  getGlobalRequestOptions,
   pickUrlStrFromRequestInfo,
-  setGloalRequestOptions,
+  setGlobalRequestOptions,
 } from './util.js'
 

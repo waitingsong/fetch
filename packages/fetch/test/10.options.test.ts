@@ -4,22 +4,22 @@ import assert from 'node:assert/strict'
 import { fileShortPath } from '@waiting/shared-core'
 
 import {
-  getGloalRequestOptions,
-  setGloalRequestOptions,
+  getGlobalRequestOptions,
+  setGlobalRequestOptions,
   Options,
 } from '../src/index.js'
 import { initialOptions } from '../src/lib/config.js'
 
 
-const defaultOptions: Readonly<Options> = getGloalRequestOptions()
+const defaultOptions: Readonly<Options> = getGlobalRequestOptions()
 
 describe(fileShortPath(import.meta.url), () => {
   afterEach(() => {
-    setGloalRequestOptions(defaultOptions)
+    setGlobalRequestOptions(defaultOptions)
   })
 
-  describe('Should getGloalRequestInit() work', () => {
-    const initData = getGloalRequestOptions()
+  describe('Should getGlobalRequestInit() work', () => {
+    const initData = getGlobalRequestOptions()
 
     it('result is copy of initialOptions', () => {
       assert(initData && initData !== initialOptions)
@@ -33,36 +33,35 @@ describe(fileShortPath(import.meta.url), () => {
         }
         else {
           assert(false, `${key} not exists in initialOptions`)
-          break
         }
       }
     })
   })
 
 
-  describe('Should setGloalRequestInit() work', () => {
+  describe('Should setGlobalRequestInit() work', () => {
     it('change method to POST', () => {
       const method = 'POST'
-      setGloalRequestOptions({ method })
-      const initData = getGloalRequestOptions()
+      setGlobalRequestOptions({ method })
+      const initData = getGlobalRequestOptions()
 
       assert(initData && initData.method === method)
     })
 
     it('change mode to no-cors', () => {
-      const { mode: oriMode } = getGloalRequestOptions()
+      const { mode: oriMode } = getGlobalRequestOptions()
       const mode = 'no-cors'
       assert(oriMode !== mode)
-      setGloalRequestOptions({ mode })
-      const { mode: curMode } = getGloalRequestOptions()
+      setGlobalRequestOptions({ mode })
+      const { mode: curMode } = getGlobalRequestOptions()
 
       assert(curMode === mode)
     })
 
     it('change timeout', () => {
       const timeout = Math.ceil(Math.random() * 100)
-      setGloalRequestOptions({ timeout })
-      const initData = getGloalRequestOptions()
+      setGlobalRequestOptions({ timeout })
+      const initData = getGlobalRequestOptions()
 
       assert(initData && initData.timeout === timeout)
     })

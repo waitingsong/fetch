@@ -19,7 +19,7 @@ import {
 
 
 /** Update initialFetchOptions */
-export function setGloalRequestOptions(options: Partial<Options>): void {
+export function setGlobalRequestOptions(options: Partial<Options>): void {
   for (const [key, value] of Object.entries(options)) {
     Object.defineProperty(initialOptions, key, {
       configurable: true,
@@ -32,7 +32,7 @@ export function setGloalRequestOptions(options: Partial<Options>): void {
 }
 
 /** Get copy of initialFetchOptions */
-export function getGloalRequestOptions(): Readonly<Options> {
+export function getGlobalRequestOptions(): Readonly<Options> {
   return { ...initialOptions }
 }
 
