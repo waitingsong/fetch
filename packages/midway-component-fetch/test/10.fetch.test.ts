@@ -5,7 +5,7 @@ import { fileShortPath } from '@waiting/shared-core'
 import { testConfig } from '#@/root.config.js'
 
 
-describe(fileShortPath(import.meta.url), function() {
+describe(fileShortPath(import.meta.url), function () {
 
   it('Should work', async () => {
     const { httpRequest, app } = testConfig
@@ -15,11 +15,11 @@ describe(fileShortPath(import.meta.url), function() {
       .get(path)
       .expect(200)
 
-    const ip = resp.text as string
+    const ip = resp.text
     console.log({ ip })
     assert(typeof ip === 'string')
     assert(ip.length > 0)
-    assert(/[\d.]+/.test(ip))
+    assert(/[\d.]+/u.test(ip))
   })
 
   it.skip('Should work self', async () => {
@@ -30,7 +30,7 @@ describe(fileShortPath(import.meta.url), function() {
       .get(path)
       .expect(200)
 
-    const ip = resp.text as string
+    const ip = resp.text
     console.log({ ip })
     assert(typeof ip === 'string')
   })

@@ -30,8 +30,8 @@ export const genRequestHeaders: Config['genRequestHeaders'] = (options, headersI
   const { webContext: ctx, traceContext, span } = options
 
   if (ctx?.requestContext) {
-    if (typeof ctx['reqId'] === 'string' && ctx['reqId'] && ! headers.has(HeadersKey.reqId)) {
-      headers.set(HeadersKey.reqId, ctx['reqId'])
+    if (typeof ctx.reqId === 'string' && ctx.reqId && ! headers.has(HeadersKey.reqId)) {
+      headers.set(HeadersKey.reqId, ctx.reqId)
     }
   }
 
@@ -226,9 +226,7 @@ export const defaultfetchConfigCallbacks = {
 /**
  * Returns outgoing request attributes
  */
-export function genOutgoingRequestAttributes(
-  options: ReqCallbackOptions,
-): Attributes | undefined {
+export function genOutgoingRequestAttributes(options: ReqCallbackOptions): Attributes | undefined {
 
   const { opts } = options
 

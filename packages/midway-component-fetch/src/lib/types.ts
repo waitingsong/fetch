@@ -14,7 +14,7 @@ export enum ConfigKey {
   config = 'fetchConfig',
   middlewareConfig = 'fetchMiddlewareConfig',
   componentName = 'fetchComponent',
-  middlewareName = 'fetchMiddleware'
+  middlewareName = 'fetchMiddleware',
 }
 
 export enum Msg {
@@ -115,7 +115,7 @@ export interface ReqCallbackOptions {
   opts: FetchOptions
 }
 
-export interface RespCallbackOptions <T = unknown> {
+export interface RespCallbackOptions<T = unknown> {
   id: symbol
   config: Config
   opts: FetchOptions

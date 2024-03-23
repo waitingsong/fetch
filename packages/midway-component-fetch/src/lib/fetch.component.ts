@@ -27,17 +27,13 @@ export class FetchComponent {
 
   @Inject() readonly otel: OtelComponent
 
-  async fetch<T extends ResponseData>(
-    options: FetchOptions,
-  ): Promise<T> {
+  async fetch<T extends ResponseData>(options: FetchOptions): Promise<T> {
 
     const [ret] = await this.fetch2<T>(options)
     return ret
   }
 
-  async fetch2<T extends ResponseData>(
-    options: FetchOptions,
-  ): Promise<[T, Headers]> {
+  async fetch2<T extends ResponseData>(options: FetchOptions): Promise<[T, Headers]> {
 
     const opts: FetchOptions = { ...options }
 
