@@ -10,7 +10,7 @@ import { processParams } from './util.js'
 /**
  * Fetch with strict types
  *
- * @description generics any will be overwriten to unknown
+ * @description generics any will be overwritten to unknown
  */
 export async function fetch<T extends ResponseData>(options: Options): Promise<T> {
 
@@ -23,7 +23,7 @@ export async function fetch<T extends ResponseData>(options: Options): Promise<T
  * Fetch with strict types
  *
  * @returns [result, response header]
- * @description generics any will be overwriten to unknown
+ * @description generics any will be overwritten to unknown
  */
 export async function fetch2<T extends ResponseData>(options: Options): Promise<[T, Headers]> {
 
@@ -46,7 +46,12 @@ export async function fetch2<T extends ResponseData>(options: Options): Promise<
   if (typeof data === 'undefined') { // timeout
     abortReq(args.abortController)
     trace(AttributeKey.RequestTimeout, options.span)
-    throw new Error(`fetch timeout in "${timeout!}ms"`)
+    if (timeout) {
+      throw new Error(`fetch timeout in "${timeout.toString()}ms"`)
+    }
+    else {
+      throw new Error(`fetch timeout`)
+    }
   }
   const dataType = (args.dataType ?? 'bare') as NonNullable<Options['dataType']>
 
@@ -66,7 +71,7 @@ export async function fetch2<T extends ResponseData>(options: Options): Promise<
 /**
  * Fetch Get with strict types, default response is JSON
  *
- * @description generics any will be overwriten to unknown
+ * @description generics any will be overwritten to unknown
  */
 export function get<T extends ResponseData>(
   url: string,
@@ -85,7 +90,7 @@ export function get<T extends ResponseData>(
 /**
  * Fetch Post with strict types
  *
- * @description generics any will be overwriten to unknown
+ * @description generics any will be overwritten to unknown
  */
 export function post<T extends ResponseData>(
   url: Options['url'],
@@ -104,7 +109,7 @@ export function post<T extends ResponseData>(
 /**
  * Fetch Put with strict types
  *
- * @description generics any will be overwriten to unknown
+ * @description generics any will be overwritten to unknown
  */
 export function put<T extends ResponseData>(
   url: Options['url'],
@@ -123,7 +128,7 @@ export function put<T extends ResponseData>(
 /**
  * Fetch delete with strict types
  *
- * @description generics any will be overwriten to unknown
+ * @description generics any will be overwritten to unknown
  */
 export function remove<T extends ResponseData>(
   url: Options['url'],

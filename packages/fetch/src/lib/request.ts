@@ -59,10 +59,12 @@ export async function createRequest(
     trace(AttributeKey.ProcessRequestData)
     assert(input, 'input should not be empty when typeof input is string')
 
-    if (['GET', 'DELETE'].includes(requestInit.method!)) {
+    assert(requestInit.method, 'requestInit.method should not be empty')
+
+    if (['GET', 'DELETE'].includes(requestInit.method)) {
       inputNew = processRequestGetLikeData(input, args)
     }
-    else if (['POST', 'PUT', 'OPTIONS'].includes(requestInit.method!)) {
+    else if (['POST', 'PUT', 'OPTIONS'].includes(requestInit.method)) {
       const body = processRequestPostLikeData(args) ?? null
       requestInit.body = body
     }

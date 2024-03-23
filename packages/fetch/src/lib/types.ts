@@ -30,7 +30,7 @@ export interface Options extends RequestInit, Args {
 }
 /** Typeof resolved Response data */
 export type ResponseData = ArrayBuffer | Blob | FormData |
-  string | JsonObject | void | object
+  string | JsonObject | undefined | object
 
 
 export enum FnKeys {
@@ -108,7 +108,7 @@ export interface Args {
 
   /**
    * Request timeout in msec.
-   * Also for aborting reqeust via abortController
+   * Also for aborting request via abortController
    *
    * @default Infinity
    */
