@@ -1,7 +1,6 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "rootDir": "..",
     "declaration": false,
     "declarationMap": false,
     "noEmit": true,
@@ -9,13 +8,11 @@
     "noImplicitThis": false,
     "noPropertyAccessFromIndexSignature": false,
     "noUnusedLocals": false,
+    "rootDir": "..",
     "sourceMap": false
   },
   "include": [
     "../src/",
-    "./**/*.ts"
-  ],
-  "exclude": [
-    "**/*.d.ts"
-  ],
+    "."
+  ]
 }
