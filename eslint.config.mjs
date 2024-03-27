@@ -1,14 +1,11 @@
 import eslint from 'typescript-eslint'
+
 import srcConfig from '@waiting/eslint-config'
 import testConfig from '@waiting/eslint-config/test'
+import { genCurrentDirname, genModuleAbsolutePathIfExists } from '@waiting/shared-core'
 
 
-const CI = !! ((process.env['CI']
-  ?? process.env['MIDWAY_SERVER_ENV'] === 'unittest')
-  || process.env['MIDWAY_SERVER_ENV'] === 'local'
-  || process.env['NODE_ENV'] === 'unittest'
-  || process.env['NODE_ENV'] === 'local'
-)
+const projectDir = genCurrentDirname(import.meta.url)
 
 const srcRules = {
   'import/no-extraneous-dependencies': [2, {
@@ -17,22 +14,18 @@ const srcRules = {
     bundledDependencies: false,
     packageDir: [
       './',
-      '../../node_modules/@mwcp/share/',
+      await genModuleAbsolutePathIfExists(projectDir, 'node_modules/@mwcp/share'),
     ],
   }],
 }
 const testRules = {
-}
-
-if (CI) {
-  srcRules['@stylistic/linebreak-style'] = 0
-  testRules['@stylistic/linebreak-style'] = 0
+  '@typescript-eslint/no-explicit-any': 0
 }
 
 const languageOptions = {
   parserOptions: {
     // project: 'tsconfig.eslint.json',
-    project: ['./tsconfig.eslint.json', './packages/*/tsconfig.json'],
+    project: ['./tsconfig.eslint.json', './packages/*/tsconfig.eslint.json'],
     tsconfigRootDir: import.meta.dirname,
   },
 }
