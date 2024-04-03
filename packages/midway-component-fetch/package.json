@@ -34,10 +34,10 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@mwcp/otel": "22",
-    "@mwcp/share": "22",
+    "@mwcp/otel": "24",
+    "@mwcp/share": "24",
     "@waiting/fetch": "^27.0.0",
-    "@waiting/shared-core": "^23.2.0"
+    "@waiting/shared-core": "^23.3.0"
   },
   "engines": {
     "node": ">=18.12.0",
