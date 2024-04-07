@@ -48,7 +48,7 @@ describe(fileShortPath(import.meta.url), function () {
       const res = await get<Response>(url, opts)
       assert(res && ! res.ok)
       const cookies = res.headers.get('Set-Cookie')
-      assert(cookies && cookies.includes(`foo=${value};`))
+      assert(cookies?.includes(`foo=${value};`))
     })
 
     it('retrieve cookies with bare:true', async () => {
@@ -60,7 +60,7 @@ describe(fileShortPath(import.meta.url), function () {
       args.keepRedirectCookies = false
 
       const res = await get<Response>(url, args)
-      assert(res && res.ok)
+      assert(res?.ok)
       const cookies = res.headers.get('Set-Cookie')
       assert(! cookies)
     })

@@ -25,7 +25,7 @@ describe(fileShortPath(import.meta.url), function () {
       assert(buf && buf.byteLength > 0)
 
       const txt = buf.byteLength ? ab2str(buf) : ''
-      assert(txt && txt.includes(url))
+      assert(txt?.includes(url))
     })
 
     it.skip('with dataType:"blob"', (done) => {
@@ -41,7 +41,7 @@ describe(fileShortPath(import.meta.url), function () {
           assert(buf && buf.byteLength > 0)
 
           const txt = buf.byteLength ? ab2str(buf) : ''
-          assert(txt && txt.includes(url))
+          assert(txt?.includes(url))
           done()
         }
         fr.onerror = () => {
@@ -61,7 +61,7 @@ describe(fileShortPath(import.meta.url), function () {
 
       const resp = await get<Response>(url, opts)
       const txt = await resp.text()
-      assert(txt && txt.includes(url))
+      assert(txt?.includes(url))
     })
 
     it('with dataType:"text"', async () => {
@@ -69,7 +69,7 @@ describe(fileShortPath(import.meta.url), function () {
       opts.dataType = 'text'
 
       const txt = await get<string>(url, opts)
-      assert(txt && txt.includes(url))
+      assert(txt?.includes(url))
     })
 
     it('with dataType:"unknown" transferred to "json" automatically', async () => {
@@ -159,7 +159,7 @@ describe(fileShortPath(import.meta.url), function () {
       assert(buf && buf.byteLength > 0)
 
       const txt = buf.byteLength ? ab2str(buf) : ''
-      assert(txt && txt.includes(url))
+      assert(txt?.includes(url))
     })
 
     it.skip('with dataType:"blob"', (done) => {
@@ -178,7 +178,7 @@ describe(fileShortPath(import.meta.url), function () {
               assert(buf && buf.byteLength > 0)
 
               const txt = buf.byteLength ? ab2str(buf) : ''
-              assert(txt && txt.includes(url))
+              assert(txt?.includes(url))
 
               done()
             }
@@ -200,7 +200,7 @@ describe(fileShortPath(import.meta.url), function () {
 
       const resp = await get<Response>(url, opts)
       const txt = await resp.text()
-      assert(txt && txt.includes(url))
+      assert(txt?.includes(url))
     })
 
     it('with dataType:"text"', async () => {
@@ -208,7 +208,7 @@ describe(fileShortPath(import.meta.url), function () {
       opts.dataType = 'text'
 
       const txt = await get<string>(url, opts)
-      assert(txt && txt.includes(url))
+      assert(txt?.includes(url))
     })
 
     it('with dataType:"unknown" transferred to "json" automatically', async () => {

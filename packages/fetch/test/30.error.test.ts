@@ -30,7 +30,7 @@ describe(fileShortPath(import.meta.url), function () {
       catch (ex) {
         const err = ex as Error
         assert(
-          err && err.message.startsWith(`${FetchMsg.httpErrorMsgPrefix}404`),
+          err?.message.startsWith(`${FetchMsg.httpErrorMsgPrefix}404`),
           'Should got 404 error, but got: ' + err.message,
         )
         return
@@ -48,7 +48,7 @@ describe(fileShortPath(import.meta.url), function () {
       catch (ex) {
         const err = ex as Error
         assert(
-          err && err.message.startsWith(`${FetchMsg.httpErrorMsgPrefix}405`),
+          err?.message.startsWith(`${FetchMsg.httpErrorMsgPrefix}405`),
           `Should get 405 error but get ${err.message}`,
         )
         return

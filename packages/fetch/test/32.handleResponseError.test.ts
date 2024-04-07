@@ -74,7 +74,7 @@ describe(fileShortPath(import.meta.url), () => {
       // @ts-ignore
       const res = await handleResponseError(resp, true)
       assert(res && res.ok === false)
-      assert(res && res.statusText.includes(statusText))
+      assert(res?.statusText.includes(statusText))
     })
   })
 })

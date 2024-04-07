@@ -17,7 +17,7 @@ describe(fileShortPath(import.meta.url), () => {
         dataType: 'text',
         beforeProcessResponseCallback,
       })
-      assert(txt && txt.includes(url))
+      assert(txt?.includes(url))
     })
   })
 
