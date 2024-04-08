@@ -21,7 +21,7 @@
     "coveralls": "3",
     "cross-env": "7",
     "debug": "^4.3.4",
-    "eslint": "8",
+    "eslint": "9",
     "mocha": "10",
     "mocha-lcov-reporter": "1",
     "mwtsc": "^1.7.2",
