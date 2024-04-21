@@ -8,7 +8,7 @@ import {
   Logger,
 } from '@midwayjs/core'
 
-import * as DefulatConfig from './config/config.default.js'
+import * as DefaultConfig from './config/config.default.js'
 // import * as LocalConfig from './config/config.local.js'
 import * as UnittestConfig from './config/config.unittest.js'
 import { useComponents } from './imports.js'
@@ -23,7 +23,7 @@ import {
   namespace: ConfigKey.namespace,
   importConfigs: [
     {
-      default: DefulatConfig,
+      default: DefaultConfig,
       // local: LocalConfig,
       unittest: UnittestConfig,
     },
