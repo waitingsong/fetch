@@ -3,21 +3,22 @@ import assert from 'node:assert/strict'
 import { fileShortPath } from '@waiting/shared-core'
 
 import { ConfigKey, Msg } from '##/lib/types.js'
+import { apiBase, apiMethod } from '#@/api-test.js'
 import { RespData, TestRespBody, testConfig } from '#@/root.config.js'
 
 
 describe(fileShortPath(import.meta.url), () => {
 
-  const path = '/'
-  const helloPath = `/_${ConfigKey.namespace}/hello`
+  const helloPath = `${apiBase.prefix}/${apiMethod.hello}`
 
-  it(`Should ${path} work`, async () => {
+  it(`Should ${apiBase.root} work`, async () => {
     const { app, httpRequest } = testConfig
 
     const resp = await httpRequest
-      .get(path)
-      .expect(200)
+      .get(apiBase.root)
+      // .expect(200)
 
+    assert(resp.ok, resp.text)
     const ret = resp.body as TestRespBody | RespData
     assert(typeof ret === 'object', JSON.stringify(ret, null, 2))
 
@@ -43,8 +44,8 @@ describe(fileShortPath(import.meta.url), () => {
 
     const resp = await httpRequest
       .get(helloPath)
-      .expect(200)
 
+    assert(resp.ok, resp.text)
     const ret = resp.text
     assert(ret.includes(Msg.hello), JSON.stringify(ret, null, 2))
   })
