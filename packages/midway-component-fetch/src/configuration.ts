@@ -1,12 +1,11 @@
 /* eslint-disable import/max-dependencies */
-// import assert from 'node:assert'
-
 import {
   Configuration,
   ILifeCycle,
   ILogger,
   Logger,
 } from '@midwayjs/core'
+import { TraceInit } from '@mwcp/otel'
 
 import * as DefaultConfig from './config/config.default.js'
 // import * as LocalConfig from './config/config.local.js'
@@ -34,6 +33,7 @@ export class AutoConfiguration implements ILifeCycle {
 
   @Logger() protected readonly logger: ILogger
 
+  @TraceInit(`INIT ${ConfigKey.componentName}.onReady`)
   async onReady(): Promise<void> {
 
     this.logger.info(`[${ConfigKey.componentName}] onReady`)
