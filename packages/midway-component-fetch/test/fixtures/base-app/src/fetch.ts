@@ -6,14 +6,16 @@ import {
 } from '@midwayjs/core'
 
 import { FetchService } from '../../../../dist/index.js'
+import { apiBase, apiMethod } from '../../../api-test.js'
 
 
-@Controller('/fetch')
+// @Controller('/fetch')
+@Controller(apiBase.fetch)
 export class FetchController {
 
   @Inject() private readonly fetchService: FetchService
 
-  @Get('/ip')
+  @Get(`/${apiMethod.ip}`)
   async ip(): Promise<string> {
     const url = 'http://ifconfig.me' // 222.233.10.1
 
@@ -26,7 +28,7 @@ export class FetchController {
     return ip
   }
 
-  @Get('/self')
+  @Get(`/${apiMethod.self}`)
   async self(): Promise<string> {
     const url = 'http://127.0.0.1:7002/fetch/hello'
     const text = await this.fetchService.get<string>(url, { dataType: 'text' })

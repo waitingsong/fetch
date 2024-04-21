@@ -11,7 +11,7 @@ describe(fileShortPath(import.meta.url), function () {
   it('Should work', async () => {
     const { httpRequest, app } = testConfig
 
-    const path = `${apiBase.prefix}/${apiMethod.ip}`
+    const path = `${apiBase.fetch}/${apiMethod.ip}`
     const resp = await httpRequest
       .get(path)
 
@@ -26,7 +26,7 @@ describe(fileShortPath(import.meta.url), function () {
   it.skip('Should work self', async () => {
     const { httpRequest } = testConfig
 
-    const path = `${apiBase.prefix}/${apiMethod.self}`
+    const path = `${apiBase.fetch}/${apiMethod.self}`
     const resp = await httpRequest
       .get(path)
 
