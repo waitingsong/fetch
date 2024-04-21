@@ -34,7 +34,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@opentelemetry/api": "*",
     "@waiting/shared-core": "^23.5.1",
     "@waiting/shared-types": "^23.4.0",
     "form-data": "^4.0.0",
@@ -42,6 +41,7 @@
     "undici": "^6.13.0"
   },
   "devDependencies": {
+    "@opentelemetry/api": "*",
     "@types/qs": "^6.9.15"
   },
   "engines": {
