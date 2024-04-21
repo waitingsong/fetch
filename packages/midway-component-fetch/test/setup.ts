@@ -14,10 +14,12 @@ let app: Application
 
 export async function mochaGlobalSetup(this: Suite) {
   app = await createAppInstance()
-  updateConfig(app, testConfig)
+  await updateConfig(app, testConfig)
+  await updateConfig2(app, testConfig)
 }
 
 export async function mochaGlobalTeardown(this: Suite) {
+  await clean(app, testConfig)
   await close(app)
 }
 
@@ -45,14 +47,14 @@ async function createAppInstance(): Promise<Application> {
   assert(app, 'app not exists')
   app.addConfigObject(globalConfig)
 
-  const names = app.getMiddleware().getNames()
-  console.info({ middlewares: names })
+  const middlewares = app.getMiddleware().getNames()
+  console.info({ middlewares })
 
   return app
   // https://midwayjs.org/docs/testing
 }
 
-function updateConfig(mockApp: Application, config: TestConfig): void {
+async function updateConfig(mockApp: Application, config: TestConfig): Promise<void> {
   config.app = mockApp
   config.httpRequest = createHttpRequest(mockApp)
 
@@ -62,4 +64,14 @@ function updateConfig(mockApp: Application, config: TestConfig): void {
 
   config.container = mockApp.getApplicationContext()
   // const svc = await testConfig.container.getAsync(TaskQueueService)
+}
+
+async function updateConfig2(mockApp: Application, config: TestConfig): Promise<void> {
+  void mockApp
+  void config
+}
+
+async function clean(mockApp: Application, config: TestConfig): Promise<void> {
+  void mockApp
+  void config
 }

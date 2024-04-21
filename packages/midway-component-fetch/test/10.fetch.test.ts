@@ -2,6 +2,7 @@ import assert from 'node:assert/strict'
 
 import { fileShortPath } from '@waiting/shared-core'
 
+import { apiBase, apiMethod } from '#@/api-test.js'
 import { testConfig } from '#@/root.config.js'
 
 
@@ -10,11 +11,11 @@ describe(fileShortPath(import.meta.url), function () {
   it('Should work', async () => {
     const { httpRequest, app } = testConfig
 
-    const path = '/fetch/ip'
+    const path = `${apiBase.prefix}/${apiMethod.ip}`
     const resp = await httpRequest
       .get(path)
-      .expect(200)
 
+    assert(resp.ok, resp.text)
     const ip = resp.text
     console.log({ ip })
     assert(typeof ip === 'string')
@@ -25,11 +26,11 @@ describe(fileShortPath(import.meta.url), function () {
   it.skip('Should work self', async () => {
     const { httpRequest } = testConfig
 
-    const path = '/fetch/self'
+    const path = `${apiBase.prefix}/${apiMethod.self}`
     const resp = await httpRequest
       .get(path)
-      .expect(200)
 
+    assert(resp.ok, resp.text)
     const ip = resp.text
     console.log({ ip })
     assert(typeof ip === 'string')
