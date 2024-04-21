@@ -1,8 +1,7 @@
 // https://mochajs.org/#global-fixtures
 // https://mochajs.org/#root-hook-plugins
-import assert from 'node:assert/strict'
+import assert from 'node:assert'
 
-import * as WEB from '@midwayjs/koa'
 import { createApp, close, createHttpRequest } from '@midwayjs/mock'
 import { Application } from '@mwcp/share'
 import type { Suite } from 'mocha'
@@ -32,7 +31,6 @@ async function createAppInstance(): Promise<Application> {
     keys: Math.random().toString(),
   }
   const opts = {
-    imports: [WEB],
     globalConfig,
   }
 
