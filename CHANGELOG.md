@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [27.1.0](https://github.com/waitingsong/fetch/compare/v27.0.3...v27.1.0) (2024-04-21)
+
+**Note:** Version bump only for package rxxfetch
+
+
+
+
+
 ## [27.0.3](https://github.com/waitingsong/fetch/compare/v27.0.2...v27.0.3) (2024-04-08)
 
 **Note:** Version bump only for package rxxfetch
