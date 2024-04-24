@@ -216,7 +216,7 @@ export const processEx: Config['processEx'] = async (options) => {
   }
 }
 
-export const defaultfetchConfigCallbacks = {
+export const defaultFetchConfigCallbacks = {
   beforeRequest,
   afterResponse,
   processEx,

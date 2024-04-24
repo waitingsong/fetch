@@ -4,7 +4,7 @@ export * from './types.js'
 export { FetchComponent } from './fetch.component.js'
 export { FetchService } from './fetch.service.js'
 export {
-  defaultfetchConfigCallbacks,
+  defaultFetchConfigCallbacks,
   genRequestHeaders,
 } from './helper.js'
 

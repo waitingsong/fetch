@@ -15,7 +15,7 @@ import {
   ResponseData,
 } from '@waiting/fetch'
 
-import { defaultfetchConfigCallbacks } from './helper.js'
+import { defaultFetchConfigCallbacks } from './helper.js'
 import { Config, ConfigKey, FetchOptions } from './types.js'
 
 
@@ -51,7 +51,7 @@ export class FetchComponent {
 
     const config = this.fetchConfig
 
-    await defaultfetchConfigCallbacks.beforeRequest({
+    await defaultFetchConfigCallbacks.beforeRequest({
       id,
       config,
       opts,
@@ -95,7 +95,7 @@ export class FetchComponent {
       }
 
       if (config.enableTrace) {
-        await defaultfetchConfigCallbacks.afterResponse({
+        await defaultFetchConfigCallbacks.afterResponse({
           id,
           config,
           opts,
@@ -113,8 +113,8 @@ export class FetchComponent {
       }
       const err = new Error(msg, { cause: ex })
       if (config.enableTrace) {
-        if (typeof defaultfetchConfigCallbacks.processEx === 'function') {
-          return defaultfetchConfigCallbacks.processEx({
+        if (typeof defaultFetchConfigCallbacks.processEx === 'function') {
+          return defaultFetchConfigCallbacks.processEx({
             id,
             config: this.fetchConfig,
             opts,
