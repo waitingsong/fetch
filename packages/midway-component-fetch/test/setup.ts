@@ -27,15 +27,8 @@ export async function mochaGlobalTeardown(this: Suite) {
  * Update testConfig in place
  */
 async function createAppInstance(): Promise<Application> {
-  const globalConfig = {
-    keys: Math.random().toString(),
-  }
-  const opts = {
-    globalConfig,
-  }
-
   try {
-    app = await createApp(testConfig.testAppDir, opts) as Application
+    app = await createApp(testConfig.testAppDir) as Application
   }
   catch (ex) {
     console.error('createApp error:', ex)
@@ -43,7 +36,10 @@ async function createAppInstance(): Promise<Application> {
   }
 
   assert(app, 'app not exists')
-  app.addConfigObject(globalConfig)
+  // const globalConfig = {
+  //   keys: Math.random().toString(),
+  // }
+  // app.addConfigObject(globalConfig)
 
   const middlewares = app.getMiddleware().getNames()
   console.info({ middlewares })
