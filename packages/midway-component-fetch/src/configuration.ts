@@ -33,9 +33,8 @@ export class AutoConfiguration implements ILifeCycle {
 
   @Logger() protected readonly logger: ILogger
 
-  @TraceInit(`INIT ${ConfigKey.componentName}.onReady`)
+  @TraceInit({ namespace: ConfigKey.componentName })
   async onReady(): Promise<void> {
-
     this.logger.info(`[${ConfigKey.componentName}] onReady`)
   }
 
