@@ -1,19 +1,16 @@
 /* eslint-disable max-lines-per-function */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
-import {
-  Autoload,
-  Config as _Config,
-  Singleton,
-  Inject,
-} from '@midwayjs/core'
+import { Autoload, Singleton, Inject } from '@midwayjs/core'
 import { OtelComponent } from '@mwcp/otel'
+import { MConfig } from '@mwcp/share'
 import {
   Headers,
   fetch2,
   pickUrlStrFromRequestInfo,
   ResponseData,
 } from '@waiting/fetch'
+
 
 import { defaultFetchConfigCallbacks } from './helper.js'
 import { Config, ConfigKey, FetchOptions } from './types.js'
@@ -23,7 +20,7 @@ import { Config, ConfigKey, FetchOptions } from './types.js'
 @Singleton()
 export class FetchComponent {
 
-  @_Config(ConfigKey.config) protected readonly fetchConfig: Config
+  @MConfig(ConfigKey.config) protected readonly fetchConfig: Config
 
   @Inject() readonly otel: OtelComponent
 

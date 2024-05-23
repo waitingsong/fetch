@@ -1,15 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  Config as _Config,
-  Inject,
-  Provide,
-} from '@midwayjs/core'
+import { Inject, Provide } from '@midwayjs/core'
 import {
   Context as TraceContext,
   Span,
   TraceService,
   setSpan,
 } from '@mwcp/otel'
+import { MConfig } from '@mwcp/share'
 import { Headers, ResponseData, pickUrlStrFromRequestInfo } from '@waiting/fetch'
 
 import type { Context } from '../interface.js'
@@ -25,7 +22,7 @@ import {
 @Provide()
 export class FetchService {
 
-  @_Config(ConfigKey.config) protected readonly fetchConfig: Config
+  @MConfig(ConfigKey.config) protected readonly fetchConfig: Config
   @Inject() protected readonly ctx: Context
   @Inject() protected readonly fetchComponent: FetchComponent
   @Inject() protected readonly traceService: TraceService
