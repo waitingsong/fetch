@@ -7,6 +7,7 @@ import {
   SemanticAttributes,
   SpanStatusCode,
 } from '@mwcp/otel'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { propagation } from '@opentelemetry/api'
 import {
   Headers,
