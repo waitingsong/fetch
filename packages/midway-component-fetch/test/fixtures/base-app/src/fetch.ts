@@ -5,11 +5,10 @@ import {
   Inject,
 } from '@midwayjs/core'
 
-import { FetchService } from '../../../../dist/index.js'
-import { apiBase, apiMethod } from '../../../api-test.js'
+import { apiBase, apiMethod } from './types/api-test.js'
+import { FetchService } from './types/index.js'
 
 
-// @Controller('/fetch')
 @Controller(apiBase.fetch)
 export class FetchController {
 
