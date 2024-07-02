@@ -1,7 +1,8 @@
 import { Middleware } from '@midwayjs/core'
-import {
+import type {
   Context,
   IMiddleware,
+  MiddlewareResolve,
   NextFunction,
 } from '@mwcp/share'
 
@@ -17,12 +18,12 @@ export class DemoMiddleware implements IMiddleware<Context, NextFunction> {
   //   return name
   // }
 
-  match(ctx?: Context) {
+  match(ctx?: Context): boolean {
     const flag = !! ctx
     return flag
   }
 
-  resolve() {
+  resolve(): MiddlewareResolve {
     return middleware
   }
 

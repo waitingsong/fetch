@@ -4,32 +4,27 @@ import assert from 'node:assert'
 import {
   App,
   Configuration,
-  ILifeCycle,
-  ILogger,
   Inject,
   Logger,
   MidwayEnvironmentService,
   MidwayInformationService,
   MidwayWebRouterService,
 } from '@midwayjs/core'
+import type { ILifeCycle, ILogger } from '@midwayjs/core'
 import { TraceInit } from '@mwcp/otel'
 import {
-  Application,
-  IMidwayContainer,
   MConfig,
   registerMiddleware,
   deleteRouter,
 } from '@mwcp/share'
+import type { Application, IMidwayContainer } from '@mwcp/share'
 
 import * as DefaultConfig from './config/config.default.js'
 import * as LocalConfig from './config/config.local.js'
 import * as UnittestConfig from './config/config.unittest.js'
 import { useComponents } from './imports.js'
-import {
-  Config,
-  ConfigKey,
-  MiddlewareConfig,
-} from './lib/types.js'
+import { ConfigKey } from './lib/types.js'
+import type { Config, MiddlewareConfig } from './lib/types.js'
 import { DemoMiddleware } from './middleware/index.middleware.js'
 
 

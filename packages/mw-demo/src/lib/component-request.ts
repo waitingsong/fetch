@@ -5,9 +5,11 @@ import {
   Inject,
   Provide,
 } from '@midwayjs/core'
-import { Context, MConfig } from '@mwcp/share'
+import { MConfig } from '@mwcp/share'
+import type { Context } from '@mwcp/share'
 
-import { Config, ConfigKey } from './types.js'
+import { ConfigKey } from './types.js'
+import type { Config } from './types.js'
 
 
 @Provide()

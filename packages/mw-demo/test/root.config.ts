@@ -1,13 +1,10 @@
-import { IncomingHttpHeaders } from 'node:http'
+import type { IncomingHttpHeaders } from 'node:http'
 import { join } from 'node:path'
 
-import {
-  Application,
-  IMidwayContainer,
-  JsonResp,
-} from '@mwcp/share'
+import type { Application, IMidwayContainer, JsonResp } from '@mwcp/share'
 import { genCurrentDirname } from '@waiting/shared-core'
-import supertest, { SuperTest } from 'supertest'
+import type { SuperTest } from 'supertest'
+import type supertest from 'supertest'
 
 
 export const testDir = genCurrentDirname(import.meta.url)
