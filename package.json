@@ -40,6 +40,7 @@
     "bp:syncxo": "git fetch --all -v && git pull origin && git merge bp/main -m \"Merge remote-tracking branch 'bp/main'\" -Xours",
     "bootstrap": "npm i --loglevel info --disturl=https://npmmirror.com/dist/",
     "build": "sh .scripts/build.sh",
+    "build:prod": "sh .scripts/build-prod.sh",
     "ci": "npm run cov",
     "clean": "lerna clean --loglevel error --yes && lerna run clean",
     "cov": "sh .scripts/cov.sh",
