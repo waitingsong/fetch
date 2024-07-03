@@ -211,7 +211,7 @@ jobs:
           --health-retries 5
 
       jaeger:
-        image: jaegertracing/all-in-one
+        image: jaegertracing/all-in-one:1.57
         env:
           TZ: 'Asia/Chongqing'
           COLLECTOR_OTLP_ENABLED: 'true'
