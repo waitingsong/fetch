@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": "${configDir}",
-    "declaration": false,
+    "declaration": true,
     "declarationMap": false,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
