@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import type { Span } from '@opentelemetry/api'
 import type { JsonObject } from '@waiting/shared-types'
-import {
+import type {
   FormData,
   HeadersInit,
   Response,

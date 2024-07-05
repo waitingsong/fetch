@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
+import type { Attributes } from '@mwcp/otel'
 import {
-  Attributes,
   AttrNames,
   HeadersKey,
   propagateHeader,
@@ -18,7 +18,7 @@ import {
   retrieveHeadersItem,
 } from '@waiting/shared-core'
 
-import { Config, ReqCallbackOptions } from './types.js'
+import type { Config, ReqCallbackOptions } from './types.js'
 
 
 /**

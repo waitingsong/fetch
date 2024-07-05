@@ -1,4 +1,4 @@
-import { Options } from './types.js'
+import type { Options } from './types.js'
 
 
 export const initialOptions: Options = {

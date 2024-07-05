@@ -3,10 +3,10 @@ import assert from 'node:assert/strict'
 
 import { fileShortPath } from '@waiting/shared-core'
 
+import type { Options } from '../src/index.js'
 import {
   getGlobalRequestOptions,
   setGlobalRequestOptions,
-  Options,
 } from '../src/index.js'
 import { initialOptions } from '../src/lib/config.js'
 

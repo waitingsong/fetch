@@ -2,10 +2,11 @@ import assert from 'node:assert/strict'
 
 import { fileShortPath } from '@waiting/shared-core'
 
-import { Args, get, Options } from '../src/index.js'
+import type { Options } from '../src/index.js'
+import { Args, get } from '../src/index.js'
 
 import { DELAY, HOST, HOST_COOKIES } from './config.js'
-import { HttpbinRetCookie } from './test.types.js'
+import type { HttpbinRetCookie } from './test.types.js'
 
 
 describe(fileShortPath(import.meta.url), function () {

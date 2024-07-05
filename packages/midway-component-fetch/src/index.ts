@@ -1,4 +1,4 @@
-import {
+import type {
   Config,
   ConfigKey,
 } from './lib/index.js'
@@ -11,16 +11,16 @@ export * from './lib/index.js'
 export {
   FormData,
   Headers,
-  HeadersInit,
+  type HeadersInit,
   Response,
-  ResponseData,
-  RequestInfo,
-  RequestInit,
+  type ResponseData,
+  type RequestInfo,
+  type RequestInit,
   pickUrlStrFromRequestInfo,
 } from '@waiting/fetch'
 
 export { retrieveHeadersItem } from '@waiting/shared-core'
-export {
+export type {
   JsonResp,
   JsonType,
   JsonObject,

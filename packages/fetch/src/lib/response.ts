@@ -1,13 +1,15 @@
 import assert from 'assert'
 
 import type { JsonObject } from '@waiting/shared-types'
-import { Response } from 'undici'
+import type { Response } from 'undici'
 
+import type {
+  ResponseRawKeys,
+  ResponseProcessNameKeys,
+} from './types.js'
 import {
   FetchMsg,
   FnKeys,
-  ResponseRawKeys,
-  ResponseProcessNameKeys,
 } from './types.js'
 
 

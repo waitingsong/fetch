@@ -3,9 +3,9 @@ import assert from 'node:assert/strict'
 
 import { fileShortPath } from '@waiting/shared-core'
 
+import type { Options } from '../src/index.js'
 import {
   get,
-  Options,
   FetchMsg,
 } from '../src/index.js'
 

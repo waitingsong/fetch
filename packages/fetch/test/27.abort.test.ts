@@ -2,10 +2,8 @@ import assert from 'node:assert/strict'
 
 import { fileShortPath } from '@waiting/shared-core'
 
-import {
-  get,
-  Options,
-} from '../src/index.js'
+import type { Options } from '../src/index.js'
+import { get } from '../src/index.js'
 
 
 describe(fileShortPath(import.meta.url), () => {

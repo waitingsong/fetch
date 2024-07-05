@@ -1,15 +1,16 @@
 import assert from 'assert'
 
 import type { Span } from '@opentelemetry/api'
-import {
+import type {
   Response,
   RequestInit,
   RequestInfo,
-  fetch,
 } from 'undici'
+import { fetch } from 'undici'
 
 import { trace } from './trace.js'
-import { Args, AttributeKey } from './types.js'
+import type { Args } from './types.js'
+import { AttributeKey } from './types.js'
 import {
   processInitOpts,
   processRequestGetLikeData,

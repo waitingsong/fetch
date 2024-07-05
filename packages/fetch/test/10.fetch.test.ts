@@ -2,7 +2,8 @@ import assert from 'node:assert/strict'
 
 import { fileShortPath } from '@waiting/shared-core'
 
-import { fetch, Options } from '../src/index.js'
+import type { Options } from '../src/index.js'
+import { fetch } from '../src/index.js'
 
 import { HOST, HOST_GET } from './config.js'
 

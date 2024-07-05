@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 
 import { fileShortPath } from '@waiting/shared-core'
-import { Response } from 'undici'
+import type { Response } from 'undici'
 
 import { get, fetch } from '../src/index.js'
 

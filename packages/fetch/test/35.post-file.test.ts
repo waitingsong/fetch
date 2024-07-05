@@ -7,10 +7,11 @@ import { fileURLToPath } from 'node:url'
 
 import { fileShortPath } from '@waiting/shared-core'
 
-import { post, FormData, Options, ContentTypeList } from '../src/index.js'
+import type { Options } from '../src/index.js'
+import { post, FormData, ContentTypeList } from '../src/index.js'
 
 import { DELAY, HOST_POST } from './config.js'
-import { HttpbinPostResponse, PostForm1 } from './test.types.js'
+import type { HttpbinPostResponse, PostForm1 } from './test.types.js'
 
 
 const __filename = fileURLToPath(import.meta.url)

@@ -3,10 +3,11 @@ import assert from 'node:assert/strict'
 import { ab2str, fileShortPath } from '@waiting/shared-core'
 import QueryString from 'qs'
 
-import { get, Options } from '../src/index.js'
+import type { Options } from '../src/index.js'
+import { get } from '../src/index.js'
 
 import { DELAY, HOST_GET } from './config.js'
-import { HttpbinGetResponse, PDATA, PostForm1 } from './test.types.js'
+import type { HttpbinGetResponse, PDATA, PostForm1 } from './test.types.js'
 
 
 describe(fileShortPath(import.meta.url), function () {

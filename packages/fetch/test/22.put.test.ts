@@ -4,10 +4,11 @@ import { fileShortPath } from '@waiting/shared-core'
 import NodeFormData from 'form-data'
 import { FormData } from 'undici'
 
-import { put, Options, ContentTypeList } from '../src/index.js'
+import type { Options } from '../src/index.js'
+import { put, ContentTypeList } from '../src/index.js'
 
 import { DELAY, HOST_PUT } from './config.js'
-import { HttpbinPostResponse, PostForm1 } from './test.types.js'
+import type { HttpbinPostResponse, PostForm1 } from './test.types.js'
 
 
 describe(fileShortPath(import.meta.url), function () {

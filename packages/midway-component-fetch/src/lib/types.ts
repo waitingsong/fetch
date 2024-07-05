@@ -6,7 +6,7 @@ import type {
 import type { Headers as UndiciHeaders, Options } from '@waiting/fetch'
 import type { MiddlewareConfig as MWConfig } from '@waiting/shared-types'
 
-import { Context } from '../interface.js'
+import type { Context } from '../interface.js'
 
 
 export enum ConfigKey {

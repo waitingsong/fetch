@@ -2,10 +2,10 @@ import assert from 'node:assert/strict'
 
 import { fileShortPath } from '@waiting/shared-core'
 
+import type { Options } from '../src/index.js'
 import {
   get,
   post,
-  Options,
 } from '../src/index.js'
 
 import {
@@ -14,7 +14,7 @@ import {
   HOST_GET,
   HOST_STATUS,
 } from './config.js'
-import { HttpbinGetResponse } from './test.types.js'
+import type { HttpbinGetResponse } from './test.types.js'
 
 
 // skip while https://github.com/postmanlabs/httpbin/issues/617
