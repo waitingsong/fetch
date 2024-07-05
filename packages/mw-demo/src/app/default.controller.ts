@@ -5,7 +5,8 @@ import {
 import { ApiResponse } from '@midwayjs/swagger'
 import { MConfig } from '@mwcp/share'
 
-import { Config, ConfigKey, Msg } from '##/lib/types.js'
+import { ConfigKey, Msg } from '##/lib/types.js'
+import type { Config } from '##/lib/types.js'
 
 import { DefaultApi } from './default.types.js'
 

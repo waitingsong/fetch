@@ -14,18 +14,18 @@
     "@types/koa": "2",
     "@types/mocha": "10",
     "@types/node": "20",
-    "@waiting/eslint-config": "^10.25.1",
-    "@waiting/shared-core": "^23.11.0",
-    "@waiting/shared-types": "^23.6.0",
+    "@waiting/eslint-config": "^11.0.0",
+    "@waiting/shared-core": "^23.19.0",
+    "@waiting/shared-types": "^23.19.0",
     "autocannon": "7",
     "cross-env": "7",
     "eslint": "8",
     "mocha": "10",
-    "mwtsc": "^1.10.1",
+    "mwtsc": "^1.10.2",
     "swagger-ui-dist": "^5.17.14",
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.10",
-    "typescript": "^5.4.5"
+    "typescript": "^5.5.3"
   },
   "engines": {
     "node": ">=20.11.0"
@@ -41,6 +41,7 @@
     "bp:syncxo": "git fetch --all -v && git pull origin && git merge bp/main -m \"Merge remote-tracking branch 'bp/main'\" -Xours",
     "bootstrap": "npm i --loglevel info --disturl=https://npmmirror.com/dist/",
     "build": "sh .scripts/build.sh",
+    "build:prod": "sh .scripts/build-prod.sh",
     "ci": "npm run cov",
     "clean": "lerna clean --loglevel error --yes && lerna run clean",
     "cov": "sh .scripts/cov.sh",

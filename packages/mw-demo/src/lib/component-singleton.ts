@@ -5,9 +5,11 @@ import {
   Init,
   Singleton,
 } from '@midwayjs/core'
-import { Application, MConfig } from '@mwcp/share'
+import { MConfig } from '@mwcp/share'
+import type { Application } from '@mwcp/share'
 
-import { Config, ConfigKey } from './types.js'
+import { ConfigKey } from './types.js'
+import type { Config } from './types.js'
 
 
 @Singleton()

@@ -2,15 +2,13 @@ import {
   Controller,
   Get,
 } from '@midwayjs/core'
-import { Context, MConfig } from '@mwcp/share'
+import { MConfig } from '@mwcp/share'
+import type { Context } from '@mwcp/share'
 
 import { apiBase, apiMethod } from './types/api-test.js'
-import {
-  Config,
-  ConfigKey,
-  MiddlewareConfig,
-} from './types/lib-types.js'
-import { RespData } from './types/root.config.js'
+import { ConfigKey } from './types/lib-types.js'
+import type { Config, MiddlewareConfig } from './types/lib-types.js'
+import type { RespData } from './types/root.config.js'
 
 
 @Controller(apiBase.root)

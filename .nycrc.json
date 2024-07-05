@@ -1,6 +1,5 @@
 {
   "include": [
-    "dist",
     "src/*.ts",
     "src/**/*.ts"
   ],
@@ -21,5 +20,6 @@
     "json",
     "text-summary"
   ],
+  "skip-full": true,
   "all": true
 }

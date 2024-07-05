@@ -98,7 +98,7 @@ jobs:
           export cwd=`pwd`
           . .scripts/ci/ci-env.sh
           .scripts/ci/ci-prepare.sh
-          npm run build --if-present
+          npm run build:prod --if-present
         env:
           CI: true
 
@@ -182,7 +182,7 @@ jobs:
           - 80:80 # no 443
 
       jaeger:
-        image: jaegertracing/all-in-one
+        image: jaegertracing/all-in-one:1.57
         env:
           TZ: 'Asia/Chongqing'
           COLLECTOR_OTLP_ENABLED: 'true'
