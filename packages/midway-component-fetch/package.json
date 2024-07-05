@@ -1,7 +1,7 @@
 {
   "name": "@mwcp/fetch",
   "author": "waiting",
-  "version": "29.1.2",
+  "version": "29.1.3",
   "description": "",
   "private": false,
   "keywords": [
@@ -35,7 +35,7 @@
   "license": "MIT",
   "dependencies": {
     "@mwcp/otel": "^30.16.1",
-    "@waiting/fetch": "^29.1.1",
+    "@waiting/fetch": "^29.1.3",
     "@waiting/shared-core": "^23.20.0"
   },
   "engines": {
