@@ -6,7 +6,7 @@ import { createApp, close, createHttpRequest } from '@midwayjs/mock'
 import type { Application } from '@mwcp/share'
 import type { Suite } from 'mocha'
 
-import type { TestConfig, testConfig } from './root.config.js'
+import { type TestConfig, testConfig } from './root.config.js'
 
 
 let app: Application
