@@ -2,20 +2,12 @@ import { ReadStream } from 'fs'
 
 import NodeFormData from 'form-data'
 import QueryString from 'qs'
-import {
-  FormData,
-  Headers,
-  RequestInfo as UndiciRequestInfo,
-  RequestInit,
-} from 'undici'
+import type { RequestInfo as UndiciRequestInfo, RequestInit } from 'undici'
+import { FormData, Headers } from 'undici'
 
 import { initialOptions } from './config.js'
-import {
-  Args,
-  ArgsRequestInitCombined,
-  ContentTypeList,
-  Options,
-} from './types.js'
+import type { Args, ArgsRequestInitCombined, Options } from './types.js'
+import { ContentTypeList } from './types.js'
 
 
 /** Update initialFetchOptions */
@@ -331,7 +323,6 @@ export function processRequestPostLikeData(args: Args): RequestInit['body'] | nu
     body = data
   }
   else if (typeof ReadableStream !== 'undefined' && data instanceof ReadableStream) {
-    // @ts-expect-error
     body = data
   }
   else if (typeof ReadStream !== 'undefined' && data instanceof ReadStream) {
