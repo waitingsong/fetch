@@ -3,7 +3,7 @@
 import assert from 'node:assert'
 
 import { createApp, close, createHttpRequest } from '@midwayjs/mock'
-import { Application } from '@mwcp/share'
+import type { Application } from '@mwcp/share'
 import type { Suite } from 'mocha'
 
 import { TestConfig, testConfig } from './root.config.js'
