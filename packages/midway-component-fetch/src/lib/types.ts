@@ -2,6 +2,7 @@ import type {
   AbstractOtelComponent,
   AbstractTraceService,
   Context as TraceContext,
+  TraceScopeParamType,
 } from '@mwcp/otel'
 import type { Headers as UndiciHeaders, Options } from '@waiting/fetch'
 import type { MiddlewareConfig as MWConfig } from '@waiting/shared-types'
@@ -47,11 +48,11 @@ export interface Config {
    * Callback after response
    */
   afterResponse?: <T = unknown>(options: RespCallbackOptions<T>) => Promise<void>
-  /**
-   * Callback handling exception
-   * @description process caught Exception then throw it
-   */
-  processEx?: (options: ProcessExCallbackOptions) => Promise<never>
+  // /**
+  //  * Callback handling exception
+  //  * @description process caught Exception then throw it
+  //  */
+  // processEx?: (options: ProcessExCallbackOptions) => Promise<never>
   /**
    * Enable OpenTeleMetry trace
    * @default false
@@ -113,6 +114,8 @@ export interface ReqCallbackOptions {
   id: symbol
   config: Config
   opts: FetchOptions
+  webContext: Context
+  traceScope: TraceScopeParamType
 }
 
 export interface RespCallbackOptions<T = unknown> {
@@ -121,10 +124,12 @@ export interface RespCallbackOptions<T = unknown> {
   opts: FetchOptions
   resultData: T
   respHeaders: UndiciHeaders
+  webContext: Context
+  traceScope: TraceScopeParamType
 }
 
 export interface ProcessExCallbackOptions {
-  id: symbol
+  id: symbol | undefined
   config: Config
   opts: FetchOptions
   exception: Error
@@ -139,5 +144,6 @@ export interface TraceOptions {
   webContext?: Context | undefined
   traceService?: AbstractTraceService | undefined
   traceContext?: TraceContext | undefined
+  traceScope?: symbol | object
 }
 

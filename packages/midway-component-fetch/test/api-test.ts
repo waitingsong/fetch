@@ -14,4 +14,5 @@ export const apiMethod = {
   component: 'component',
   ip: 'ip',
   self: 'self',
+  after_throw: 'after_throw',
 }

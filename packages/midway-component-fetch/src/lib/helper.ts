@@ -1,24 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
-import type { Attributes } from '@mwcp/otel'
 import {
+  type Attributes,
+  type DecoratorTraceDataResp,
+  type DecoratorContext,
   AttrNames,
   HeadersKey,
   propagateHeader,
   SemanticAttributes,
-  SpanStatusCode,
 } from '@mwcp/otel'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { propagation } from '@opentelemetry/api'
-import {
-  Headers,
-  pickUrlStrFromRequestInfo,
-} from '@waiting/fetch'
-import {
-  genISO8601String,
-  retrieveHeadersItem,
-} from '@waiting/shared-core'
+import { Headers, pickUrlStrFromRequestInfo } from '@waiting/fetch'
+import { genISO8601String, retrieveHeadersItem } from '@waiting/shared-core'
 
-import type { Config, ReqCallbackOptions } from './types.js'
+import type { Config, ProcessExCallbackOptions, ReqCallbackOptions, RespCallbackOptions } from './types.js'
 
 
 /**
@@ -61,54 +56,47 @@ export const genRequestHeaders: Config['genRequestHeaders'] = (options, headersI
   return headers
 }
 
-const beforeRequest: Config['beforeRequest'] = async (options) => {
+export function traceLogBeforeRequest(
+  options: ReqCallbackOptions,
+  decoratorContext: DecoratorContext,
+): DecoratorTraceDataResp {
+
   const { opts, config } = options
-  const { span, otelComponent, traceContext } = opts
+  const { traceSpan: span, otelComponent, traceContext } = decoratorContext
 
   if (traceContext) {
     const headers = new Headers(opts.headers)
     propagateHeader(traceContext, headers)
     opts.headers = headers
   }
-
   if (! span || ! otelComponent) { return }
 
   const time = genISO8601String()
   const url = pickUrlStrFromRequestInfo(opts.url)
 
+  let events: Attributes = {}
   if (config.traceEvent) {
-    const currInput: Attributes = {
+    events = {
       event: AttrNames.FetchStart,
       url,
       method: opts.method,
       time,
     }
-    otelComponent.addEvent(span, currInput)
   }
 
-  const attrs = genOutgoingRequestAttributes(options)
-  attrs && otelComponent.setAttributes(span, attrs)
-
+  const attrs = genOutgoingRequestAttributes(options) ?? {}
+  return { attrs, events }
 }
 
-const afterResponse: Config['afterResponse'] = async (options) => {
+
+export function traceLogAfterResponse(options: RespCallbackOptions): DecoratorTraceDataResp {
   const {
     config,
     opts,
-    // resultData,
     respHeaders,
   } = options
 
-
-  // if (! opts.webContext?.requestContext) { return }
-
-  const { span, otelComponent, traceService } = opts
-  if (! span || ! otelComponent) { return }
-
-  const {
-    traceResponseData,
-    captureResponseHeaders,
-  } = options.config
+  const { traceResponseData, captureResponseHeaders } = options.config
 
   const tags: Attributes = {}
   if (traceResponseData) {
@@ -124,104 +112,63 @@ const afterResponse: Config['afterResponse'] = async (options) => {
     })
   }
 
-  if (Object.keys(tags).length) {
-    otelComponent.setAttributes(span, tags)
-  }
   const url = pickUrlStrFromRequestInfo(opts.url)
 
+  let events: Attributes = {}
   if (config.traceEvent) {
     const time = genISO8601String()
-    const attrs: Attributes = {
+    events = {
       event: AttrNames.FetchFinish,
       url,
       method: opts.method,
       time,
     }
-    otelComponent.addEvent(span, attrs)
+    // otelComponent.addEvent(span, events)
   }
+
+  return { attrs: tags, events }
 
   // traceContext && propagateOutgoingHeader(traceContext, ctx.res)
-  if (traceService) {
-    traceService.endSpan(span)
-  }
-  else {
-    otelComponent.endSpan(void 0, span)
-  }
 }
 
-export const processEx: Config['processEx'] = async (options) => {
+export function genAttrsWhileError(options: ProcessExCallbackOptions): DecoratorTraceDataResp {
+  if (! options.config.enableTrace) { return }
+
   const { opts, exception } = options
-  const { otelComponent, span, traceService } = opts
 
-  if (! span || ! otelComponent) {
-    throw exception
-  }
+  const { captureResponseHeaders } = options.config
+  // const time = genISO8601String()
+  // const url = pickUrlStrFromRequestInfo(opts.url)
+  // const parentInput: Attributes = {
+  //   event: AttrNames.FetchException,
+  //   url,
+  //   method: opts.method,
+  //   time,
+  // }
+  // // otelComponent.addEvent(span, parentInput) // parent span log
+  // ret.rootEvents = parentInput
 
-  const {
-    captureResponseHeaders,
-  } = options.config
-  const time = genISO8601String()
-  const url = pickUrlStrFromRequestInfo(opts.url)
-
-  const parentInput: Attributes = {
-    event: AttrNames.FetchException,
-    url,
-    method: opts.method,
-    time,
-  }
-  otelComponent.addEvent(span, parentInput) // parent span log
-
-  const attrs: Attributes = {
-    // [AttrNames.error]: true,
+  const events: Attributes = {
     [AttrNames.LogLevel]: 'error',
-    // [AttrNames.svcException]: exception.message,
-  }
-
-  if (Array.isArray(captureResponseHeaders)) {
-    captureResponseHeaders.forEach((name) => {
-      // @ts-expect-error for undici types
-      const val = retrieveHeadersItem(opts.headers, name)
-      if (val) {
-        attrs[`http.${name}`] = val
-      }
-    })
-  }
-  otelComponent.addEvent(span, attrs)
-
-  const input: Attributes = {
     level: 'error',
     event: AttrNames.FetchException,
     time: genISO8601String(),
     'err.msg': exception.message,
     'err.stack': exception.stack,
-    // [TracerLog.svcMemoryUsage]: mem,
   }
-  otelComponent.addEvent(span, input)
-
-  const status = {
-    code: SpanStatusCode.ERROR,
-    error: exception,
-  }
-  if (traceService) {
-    traceService.endSpan(span, status)
-  }
-  else {
-    otelComponent.endSpan(void 0, span, status)
+  if (Array.isArray(captureResponseHeaders)) {
+    captureResponseHeaders.forEach((name) => {
+      // @ts-expect-error for undici types
+      const val = retrieveHeadersItem(opts.headers, name)
+      if (val) {
+        events[`http.${name}`] = val
+      }
+    })
   }
 
-  if (exception instanceof Error) {
-    throw exception
-  }
-  else {
-    throw new Error(exception)
-  }
+  return { events }
 }
 
-export const defaultFetchConfigCallbacks = {
-  beforeRequest,
-  afterResponse,
-  processEx,
-}
 
 
 /**

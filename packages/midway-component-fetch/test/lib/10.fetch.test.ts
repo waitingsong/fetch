@@ -12,10 +12,9 @@ describe(fileShortPath(import.meta.url), function () {
     const { httpRequest, app } = testConfig
 
     const path = `${apiBase.fetch}/${apiMethod.ip}`
-    const resp = await httpRequest
-      .get(path)
-
+    const resp = await httpRequest.get(path)
     assert(resp.ok, resp.text)
+
     const ip = resp.text
     console.log({ ip })
     assert(typeof ip === 'string')
@@ -27,10 +26,9 @@ describe(fileShortPath(import.meta.url), function () {
     const { httpRequest } = testConfig
 
     const path = `${apiBase.fetch}/${apiMethod.self}`
-    const resp = await httpRequest
-      .get(path)
-
+    const resp = await httpRequest.get(path)
     assert(resp.ok, resp.text)
+
     const ip = resp.text
     console.log({ ip })
     assert(typeof ip === 'string')

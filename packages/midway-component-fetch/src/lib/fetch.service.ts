@@ -1,11 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { assert } from 'console'
+
 import { Inject, Provide } from '@midwayjs/core'
-import {
-  Context as TraceContext,
-  Span,
-  TraceService,
-  setSpan,
-} from '@mwcp/otel'
+import { TraceService } from '@mwcp/otel'
 import { MConfig } from '@mwcp/share'
 import { Headers, ResponseData, pickUrlStrFromRequestInfo } from '@waiting/fetch'
 
@@ -27,19 +24,16 @@ export class FetchService {
   @Inject() protected readonly fetchComponent: FetchComponent
   @Inject() protected readonly traceService: TraceService
 
-
   async fetch<T extends ResponseData>(options: FetchOptions): Promise<T> {
-
     const [ret] = await this.fetch2<T>(options)
     return ret
   }
 
   async fetch2<T extends ResponseData>(options: FetchOptions): Promise<[T, Headers]> {
-
-    let opts = options
+    const opts = { ...options }
 
     if (this.fetchConfig.enableTrace) {
-      opts = this.prepareTrace(options)
+      this.prepareTrace(opts)
     }
 
     const ret = await this.fetchComponent.fetch2<T>(opts)
@@ -75,27 +69,19 @@ export class FetchService {
   }
 
 
-  protected prepareTrace(options: FetchOptions): FetchOptions {
-
-    const opts = options
-
-    if (! opts.span) {
-      const txt = pickUrlStrFromRequestInfo(opts.url)
-      const url = new URL(txt)
-      const host = url.host.endsWith('/') ? url.host.slice(0, -1) : url.host
-      const name = `HTTP ${opts.method.toLocaleUpperCase()} ${host}${url.pathname}`
-
-      const traceContext: TraceContext = this.traceService.getActiveContext()
-      const span: Span = this.traceService.startSpan(
-        name,
-        void 0,
-        traceContext,
-      )
-      opts.traceContext = setSpan(traceContext, span)
-      opts.span = span
+  protected prepareTrace(options: FetchOptions): void {
+    options.traceService = this.traceService
+    if (! options.webContext) {
+      options.webContext = this.ctx
     }
 
-    return opts
+    const txt = pickUrlStrFromRequestInfo(options.url)
+    if (options.traceScope) {
+      assert(typeof options.traceScope === 'symbol' || typeof options.traceScope === 'object', 'opts.scope must be symbol or object')
+    }
+    else {
+      options.traceScope = Symbol(txt)
+    }
   }
 
 }
