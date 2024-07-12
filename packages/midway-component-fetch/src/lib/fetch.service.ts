@@ -1,10 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { assert } from 'console'
-
 import { Inject, Provide } from '@midwayjs/core'
 import { TraceService } from '@mwcp/otel'
 import { MConfig } from '@mwcp/share'
-import { Headers, ResponseData, pickUrlStrFromRequestInfo } from '@waiting/fetch'
+import { Headers, ResponseData } from '@waiting/fetch'
 
 import type { Context } from '../interface.js'
 
@@ -75,13 +73,7 @@ export class FetchService {
       options.webContext = this.ctx
     }
 
-    const txt = pickUrlStrFromRequestInfo(options.url)
-    if (options.traceScope) {
-      assert(typeof options.traceScope === 'symbol' || typeof options.traceScope === 'object', 'opts.scope must be symbol or object')
-    }
-    else {
-      options.traceScope = Symbol(txt)
-    }
+    this.fetchComponent.prepareTrace(options)
   }
 
 }

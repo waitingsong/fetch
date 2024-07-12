@@ -38,13 +38,17 @@ export class FetchComponent {
   }
 
   @Trace<FetchComponent['fetch2']>({
-    scope: ([fetchOptions]) => fetchOptions.traceScope,
     spanName: ([options]) => {
       const txt = pickUrlStrFromRequestInfo(options.url)
       const url = new URL(txt)
       const host = url.host.endsWith('/') ? url.host.slice(0, -1) : url.host
       const name = `HTTP ${options.method.toLocaleUpperCase()} ${host}${url.pathname}`
       return name
+    },
+    scope([fetchOptions]) { // run before `before()`,
+      this.prepareTrace(fetchOptions)
+      assert(fetchOptions.traceScope, 'fetchOptions.traceScope must be set')
+      return fetchOptions.traceScope
     },
     before([options], decoratorContext) {
       if (! this.fetchConfig.enableTrace) { return }
@@ -125,6 +129,20 @@ export class FetchComponent {
 
     return data
   }
+
+
+  prepareTrace(options: FetchOptions): void {
+    assert(options.webContext, 'webContext must be set')
+
+    if (options.traceScope) {
+      assert(typeof options.traceScope === 'symbol' || typeof options.traceScope === 'object', 'opts.scope must be symbol or object')
+    }
+    else {
+      const txt = pickUrlStrFromRequestInfo(options.url)
+      options.traceScope = Symbol(txt)
+    }
+  }
+
 
   /**
    * Duplicate key will be overwritten,
