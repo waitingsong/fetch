@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [30.0.1](https://github.com/waitingsong/fetch/compare/v30.0.0...v30.0.1) (2024-07-12)
+
+
+### Bug Fixes
+
+* **mwcp:** fetchOptions.traceScope may empty ([6259a47](https://github.com/waitingsong/fetch/commit/6259a4725df7ef9ff2b6769f459dfeb04d1127e0))
+
+
+
+
+
 # [30.0.0](https://github.com/waitingsong/fetch/compare/v29.1.3...v30.0.0) (2024-07-06)
 
 **Note:** Version bump only for package @mwcp/fetch
