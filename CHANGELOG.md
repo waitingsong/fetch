@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [31.0.0](https://github.com/waitingsong/fetch/compare/v30.0.1...v31.0.0) (2024-07-24)
+
+
+### Features
+
+* **mwcp:** remove otelCompon from type TraceOptions ([991529c](https://github.com/waitingsong/fetch/commit/991529c4cb5f22fdb28ff5a7b5b3c029037adb60))
+
+
+
+
+
 ## [30.0.1](https://github.com/waitingsong/fetch/compare/v30.0.0...v30.0.1) (2024-07-12)
 
 
