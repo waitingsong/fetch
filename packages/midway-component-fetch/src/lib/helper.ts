@@ -62,14 +62,14 @@ export function traceLogBeforeRequest(
 ): DecoratorTraceDataResp {
 
   const { opts, config } = options
-  const { traceSpan: span, otelComponent, traceContext } = decoratorContext
+  const { traceSpan: span, traceContext } = decoratorContext
 
   if (traceContext) {
     const headers = new Headers(opts.headers)
     propagateHeader(traceContext, headers)
     opts.headers = headers
   }
-  if (! span || ! otelComponent) { return }
+  if (! span) { return }
 
   const time = genISO8601String()
   const url = pickUrlStrFromRequestInfo(opts.url)
