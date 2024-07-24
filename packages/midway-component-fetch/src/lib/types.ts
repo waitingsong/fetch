@@ -1,5 +1,4 @@
 import type {
-  AbstractOtelComponent,
   AbstractTraceService,
   Context as TraceContext,
   TraceScopeParamType,
@@ -140,7 +139,6 @@ export interface ProcessExCallbackOptions {
 
 
 export interface TraceOptions {
-  otelComponent?: AbstractOtelComponent | undefined
   webContext?: Context | undefined
   traceService?: AbstractTraceService | undefined
   traceContext?: TraceContext | undefined

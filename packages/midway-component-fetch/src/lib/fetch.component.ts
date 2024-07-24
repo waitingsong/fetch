@@ -3,8 +3,8 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import assert from 'node:assert'
 
-import { Autoload, Singleton, Inject } from '@midwayjs/core'
-import { OtelComponent, Trace, TraceLog } from '@mwcp/otel'
+import { Autoload, Singleton } from '@midwayjs/core'
+import { Trace, TraceLog } from '@mwcp/otel'
 import { MConfig } from '@mwcp/share'
 import {
   Headers,
@@ -29,8 +29,6 @@ import {
 export class FetchComponent {
 
   @MConfig(ConfigKey.config) protected readonly fetchConfig: Config
-
-  @Inject() protected readonly otel: OtelComponent
 
   async fetch<T extends ResponseData>(options: FetchOptions): Promise<T> {
     const [ret] = await this.fetch2<T>(options)
@@ -73,10 +71,6 @@ export class FetchComponent {
   })
   async fetch2<T extends ResponseData>(this: FetchComponent, options: FetchOptions): Promise<[T, Headers]> {
     const opts: FetchOptions = { ...options }
-
-    if (! opts.otelComponent) {
-      opts.otelComponent = this.otel
-    }
 
     const url = pickUrlStrFromRequestInfo(opts.url)
     const id = Symbol(url)
