@@ -1,24 +1,33 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Inject, Provide } from '@midwayjs/core'
+import assert from 'node:assert'
+
+import {
+  type AsyncContextManager,
+  ApplicationContext,
+  ASYNC_CONTEXT_KEY,
+  ASYNC_CONTEXT_MANAGER_KEY,
+  Inject,
+  Singleton,
+} from '@midwayjs/core'
 import { TraceService } from '@mwcp/otel'
 import { MConfig } from '@mwcp/share'
 import { Headers, ResponseData } from '@waiting/fetch'
 
-import type { Context } from '../interface.js'
+import type { Context, IMidwayContainer } from '../interface.js'
 
 import { FetchComponent } from './fetch.component.js'
 import {
-  Config,
+  type Config,
+  type FetchOptions,
   ConfigKey,
-  FetchOptions,
 } from './types.js'
 
 
-@Provide()
+@Singleton()
 export class FetchService {
 
   @MConfig(ConfigKey.config) protected readonly fetchConfig: Config
-  @Inject() protected readonly ctx: Context
+  @ApplicationContext() readonly applicationContext: IMidwayContainer
   @Inject() protected readonly fetchComponent: FetchComponent
   @Inject() protected readonly traceService: TraceService
 
@@ -66,15 +75,31 @@ export class FetchService {
     return this.fetch(opts)
   }
 
+  // #region protected
 
   protected prepareTrace(options: FetchOptions): void {
     options.traceService = this.traceService
     if (! options.webContext) {
-      options.webContext = this.ctx
+      options.webContext = this.getWebContext()
     }
+    assert(options.webContext, 'webContext must be set')
 
     this.fetchComponent.prepareTrace(options)
   }
 
+  protected getWebContext(): Context | undefined {
+    try {
+      const contextManager: AsyncContextManager = this.applicationContext.get(
+        ASYNC_CONTEXT_MANAGER_KEY,
+      )
+      const ctx = contextManager.active().getValue(ASYNC_CONTEXT_KEY) as Context | undefined
+      return ctx
+    }
+    catch (ex) {
+      void ex
+      console.warn(new Error('getWebContext() failed', { cause: ex }))
+      return void 0
+    }
+  }
 }
 
