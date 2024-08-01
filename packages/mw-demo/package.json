@@ -32,14 +32,14 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@mwcp/otel": "30",
-    "@mwcp/share": "30"
+    "@mwcp/otel": "35",
+    "@mwcp/share": "35"
   },
   "devDependencies": {
   },
   "engines": {
     "node": ">=18.12.0",
-    "@midwayjs/core": ">=3.15.0"
+    "@midwayjs/core": ">=3.16.0"
   },
   "files": [
     "README.*.md",
