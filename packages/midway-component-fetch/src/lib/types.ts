@@ -1,5 +1,5 @@
 import type {
-  AbstractTraceService,
+  TraceService,
   Context as TraceContext,
   TraceScopeParamType,
 } from '@mwcp/otel'
@@ -140,7 +140,7 @@ export interface ProcessExCallbackOptions {
 
 export interface TraceOptions {
   webContext?: Context | undefined
-  traceService?: AbstractTraceService | undefined
+  traceService?: TraceService | undefined
   traceContext?: TraceContext | undefined
   traceScope?: symbol | object
 }
