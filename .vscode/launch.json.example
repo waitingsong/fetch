@@ -85,21 +85,11 @@
       "runtimeExecutable": "npm",
       "skipFiles": [
         "**/node_modules/rxjs/**",
+        "**/node_modules/mocha/**",
         "<node_internals>/**",
         "<node_internals>/**/*.js"
       ],
       "timeout": 30000
-    },
-    {
-      "name": "Chrome Debug with Karma",
-      "type": "chrome",
-      "address": "localhost",
-      "pathMapping": {
-        "/": "${workspaceRoot}/",
-        "/base/": "${workspaceRoot}/"
-      },
-      "port": 9333,
-      "request": "attach"
-    },
+    }
   ]
 }
