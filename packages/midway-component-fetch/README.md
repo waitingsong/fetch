@@ -5,12 +5,11 @@ HTTP fetch component for midway.js
 [![Version](https://img.shields.io/npm/v/@mwcp/fetch.svg)](https://www.npmjs.com/package/midway-component-fetch)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![](https://img.shields.io/badge/lang-TypeScript-blue.svg)]()
-[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
 
 ## Note
 
-ESM build only, requires `@midwayjs >= 3.12` and set `"type": "module"` in `packages.json`
+ESM build only, requires `@midwayjs >= 3.16` and set `"type": "module"` in `packages.json`
 
 ## Install
 
