@@ -32,7 +32,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@mwcp/otel": "37"
+    "@mwcp/otel": "^37.2.0"
   },
   "devDependencies": {
   },
@@ -51,15 +51,13 @@
     "database",
     "dist",
     "src",
-    "!**/*.spec.*",
-    "!**/*.tsbuildinfo"
+    "!**/*.spec.*"
   ],
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "build": "npm run tsc && tsc-alias",
-    "build:prod": "npm run tsc -- --declaration --declarationMap && tsc-alias",
+    "build": "npm run tsc",
     "build:unit": "tsc -p test/tsconfig.json",
     "clean": "npm run clean:lock && npm run clean:dist && npm run clean:log",
     "clean:cache": "rm -rf .eslintcache .tsbuildinfo",
@@ -71,11 +69,13 @@
     "dev": "cross-env MIDWAY_SERVER_ENV=local mwtsc --watch --run @midwayjs/mock/app",
     "lint": "eslint --fix --cache src test",
     "lint:nofix": "eslint --cache src test",
+    "postbuild": "tsc-alias",
     "predev": "npm run build",
     "pretest": "npm run build:unit",
     "start": "cross-env NODE_ENV=production node ./bootstrap.js",
     "start:gc": "cross-env NODE_ENV=local node --trace_gc ./bootstrap.js",
     "test": "cross-env MIDWAY_SERVER_ENV=unittest TS_NODE_PROJECT=test/tsconfig.json mocha --parallel=false",
+    "test:deb": "npm run test",
     "tsc": "tsc -b"
   }
 }

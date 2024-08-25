@@ -1,3 +1,4 @@
+import type { RouterOption } from '@midwayjs/core'
 
 import {
   initialConfig,
@@ -21,6 +22,15 @@ export const demoMiddlewareConfig: Readonly<Omit<MiddlewareConfig, 'match'>> = {
   ],
   options: {
     ...initMiddlewareOptions,
+  },
+}
+
+export const swagger = {
+  routerFilter: (url: string, options: RouterOption) => {
+    void options
+    if (url.startsWith('/_')) {
+      return true
+    }
   },
 }
 

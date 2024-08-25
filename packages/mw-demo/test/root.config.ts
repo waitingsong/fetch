@@ -1,6 +1,7 @@
 import type { IncomingHttpHeaders } from 'node:http'
 import { join } from 'node:path'
 
+import type { ValidateService } from '@midwayjs/validate'
 import type { Application, IMidwayContainer, JsonResp } from '@mwcp/share'
 import { genCurrentDirname } from '@waiting/shared-core'
 import type { Response, SuperTest, Test } from 'supertest'
@@ -35,6 +36,7 @@ export interface TestConfig {
   container: IMidwayContainer
   host: string
   httpRequest: SuperTest<Test>
+  validateService: ValidateService
 }
 
 const testAppDir = join(testDir, 'fixtures', 'base-app')

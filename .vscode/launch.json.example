@@ -61,7 +61,6 @@
       "name": "Midway Dev",
       "type": "node",
       "autoAttachChildProcesses": true,
-      "console": "integratedTerminal",
       "env": {
         "MIDWAY_SERVER_ENV": "local",
         "NODE_ENV": "local",
