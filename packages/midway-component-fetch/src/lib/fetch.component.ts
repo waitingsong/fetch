@@ -50,12 +50,10 @@ export class FetchComponent {
     },
     before([options], decoratorContext) {
       if (! this.fetchConfig.enableTrace) { return }
-      assert(decoratorContext.webContext, 'webContext must be set')
-      assert(decoratorContext.traceService, 'traceService must be set')
       const { traceSpan } = decoratorContext
       assert(traceSpan, 'traceSpan must be set')
       options.span = traceSpan
-      return void 0
+      return null
     },
     afterThrow([options], error) {
       assert(this.fetchConfig, 'this.fetchConfig undefined')
@@ -80,7 +78,6 @@ export class FetchComponent {
     )
     // opts.beforeProcessResponseCallback = (input: Response) => this.cacheRespHeaders(id, input, responseHeadersMap)
 
-    assert(opts.webContext, 'webContext must be set for single fetchComponent')
     assert(opts.traceScope, 'traceScope must be set for single fetchComponent')
     const config = this.fetchConfig
     await this.beforeRequest({
@@ -126,8 +123,6 @@ export class FetchComponent {
 
 
   prepareTrace(options: FetchOptions): void {
-    assert(options.webContext, 'webContext must be set')
-
     if (options.traceScope) {
       assert(typeof options.traceScope === 'symbol' || typeof options.traceScope === 'object', 'opts.scope must be symbol or object')
     }
@@ -165,7 +160,6 @@ export class FetchComponent {
     before: ([options], ctx) => traceLogBeforeRequest(options, ctx),
   })
   private async beforeRequest(options: ReqCallbackOptions): Promise<void> {
-    assert(options.webContext, 'webContext must be set for single fetchComponent')
     assert(options.traceScope, 'traceScope must be set for single fetchComponent')
 
     const config = this.fetchConfig
@@ -179,7 +173,6 @@ export class FetchComponent {
     after: ([options]) => traceLogAfterResponse(options),
   })
   private async afterResponse(options: RespCallbackOptions): Promise<void> {
-    assert(options.webContext, 'webContext must be set for single fetchComponent')
     assert(options.traceScope, 'traceScope must be set for single fetchComponent')
 
     const config = this.fetchConfig

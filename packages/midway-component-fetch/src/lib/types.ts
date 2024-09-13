@@ -113,7 +113,7 @@ export interface ReqCallbackOptions {
   id: symbol
   config: Config
   opts: FetchOptions
-  webContext: Context
+  webContext: Context | undefined
   traceScope: TraceScopeParamType
 }
 
@@ -123,7 +123,7 @@ export interface RespCallbackOptions<T = unknown> {
   opts: FetchOptions
   resultData: T
   respHeaders: UndiciHeaders
-  webContext: Context
+  webContext: Context | undefined
   traceScope: TraceScopeParamType
 }
 

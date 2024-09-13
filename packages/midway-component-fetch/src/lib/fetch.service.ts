@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import assert from 'node:assert'
-
 import {
   type AsyncContextManager,
   ApplicationContext,
@@ -82,7 +80,6 @@ export class FetchService {
     if (! options.webContext) {
       options.webContext = this.getWebContext()
     }
-    assert(options.webContext, 'webContext must be set')
 
     this.fetchComponent.prepareTrace(options)
   }
@@ -97,8 +94,7 @@ export class FetchService {
     }
     catch (ex) {
       void ex
-      console.warn(new Error('getWebContext() failed', { cause: ex }))
-      return void 0
+      // console.warn(new Error('getWebContext() failed', { cause: ex }))
     }
   }
 }
