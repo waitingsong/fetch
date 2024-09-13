@@ -27,8 +27,7 @@ export type {
 } from '@waiting/shared-types'
 
 
-// @ts-expect-error
-declare module '@midwayjs/core/dist/interface' {
+declare module '@midwayjs/core/dist/interface.js' {
   interface MidwayConfig {
     [ConfigKey.config]: Partial<Config>
   }
