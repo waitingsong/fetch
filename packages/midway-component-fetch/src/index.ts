@@ -9,13 +9,14 @@ export * from './app/index.controller.js'
 export * from './lib/index.js'
 
 export {
-  FormData,
-  Headers,
   type HeadersInit,
-  Response,
   type ResponseData,
   type RequestInfo,
   type RequestInit,
+  ContentTypeList,
+  FormData,
+  Headers,
+  Response,
   pickUrlStrFromRequestInfo,
 } from '@waiting/fetch'
 
