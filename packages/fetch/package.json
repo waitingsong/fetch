@@ -35,7 +35,7 @@
   "license": "MIT",
   "dependencies": {
     "@waiting/shared-core": "^23.21.0",
-    "@waiting/shared-types": "^23.20.2",
+    "@waiting/shared-types": "^23.21.0",
     "form-data": "^4.0.0",
     "qs": "^6.13.0",
     "undici": "^6.19.8"
