@@ -7,16 +7,16 @@
   "devDependencies": {
     "@commitlint/cli": "19",
     "@commitlint/config-conventional": "19",
-    "@midwayjs/mock": "^3.16.5",
-    "@midwayjs/swagger": "^3.16.8",
-    "@midwayjs/validate": "^3.16.8",
+    "@midwayjs/mock": "^3.17.1",
+    "@midwayjs/swagger": "^3.17.2",
+    "@midwayjs/validate": "^3.17.1",
     "@types/koa": "2",
     "@types/koa": "2",
     "@types/mocha": "10",
     "@types/node": "22",
-    "@waiting/eslint-config": "^12.0.0",
-    "@waiting/shared-core": "^23.20.2",
-    "@waiting/shared-types": "^23.20.2",
+    "@waiting/eslint-config": "^13.0.0",
+    "@waiting/shared-core": "^23.21.0",
+    "@waiting/shared-types": "^23.21.0",
     "autocannon": "7",
     "cross-env": "7",
     "eslint": "8",
@@ -25,7 +25,7 @@
     "swagger-ui-dist": "^5.17.14",
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.10",
-    "typescript": "^5.5.4"
+    "typescript": "^5.6.2"
   },
   "engines": {
     "node": ">=20.11.0"
