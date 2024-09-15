@@ -10,6 +10,7 @@ import type {
 } from 'undici'
 
 
+// eslint-disable-next-line import/no-extraneous-dependencies
 export {
   FormData,
   Headers,
