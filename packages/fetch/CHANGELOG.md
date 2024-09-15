@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [32.1.0](https://github.com/waitingsong/fetch/compare/v32.0.1...v32.1.0) (2024-09-15)
+
+**Note:** Version bump only for package @waiting/fetch
+
+
+
+
+
 # [32.0.0](https://github.com/waitingsong/fetch/compare/v31.0.0...v32.0.0) (2024-08-12)
 
 **Note:** Version bump only for package @waiting/fetch

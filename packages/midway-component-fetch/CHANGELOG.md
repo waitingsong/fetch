@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [32.1.0](https://github.com/waitingsong/fetch/compare/v32.0.1...v32.1.0) (2024-09-15)
+
+
+### Features
+
+* **mwcp:** change webContext optional ([d409375](https://github.com/waitingsong/fetch/commit/d4093759e1eea2139a44da920530e7cf487d5707))
+* **mwcp:** export ContentTypeList ([bc9dc77](https://github.com/waitingsong/fetch/commit/bc9dc775cb45234107f61fce12611a80a65c64e7))
+* **mwcp:** fetchService.postFormWithFile() ([9989ddc](https://github.com/waitingsong/fetch/commit/9989ddc650439d41bb06096be32b1b1d248dcdea))
+
+
+
+
+
 ## [32.0.1](https://github.com/waitingsong/fetch/compare/v32.0.0...v32.0.1) (2024-08-25)
 
 **Note:** Version bump only for package @mwcp/fetch
