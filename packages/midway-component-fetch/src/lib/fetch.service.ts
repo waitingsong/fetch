@@ -77,7 +77,7 @@ export class FetchService {
   postFormWithFile<T extends ResponseData>(
     input: string,
     formData: FormData,
-    options?: Omit<FetchOptions, 'url' | 'method' | 'body'>,
+    options?: Omit<FetchOptions, 'url' | 'method' | 'body' | 'data' | 'contentType' | 'processData'>,
   ): Promise<T> {
 
     const opts = {
