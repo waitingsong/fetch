@@ -1,4 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import assert from 'node:assert'
+import type { Blob as NodeBlob } from 'node:buffer'
+
 import {
   type AsyncContextManager,
   ApplicationContext,
@@ -85,6 +88,25 @@ export class FetchService {
       url: input,
       method: 'POST',
       data: formData,
+      processData: false,
+      contentType: false,
+    } as FetchOptions
+    return this.fetch(opts)
+  }
+
+  postFile<T extends ResponseData>(
+    input: string,
+    file: File | Blob | NodeBlob,
+    options?: Omit<FetchOptions, 'url' | 'method' | 'body' | 'data' | 'contentType' | 'processData'>,
+  ): Promise<T> {
+
+    assert(file, 'file is empty, should be Buffer or Blob')
+
+    const opts = {
+      ...options,
+      url: input,
+      method: 'POST',
+      data: file,
       processData: false,
       contentType: false,
     } as FetchOptions
