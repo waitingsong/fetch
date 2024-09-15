@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [32.2.0](https://github.com/waitingsong/fetch/compare/v32.1.0...v32.2.0) (2024-09-15)
+
+
+### Features
+
+* **mwcp:** FetchService.postFile() ([5ac0f10](https://github.com/waitingsong/fetch/commit/5ac0f10e5e4deaa5596fda665300dcde1fa201b6))
+* **mwcp:** update options of FetchService.postFormWithFile() ([466fce1](https://github.com/waitingsong/fetch/commit/466fce19db0397b9376b239bbb947160e5464869))
+
+
+
+
+
 # [32.1.0](https://github.com/waitingsong/fetch/compare/v32.0.1...v32.1.0) (2024-09-15)
 
 
