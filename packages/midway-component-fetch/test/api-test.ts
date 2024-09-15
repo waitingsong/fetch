@@ -6,6 +6,7 @@ export const apiBase = {
   prefix: `/_${ConfigKey.namespace}`,
   demo: '/demo',
   fetch: '/fetch',
+  upload: '/upload',
 }
 
 export const apiMethod = {

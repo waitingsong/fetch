@@ -9,7 +9,7 @@ import {
 } from '@midwayjs/core'
 import { TraceService } from '@mwcp/otel'
 import { MConfig } from '@mwcp/share'
-import { Headers, ResponseData } from '@waiting/fetch'
+import { type FormData, Headers, ResponseData } from '@waiting/fetch'
 
 import type { Context, IMidwayContainer } from '../interface.js'
 
@@ -69,6 +69,24 @@ export class FetchService {
       ...options,
       url: input,
       method: 'POST',
+    } as FetchOptions
+    return this.fetch(opts)
+  }
+
+
+  postFormWithFile<T extends ResponseData>(
+    input: string,
+    formData: FormData,
+    options?: Omit<FetchOptions, 'url' | 'method' | 'body'>,
+  ): Promise<T> {
+
+    const opts = {
+      ...options,
+      url: input,
+      method: 'POST',
+      data: formData,
+      processData: false,
+      contentType: false,
     } as FetchOptions
     return this.fetch(opts)
   }

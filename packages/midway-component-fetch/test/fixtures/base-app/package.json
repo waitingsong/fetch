@@ -8,5 +8,6 @@
     "#@/*": "../../../test/*"
   },
   "dependencies": {
+    "@midwayjs/busboy": "^3.17.1"
   }
 }

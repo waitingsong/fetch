@@ -9,7 +9,7 @@ const CI = !! (process.env['MIDWAY_SERVER_ENV'] === 'unittest'
 )
 
 export const useComponents: IComponentInfo[] = []
-if (CI && ! useComponents.includes(koa)) {
+if (CI) {
   useComponents.push(koa)
 }
 useComponents.push(otel)

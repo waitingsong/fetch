@@ -8,6 +8,7 @@ import {
   retrieveTraceInfoFromRemote,
   retrieveTraceparentFromHeader,
   sortSpans,
+  assertJaegerParentSpanArray,
 } from '@mwcp/otel'
 import { SEMATTRS_HTTP_TARGET, SEMATTRS_HTTP_ROUTE } from '@opentelemetry/semantic-conventions'
 import { fileShortPath } from '@waiting/shared-core'
@@ -36,6 +37,10 @@ describe(fileShortPath(import.meta.url), function () {
     const [rootSpan, span1] = sortSpans(spans)
     assert(rootSpan)
     assert(span1)
+
+    assertJaegerParentSpanArray([
+      { parentSpan: rootSpan, childSpan: span1 },
+    ])
 
     assertRootSpan({
       path,
