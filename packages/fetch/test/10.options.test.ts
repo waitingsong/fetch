@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
+
 import assert from 'node:assert/strict'
 
 import { fileShortPath } from '@waiting/shared-core'

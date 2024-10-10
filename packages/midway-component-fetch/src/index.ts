@@ -10,9 +10,9 @@ export * from './lib/index.js'
 
 export {
   type HeadersInit,
-  type ResponseData,
   type RequestInfo,
   type RequestInit,
+  type ResponseData,
   ContentTypeList,
   FormData,
   Headers,
@@ -22,9 +22,9 @@ export {
 
 export { retrieveHeadersItem } from '@waiting/shared-core'
 export type {
+  JsonObject,
   JsonResp,
   JsonType,
-  JsonObject,
 } from '@waiting/shared-types'
 
 

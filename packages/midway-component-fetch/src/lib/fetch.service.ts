@@ -1,12 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import assert from 'node:assert'
 import type { Blob as NodeBlob } from 'node:buffer'
 
 import {
   type AsyncContextManager,
-  ApplicationContext,
   ASYNC_CONTEXT_KEY,
   ASYNC_CONTEXT_MANAGER_KEY,
+  ApplicationContext,
   Inject,
   Singleton,
 } from '@midwayjs/core'

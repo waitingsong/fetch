@@ -1,4 +1,4 @@
-import { HeadersKey, AttrNames } from '@mwcp/otel'
+import { AttrNames, HeadersKey } from '@mwcp/otel'
 
 import { genRequestHeaders } from './helper.js'
 import type { Config, MiddlewareConfig, MiddlewareOptions } from './types.js'

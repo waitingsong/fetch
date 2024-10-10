@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import {
   type Attributes,
-  type DecoratorTraceDataResp,
   type DecoratorContext,
+  type DecoratorTraceDataResp,
   AttrNames,
   HeadersKey,
-  propagateHeader,
   SemanticAttributes,
+  propagateHeader,
 } from '@mwcp/otel'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { propagation } from '@opentelemetry/api'

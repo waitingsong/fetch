@@ -4,7 +4,7 @@ import { fileShortPath } from '@waiting/shared-core'
 import QueryString from 'qs'
 
 import type { Options } from '../src/index.js'
-import { remove, FormData } from '../src/index.js'
+import { FormData, remove } from '../src/index.js'
 
 import { DELAY, HOST_DELETE } from './config.js'
 import type { HttpbinPostResponse, PDATA } from './test.types.js'

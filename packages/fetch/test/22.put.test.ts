@@ -5,7 +5,7 @@ import NodeFormData from 'form-data'
 import { FormData } from 'undici'
 
 import type { Options } from '../src/index.js'
-import { put, ContentTypeList } from '../src/index.js'
+import { ContentTypeList, put } from '../src/index.js'
 
 import { DELAY, HOST_PUT } from './config.js'
 import type { HttpbinPostResponse, PostForm1 } from './test.types.js'

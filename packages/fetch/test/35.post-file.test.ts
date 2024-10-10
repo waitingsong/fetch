@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url'
 import { fileShortPath } from '@waiting/shared-core'
 
 import type { Options } from '../src/index.js'
-import { post, FormData, ContentTypeList } from '../src/index.js'
+import { ContentTypeList, FormData, post } from '../src/index.js'
 
 import { DELAY, HOST_POST } from './config.js'
 import type { HttpbinPostResponse, PostForm1 } from './test.types.js'

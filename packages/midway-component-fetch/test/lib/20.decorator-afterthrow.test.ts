@@ -3,14 +3,14 @@ import assert from 'node:assert/strict'
 import type { AssertsOptions } from '@mwcp/otel'
 import {
   AttrNames,
-  assertsSpan,
+  assertJaegerParentSpanArray,
   assertRootSpan,
+  assertsSpan,
   retrieveTraceInfoFromRemote,
   retrieveTraceparentFromHeader,
   sortSpans,
-  assertJaegerParentSpanArray,
 } from '@mwcp/otel'
-import { SEMATTRS_HTTP_TARGET, SEMATTRS_HTTP_ROUTE } from '@opentelemetry/semantic-conventions'
+import { SEMATTRS_HTTP_ROUTE, SEMATTRS_HTTP_TARGET } from '@opentelemetry/semantic-conventions'
 import { fileShortPath } from '@waiting/shared-core'
 
 import { apiBase, apiMethod } from '#@/api-test.js'

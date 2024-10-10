@@ -4,13 +4,13 @@ import type { JsonObject } from '@waiting/shared-types'
 import type {
   FormData,
   HeadersInit,
-  Response,
   RequestInfo,
   RequestInit,
+  Response,
 } from 'undici'
 
 
-// eslint-disable-next-line import/no-extraneous-dependencies
+
 export {
   FormData,
   Headers,

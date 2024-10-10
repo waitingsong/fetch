@@ -3,7 +3,7 @@ import assert from 'node:assert/strict'
 import { fileShortPath } from '@waiting/shared-core'
 
 import type { Options } from '../src/index.js'
-import { post, ContentTypeList } from '../src/index.js'
+import { ContentTypeList, post } from '../src/index.js'
 
 import { DELAY, HOST_POST } from './config.js'
 import type { HttpbinPostResponse } from './test.types.js'

@@ -1,12 +1,12 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
+
 import assert from 'node:assert/strict'
 
 import { fileShortPath } from '@waiting/shared-core'
 
 import type { Options } from '../src/index.js'
 import {
-  get,
   FetchMsg,
+  get,
 } from '../src/index.js'
 
 import { HOST, HOST_POST } from './config.js'

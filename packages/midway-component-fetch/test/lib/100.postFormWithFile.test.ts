@@ -6,7 +6,7 @@ import { join } from 'node:path'
 import type { UploadFileInfo } from '@midwayjs/busboy'
 import { fileShortPath, genCurrentDirname } from '@waiting/shared-core'
 
-import { FormData, FetchService } from '##/index.js'
+import { FetchService, FormData } from '##/index.js'
 import { apiBase, apiMethod } from '#@/api-test.js'
 import { testConfig } from '#@/root.config.js'
 

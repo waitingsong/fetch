@@ -1,6 +1,4 @@
-/* eslint-disable max-lines-per-function */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+
 import assert from 'node:assert'
 
 import { Autoload, Singleton } from '@midwayjs/core'
@@ -8,9 +6,9 @@ import { Trace, TraceLog } from '@mwcp/otel'
 import { MConfig } from '@mwcp/share'
 import {
   Headers,
+  ResponseData,
   fetch2,
   pickUrlStrFromRequestInfo,
-  ResponseData,
 } from '@waiting/fetch'
 
 import { genAttrsWhileError, traceLogAfterResponse, traceLogBeforeRequest } from './helper.js'

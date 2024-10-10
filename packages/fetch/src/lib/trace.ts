@@ -6,7 +6,7 @@ import type { Attributes, Span } from '@opentelemetry/api'
  */
 export function trace(
   eventName: string,
-  span?: Span | undefined,
+  span?: Span,
   data?: Attributes,
 ): void {
 

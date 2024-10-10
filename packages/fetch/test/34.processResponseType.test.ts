@@ -3,7 +3,7 @@ import assert from 'node:assert/strict'
 import { fileShortPath } from '@waiting/shared-core'
 import type { Response } from 'undici'
 
-import { get, fetch } from '../src/index.js'
+import { fetch, get } from '../src/index.js'
 
 import { HOST_GET } from './config.js'
 

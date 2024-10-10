@@ -2,11 +2,11 @@ import assert from 'node:assert'
 
 import type { AssertsOptions } from '@mwcp/otel'
 import {
-  assertsSpan,
+  assertJaegerParentSpanArray,
   assertRootSpan,
+  assertsSpan,
   retrieveTraceInfoFromRemote,
   sortSpans,
-  assertJaegerParentSpanArray,
 } from '@mwcp/otel'
 import { fileShortPath } from '@waiting/shared-core'
 

@@ -8,7 +8,7 @@ import NodeFormData from 'form-data'
 import { FormData } from 'undici'
 
 import type { Options } from '../src/index.js'
-import { post, ContentTypeList } from '../src/index.js'
+import { ContentTypeList, post } from '../src/index.js'
 
 import { DELAY, HOST_POST } from './config.js'
 import type { HttpbinPostResponse, PostForm1 } from './test.types.js'

@@ -9,9 +9,9 @@ export type {
 export type {
   Application,
   Context,
+  IMiddleware,
   IMidwayApplication,
   IMidwayContainer,
-  IMiddleware,
   NextFunction,
 } from '@mwcp/share'
 

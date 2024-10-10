@@ -7,17 +7,17 @@ import type { UploadFileInfo } from '@midwayjs/busboy'
 import type { AssertsOptions } from '@mwcp/otel'
 import {
   AttrNames,
-  assertsSpan,
+  assertJaegerParentSpanArray,
   assertRootSpan,
+  assertsSpan,
   retrieveTraceInfoFromRemote,
   retrieveTraceparentFromHeader,
   sortSpans,
-  assertJaegerParentSpanArray,
 } from '@mwcp/otel'
-import { SEMATTRS_HTTP_TARGET, SEMATTRS_HTTP_ROUTE } from '@opentelemetry/semantic-conventions'
+import { SEMATTRS_HTTP_ROUTE, SEMATTRS_HTTP_TARGET } from '@opentelemetry/semantic-conventions'
 import { fileShortPath, genCurrentDirname } from '@waiting/shared-core'
 
-import { FormData, FetchService } from '##/index.js'
+import { FetchService, FormData } from '##/index.js'
 import { apiBase, apiMethod } from '#@/api-test.js'
 import { testConfig } from '#@/root.config.js'
 

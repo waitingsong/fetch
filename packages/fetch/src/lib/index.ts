@@ -1,11 +1,11 @@
 
 export {
-  fetch,
   fetch2,
+  fetch,
   get,
   post,
-  remove,
   put,
+  remove,
 } from './fetch.js'
 // export * from './config.js'
 export * from './types.js'

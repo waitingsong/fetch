@@ -1,5 +1,5 @@
 import { UploadFileInfo, UploadMiddleware } from '@midwayjs/busboy'
-import { Controller, Inject, Fields, Files, Post } from '@midwayjs/core'
+import { Controller, Fields, Files, Inject, Post } from '@midwayjs/core'
 import { TraceService } from '@mwcp/otel'
 
 import { apiBase, apiMethod } from '../types/api-test.js'

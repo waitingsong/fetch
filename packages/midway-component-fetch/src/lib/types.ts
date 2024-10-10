@@ -1,7 +1,7 @@
 import type {
-  TraceService,
   Context as TraceContext,
   TraceScopeParamType,
+  TraceService,
 } from '@mwcp/otel'
 import type { Headers as UndiciHeaders, Options } from '@waiting/fetch'
 import type { MiddlewareConfig as MWConfig } from '@waiting/shared-types'

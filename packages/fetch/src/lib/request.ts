@@ -1,10 +1,10 @@
-import assert from 'assert'
+import assert from 'node:assert'
 
 import type { Span } from '@opentelemetry/api'
 import type {
-  Response,
-  RequestInit,
   RequestInfo,
+  RequestInit,
+  Response,
 } from 'undici'
 import { fetch } from 'undici'
 
@@ -12,10 +12,10 @@ import { trace } from './trace.js'
 import type { Args } from './types.js'
 import { AttributeKey } from './types.js'
 import {
+  parseRespCookie,
   processInitOpts,
   processRequestGetLikeData,
   processRequestPostLikeData,
-  parseRespCookie,
 } from './util.js'
 
 
@@ -28,7 +28,7 @@ export async function _fetch(
   input: RequestInfo,
   args: Args,
   requestInit: RequestInit,
-  span?: Span | undefined,
+  span?: Span,
 ): Promise<Response> {
 
   const resp = await createRequest(input, args, requestInit, span)
@@ -42,7 +42,7 @@ export async function createRequest(
   input: RequestInfo,
   args: Args,
   requestInit: RequestInit,
-  span?: Span | undefined,
+  span?: Span,
 ): Promise<Response> {
 
   let inputNew = input
@@ -70,7 +70,7 @@ export async function createRequest(
       requestInit.body = body
     }
     else {
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+
       throw new TypeError(`Invalid method value: "${requestInit.method}"`)
     }
 

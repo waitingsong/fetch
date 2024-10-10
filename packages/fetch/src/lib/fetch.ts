@@ -3,7 +3,7 @@ import type { Response } from 'undici'
 import { _fetch } from './request.js'
 import { handleResponseError, processResponseType } from './response.js'
 import { trace } from './trace.js'
-import type { ResponseData, Options } from './types.js'
+import type { Options, ResponseData } from './types.js'
 import { AttributeKey, Headers } from './types.js'
 import { processParams } from './util.js'
 

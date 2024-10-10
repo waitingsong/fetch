@@ -1,4 +1,4 @@
-import { ReadStream } from 'fs'
+import { ReadStream } from 'node:fs'
 
 import NodeFormData from 'form-data'
 import QueryString from 'qs'
@@ -17,7 +17,7 @@ export function setGlobalRequestOptions(options: Partial<Options>): void {
       configurable: true,
       enumerable: true,
       writable: true,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+
       value,
     })
   }
@@ -50,7 +50,7 @@ export function splitInitArgs(options: Options): ArgsRequestInitCombined {
   }
   delete opts.cookies
 
-  // eslint-disable-next-line @typescript-eslint/unbound-method
+
   if (opts.abortController && typeof opts.abortController.abort === 'function') {
     args.abortController = opts.abortController
   }
@@ -150,7 +150,7 @@ function processAbortController(options: ArgsRequestInitCombined): ArgsRequestIn
       args.abortController = new AbortController()
     }
     else {
-      throw new Error('AbortController not available')
+      throw new TypeError('AbortController not available')
     }
   }
 
@@ -262,7 +262,7 @@ function processRedirect(
 
   // not change value if on Browser
   /* istanbul ignore else */
-  if (keepRedirectCookies && typeof window === 'undefined') {
+  if (keepRedirectCookies && typeof globalThis === 'undefined') {
     /* istanbul ignore else */
     if (curValue === 'follow') {
       return 'manual'
@@ -350,7 +350,7 @@ export function parseRespCookie(cookie: string | null): Args['cookies'] {
   if (! cookie) {
     return
   }
-  // eslint-disable-next-line require-unicode-regexp
+
   const arr = cookie.split(/;/)
   const ret: Args['cookies'] = {}
 
