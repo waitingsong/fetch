@@ -5,7 +5,6 @@ import {
   type DecoratorTraceDataResp,
   AttrNames,
   HeadersKey,
-  SemanticAttributes,
   propagateHeader,
 } from '@mwcp/otel'
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -35,7 +34,7 @@ export const genRequestHeaders: Config['genRequestHeaders'] = (options, headersI
     return headers
   }
 
-  if (! headers.has(HeadersKey.otelTraceId)) {
+  if (! headers.has(HeadersKey.TRACE_PARENT_HEADER)) {
     const tmp = {}
     propagation.inject(traceContext, tmp)
     Object.entries(tmp).forEach(([key, val]) => {
@@ -185,8 +184,8 @@ export function genOutgoingRequestAttributes(options: ReqCallbackOptions): Attri
 
   const url = pickUrlStrFromRequestInfo(opts.url)
   const tags: Attributes = {
-    [SemanticAttributes.HTTP_METHOD]: opts.method,
-    [SemanticAttributes.HTTP_URL]: url,
+    ['http.method']: opts.method,
+    ['http.url']: url,
   }
 
   if (enableTraceLoggingReqBody && typeof opts.data !== 'undefined') {

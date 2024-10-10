@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
 import type { Span } from '@opentelemetry/api'
 import type { JsonObject } from '@waiting/shared-types'
 import type {
@@ -10,18 +9,14 @@ import type {
 } from 'undici'
 
 
-
 export {
+  type HeadersInit,
+  type RequestInfo,
+  type RequestInit,
   FormData,
   Headers,
   Response,
 } from 'undici'
-export type {
-  HeadersInit,
-  RequestInfo,
-  RequestInit,
-} from 'undici'
-
 
 export interface Options extends RequestInit, Args {
   url: RequestInfo
