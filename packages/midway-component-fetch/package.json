@@ -34,12 +34,12 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@mwcp/otel": "^38.2.0",
+    "@mwcp/otel": "^38.2.2",
     "@waiting/fetch": "^32.1.0",
-    "@waiting/shared-core": "^23.21.0"
+    "@waiting/shared-core": "^23.22.0"
   },
   "devDependencies": {
-    "@midwayjs/busboy": "^3.17.1"
+    "@midwayjs/busboy": "^3.18.0"
   },
   "engines": {
     "node": ">=18.12.0",
