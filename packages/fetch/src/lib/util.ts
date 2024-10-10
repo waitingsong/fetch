@@ -262,7 +262,8 @@ function processRedirect(
 
   // not change value if on Browser
   /* istanbul ignore else */
-  if (keepRedirectCookies && typeof globalThis === 'undefined') {
+  // eslint-disable-next-line unicorn/prefer-global-this
+  if (keepRedirectCookies && typeof window === 'undefined') {
     /* istanbul ignore else */
     if (curValue === 'follow') {
       return 'manual'
