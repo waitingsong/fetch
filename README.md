@@ -58,7 +58,7 @@ npm run repo:init
 <br>
 
 [`fetch`]: https://github.com/waitingsong/fetch/tree/main/packages/fetch
-[main-svg]: https://img.shields.io/npm/v/@waiting/fetch.svg?maxAge=7200
+[main-svg]: https://img.shields.io/npm/v/@waiting/fetch.svg?maxAge=300
 [main-ch]: https://github.com/waitingsong/fetch/tree/main/packages/fetch/CHANGELOG.md
 
 [`@mwcp/fetch`]: https://github.com/waitingsong/fetch/tree/main/packages/midway-component-fetch
