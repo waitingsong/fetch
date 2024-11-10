@@ -1,11 +1,7 @@
-
 import assert from 'node:assert'
 import type { Blob as NodeBlob } from 'node:buffer'
 
 import {
-  type AsyncContextManager,
-  ASYNC_CONTEXT_KEY,
-  ASYNC_CONTEXT_MANAGER_KEY,
   ApplicationContext,
   Inject,
   Singleton,
@@ -14,7 +10,7 @@ import { TraceService } from '@mwcp/otel'
 import { MConfig } from '@mwcp/share'
 import { type FormData, Headers, ResponseData } from '@waiting/fetch'
 
-import type { Context, IMidwayContainer } from '../interface.js'
+import type { IMidwayContainer } from '../interface.js'
 
 import { FetchComponent } from './fetch.component.js'
 import {
@@ -118,24 +114,9 @@ export class FetchService {
   protected prepareTrace(options: FetchOptions): void {
     options.traceService = this.traceService
     if (! options.webContext) {
-      options.webContext = this.getWebContext()
-    }
-
-    this.fetchComponent.prepareTrace(options)
-  }
-
-  protected getWebContext(): Context | undefined {
-    try {
-      const contextManager: AsyncContextManager = this.applicationContext.get(
-        ASYNC_CONTEXT_MANAGER_KEY,
-      )
-      const ctx = contextManager.active().getValue(ASYNC_CONTEXT_KEY) as Context | undefined
-      return ctx
-    }
-    catch (ex) {
-      void ex
-      // console.warn(new Error('getWebContext() failed', { cause: ex }))
+      options.webContext = this.traceService.getWebContext()
     }
   }
+
 }
 

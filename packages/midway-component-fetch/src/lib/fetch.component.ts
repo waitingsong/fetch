@@ -1,4 +1,3 @@
-
 import assert from 'node:assert'
 
 import { Autoload, Singleton } from '@midwayjs/core'
@@ -41,11 +40,6 @@ export class FetchComponent {
       const name = `HTTP ${options.method.toLocaleUpperCase()} ${host}${url.pathname}`
       return name
     },
-    scope([fetchOptions]) { // run before `before()`,
-      this.prepareTrace(fetchOptions)
-      assert(fetchOptions.traceScope, 'fetchOptions.traceScope must be set')
-      return fetchOptions.traceScope
-    },
     before([options], decoratorContext) {
       if (! this.fetchConfig.enableTrace) { return }
       const { traceSpan } = decoratorContext
@@ -76,14 +70,12 @@ export class FetchComponent {
     )
     // opts.beforeProcessResponseCallback = (input: Response) => this.cacheRespHeaders(id, input, responseHeadersMap)
 
-    assert(opts.traceScope, 'traceScope must be set for single fetchComponent')
     const config = this.fetchConfig
     await this.beforeRequest({
       id,
       config,
       opts,
       webContext: opts.webContext,
-      traceScope: opts.traceScope,
     })
 
     const opts2 = { ...opts }
@@ -102,7 +94,6 @@ export class FetchComponent {
         resultData: data[0],
         respHeaders: data[1],
         webContext: opts.webContext,
-        traceScope: opts.traceScope,
       })
     }
 
@@ -113,21 +104,9 @@ export class FetchComponent {
       resultData: data[0],
       respHeaders: data[1],
       webContext: opts.webContext,
-      traceScope: opts.traceScope,
     })
 
     return data
-  }
-
-
-  prepareTrace(options: FetchOptions): void {
-    if (options.traceScope) {
-      assert(typeof options.traceScope === 'symbol' || typeof options.traceScope === 'object', 'opts.scope must be symbol or object')
-    }
-    else {
-      const txt = pickUrlStrFromRequestInfo(options.url)
-      options.traceScope = Symbol(txt)
-    }
   }
 
 
@@ -158,8 +137,6 @@ export class FetchComponent {
     before: ([options], ctx) => traceLogBeforeRequest(options, ctx),
   })
   private async beforeRequest(options: ReqCallbackOptions): Promise<void> {
-    assert(options.traceScope, 'traceScope must be set for single fetchComponent')
-
     const config = this.fetchConfig
     if (config.beforeRequest) {
       await config.beforeRequest(options)
@@ -171,8 +148,6 @@ export class FetchComponent {
     after: ([options]) => traceLogAfterResponse(options),
   })
   private async afterResponse(options: RespCallbackOptions): Promise<void> {
-    assert(options.traceScope, 'traceScope must be set for single fetchComponent')
-
     const config = this.fetchConfig
     if (config.afterResponse) {
       await config.afterResponse(options)

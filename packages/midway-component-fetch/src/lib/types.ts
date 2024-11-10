@@ -1,6 +1,5 @@
 import type {
   Context as TraceContext,
-  TraceScopeParamType,
   TraceService,
 } from '@mwcp/otel'
 import type { Headers as UndiciHeaders, Options } from '@waiting/fetch'
@@ -114,7 +113,6 @@ export interface ReqCallbackOptions {
   config: Config
   opts: FetchOptions
   webContext: Context | undefined
-  traceScope: TraceScopeParamType
 }
 
 export interface RespCallbackOptions<T = unknown> {
@@ -124,7 +122,6 @@ export interface RespCallbackOptions<T = unknown> {
   resultData: T
   respHeaders: UndiciHeaders
   webContext: Context | undefined
-  traceScope: TraceScopeParamType
 }
 
 export interface ProcessExCallbackOptions {
