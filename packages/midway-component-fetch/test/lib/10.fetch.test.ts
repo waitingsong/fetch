@@ -19,7 +19,7 @@ describe(fileShortPath(import.meta.url), function () {
     console.log({ ip })
     assert(typeof ip === 'string')
     assert(ip.length > 0)
-    assert(/[\d.]+/u.test(ip))
+    assert(/[\d.]+/u.test(ip) || /[a-f\d:]+/u.test(ip))
   })
 
   it.skip('Should work self', async () => {
