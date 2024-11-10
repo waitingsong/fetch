@@ -29,8 +29,8 @@ export class FetchService {
   @Inject() protected readonly traceService: TraceService
 
   async fetch<T extends ResponseData>(options: FetchOptions): Promise<T> {
-    const [ret] = await this.fetch2<T>(options)
-    return ret
+    const res = await this.fetch2<T>(options)
+    return res[0]
   }
 
   async fetch2<T extends ResponseData>(options: FetchOptions): Promise<[T, Headers]> {
