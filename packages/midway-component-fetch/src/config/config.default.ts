@@ -20,3 +20,7 @@ export const fetchMiddlewareConfig: Readonly<Omit<MiddlewareConfig, 'match'>> = 
   },
 }
 
+export const asyncContextManager = {
+  enable: true,
+}
+
