@@ -16,9 +16,10 @@ export class FetchController {
 
   @Get(`/${apiMethod.ip}`)
   async ip(): Promise<string> {
-    const url = 'http://ifconfig.me' // 222.233.10.1
+    // {"ip_addr":"223.87.231.32","remote_host":"unavailable","user_agent":"curl/7.76.1","port":"47100","method":"GET","mime":"*/*","via":"1.1 google","forwarded":"223.87.231.32,34.160.111.145"}
+    const url = 'http://ifconfig.me/all.json'
 
-    const text = await this.fetchService.get<string>(url, { dataType: 'text' })
+    const text = await this.fetchService.get<string>(url, { dataType: 'json' })
     let ip = ''
     if (text) {
       const arr = /([\d.]+)/ui.exec(text)
