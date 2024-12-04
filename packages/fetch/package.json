@@ -37,7 +37,7 @@
     "@waiting/shared-core": "^23.25.3",
     "form-data": "^4.0.1",
     "qs": "^6.13.1",
-    "undici": "^6.21.0"
+    "undici": "^7.1.0"
   },
   "devDependencies": {
     "@opentelemetry/api": "1",
