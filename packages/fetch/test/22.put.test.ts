@@ -1,7 +1,6 @@
 import assert from 'node:assert/strict'
 
 import { fileShortPath } from '@waiting/shared-core'
-import NodeFormData from 'form-data'
 import { FormData } from 'undici'
 
 import type { Options } from '../src/index.js'
@@ -88,26 +87,26 @@ describe(fileShortPath(import.meta.url), function () {
       }
     })
 
-    it('error FormData from pkg "form-data"', async () => {
-      const pdata = new NodeFormData()
-      const p1 = Math.random()
-      const p2 = Math.random().toString()
-      pdata.append('p1', p1)
-      pdata.append('p2', p2)
+    // it('error FormData from pkg "form-data"', async () => {
+    //   const pdata = new NodeFormData()
+    //   const p1 = Math.random()
+    //   const p2 = Math.random().toString()
+    //   pdata.append('p1', p1)
+    //   pdata.append('p2', p2)
 
-      const opts: Options = {
-        ...initOpts, data: pdata, processData: false, contentType: false,
-      }
+    //   const opts: Options = {
+    //     ...initOpts, data: pdata, processData: false, contentType: false,
+    //   }
 
-      try {
-        await put<HttpbinPostResponse<PostForm1>>(url, opts)
-      }
-      catch (ex) {
-        assert(ex instanceof TypeError, 'Should got TypeError')
-        return
-      }
-      assert(false, 'Should throw TypeError')
-    })
+    //   try {
+    //     await put<HttpbinPostResponse<PostForm1>>(url, opts)
+    //   }
+    //   catch (ex) {
+    //     assert(ex instanceof TypeError, 'Should got TypeError')
+    //     return
+    //   }
+    //   assert(false, 'Should throw TypeError')
+    // })
 
   })
 

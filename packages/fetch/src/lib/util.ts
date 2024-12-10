@@ -1,6 +1,5 @@
 import { ReadStream } from 'node:fs'
 
-import NodeFormData from 'form-data'
 import QueryString from 'qs'
 import type { RequestInfo as UndiciRequestInfo, RequestInit } from 'undici'
 import { FormData, Headers } from 'undici'
@@ -310,9 +309,9 @@ export function processRequestPostLikeData(args: Args): RequestInit['body'] | nu
   else if (data instanceof FormData) {
     body = data
   }
-  else if (data instanceof NodeFormData) {
-    throw new TypeError('NodeFormData from pkg "form-data" not supported, use FormData from "undici" instead')
-  }
+  // else if (data instanceof NodeFormData) {
+  //   throw new TypeError('NodeFormData from pkg "form-data" not supported, use FormData from "undici" instead')
+  // }
   else if (typeof Blob !== 'undefined' && data instanceof Blob) {
     // @ts-expect-error
     body = data
