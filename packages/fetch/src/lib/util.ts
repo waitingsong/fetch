@@ -313,7 +313,7 @@ export function processRequestPostLikeData(args: Args): RequestInit['body'] | nu
   //   throw new TypeError('NodeFormData from pkg "form-data" not supported, use FormData from "undici" instead')
   // }
   else if (typeof Blob !== 'undefined' && data instanceof Blob) {
-    // @ts-expect-error
+    // @ts-ignore
     body = data
   }
   else if (typeof ArrayBuffer !== 'undefined' && data instanceof ArrayBuffer) {

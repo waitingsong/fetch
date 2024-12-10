@@ -157,7 +157,6 @@ export function genAttrsWhileError(options: ProcessExCallbackOptions): Decorator
   }
   if (Array.isArray(captureResponseHeaders)) {
     captureResponseHeaders.forEach((name) => {
-      // @ts-expect-error for undici types
       const val = retrieveHeadersItem(opts.headers, name)
       if (val) {
         events[`http.${name}`] = val
@@ -194,7 +193,6 @@ export function genOutgoingRequestAttributes(options: ReqCallbackOptions): Attri
 
   if (Array.isArray(captureRequestHeaders)) {
     captureRequestHeaders.forEach((name) => {
-      // @ts-expect-error for undici types
       const val = retrieveHeadersItem(opts.headers, name)
       if (val) {
         tags[`http.${name}`] = val
